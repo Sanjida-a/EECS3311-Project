@@ -2,3 +2,4 @@
 2. library app - can keep track of: which books are available (on the shelves), number of copies available, for borrowed books: when they are expected to to be returned, which ones are late and for how many days, etc.
 3. inventory
 4. flight or hotel reservation and manegement.
+  (a) - Flight seat selection - checks seat availability + preferred seats + disable seats that are already selected
