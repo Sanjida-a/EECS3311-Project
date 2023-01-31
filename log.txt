@@ -1,2 +1,5 @@
 1. 2023/01/30 18:09 contributor: Geon Kim
 -log.txt created 
+
+2. 2023/01/30 21:30 contributor: all
+-virtual discussion regarding scheduling in-person meetings. 
