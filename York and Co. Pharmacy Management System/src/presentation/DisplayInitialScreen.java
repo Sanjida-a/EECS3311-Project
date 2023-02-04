@@ -17,6 +17,7 @@ import javax.swing.JProgressBar;
 import javax.swing.Box;
 import javax.swing.border.LineBorder;
 import javax.swing.JList;
+import javax.swing.JFormattedTextField;
 
 public class DisplayInitialScreen {
 	private static JTextField inputFieldName;
@@ -26,7 +27,17 @@ public class DisplayInitialScreen {
 	private static JTextField inputFieldQty;
 	private static JTextField inputFieldPrice;
 	private static JTextField inputKeyword;
-	public static void displayInitialScreen(USER user) {
+	
+	private static String name;
+	private static int username;
+	private static String type;
+	private static String form;
+	private static int qty;
+	private static double price;
+	private static boolean isOTC;
+	private static String searchKeyword;
+	
+	public void displayInitialScreen(USER user) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("York and Co. Pharmacy Management System");
         DisplayInitialScreen background = new DisplayInitialScreen();
@@ -43,9 +54,20 @@ public class DisplayInitialScreen {
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
 		
+		if(user == USER.OWNER || user == USER.PHARMACIST) {
+			this.createPanelVisibleToAdmin(totalGUI);
+		}
+		//this.createPanelVisibleToAdmin(totalGUI);
+        this.createExtraContents(totalGUI);
+        this.createPanelVisibleToAll(totalGUI);
+        		
+		return totalGUI;
 		
-        JPanel panelVisibleToAdmin = new JPanel();
-        panelVisibleToAdmin.setBounds(38, 42, 944, 194);
+	}
+	
+	private void createPanelVisibleToAdmin(JPanel totalGUI) {
+		JPanel panelVisibleToAdmin = new JPanel();
+        panelVisibleToAdmin.setBounds(45, 536, 944, 194);
         panelVisibleToAdmin.setLayout(null);
     
         
@@ -57,7 +79,8 @@ public class DisplayInitialScreen {
         inputFieldName = new JTextField();
         inputFieldName.setBounds(125, 0, 350, 35);
         panelVisibleToAdmin.add(inputFieldName);
-        inputFieldName.setColumns(10);
+        inputFieldName.setColumns(20);
+        //name = inputFieldName.getText();
         
         JLabel lblHCN = new JLabel("Health card#");
         lblHCN.setFont(new Font("굴림", Font.BOLD, 18));
@@ -67,7 +90,8 @@ public class DisplayInitialScreen {
         inputFieldHCN = new JTextField();
         inputFieldHCN.setBounds(125, 45, 350, 35);
         panelVisibleToAdmin.add(inputFieldHCN);
-        inputFieldHCN.setColumns(10);
+        inputFieldHCN.setColumns(20);
+        //username = Integer.getInteger(inputFieldHCN.getText(), 0);	//assign 0 if the input is invalid
         
         JLabel lblType = new JLabel("Type");
         lblType.setFont(new Font("굴림", Font.BOLD, 18));
@@ -82,12 +106,14 @@ public class DisplayInitialScreen {
         inputFieldType = new JTextField();
         inputFieldType.setBounds(125, 90, 350, 35);
         panelVisibleToAdmin.add(inputFieldType);
-        inputFieldType.setColumns(10);
+        inputFieldType.setColumns(30);
+        //type = inputFieldType.getText();
         
         inputFieldForm = new JTextField();
         inputFieldForm.setColumns(10);
         inputFieldForm.setBounds(125, 135, 350, 35);
         panelVisibleToAdmin.add(inputFieldForm);
+        //form = inputFieldForm.getText();
         
         JLabel lblQty = new JLabel("Qty");
         lblQty.setFont(new Font("굴림", Font.BOLD, 18));
@@ -103,12 +129,14 @@ public class DisplayInitialScreen {
         inputFieldQty.setBounds(625, 0, 90, 35);
         panelVisibleToAdmin.add(inputFieldQty);
         inputFieldQty.setColumns(10);
+        //qty = Integer.getInteger(inputFieldQty.getText(), 0); 	//assign 0 if the input is invalid
         
         inputFieldPrice = new JTextField();
         inputFieldPrice.setFont(new Font("굴림", Font.BOLD, 18));
         inputFieldPrice.setBounds(625, 45, 90, 35);
         panelVisibleToAdmin.add(inputFieldPrice);
         inputFieldPrice.setColumns(10);
+        //price = Double.parseDouble(inputFieldPrice.getText());
         
         JRadioButton rdbtnRx = new JRadioButton("Rx");
         rdbtnRx.setFont(new Font("굴림", Font.BOLD, 18));
@@ -120,6 +148,8 @@ public class DisplayInitialScreen {
         rdbtnOTC.setFont(new Font("굴림", Font.BOLD, 18));
         rdbtnOTC.setBounds(831, 39, 113, 23);
         panelVisibleToAdmin.add(rdbtnOTC);
+        
+        //isOTC = rdbtnOTC.isEnabled();
         
         JButton btnAdd = new JButton("Add");
         btnAdd.setFont(new Font("굴림", Font.BOLD, 20));
@@ -135,7 +165,11 @@ public class DisplayInitialScreen {
         btnDelete.setFont(new Font("굴림", Font.BOLD, 20));
         btnDelete.setBounds(774, 135, 125, 35);
         panelVisibleToAdmin.add(btnDelete);
+        totalGUI.add(panelVisibleToAdmin);
         
+	}
+	
+	private void createExtraContents(JPanel totalGUI) {
         JButton btnExit = new JButton("Exit");
         btnExit.setFont(new Font("굴림", Font.BOLD, 20));
         btnExit.setBounds(1213, 40, 125, 35);
@@ -144,23 +178,26 @@ public class DisplayInitialScreen {
         		System.exit(0);
         	}
         });
-
-        
         Box horizontalBox = Box.createHorizontalBox();
         horizontalBox.setBorder(new LineBorder(new Color(192, 192, 192)));
         horizontalBox.setBackground(new Color(0, 0, 0));
-        horizontalBox.setBounds(12, 255, 1362, 2);
-
+        horizontalBox.setBounds(12, 515, 1362, 2);
         
-        JPanel panelVisibleToAll = new JPanel();
-        panelVisibleToAll.setBounds(38, 275, 944, 455);
+        totalGUI.add(horizontalBox);
+        totalGUI.add(btnExit);
+	}
+	
+	private void createPanelVisibleToAll(JPanel totalGUI) {
+		JPanel panelVisibleToAll = new JPanel();
+        panelVisibleToAll.setBounds(45, 40, 944, 455);
  
         panelVisibleToAll.setLayout(null);
         
         inputKeyword = new JTextField();
         inputKeyword.setBounds(0, 0, 807, 35);
         panelVisibleToAll.add(inputKeyword);
-        inputKeyword.setColumns(10);
+        inputKeyword.setColumns(40);
+        //searchKeyword = inputKeyword.getText();
         
         JButton btnSearch = new JButton("Search");
         btnSearch.setFont(new Font("굴림", Font.BOLD, 20));
@@ -173,18 +210,41 @@ public class DisplayInitialScreen {
         list.setBounds(0, 58, 944, 397);
         panelVisibleToAll.add(list);
 		
-        totalGUI.add(panelVisibleToAdmin);
+        //totalGUI.add(panelVisibleToAdmin);
         totalGUI.add(panelVisibleToAll);
-        totalGUI.add(horizontalBox);
-        totalGUI.add(btnExit);
-        
-		
-		return totalGUI;
-		
 	}
+	
+	public String getName() {
+		return new String(name);
+	}
+	public int getUsername() {
+		return username;
+	}
+	public String getType() {
+		return new String(type);
+	}
+	public String getForm() {
+		return new String(form);
+	}
+	public int getQty() {
+		return qty;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public boolean getIsOTC() {
+		return isOTC;
+	}
+	public String getSearchKeyword() {
+		return new String(searchKeyword);
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		displayInitialScreen(USER.PATIENT);
+		//displayInitialScreen(USER.PATIENT); 
+		DisplayInitialScreen screen = new DisplayInitialScreen();
+		screen.displayInitialScreen(USER.OWNER);
 	}
 }
