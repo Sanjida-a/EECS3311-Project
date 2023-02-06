@@ -30,6 +30,9 @@ public class AuthenticateUser {
        
         int passInteger = Integer.parseInt(pass);
         System.out.println("pass " + passInteger);
+        
+        System.out.println("practice test");
+        
 	}
 
 }
