@@ -2,10 +2,6 @@ package presentation;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-<<<<<<< Updated upstream
-
-public class DisplayLogin {
-=======
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -26,7 +22,7 @@ public class DisplayLogin implements ActionListener {
 //		_authUser = authUser;
 //		displayLogin();
 //	}
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 
 	public void displayLogin() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -42,8 +38,8 @@ public class DisplayLogin implements ActionListener {
 		JPanel totalGUI = new JPanel();
 		totalGUI.setLayout(null);
 		
-<<<<<<< Updated upstream
-=======
+//<<<<<<< Updated upstream
+//=======
 		JLabel lblUserAccount = new JLabel("Username");
 		lblUserAccount.setFont(new Font("굴림", Font.BOLD, 20));
 		lblUserAccount.setBounds(100, 100, 125, 35);
@@ -76,7 +72,7 @@ public class DisplayLogin implements ActionListener {
 		
 		
 		totalGUI.setVisible(true);
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 		return totalGUI;
 	}
 	
@@ -93,10 +89,10 @@ public class DisplayLogin implements ActionListener {
     	
     	
 	}
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 
-=======
+//=======
 	
 	
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 }
