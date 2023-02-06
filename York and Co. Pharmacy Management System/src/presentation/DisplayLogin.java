@@ -5,23 +5,28 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.*;
+import middleLayer.*;
 import javax.swing.SwingConstants;
 
 public class DisplayLogin {
 	private JTextField userNameField;
 	private JPasswordField passwordField;
-	
-	private static int username;
+	AuthenticateUser _authUser;
+
+    private static int username;
 	private static int password;
+//	public DisplayLogin() {};
+	
+//	public DisplayLogin(AuthenticateUser authUser) {
+//		_authUser = authUser;
+//		displayLogin();
+//	}
+//>>>>>>> Stashed changes
 
 	public void displayLogin() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -37,7 +42,7 @@ public class DisplayLogin {
 	public JPanel createContentPanel(JFrame frame) {
 		JPanel totalGUI = new JPanel();
 		totalGUI.setLayout(null);
-		
+
 		JLabel lblUserAccount = new JLabel("Username");
 		lblUserAccount.setFont(new Font("굴림", Font.BOLD, 20));
 		lblUserAccount.setBounds(100, 100, 125, 35);
@@ -48,6 +53,10 @@ public class DisplayLogin {
 		lblPassword.setBounds(100, 150, 125, 35);
 		totalGUI.add(lblPassword);
 		
+		// textField = new JTextField();
+		// textField.setBounds(225, 100, 225, 35);
+		// totalGUI.add(textField);
+		// textField.setColumns(10);
 		userNameField = new JTextField();
 		userNameField.setBounds(225, 100, 225, 35);
 		totalGUI.add(userNameField);
@@ -69,9 +78,9 @@ public class DisplayLogin {
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(validateInput(totalGUI, userNameField, passwordField)) {
-						frame.dispose();
-					}
+//					if(validateInput(totalGUI, userNameField, passwordField)) {
+//						frame.dispose();
+//					}
 				}
 			}
 		});
@@ -79,6 +88,12 @@ public class DisplayLogin {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(225, 150, 225, 35);
 		totalGUI.add(passwordField);
+		
+		// JButton btnNewButton = new JButton("Login");
+		// btnNewButton.addActionListener(this);
+		// btnNewButton.setFont(new Font("굴림", Font.BOLD, 25));
+		// btnNewButton.setBounds(225, 244, 150, 50);
+		// totalGUI.add(btnNewButton);
 		passwordField.setColumns(20);
 		passwordField.addKeyListener(new KeyListener() {
 			@Override
@@ -97,9 +112,9 @@ public class DisplayLogin {
 			public void keyReleased(KeyEvent e) {
 				// TODO Auto-generated method stub
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(validateInput(totalGUI, userNameField, passwordField)) {
-						frame.dispose();
-					}
+//					if(validateInput(totalGUI, userNameField, passwordField)) {
+//						frame.dispose();
+//					}
 				}
 			}
 		});
@@ -110,6 +125,38 @@ public class DisplayLogin {
 		lblTitle.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		lblTitle.setBounds(75, 30, 450, 50);
 		totalGUI.add(lblTitle);
+		
+		
+	
+	
+// 	 public void actionPerformed(ActionEvent e) {
+	    	
+//     	String username = textField.getText();
+//     	char[] pass = passwordField.getPassword();
+// //    	System.out.println("TEST");
+// //    	int usernameInt = Integer.parseInt(username);
+// //    	int passwordInt = Integer.parseInt(pass);
+    	
+//     	//==_authUser.checkUserValid(username, pass);
+//     	AuthenticateUser.checkUserValid(username, pass);
+    	
+    	
+// 	}
+//<<<<<<< Updated upstream
+
+//=======
+	
+	
+//>>>>>>> Stashed changes
+		
+		
+//		JButton btnNewButton = new JButton("Login");
+//		btnNewButton.addActionListener(this);
+//		btnNewButton.setFont(new Font("굴림", Font.BOLD, 25));
+//		btnNewButton.setBounds(225, 244, 150, 50);
+//		totalGUI.add(btnNewButton);
+
+		
 		
 		this.loginButton(totalGUI, frame);
 		
@@ -128,7 +175,10 @@ public class DisplayLogin {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(validateInput(totalGUI, userNameField, passwordField)) {
-					frame.dispose();
+					Boolean inputIsFound = AuthenticateUser.checkUserValid(username, password);
+					if (inputIsFound==true) {
+						frame.dispose();
+					}
 				}
 			}
 		});
@@ -138,7 +188,7 @@ public class DisplayLogin {
 	private boolean validateInput(JPanel totalGUI, JTextField inputUsername, JPasswordField inputPassword) {
 		try {
 			username = Integer.getInteger(inputUsername.getText(), 0);
-			password = Integer.getInteger(new String(inputPassword.getPassword()));
+			password = Integer.parseInt(new String(inputPassword.getPassword()));
 			return true;
 		}
 		catch(Exception e) {
@@ -170,9 +220,34 @@ public class DisplayLogin {
 		return password;
 	}
 	
-	public static void main(String[] args) {
+
+// 	 public void actionPerformed(ActionEvent e) {
+//	    
+//     	String username = userNameField.getText();
+//     	char[] pass = passwordField.getPassword();
+//     	System.out.println("TEST");
+//     	
+//     	if (username!= "1111") {
+//     		System.out.println("Incorrect User or Pass");
+//     	}
+//     	else {
+//     		//HOW TO CLOSE FRAME HERE??
+////     		dispose();
+//     	}
+// //    	int usernameInt = Integer.parseInt(username);
+// //    	int passwordInt = Integer.parseInt(pass);
+//    	
+//     	//==_authUser.checkUserValid(username, pass);
+// 		
+////     	AuthenticateUser.checkUserValid(username, pass);
+//    	
+//    	
+// 	}
+
+//	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		DisplayLogin login = new DisplayLogin();
-		login.displayLogin();
-	}
+//		DisplayLogin login = new DisplayLogin();
+//		login.displayLogin();
+//	}
 }
+

@@ -7,8 +7,14 @@
 3. 2023/02/02 14:30~16:00 contributor: all
 *in-person discussion regarding the basic contents of UML diagram and how to divide the tasks to each member.
 
-4. 2023/02/03 22:25 contributor: Geon Kim
+4. 2023/02/02 14:30~16:00 contributor: Geon Kim, Aiza Bajwa, Sanjida Afreen
+*short virtual discussion regarding GUI and how to simplify user interface
+
+5. 2023/02/03 22:25 contributor: Geon Kim
 *basic implementation of GUI uploaded.
 
 5. 2023/02/04 17:00 ~ 19:00 contributor: all
-*editing UML diagram, discussion about detailed implementation of some classes
+*virtual discussion regarding editing UML diagram, discussion about detailed implementation of some classes, assigned detailed stories to each member
+
+6. 2023/02/04 20:30-23:00 contributor: Aiza Bajwa, Minh Tran
+*virtually worked together on connecting front end to middle tier (main java starting application); also created basic implementation of AuthenticateUser class and connected it to front end
