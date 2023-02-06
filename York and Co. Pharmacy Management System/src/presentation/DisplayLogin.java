@@ -138,7 +138,7 @@ public class DisplayLogin {
 	private boolean validateInput(JPanel totalGUI, JTextField inputUsername, JPasswordField inputPassword) {
 		try {
 			username = Integer.getInteger(inputUsername.getText(), 0);
-			password = Integer.parseInt(new String(inputPassword.getPassword()));
+			password = Integer.getInteger(new String(inputPassword.getPassword()));
 			return true;
 		}
 		catch(Exception e) {
