@@ -245,6 +245,6 @@ public class DisplayInitialScreen {
 		// TODO Auto-generated method stub
 		//displayInitialScreen(USER.PATIENT); 
 		DisplayInitialScreen screen = new DisplayInitialScreen();
-		screen.displayInitialScreen(USER.OWNER);
+		screen.displayInitialScreen(USER.PATIENT);
 	}
 }
