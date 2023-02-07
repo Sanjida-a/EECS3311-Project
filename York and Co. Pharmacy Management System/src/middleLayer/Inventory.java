@@ -12,7 +12,7 @@ class Inventory{
 
     public void display(){
         for (int i = 0; i < list.size(); i ++){
-            System.out.print(""+list.get(i).name+", ");
+             System.out.print(""+list.get(i).name+", ");
             System.out.print(""+list.get(i).quantity+", ");
             System.out.print(""+list.get(i).price+", ");
             System.out.print(""+list.get(i).type+", ");
@@ -37,7 +37,12 @@ class Inventory{
             if (list.get(i).name == name){
                 list.get(i).quantity -= quantity;
             }
-            //add notification here
+            //notifies low stock
+            if(list.get(i).name==name){
+                if(list.get(i).quantity < 3){
+                    System.out.print(list.get(i).name+" low in stock : only " +list.get(i).quantity+ " left." );
+                }
+            }
         }
     }
     public void delete(String name){
@@ -50,4 +55,6 @@ class Inventory{
     public void addToInventory(Merchandise m){
         list.add(m);
     }
+
 }
+    
