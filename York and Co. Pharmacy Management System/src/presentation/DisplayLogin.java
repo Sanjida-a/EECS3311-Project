@@ -179,6 +179,10 @@ public class DisplayLogin {
 					if (inputIsFound==true) {
 						frame.dispose();
 					}
+					else {
+						System.out.println("INCORRECT MATCH");
+						// have to add label "username or password is not found in system/ or is invalid here"
+					}
 				}
 			}
 		});
@@ -187,7 +191,7 @@ public class DisplayLogin {
 	
 	private boolean validateInput(JPanel totalGUI, JTextField inputUsername, JPasswordField inputPassword) {
 		try {
-			username = Integer.getInteger(inputUsername.getText(), 0);
+			username = Integer.parseInt(inputUsername.getText());
 			password = Integer.parseInt(new String(inputPassword.getPassword()));
 			return true;
 		}
