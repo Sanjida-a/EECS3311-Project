@@ -1,5 +1,14 @@
+import java.util.ArrayList;
 class Inventory{
+    private static Inventory singletonInstance;
+
     ArrayList<Merchandise> list = new ArrayList<Merchandise>();
+
+    public static Inventory getInstance(){
+        if (singletonInstance == null)
+            singletonInstance = new Inventory();
+        return singletonInstance;
+    }
 
     public void display(){
         for (int i = 0; i < list.size(); i ++){
@@ -37,5 +46,8 @@ class Inventory{
                 list.remove(i);
             }
         }
+    }
+    public void addToInventory(Merchandise m){
+        list.add(m);
     }
 }
