@@ -14,6 +14,8 @@ public class pharmacyAppMain {
 //		DisplayLogin logIn = new DisplayLogin(authUser);
 		DisplayLogin logIn = new DisplayLogin();
 		logIn.displayLogin();
+
+		//test from Minh
 	}
 	
 

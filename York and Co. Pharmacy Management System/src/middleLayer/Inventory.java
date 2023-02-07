@@ -1,4 +1,7 @@
+package middleLayer;
 import java.util.ArrayList;
+
+
 class Inventory{
     private static Inventory singletonInstance;
 

@@ -1,3 +1,5 @@
+package middleLayer;
+
 class Merchandise{
     String name;
     int quantity;
