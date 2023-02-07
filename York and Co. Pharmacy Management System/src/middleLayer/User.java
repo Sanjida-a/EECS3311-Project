@@ -1,16 +1,24 @@
 package middleLayer;
 
-public class User {
+public abstract class User {
 
-	private String username;
-	private String password;
+	public int username;
+	public int password;
 	
-	public void setUsername(String username) {
+	public void setUsername(int username) {
 		this.username = username;
 	}
 	
-	public void setPassword(String password) {
+	public void setPassword(int password) {
 		this.password = password;
 	}
-
+	
+	public int getUsername() {
+		return this.username;
+	}
+	
+	public int getPassword() {
+		return this.password;
+	}
+	
 }
