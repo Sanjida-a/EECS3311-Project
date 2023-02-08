@@ -1,20 +1,20 @@
 package middleLayer;
 
-class Merchandise{
+public class Merchandise{
     String name;
     int quantity;
     double price;
-    String type;
-    String form;
+    MERCHANDISE_TYPE type;
+    MERCHANDISE_FORM form;
     boolean isOTC;
 
     //constructor
-    public Merchandise(String n, int q, double p, String t, String f, boolean OTC){
-        this.name = n;
-        this.quantity = q;
-        this.price = p;
-        this.type = t;
-        this.form = f;
+    public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.type = type;
+        this.form = form;
         this.isOTC = OTC;
     }
 
@@ -28,11 +28,11 @@ class Merchandise{
         this.name = name;
     }
     
-    public String getQuantity(){
+    public int getQuantity(){
         return quantity;
     }
 
-    public void setQuantity(String quantity){
+    public void setQuantity(int quantity){
         this.quantity = quantity;
     }
 
@@ -44,19 +44,19 @@ class Merchandise{
         this.price = price;
     }
 
-    public String getType(){
+    public MERCHANDISE_TYPE getType(){
         return type;
     }
 
-    public void setType(String type){
+    public void setType(MERCHANDISE_TYPE type){
         this.type = type;
     }
 
-    public String getForm(){
+    public MERCHANDISE_FORM getForm(){
         return form;
     }
 
-    public void setForm(String form){
+    public void setForm(MERCHANDISE_FORM form){
         this.form = form;
     }
 
@@ -67,6 +67,7 @@ class Merchandise{
     public void setForm(boolean isOTC){
         this.isOTC = isOTC;
     }
+    
 
     public String toString(){
         return "Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + "\n";

@@ -11,6 +11,8 @@ public class Patient extends User {
 	private int healthCardNum;
 	private int dateOfBirth;
 	//private ArrayList<Order> ordersMade; Order class not made yet
+	private Inventory merList = Inventory.getInstance(); 
+	
 	
 	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
 		this.firstName = firstName;
@@ -78,6 +80,40 @@ public class Patient extends User {
 //	public void setDateOfBirth(int dateOfBirth) {
 //		this.dateOfBirth = dateOfBirth;
 //	}
+	
+
+	public ArrayList<Merchandise> searchOTCMedicineByName (String name) {
+		ArrayList<Merchandise> searchMedName = new ArrayList <Merchandise> ();
+		for (Merchandise i : merList.getMerchandise()) {
+			if (i.getisOTC() == true && i.getName().compareTo(name) == 0) {
+				searchMedName.add(i);
+			}
+		}
+		return searchMedName;
+	}
+	
+	public ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type) {
+		ArrayList<Merchandise> searchMedType = new ArrayList <Merchandise> ();
+		for (Merchandise i : merList.getMerchandise()) {
+			if (i.getisOTC() == true && i.getType() == type) {
+				searchMedType.add(i);
+			}
+		}
+		return searchMedType;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Inventory merList = Inventory.getInstance();
+		for (Merchandise i : merList.getMerchandise())
+			System.out.println(i);
+		Patient abc = new Patient("abc", "xyz" , "address" , 123456, 111111, 12121212);
+		ArrayList<Merchandise> list = abc.searchOTCMedicineByName("Tylenol");
+		System.out.println(list);
+		ArrayList<Merchandise> listType = abc.searchOTCMedicineByType(MERCHANDISE_TYPE.FEVER);
+		System.out.println(listType);
+
+	}
 	
 	
 }
