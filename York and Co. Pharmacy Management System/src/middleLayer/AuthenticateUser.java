@@ -3,6 +3,8 @@ package middleLayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import presentation.USER;
+
 public class AuthenticateUser { // singleton???
 	
 //	int num;
@@ -15,11 +17,11 @@ public class AuthenticateUser { // singleton???
 //	private static ArrayList<int[]> allUsernamesAndPasswordsList = new ArrayList<int[]>();
 	private static ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	
-	public static boolean checkUserValid(int username, int password) {
+	public static USER checkUserValid(int username, int password) {
 		
 //		int usernameInt = Integer.parseInt(username);
-		System.out.println("Username: " + username);
-		System.out.println("Pass: " + password);
+		//System.out.println("Username: " + username);
+		//System.out.println("Pass: " + password);
 //		String pass = Arrays.toString(password);
 //		int p = Integer.parseInt(new String(pass));
 //		System.out.println("pass " + pass);
@@ -52,23 +54,24 @@ public class AuthenticateUser { // singleton???
 		//--BELOW IS WITH PROPER OBJECTS--//
 		User ownerUser = new Owner(1111111111, 11111111);
 		User pharmacistUser = new Pharmacist(1234567890, 12345678);
+		User patientUser = new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11112233);
+		USER userType;
 		allUsernamesAndPasswordsList.add(ownerUser);
 		allUsernamesAndPasswordsList.add(pharmacistUser);
+		allUsernamesAndPasswordsList.add(patientUser);
 		
-		Boolean foundUsername = false;
+		//Boolean foundUsername = false;
+		
 		for (int i = 0; i < allUsernamesAndPasswordsList.size(); i++) {
 			if ((allUsernamesAndPasswordsList.get(i).getUsername() == username) && (allUsernamesAndPasswordsList.get(i).getPassword() == password)) {
-				foundUsername = true;
+				//foundUsername = true;
+				System.out.println("class type: " + allUsernamesAndPasswordsList.get(i).getClass().getSimpleName());
+				userType = USER.getValue(allUsernamesAndPasswordsList.get(i).getClass().getSimpleName());
+				return userType;
 			}
 		}
 		
-		if (foundUsername == false) {
-//			System.out.println("IN FALSE");
-			return false;
-		}
-      
-//		System.out.println("IN TRUE");
-        return true;
+		return USER.PATIENT;
   
         
 	}

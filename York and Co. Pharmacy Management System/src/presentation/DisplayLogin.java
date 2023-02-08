@@ -61,29 +61,7 @@ public class DisplayLogin {
 		userNameField.setBounds(225, 100, 225, 35);
 		totalGUI.add(userNameField);
 		userNameField.setColumns(20);
-		userNameField.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-//					if(validateInput(totalGUI, userNameField, passwordField)) {
-//						frame.dispose();
-//					}
-				}
-			}
-		});
+		
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(225, 150, 225, 35);
@@ -95,29 +73,7 @@ public class DisplayLogin {
 		// btnNewButton.setBounds(225, 244, 150, 50);
 		// totalGUI.add(btnNewButton);
 		passwordField.setColumns(20);
-		passwordField.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-//					if(validateInput(totalGUI, userNameField, passwordField)) {
-//						frame.dispose();
-//					}
-				}
-			}
-		});
+		
 		
 
 		
@@ -175,13 +131,21 @@ public class DisplayLogin {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(validateInput(totalGUI, userNameField, passwordField)) {
-					Boolean inputIsFound = AuthenticateUser.checkUserValid(username, password);
-					if (inputIsFound==true) {
+					USER userType = AuthenticateUser.checkUserValid(username, password);
+					if (userType==USER.OWNER || userType == USER.PHARMACIST) {
 						frame.dispose();
+						DisplayInitialScreen list = new DisplayInitialScreen();
+						list.displayInitialScreen(userType);
+					}
+					else if(userType == USER.PATIENT) {
+						frame.dispose();
+						DisplayInitialScreen list = new DisplayInitialScreen();
+						list.displayInitialScreen(userType);
 					}
 					else {
-						System.out.println("INCORRECT MATCH");
+						//System.out.println("INCORRECT MATCH");
 						// have to add label "username or password is not found in system/ or is invalid here"
+						DisplayLogin.autheticationFailed(totalGUI);
 					}
 				}
 			}
@@ -197,21 +161,25 @@ public class DisplayLogin {
 		}
 		catch(Exception e) {
 		
-			JPanel panelInvalidInput = new JPanel();
-			panelInvalidInput.setBounds(100, 195, 350, 35);
-			totalGUI.add(panelInvalidInput);
-			panelInvalidInput.setLayout(null);
-		
-			JLabel lblInvalidInput = new JLabel("username or password is invalid");
-			lblInvalidInput.setBounds(0, 0, 350, 35);
-			panelInvalidInput.add(lblInvalidInput);
-		
-			lblInvalidInput.setHorizontalAlignment(SwingConstants.CENTER);
-			lblInvalidInput.setForeground(new Color(255, 0, 0));
-			lblInvalidInput.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
-			totalGUI.add(panelInvalidInput);
+			DisplayLogin.autheticationFailed(totalGUI);
 			return false;
 		}
+	}
+	
+	private static void autheticationFailed(JPanel totalGUI) {
+		JPanel panelInvalidInput = new JPanel();
+		panelInvalidInput.setBounds(100, 195, 350, 35);
+		totalGUI.add(panelInvalidInput);
+		panelInvalidInput.setLayout(null);
+		
+		JLabel lblInvalidInput = new JLabel("username or password is invalid");
+		lblInvalidInput.setBounds(0, 0, 350, 35);
+		panelInvalidInput.add(lblInvalidInput);
+		
+		lblInvalidInput.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInvalidInput.setForeground(new Color(255, 0, 0));
+		lblInvalidInput.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
+		totalGUI.add(panelInvalidInput);
 	}
 	
 	
