@@ -19,6 +19,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.JList;
 import javax.swing.JFormattedTextField;
 
+//Minh's notes: TODO Parse input search from box ~~~ type/TyPe/.. -> Capitalized -> ENUM
+
 public class DisplayInitialScreen {
 	private static JTextField inputFieldName;
 	private static JTextField inputFieldHCN;
@@ -246,5 +248,7 @@ public class DisplayInitialScreen {
 		//displayInitialScreen(USER.PATIENT); 
 		DisplayInitialScreen screen = new DisplayInitialScreen();
 		screen.displayInitialScreen(USER.PATIENT);
+//		screen.displayInitialScreen(USER.OWNER);
+//		screen.displayInitialScreen(USER.PHARMACIST);
 	}
 }

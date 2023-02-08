@@ -175,9 +175,11 @@ public class DisplayLogin {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(validateInput(totalGUI, userNameField, passwordField)) {
-					Boolean inputIsFound = AuthenticateUser.checkUserValid(username, password);
+					//Minh changed AuthenticateUser to singleton class					
+					Boolean inputIsFound = AuthenticateUser.getInstance().checkUserValid(username, password);
 					if (inputIsFound==true) {
 						frame.dispose();
+						
 					}
 					else {
 						System.out.println("INCORRECT MATCH");

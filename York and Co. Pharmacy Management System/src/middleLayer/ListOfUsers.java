@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class ListOfUsers {
 	
 	private static ListOfUsers ListOfUsersInstance;
-	private Owner ownerUser;
-	private Pharmacist pharmacistUser;
+//	private Owner ownerUser;
+//	private Pharmacist pharmacistUser;
 	private ArrayList<Patient> allPatientUsersList = new ArrayList<Patient>(); //should i initialize in getInstance() or is it fine here?
 	
 	private ListOfUsers() {
@@ -22,22 +22,24 @@ public class ListOfUsers {
 	public void addPatientToList(Patient newPatient) {
 		ListOfUsersInstance.allPatientUsersList.add(newPatient);
 	}
+	
+	//Minh moved to Owner and Pharmacist class to comply with principle
 
-	public Owner getOwnerUser() {
-		return ownerUser;
-	}
+//	public Owner getOwnerUser() {
+//		return ownerUser;
+//	}
+//
+//	public void setOwnerUser(Owner ownerUser) {
+//		this.ownerUser = ownerUser;
+//	}
 
-	public void setOwnerUser(Owner ownerUser) {
-		this.ownerUser = ownerUser;
-	}
-
-	public Pharmacist getPharmacistUser() {
-		return pharmacistUser;
-	}
-
-	public void setPharmacistUser(Pharmacist pharmacistUser) {
-		this.pharmacistUser = pharmacistUser;
-	}
+//	public Pharmacist getPharmacistUser() {
+//		return pharmacistUser;
+//	}
+//
+//	public void setPharmacistUser(Pharmacist pharmacistUser) {
+//		this.pharmacistUser = pharmacistUser;
+//	}
 
 	public ArrayList<Patient> getAllPatientUsersList() {
 		return allPatientUsersList;

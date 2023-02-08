@@ -1,10 +1,26 @@
 package middleLayer;
 
 import java.util.ArrayList;
+
+import databaseDAO.MerchandiseDAO;
+import databaseDAO.UserDAO;
 class Inventory{
-    private static Inventory singletonInstance;
+    private static Inventory singletonInstance = null;
 
     ArrayList<Merchandise> list = new ArrayList<Merchandise>();
+ 
+    //Minh changed here
+	private MerchandiseDAO _merDAO;
+	
+	public Inventory() {
+		try {
+			_merDAO = new MerchandiseDAO();
+			list = _merDAO.getListOfMerchandise();
+		} catch (ClassNotFoundException e) {
+	
+			e.printStackTrace();
+		}
+	}
 
     public static Inventory getInstance(){
         if (singletonInstance == null)
@@ -57,6 +73,15 @@ class Inventory{
     public void addToInventory(Merchandise m){
         list.add(m);
     }
+    public ArrayList<Merchandise> getMerchandise(){
+    	return list;
+    }
+    public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Inventory merList = Inventory.getInstance();
+		for (Merchandise i : merList.getMerchandise())
+			System.out.println(i);
+	}
 
 }
     
