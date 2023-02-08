@@ -179,6 +179,10 @@ public class DisplayLogin {
 					if (inputIsFound==true) {
 						frame.dispose();
 					}
+					else {
+						System.out.println("INCORRECT MATCH");
+						// have to add label "username or password is not found in system/ or is invalid here"
+					}
 				}
 			}
 		});
