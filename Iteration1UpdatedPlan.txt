@@ -1,0 +1,58 @@
+Iteration 1 - Updated Plan
+
+CHANGES IN PLAN
+No changes to the previous plan for Iteration 1 as we were able to implement all of our detailed stories as planned in Iteration 0. The only difference is that since we weren’t expected to implement all aspects of the GUI in this iteration, we left those out and will implement and connect the GUI parts to the methods in later iterations.
+
+BIG USER STORIES
+Please see the Planning Document to see big user stories for iteration 2, as we intend on following that same plan.
+
+MAIN DEVELOPMENT TASKS ASSIGNED IN ITERATION 1
+-	GUI – displayLogin.java
+o	Created a login interface and system so users can login to the pharmacy. This is connected to the logic class AuthenticateUser.java.
+	AuthenticateUser.java checks to see if the login is valid
+o	Started brief implementation of some other aspects of GUI that were not needed in this iteration. Such as DisplayInitialScreen.java, which should be the screen shown after login is successful
+-	MerchandiseDAO.java and UserDAO.java
+o	Act like database stubs to hold some persistent data that we can get instances of.
+-	Merchandise.java + Inventory.java Classes
+o	Created classes and methods accordingly to create the medication inventory which contains important information about each medication.
+o	Also added appropriate methods to allow adding new medication, removing medications, modifying existing quantities of medication, and displaying the inventory.
+o	Also added a notifying mechanism which prompts when a medication’s quantity is lower than 3 after decreasing its quantity
+-	User.java, Owner.java, Pharmacist.java, Patient.java
+o	Created classes with special relationship with User.java
+o	Added methods to allow each user to be able to complete specific tasks such as:
+	Searching inventory for owner and pharmacist
+	Adding patient to the system for pharmacist
+
+PLANNED TIME AND ACTUAL TIME TAKEN
+-	Please note by days, we mean story points – roughly 3 hours, not full days
+-	For the following detailed stories of Iteration 1, here are the planned times and actual time taken:
+o	Add new medication
+	Planned: 2 days
+	Actual: 2 days
+o	Increase Quantities of Existing Medication
+	Planned: 2 days
+	Actual: 2 days
+o	Display Medication Inventory
+	Planned: 2 days
+	Actual: 2 days
+o	Notify when Medication is Low in Stock
+	Planned: 2 days
+	Actual: 1 days
+o	Decrease Quantities of Existing Medication
+	Planned: 1 days
+	Actual: 2 days
+o	Remove existing medication type
+	Planned: 1 days
+	Actual: 2 days
+o	Search medication by name
+	Planned: 2 days
+	Actual: 2 days
+o	Search medication by characteristic
+	Planned: 2 days
+	Actual: 2 days
+o	User Login (= GUI)
+	Planned: 3 days
+	Actual: 5 days
+o	Add patient/customer
+	Planned: 2 days
+	Actual: 2 days
