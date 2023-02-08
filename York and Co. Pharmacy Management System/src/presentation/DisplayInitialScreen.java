@@ -15,6 +15,7 @@ import java.awt.Color;
 import javax.swing.JToolBar;
 import javax.swing.JProgressBar;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.border.LineBorder;
 import javax.swing.JList;
 import javax.swing.JFormattedTextField;
@@ -151,6 +152,9 @@ public class DisplayInitialScreen {
         rdbtnOTC.setBounds(831, 39, 113, 23);
         panelVisibleToAdmin.add(rdbtnOTC);
         
+        ButtonGroup group = new ButtonGroup();
+        group.add(rdbtnOTC);
+        group.add(rdbtnRx);
         //isOTC = rdbtnOTC.isEnabled();
         
         JButton btnAdd = new JButton("Add");
