@@ -19,7 +19,13 @@
 6. 2023/02/04 20:30-23:00 contributor: Aiza Bajwa, Minh Tran
 *virtually worked together on connecting front end to middle tier (main java starting application); also created basic implementation of AuthenticateUser class and connected it to front end
 
-7. 2023/02/07 10:30 - 1:30, 6:00 - 7:45 contributor: Minh Tran
+7. 2023/02/06 20:00 contributor: Sanjida Afreen
+*made changes to the inventory.java - added low stock notification. added setters and getters in merchandise.java
+
+8. 2023/02/07 10:30 - 1:30, 6:00 - 7:45 contributor: Minh Tran
 *created dataDAO package
 *search merchandise methods for patients, owner, pharmacist
 *change/ update Inventory/ Owner/Pharmacist classes
+
+9. 2023/02/07 15:30 - 20:30 contributor: Sanjida Afreen
+*added Wiki to github, link to UML Class diagram
