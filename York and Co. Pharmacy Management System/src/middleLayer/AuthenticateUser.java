@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import databaseDAO.UserDAO;
+import presentation.USER;
 
 public class AuthenticateUser { // singleton???
 	
@@ -37,23 +38,18 @@ public class AuthenticateUser { // singleton???
 		return instance;
 	}
 	
-	public boolean checkUserValid(int username, int password) {
+	public USER checkUserValid(int username, int password) {
 		
 		ArrayList<User> _users = _userDAO.getListOfUsers();
-		Boolean foundUsername = false;
+		//Boolean foundUsername = false;
 		for (int i = 0; i < _users.size(); i++) {
 			if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
-				foundUsername = true;
+				//foundUsername = true;
+				return USER.getValue(_users.get(i).getClass().getSimpleName());
 			}
 		}
 		
-		if (foundUsername == false) {
-			System.out.println("IN FALSE");
-			return false;
-		}
-				
-		System.out.println("IN TRUE");
-        return true;
+		return null;
 		 
 		// authenticate TODO
 		// password hashing
