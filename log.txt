@@ -38,3 +38,6 @@
 
 10. 2023/02/07 15:30 - 20:30 contributor: Sanjida Afreen
 *added Wiki to github, link to UML Class diagram
+
+10. 2023/02/08 16:40 contributor: Geon Kim
+* transition from Login Screen to InitialScreen implemented with minor bug fix
