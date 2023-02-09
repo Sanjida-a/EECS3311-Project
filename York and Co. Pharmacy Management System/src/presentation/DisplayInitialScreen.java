@@ -181,25 +181,31 @@ public class DisplayInitialScreen {
         btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String _inputFieldName = inputFieldName.getText();
-				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-				double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
-				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-				Boolean _isOTC = false;
-				if(rdbtnOTC.isSelected()) {
-					_isOTC = true;
+				try {
+				
+					String _inputFieldName = inputFieldName.getText();
+					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					Boolean _isOTC = false;
+					if(rdbtnOTC.isSelected()) {
+						_isOTC = true;
+					}
+				
+					Inventory inv1 = Inventory.getInstance();
+				
+					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
+					inv1.addToInventory(newMerchandise);
+				
+					String temp = "Add successful. See updated inventory below: \n";
+					temp += inv1.display();
+				
+					textboxOutput.setText(temp);
 				}
-				
-				Inventory inv1 = Inventory.getInstance();
-				
-				Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-				inv1.addToInventory(newMerchandise);
-				
-				String temp = "Add successful. See updated inventory below: \n";
-				temp += inv1.display();
-				
-				textboxOutput.setText(temp);
+				catch(Exception exception) {
+					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
+				}
 			
 			}
 		});
@@ -293,15 +299,22 @@ public class DisplayInitialScreen {
 				
 				Inventory inv1 = Inventory.getInstance();
 				
-				Boolean medicationDecreased = false;
-				medicationDecreased = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+				boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false};
+				medicationDecreasedANDEnoughQuantityToDecrease = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 				
 				String temp = "";
-				if (medicationDecreased == false) {
+				if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+					temp += "Decrease successful. See updated inventory below: \n";
+				}
+				//case not possible
+//				else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == false) {
+//					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+//				}
+				else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
 					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
 				}
 				else {
-					temp += "Decrease successful. See updated inventory below: \n";
+					temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n";
 				}
 
 				temp += inv1.display();
