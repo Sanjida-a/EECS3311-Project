@@ -102,7 +102,7 @@ public class Patient extends User {
 		return searchMedType;
 	}
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Inventory merList = Inventory.getInstance();
 		for (Merchandise i : merList.getMerchandise())
@@ -113,7 +113,7 @@ public class Patient extends User {
 		ArrayList<Merchandise> listType = abc.searchOTCMedicineByType(MERCHANDISE_TYPE.FEVER);
 		System.out.println(listType);
 
-	}
+	}*/
 	
 	
 }

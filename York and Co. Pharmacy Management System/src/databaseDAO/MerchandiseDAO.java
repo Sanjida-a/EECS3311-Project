@@ -19,6 +19,7 @@ public class MerchandiseDAO {
 			Merchandise mer4 = new Merchandise( "Tylenol",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
 			Merchandise mer5 = new Merchandise( "Pill1",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, false);
 			Merchandise mer6 = new Merchandise( "Pill2",  10,  5.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, false);
+
 			allInventory.add(mer1);
 			allInventory.add(mer2);
 			allInventory.add(mer3);

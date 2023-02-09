@@ -25,21 +25,7 @@ public class ListOfUsers {
 	
 	//Minh moved to Owner and Pharmacist class to comply with principle
 
-//	public Owner getOwnerUser() {
-//		return ownerUser;
-//	}
-//
-//	public void setOwnerUser(Owner ownerUser) {
-//		this.ownerUser = ownerUser;
-//	}
 
-//	public Pharmacist getPharmacistUser() {
-//		return pharmacistUser;
-//	}
-//
-//	public void setPharmacistUser(Pharmacist pharmacistUser) {
-//		this.pharmacistUser = pharmacistUser;
-//	}
 
 	public ArrayList<Patient> getAllPatientUsersList() {
 		return allPatientUsersList;
@@ -49,19 +35,6 @@ public class ListOfUsers {
 		this.allPatientUsersList = allPatientUsersList;
 	}
 	
-//	import java.util.ArrayList;
-//	class Inventory{
-//	    private static Inventory singletonInstance;
-//
-//	    ArrayList<Merchandise> list = new ArrayList<Merchandise>();
-//
-//	    public static Inventory getInstance(){
-//	        if (singletonInstance == null)
-//	            singletonInstance = new Inventory();
-//	        return singletonInstance;
-//	    }
-//
-//	    public void display(){
-//	 
+
 		
 }

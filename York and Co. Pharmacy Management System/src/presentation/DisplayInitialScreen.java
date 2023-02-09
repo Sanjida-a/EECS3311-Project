@@ -31,6 +31,8 @@ import middleLayer.MERCHANDISE_TYPE;
 
 import javax.swing.JList;
 import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 //Minh's notes: TODO Parse input search from box ~~~ type/TyPe/.. -> Capitalized -> ENUM
 
@@ -73,10 +75,10 @@ public class DisplayInitialScreen {
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
 		
-		if(user == USER.OWNER || user == USER.PHARMACIST) {
-			this.createPanelVisibleToAdmin(totalGUI);
-		}
-		//this.createPanelVisibleToAdmin(totalGUI);
+		//if(user == USER.OWNER || user == USER.PHARMACIST) {
+		//	this.createPanelVisibleToAdmin(totalGUI);
+		//}
+		this.createPanelVisibleToAdmin(totalGUI);
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
         		
@@ -369,10 +371,18 @@ public class DisplayInitialScreen {
         panelVisibleToAll.setLayout(null);
         
         inputKeyword = new JTextField();
-        inputKeyword.setBounds(0, 0, 807, 35);
+        inputKeyword.setBounds(0, 0, 650, 35);
         panelVisibleToAll.add(inputKeyword);
         inputKeyword.setColumns(40);
         //searchKeyword = inputKeyword.getText();
+        JComboBox comboBox = new JComboBox();
+        comboBox.setBorder(new LineBorder(new Color(0, 0, 0)));
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Name", "Type"}));
+        comboBox.setSelectedIndex(0);
+        comboBox.setFont(new Font("굴림", Font.BOLD, 18));
+        comboBox.setBackground(new Color(255, 255, 255));
+        comboBox.setBounds(650, 0, 145, 35);
+        panelVisibleToAll.add(comboBox);
         
         JButton btnSearch = new JButton("Search");
         btnSearch.setFont(new Font("굴림", Font.BOLD, 20));
@@ -383,9 +393,19 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String _inputKeyword = inputKeyword.getText();
+				String searchBy = (String)comboBox.getSelectedItem();
 				if(user == USER.OWNER || user == USER.PHARMACIST) {
 					Owner owner1 = new Owner(1,1);
-					ArrayList<Merchandise> methodResult = owner1.searchOTCMedicineByName(_inputKeyword);
+					ArrayList<Merchandise> methodResult = null;
+					if(searchBy.compareTo("Name") == 0) {
+						methodResult = owner1.searchOTCMedicineByName(_inputKeyword);
+					}
+					else if(searchBy.compareTo("Type") == 0) {
+						methodResult = owner1.searchOTCMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword));
+					}
+					else {
+						
+					}
 					
 					String temp = "";
 					for (Merchandise i: methodResult) {
@@ -395,7 +415,17 @@ public class DisplayInitialScreen {
 				}
 				else {
 					Patient patient1 = new Patient(1,1);
-					ArrayList<Merchandise> methodResult = patient1.searchOTCMedicineByName(_inputKeyword);
+					ArrayList<Merchandise> methodResult = null;
+					
+					if(searchBy.compareTo("Name") == 0) {
+						methodResult = patient1.searchOTCMedicineByName(_inputKeyword);
+					}
+					else if(searchBy.compareTo("Type") == 0) {
+						methodResult = patient1.searchOTCMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword));
+					}
+					else {
+						
+					}
 					
 					String temp = "";
 					for (Merchandise i: methodResult) {
@@ -422,6 +452,8 @@ public class DisplayInitialScreen {
 		
         //totalGUI.add(panelVisibleToAdmin);
         totalGUI.add(panelVisibleToAll);
+        
+
 	}
 	
 	public String getName() {
@@ -451,12 +483,12 @@ public class DisplayInitialScreen {
 	
 	
 	
-/*public static void main(String[] args) {
+public static void main(String[] args) {
 	// TODO Auto-generated method stub
 		//displayInitialScreen(USER.PATIENT); 
 	DisplayInitialScreen screen = new DisplayInitialScreen();
 		//screen.displayInitialScreen(USER.PATIENT);
 		screen.displayInitialScreen(USER.OWNER);
 		//screen.displayInitialScreen(USER.PHARMACIST);
-	}*/
+	}
 }
