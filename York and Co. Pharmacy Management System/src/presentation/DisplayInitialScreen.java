@@ -198,7 +198,7 @@ public class DisplayInitialScreen {
 					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
 					inv1.addToInventory(newMerchandise);
 				
-					String temp = "Add successful. See updated inventory below: \n";
+					String temp = "Add successful. See updated inventory below: \n\n";
 					temp += inv1.display();
 				
 					textboxOutput.setText(temp);
@@ -232,10 +232,10 @@ public class DisplayInitialScreen {
 				
 				String temp = "";
 				if (medicationRemoved == false) {
-					temp += "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+					temp += "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
 				}
 				else {
-					temp += "Remove successful. See updated inventory below: \n";
+					temp += "Remove successful. See updated inventory below: \n\n";
 				}
 
 				temp += inv1.display();
@@ -268,7 +268,7 @@ public class DisplayInitialScreen {
 				
 				String temp = "";
 				if (medicationIncreased == false) {
-					temp += "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+					temp += "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
 				}
 				else {
 					temp += "Increase successful. See updated inventory below: \n";
@@ -304,17 +304,17 @@ public class DisplayInitialScreen {
 				
 				String temp = "";
 				if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-					temp += "Decrease successful. See updated inventory below: \n";
+					temp += "Decrease successful. See inventory below: \n\n";
 				}
 				//case not possible
 //				else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == false) {
 //					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
 //				}
 				else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory below: \n\n";
 				}
 				else {
-					temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n";
+					temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n\n";
 				}
 
 				temp += inv1.display();
