@@ -22,7 +22,7 @@
 7. 2023/02/04 21:00-23:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
 *virtually worked together to fix and finish connecting front end to middle tier since experienced GitHub problems with conflicts as still learning how to use all operations properly
 
-8. 2023/02/05 contributor: Alvin Ta
+8. 2023/02/05 20:00-23:00 contributor: Alvin Ta
 *created Merchandise.java and Inventory.java; implemented all methods for Inventory.java to allow all modifications
 
 7. 2023/02/04 21:00-00:00 contributor: Aiza Bajwa
@@ -39,5 +39,20 @@
 10. 2023/02/07 15:30 - 20:30 contributor: Sanjida Afreen
 *added Wiki to github, link to UML Class diagram
 
-10. 2023/02/08 16:40 contributor: Geon Kim
+11. 2023/02/07 23:00-01:00 contributor: Sanjida Afreen, Aiza Bajwa
+*worked on UML diagram and system architecture
+
+12. 2023/02/08 16:40 contributor: Geon Kim
 * transition from Login Screen to InitialScreen implemented with minor bug fix
+
+13. 2023/02/08 17:00 - 17:30 contributor: Aiza Bajwa, Minh Tran
+* virtual meeting to start connecting Inventory methods to DisplayInitialScreen.java
+
+14. 2023/02/08 17:30 - 20:00 contributor: Aiza Bajwa
+* finished connecting all Inventory methods to DisplayInitialScreen.java
+
+15. 2023/02/08 20:00-22:30 contributor: Alvin Ta
+* updated class diagram to make sure abides by classes made in code, connected dependencies, and associations *
+
+16. 2023/02/08 23:15 contributor: Geon Kim
+* dropdown menu for search method is implemented with minor bug fix

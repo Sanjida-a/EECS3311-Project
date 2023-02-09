@@ -1,7 +1,7 @@
 Iteration 1 - Updated Plan
 
 CHANGES IN PLAN
-No changes to the previous plan for Iteration 1 as we were able to implement all of our detailed stories as planned in Iteration 0. The only difference is that since we weren’t expected to implement all aspects of the GUI in this iteration, we left those out and will implement and connect the GUI parts to the methods in later iterations.
+No changes to the previous plan for Iteration 1 as we were able to implement all of our detailed stories as planned in Iteration 0. The only difference is that since we weren’t expected to implement all aspects of the GUI in this iteration, we left addPatient's connection to the front-end for now since we need persistent data storage for this (and database is coming in next iteration).
 
 BIG USER STORIES
 Please see the Planning Document to see big user stories for iteration 2, as we intend on following that same plan.
@@ -10,7 +10,9 @@ MAIN DEVELOPMENT TASKS ASSIGNED IN ITERATION 1
 -	GUI – displayLogin.java
 o	Created a login interface and system so users can login to the pharmacy. This is connected to the logic class AuthenticateUser.java.
 	AuthenticateUser.java checks to see if the login is valid
-o	Started brief implementation of some other aspects of GUI that were not needed in this iteration. Such as DisplayInitialScreen.java, which should be the screen shown after login is successful
+-	DisplayInitialScreen.java
+o	Implemented so this screen shows once login is successful
+o	Connects methods/operations implemented in other classes (as specified below) to the front end/GUI. Such as DisplayInitialScreen.java, which should be the screen shown after login is successful
 -	MerchandiseDAO.java and UserDAO.java
 o	Act like database stubs to hold some persistent data that we can get instances of.
 -	Merchandise.java + Inventory.java Classes
