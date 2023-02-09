@@ -86,7 +86,7 @@ public class DisplayInitialScreen {
 	
 	private void createPanelVisibleToAdmin(JPanel totalGUI) {
 		JPanel panelVisibleToAdmin = new JPanel();
-        panelVisibleToAdmin.setBounds(45, 536, 944, 194);
+        panelVisibleToAdmin.setBounds(45, 536, 1200, 194);
         panelVisibleToAdmin.setLayout(null);
     
         
@@ -276,7 +276,7 @@ public class DisplayInitialScreen {
 		});
         
         JButton btnDecrease = new JButton("Decrease");
-        btnDecrease.setFont(new Font("굴림", Font.BOLD, 20));
+        btnDecrease.setFont(new Font("굴림", Font.BOLD, 18));
         btnDecrease.setBounds(911, 135, 125, 35);
         panelVisibleToAdmin.add(btnDecrease);
         btnDecrease.addActionListener(new ActionListener() {
@@ -313,7 +313,7 @@ public class DisplayInitialScreen {
         
         JButton btnDisplay = new JButton("Display");
         btnDisplay.setFont(new Font("굴림", Font.BOLD, 20));
-        btnDisplay.setBounds(1011, 135, 125, 35);
+        btnDisplay.setBounds(1048, 134, 125, 35);
         panelVisibleToAdmin.add(btnDisplay);
         btnDisplay.addActionListener(new ActionListener() {
 			@Override
@@ -438,12 +438,12 @@ public class DisplayInitialScreen {
 	
 	
 	
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		//displayInitialScreen(USER.PATIENT); 
-//		DisplayInitialScreen screen = new DisplayInitialScreen();
-//		screen.displayInitialScreen(USER.PATIENT);
-////		screen.displayInitialScreen(USER.OWNER);
-////		screen.displayInitialScreen(USER.PHARMACIST);
-//	}
+/*public static void main(String[] args) {
+	// TODO Auto-generated method stub
+		//displayInitialScreen(USER.PATIENT); 
+	DisplayInitialScreen screen = new DisplayInitialScreen();
+		//screen.displayInitialScreen(USER.PATIENT);
+		screen.displayInitialScreen(USER.OWNER);
+		//screen.displayInitialScreen(USER.PHARMACIST);
+	}*/
 }
