@@ -181,25 +181,31 @@ public class DisplayInitialScreen {
         btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String _inputFieldName = inputFieldName.getText();
-				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-				double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
-				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-				Boolean _isOTC = false;
-				if(rdbtnOTC.isSelected()) {
-					_isOTC = true;
+				try {
+				
+					String _inputFieldName = inputFieldName.getText();
+					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					Boolean _isOTC = false;
+					if(rdbtnOTC.isSelected()) {
+						_isOTC = true;
+					}
+				
+					Inventory inv1 = Inventory.getInstance();
+				
+					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
+					inv1.addToInventory(newMerchandise);
+				
+					String temp = "Add successful. See updated inventory below: \n";
+					temp += inv1.display();
+				
+					textboxOutput.setText(temp);
 				}
-				
-				Inventory inv1 = Inventory.getInstance();
-				
-				Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-				inv1.addToInventory(newMerchandise);
-				
-				String temp = "Add successful. See updated inventory below: \n";
-				temp += inv1.display();
-				
-				textboxOutput.setText(temp);
+				catch(Exception exception) {
+					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
+				}
 			
 			}
 		});
