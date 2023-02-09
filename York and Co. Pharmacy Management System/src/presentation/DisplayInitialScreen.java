@@ -199,7 +199,7 @@ public class DisplayInitialScreen {
 				
 					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
 					inv1.addToInventory(newMerchandise);
-				
+					
 					String temp = "Add successful. See updated inventory below: \n\n";
 					temp += inv1.display();
 				
@@ -219,30 +219,36 @@ public class DisplayInitialScreen {
         btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String _inputFieldName = inputFieldName.getText();
-				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-				Boolean _isOTC = false;
-				if(rdbtnOTC.isSelected()) {
-					_isOTC = true;
-				}
+				try {
+					String _inputFieldName = inputFieldName.getText();
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					Boolean _isOTC = false;
+					if(rdbtnOTC.isSelected()) {
+						_isOTC = true;
+					}
 				
-				Inventory inv1 = Inventory.getInstance();
+					Inventory inv1 = Inventory.getInstance();
 				
-				Boolean medicationRemoved = false;
-				medicationRemoved = inv1.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+					Boolean medicationRemoved = false;
 				
-				String temp = "";
-				if (medicationRemoved == false) {
-					temp += "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
-				}
-				else {
-					temp += "Remove successful. See updated inventory below: \n\n";
-				}
+					medicationRemoved = inv1.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+				
+					String temp = "";
+					if (medicationRemoved == false) {
+						temp += "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
+					}
+					else {
+						temp += "Remove successful. See updated inventory below: \n\n";
+					}
 
-				temp += inv1.display();
+					temp += inv1.display();
 				
-				textboxOutput.setText(temp);
+					textboxOutput.setText(temp);
+				}
+				catch (Exception ex) {
+					DisplayErrorPopup.displayErrorPopup("name, type, and form are required");
+				}
 			
 			}
 		});
@@ -254,31 +260,37 @@ public class DisplayInitialScreen {
         btnIncrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String _inputFieldName = inputFieldName.getText();
-				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-				Boolean _isOTC = false;
-				if(rdbtnOTC.isSelected()) {
-					_isOTC = true;
-				}
+				try {
+					String _inputFieldName = inputFieldName.getText();
+					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					Boolean _isOTC = false;
+					if(rdbtnOTC.isSelected()) {
+						_isOTC = true;
+					}
 				
-				Inventory inv1 = Inventory.getInstance();
+					Inventory inv1 = Inventory.getInstance();
 				
-				Boolean medicationIncreased = false;
-				medicationIncreased = inv1.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+					Boolean medicationIncreased = false;
+			
+					medicationIncreased = inv1.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 				
-				String temp = "";
-				if (medicationIncreased == false) {
-					temp += "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
-				}
-				else {
-					temp += "Increase successful. See updated inventory below: \n";
-				}
+					String temp = "";
+					if (medicationIncreased == false) {
+						temp += "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
+					}
+					else {
+						temp += "Increase successful. See updated inventory below: \n";
+					}
 
-				temp += inv1.display();
+					temp += inv1.display();
 				
-				textboxOutput.setText(temp);
+					textboxOutput.setText(temp);
+				}
+				catch(Exception ex) {
+					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
+				}
 			
 			}
 		});
@@ -290,48 +302,50 @@ public class DisplayInitialScreen {
         btnDecrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String _inputFieldName = inputFieldName.getText();
-				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-				Boolean _isOTC = false;
-				if(rdbtnOTC.isSelected()) {
-					_isOTC = true;
-				}
-				
-				Inventory inv1 = Inventory.getInstance();
-				
-				boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
 				try {
+					String _inputFieldName = inputFieldName.getText();
+					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					Boolean _isOTC = false;
+					if(rdbtnOTC.isSelected()) {
+						_isOTC = true;
+					}
+				
+					Inventory inv1 = Inventory.getInstance();
+				
+					boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
+				
 					medicationDecreasedANDEnoughQuantityToDecrease = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
-				}
-				catch(Exception ex){
-					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
-				}
-				String temp = "";
-				if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-					temp += "Decrease successful. See inventory below: \n\n";
-				}
-				//case not possible
-//				else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == false) {
-//					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
-//				}
-				else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory below: \n\n";
-				}
-				else {
-					temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n\n";
-				}
+					
+					String temp = "";
+					if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+						temp += "Decrease successful. See inventory below: \n\n";
+					}
+					//case not possible
+//					else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == false) {
+//						temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+//					}
+					else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+						temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory below: \n\n";
+					}
+					else {
+						temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n\n";
+					}
 				
-				if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
-					//System.out.println("LOW");
-					//notify popup for medication low in stock
-					DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.\n");
-				}
+					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
+						//System.out.println("LOW");
+						//notify popup for medication low in stock
+						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.\n");
+					}
 
-				temp += inv1.display();
+					temp += inv1.display();
 				
-				textboxOutput.setText(temp);
+					textboxOutput.setText(temp);
+				}
+				catch(Exception ex) {
+					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
+				}
 			
 			}
 		});
