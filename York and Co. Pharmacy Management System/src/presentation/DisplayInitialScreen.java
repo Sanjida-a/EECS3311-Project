@@ -53,17 +53,17 @@ public class DisplayInitialScreen {
 	private static double price;
 	private static boolean isOTC;
 	private static String searchKeyword;
-	private static USER user;
+	private static USER userType;
 	
 	JTextArea textboxOutput;
 	
 	public void displayInitialScreen(USER user) {
-		this.user = user;
+		userType = user;
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("York and Co. Pharmacy Management System");
         DisplayInitialScreen background = new DisplayInitialScreen();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(background.createContentPanel(user));
+        frame.setContentPane(background.createContentPanel(userType));
         frame.setSize(1400, 800);
         frame.getContentPane().setLayout(null);
         
@@ -75,10 +75,10 @@ public class DisplayInitialScreen {
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
 		
-		//if(user == USER.OWNER || user == USER.PHARMACIST) {
-		//	this.createPanelVisibleToAdmin(totalGUI);
-		//}
-		this.createPanelVisibleToAdmin(totalGUI);
+		if(user == USER.OWNER || user == USER.PHARMACIST) {
+			this.createPanelVisibleToAdmin(totalGUI);
+		}
+		//this.createPanelVisibleToAdmin(totalGUI);
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
         		
@@ -403,7 +403,7 @@ public class DisplayInitialScreen {
 				// TODO Auto-generated method stub
 				String _inputKeyword = inputKeyword.getText();
 				String searchBy = (String)comboBox.getSelectedItem();
-				if(user == USER.OWNER || user == USER.PHARMACIST) {
+				if(userType == USER.OWNER || userType == USER.PHARMACIST) {
 					Owner owner1 = new Owner(1,1);
 					ArrayList<Merchandise> methodResult = null;
 					if(searchBy.compareTo("Name") == 0) {
