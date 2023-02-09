@@ -302,8 +302,12 @@ public class DisplayInitialScreen {
 				Inventory inv1 = Inventory.getInstance();
 				
 				boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false};
-				medicationDecreasedANDEnoughQuantityToDecrease = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
-				
+				try {
+					medicationDecreasedANDEnoughQuantityToDecrease = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+				}
+				catch(Exception ex){
+					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
+				}
 				String temp = "";
 				if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
 					temp += "Decrease successful. See inventory below: \n\n";
