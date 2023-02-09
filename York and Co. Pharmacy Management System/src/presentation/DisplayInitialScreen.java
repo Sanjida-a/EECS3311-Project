@@ -324,8 +324,9 @@ public class DisplayInitialScreen {
 				}
 				
 				if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
-					System.out.println("LOW");
+					//System.out.println("LOW");
 					//notify popup for medication low in stock
+					DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.\n");
 				}
 
 				temp += inv1.display();
