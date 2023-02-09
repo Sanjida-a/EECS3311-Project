@@ -206,7 +206,7 @@ public class DisplayInitialScreen {
         
         JButton btnDelete = new JButton("Delete");
         btnDelete.setFont(new Font("굴림", Font.BOLD, 20));
-//        btnDelete.setBounds(637, 135, 125, 35);
+        btnDelete.setBounds(637, 135, 125, 35);
         panelVisibleToAdmin.add(btnDelete);
         btnDelete.addActionListener(new ActionListener() {
 			@Override
@@ -313,7 +313,7 @@ public class DisplayInitialScreen {
         
         JButton btnDisplay = new JButton("Display");
         btnDisplay.setFont(new Font("굴림", Font.BOLD, 20));
-        btnDisplay.setBounds(637, 135, 125, 35);
+        btnDisplay.setBounds(1011, 135, 125, 35);
         panelVisibleToAdmin.add(btnDisplay);
         btnDisplay.addActionListener(new ActionListener() {
 			@Override
