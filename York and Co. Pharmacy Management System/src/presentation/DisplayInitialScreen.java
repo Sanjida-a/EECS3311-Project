@@ -483,12 +483,12 @@ public class DisplayInitialScreen {
 	
 	
 	
-public static void main(String[] args) {
+/*public static void main(String[] args) {
 	// TODO Auto-generated method stub
 		//displayInitialScreen(USER.PATIENT); 
 	DisplayInitialScreen screen = new DisplayInitialScreen();
 		//screen.displayInitialScreen(USER.PATIENT);
 		screen.displayInitialScreen(USER.OWNER);
 		//screen.displayInitialScreen(USER.PHARMACIST);
-	}
+	}*/
 }
