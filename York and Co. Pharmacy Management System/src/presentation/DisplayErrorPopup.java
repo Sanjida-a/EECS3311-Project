@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import middleLayer.AuthenticateUser;
+//import middleLayer.AuthenticateUser;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -57,7 +57,7 @@ public class DisplayErrorPopup {
         frmPopup.setVisible(true);
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		DisplayErrorPopup.displayErrorPopup(null);
-	}
+	}*/
 }

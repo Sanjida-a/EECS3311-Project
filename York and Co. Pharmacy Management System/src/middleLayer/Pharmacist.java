@@ -51,7 +51,7 @@ public class Pharmacist extends User {
 		return searchMedTypePhar;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ListOfUsers listOfUsersInstance = ListOfUsers.getInstance();
 		System.out.println(listOfUsersInstance.getAllPatientUsersList());
@@ -63,7 +63,7 @@ public class Pharmacist extends User {
 		System.out.println(listOfUsersInstance.getAllPatientUsersList().get(1).getFirstName());
 		ArrayList<Merchandise> list = p1.searchOTCMedicineByName("Tylenol");
 		System.out.println(list);
-	}
+	}*/
 	
 	
 }

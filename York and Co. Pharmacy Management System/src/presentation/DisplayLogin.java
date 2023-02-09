@@ -20,13 +20,7 @@ public class DisplayLogin {
 
     private static int username;
 	private static int password;
-//	public DisplayLogin() {};
-	
-//	public DisplayLogin(AuthenticateUser authUser) {
-//		_authUser = authUser;
-//		displayLogin();
-//	}
-//>>>>>>> Stashed changes
+
 
 	public void displayLogin() {
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -67,11 +61,7 @@ public class DisplayLogin {
 		passwordField.setBounds(225, 150, 225, 35);
 		totalGUI.add(passwordField);
 		
-		// JButton btnNewButton = new JButton("Login");
-		// btnNewButton.addActionListener(this);
-		// btnNewButton.setFont(new Font("굴림", Font.BOLD, 25));
-		// btnNewButton.setBounds(225, 244, 150, 50);
-		// totalGUI.add(btnNewButton);
+
 		passwordField.setColumns(20);
 		
 
@@ -80,37 +70,6 @@ public class DisplayLogin {
 		lblTitle.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		lblTitle.setBounds(75, 30, 450, 50);
 		totalGUI.add(lblTitle);
-		
-		
-	
-	
-// 	 public void actionPerformed(ActionEvent e) {
-	    	
-//     	String username = textField.getText();
-//     	char[] pass = passwordField.getPassword();
-// //    	System.out.println("TEST");
-// //    	int usernameInt = Integer.parseInt(username);
-// //    	int passwordInt = Integer.parseInt(pass);
-    	
-//     	//==_authUser.checkUserValid(username, pass);
-//     	AuthenticateUser.checkUserValid(username, pass);
-    	
-    	
-// 	}
-//<<<<<<< Updated upstream
-
-//=======
-	
-	
-//>>>>>>> Stashed changes
-		
-		
-//		JButton btnNewButton = new JButton("Login");
-//		btnNewButton.addActionListener(this);
-//		btnNewButton.setFont(new Font("굴림", Font.BOLD, 25));
-//		btnNewButton.setBounds(225, 244, 150, 50);
-//		totalGUI.add(btnNewButton);
-
 		
 		
 		this.loginButton(totalGUI, frame);
@@ -188,28 +147,7 @@ public class DisplayLogin {
 	}
 	
 
-// 	 public void actionPerformed(ActionEvent e) {
-//	    
-//     	String username = userNameField.getText();
-//     	char[] pass = passwordField.getPassword();
-//     	System.out.println("TEST");
-//     	
-//     	if (username!= "1111") {
-//     		System.out.println("Incorrect User or Pass");
-//     	}
-//     	else {
-//     		//HOW TO CLOSE FRAME HERE??
-////     		dispose();
-//     	}
-// //    	int usernameInt = Integer.parseInt(username);
-// //    	int passwordInt = Integer.parseInt(pass);
-//    	
-//     	//==_authUser.checkUserValid(username, pass);
-// 		
-////     	AuthenticateUser.checkUserValid(username, pass);
-//    	
-//    	
-// 	}
+
 
 //	public static void main(String[] args) {
 		// TODO Auto-generated method stub
