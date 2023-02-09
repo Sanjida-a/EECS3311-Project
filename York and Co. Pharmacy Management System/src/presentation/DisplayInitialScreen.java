@@ -34,7 +34,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-//Minh's notes: TODO Parse input search from box ~~~ type/TyPe/.. -> Capitalized -> ENUM
+
 
 public class DisplayInitialScreen {
 	private static JTextField inputFieldName;
@@ -70,15 +70,16 @@ public class DisplayInitialScreen {
 
         frame.setVisible(true);
 	}
+	
 	public JPanel createContentPanel(USER user) {
 		JPanel totalGUI = new JPanel();
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
 		
-		if(user == USER.OWNER || user == USER.PHARMACIST) {
+		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
 			this.createPanelVisibleToAdmin(totalGUI);
 		}
-		//this.createPanelVisibleToAdmin(totalGUI);
+
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
         		
@@ -89,8 +90,7 @@ public class DisplayInitialScreen {
 	private void createPanelVisibleToAdmin(JPanel totalGUI) {
 		JPanel panelVisibleToAdmin = new JPanel();
         panelVisibleToAdmin.setBounds(45, 536, 1200, 194);
-        panelVisibleToAdmin.setLayout(null);
-    
+        panelVisibleToAdmin.setLayout(null);  
         
         JLabel lblName = new JLabel("Name");
         lblName.setFont(new Font("굴림", Font.BOLD, 18));
@@ -101,7 +101,6 @@ public class DisplayInitialScreen {
         inputFieldName.setBounds(125, 0, 350, 35);
         panelVisibleToAdmin.add(inputFieldName);
         inputFieldName.setColumns(20);
-        //name = inputFieldName.getText();
         
         JLabel lblHCN = new JLabel("Health card#");
         lblHCN.setFont(new Font("굴림", Font.BOLD, 18));
@@ -111,8 +110,7 @@ public class DisplayInitialScreen {
         inputFieldHCN = new JTextField();
         inputFieldHCN.setBounds(125, 45, 350, 35);
         panelVisibleToAdmin.add(inputFieldHCN);
-        inputFieldHCN.setColumns(20);
-        //username = Integer.getInteger(inputFieldHCN.getText(), 0);	//assign 0 if the input is invalid
+        inputFieldHCN.setColumns(20);      
         
         JLabel lblType = new JLabel("Type");
         lblType.setFont(new Font("굴림", Font.BOLD, 18));
@@ -128,13 +126,11 @@ public class DisplayInitialScreen {
         inputFieldType.setBounds(125, 90, 350, 35);
         panelVisibleToAdmin.add(inputFieldType);
         inputFieldType.setColumns(30);
-        //type = inputFieldType.getText();
         
         inputFieldForm = new JTextField();
         inputFieldForm.setColumns(10);
         inputFieldForm.setBounds(125, 135, 350, 35);
-        panelVisibleToAdmin.add(inputFieldForm);
-        //form = inputFieldForm.getText();
+        panelVisibleToAdmin.add(inputFieldForm);       
         
         JLabel lblQty = new JLabel("Qty");
         lblQty.setFont(new Font("굴림", Font.BOLD, 18));
@@ -149,15 +145,13 @@ public class DisplayInitialScreen {
         inputFieldQty = new JTextField();
         inputFieldQty.setBounds(625, 0, 90, 35);
         panelVisibleToAdmin.add(inputFieldQty);
-        inputFieldQty.setColumns(10);
-        //qty = Integer.getInteger(inputFieldQty.getText(), 0); 	//assign 0 if the input is invalid
+        inputFieldQty.setColumns(10);     
         
         inputFieldPrice = new JTextField();
         inputFieldPrice.setFont(new Font("굴림", Font.BOLD, 18));
         inputFieldPrice.setBounds(625, 45, 90, 35);
         panelVisibleToAdmin.add(inputFieldPrice);
-        inputFieldPrice.setColumns(10);
-        //price = Double.parseDouble(inputFieldPrice.getText());
+        inputFieldPrice.setColumns(10);       
         
         JRadioButton rdbtnRx = new JRadioButton("Rx");
         rdbtnRx.setFont(new Font("굴림", Font.BOLD, 18));
@@ -172,9 +166,7 @@ public class DisplayInitialScreen {
         
         ButtonGroup group = new ButtonGroup();
         group.add(rdbtnOTC);
-        group.add(rdbtnRx);
-        
-        //isOTC = rdbtnOTC.isEnabled();
+        group.add(rdbtnRx);             
         
         JButton btnAdd = new JButton("Add");
         btnAdd.setFont(new Font("굴림", Font.BOLD, 20));
@@ -183,7 +175,8 @@ public class DisplayInitialScreen {
         btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {	//Exception is thrown when insufficient number of arguments is passed to Merchandise constructor. if all argument is fed, 
+						//addToInventory is bound to success
 				
 					String _inputFieldName = inputFieldName.getText();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
@@ -205,7 +198,7 @@ public class DisplayInitialScreen {
 				
 					textboxOutput.setText(temp);
 				}
-				catch(Exception exception) {
+				catch(Exception exception) { //catch any exceptions and show popup error
 					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
 				}
 			
@@ -219,7 +212,7 @@ public class DisplayInitialScreen {
         btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
 					String _inputFieldName = inputFieldName.getText();
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
@@ -246,7 +239,7 @@ public class DisplayInitialScreen {
 				
 					textboxOutput.setText(temp);
 				}
-				catch (Exception ex) {
+				catch (Exception ex) {	//display error popup
 					DisplayErrorPopup.displayErrorPopup("name, type, and form are required");
 				}
 			
@@ -260,7 +253,7 @@ public class DisplayInitialScreen {
         btnIncrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
 					String _inputFieldName = inputFieldName.getText();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
@@ -302,7 +295,7 @@ public class DisplayInitialScreen {
         btnDecrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
+				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
 					String _inputFieldName = inputFieldName.getText();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
@@ -320,21 +313,19 @@ public class DisplayInitialScreen {
 					
 					String temp = "";
 					if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+						//entry to decrease its quantity is found in the list and the current_quantity >= quantity_to_decrease 
 						temp += "Decrease successful. See inventory below: \n\n";
 					}
-					//case not possible
-//					else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == false) {
-//						temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
-//					}
 					else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+						//entry to decrease its quantity is not found in the list
 						temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory below: \n\n";
 					}
 					else {
+						//entry is found but current_quantity < quantity_to_decrease
 						temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n\n";
 					}
 				
 					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
-						//System.out.println("LOW");
 						//notify popup for medication low in stock
 						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.\n");
 					}
@@ -343,7 +334,7 @@ public class DisplayInitialScreen {
 				
 					textboxOutput.setText(temp);
 				}
-				catch(Exception ex) {
+				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
 					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
 				}
 			
@@ -460,21 +451,14 @@ public class DisplayInitialScreen {
 			}
 		});
         
-//        JList list = new JList();
-//        list.setBorder(new LineBorder(new Color(0, 0, 0)));
-//        list.setFont(new Font("굴림", Font.PLAIN, 15));
-//        list.setBounds(0, 58, 944, 397);
-//        panelVisibleToAll.add(list);
+
         
         textboxOutput = new JTextArea();
-       // textboxOutput.setBorder
         textboxOutput.setBorder(new LineBorder(new Color(0, 0, 0)));
         textboxOutput.setFont(new Font("굴림", Font.PLAIN, 15));
         textboxOutput.setBounds(0, 58, 944, 397);
         panelVisibleToAll.add(textboxOutput);
-        
-		
-        //totalGUI.add(panelVisibleToAdmin);
+            
         totalGUI.add(panelVisibleToAll);
         
 
