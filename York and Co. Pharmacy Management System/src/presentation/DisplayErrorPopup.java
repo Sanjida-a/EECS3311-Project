@@ -57,7 +57,4 @@ public class DisplayErrorPopup {
         frmPopup.setVisible(true);
 	}
 	
-	/*public static void main(String[] args) {
-		DisplayErrorPopup.displayErrorPopup(null);
-	}*/
 }

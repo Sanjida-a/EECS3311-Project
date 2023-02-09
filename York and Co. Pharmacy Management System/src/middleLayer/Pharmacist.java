@@ -2,18 +2,17 @@ package middleLayer;
 
 import java.util.ArrayList;
 
-import presentation.DisplayLogin;
-
 public class Pharmacist extends User {
 	
 	private Inventory merListByPhar = Inventory.getInstance();
+	
+	// having only this constructor avoids having an owner without a username and password
 	public Pharmacist(int username, int password) {
 		this.username = username;
 		this.password = password;
 	}
 	
 	//Minh moved 2 methods here from ListOfUsers
-	
 	public Pharmacist getPharmacistUser() {
 		return this;
 	}
@@ -31,39 +30,32 @@ public class Pharmacist extends User {
 		listOfUsersInstance.addPatientToList(newPatient);
 	}
 	
+	// implementation of inherited abstract method from User superclass
 	public ArrayList<Merchandise> searchOTCMedicineByName (String name) {
+		
 		ArrayList<Merchandise> searchMedNamePhar = new ArrayList <Merchandise> ();
+		
 		for (Merchandise i : merListByPhar.getMerchandise()) {
 			if (i.getName().compareTo(name) == 0) {
 				searchMedNamePhar.add(i);
 			}
 		}
+		
 		return searchMedNamePhar;
 	}
 	
+	// implementation of inherited abstract method from User superclass
 	public ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type) {
+		
 		ArrayList<Merchandise> searchMedTypePhar = new ArrayList <Merchandise> ();
+		
 		for (Merchandise i : merListByPhar.getMerchandise()) {
 			if (i.getType() == type) {
 				searchMedTypePhar.add(i);
 			}
 		}
+		
 		return searchMedTypePhar;
 	}
-	
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ListOfUsers listOfUsersInstance = ListOfUsers.getInstance();
-		System.out.println(listOfUsersInstance.getAllPatientUsersList());
-		Pharmacist p1 = new Pharmacist(111,111);
-		p1.addPatient("john", "doe", "123 fake street", 911, 1234567890, 02072023);
-		System.out.println(listOfUsersInstance.getAllPatientUsersList());
-		p1.addPatient("john2", "doe2", "123 fake street", 911, 1234567890, 02072023);
-		System.out.println(listOfUsersInstance.getAllPatientUsersList());
-		System.out.println(listOfUsersInstance.getAllPatientUsersList().get(1).getFirstName());
-		ArrayList<Merchandise> list = p1.searchOTCMedicineByName("Tylenol");
-		System.out.println(list);
-	}*/
-	
 	
 }

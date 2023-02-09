@@ -23,8 +23,10 @@ public abstract class User {
 		return this.password;
 	}
 	
+	// abstract method to be implemented by Owner, Pharmacist and Patient (not implemented here because implementation for patient is different)
 	public abstract ArrayList<Merchandise> searchOTCMedicineByName (String name);
 	
+	// abstract method to be implemented by Owner, Pharmacist and Patient (not implemented here because implementation for patient is different)
 	public abstract ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type);
 	
 }

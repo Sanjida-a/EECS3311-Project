@@ -26,7 +26,6 @@ public class MerchandiseDAO {
 			allInventory.add(mer4);
 			allInventory.add(mer5);
 			allInventory.add(mer6);
-//			allUsernamesAndPasswordsList.add(pharma1);
 			
 		} catch (Exception e) {
 			throw e;

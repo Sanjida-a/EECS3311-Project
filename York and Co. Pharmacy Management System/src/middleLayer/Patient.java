@@ -13,7 +13,6 @@ public class Patient extends User {
 	//private ArrayList<Order> ordersMade; Order class not made yet
 	private Inventory merList = Inventory.getInstance(); 
 	
-	
 	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -31,7 +30,9 @@ public class Patient extends User {
 		this.username = healthCardNum;
 		this.password = dateOfBirth;
 	}
-
+	
+	// below methods are all getters/setters for class variables (except no setters for username/password/healthCardNumber/dateOfBirth...
+	// ...because assuming a health card number and date of birth don't change for a client in a lifetime)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -68,52 +69,36 @@ public class Patient extends User {
 		return healthCardNum;
 	}
 
-	// don't want this to alter username and pass right?
-//	public void setHealthCardNum(int healthCardNum) {
-//		this.healthCardNum = healthCardNum;
-//	}
-
 	public int getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-//	public void setDateOfBirth(int dateOfBirth) {
-//		this.dateOfBirth = dateOfBirth;
-//	}
-	
-
+	// implementation of inherited abstract method from User superclass
 	public ArrayList<Merchandise> searchOTCMedicineByName (String name) {
+		
 		ArrayList<Merchandise> searchMedName = new ArrayList <Merchandise> ();
+		
 		for (Merchandise i : merList.getMerchandise()) {
-			if (i.getisOTC() == true && i.getName().compareTo(name) == 0) {
+			if (i.getisOTC() == true && i.getName().compareTo(name) == 0) { // Patient can only search OVER-THE-COUNTER medications
 				searchMedName.add(i);
 			}
 		}
+		
 		return searchMedName;
 	}
 	
+	// implementation of inherited abstract method from User superclass
 	public ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type) {
+		
 		ArrayList<Merchandise> searchMedType = new ArrayList <Merchandise> ();
+		
 		for (Merchandise i : merList.getMerchandise()) {
-			if (i.getisOTC() == true && i.getType() == type) {
+			if (i.getisOTC() == true && i.getType() == type) { // Patient can only search OVER-THE-COUNTER medications
 				searchMedType.add(i);
 			}
 		}
+		
 		return searchMedType;
 	}
-	
-/*	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Inventory merList = Inventory.getInstance();
-		for (Merchandise i : merList.getMerchandise())
-			System.out.println(i);
-		Patient abc = new Patient("abc", "xyz" , "address" , 123456, 111111, 12121212);
-		ArrayList<Merchandise> list = abc.searchOTCMedicineByName("Tylenol");
-		System.out.println(list);
-		ArrayList<Merchandise> listType = abc.searchOTCMedicineByType(MERCHANDISE_TYPE.FEVER);
-		System.out.println(listType);
 
-	}*/
-	
-	
 }

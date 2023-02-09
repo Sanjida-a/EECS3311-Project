@@ -504,15 +504,5 @@ public class DisplayInitialScreen {
 	public String getSearchKeyword() {
 		return new String(searchKeyword);
 	}
-	
-	
-	
-/*public static void main(String[] args) {
-	// TODO Auto-generated method stub
-		//displayInitialScreen(USER.PATIENT); 
-	DisplayInitialScreen screen = new DisplayInitialScreen();
-		//screen.displayInitialScreen(USER.PATIENT);
-		screen.displayInitialScreen(USER.OWNER);
-		//screen.displayInitialScreen(USER.PHARMACIST);
-	}*/
+
 }

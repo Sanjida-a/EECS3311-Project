@@ -8,7 +8,7 @@ public class Merchandise{
     MERCHANDISE_FORM form;
     boolean isOTC;
 
-    //constructor
+    // constructor
     public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
         this.name = name;
         this.quantity = quantity;
@@ -18,8 +18,7 @@ public class Merchandise{
         this.isOTC = OTC;
     }
 
-    //methods for class variables
-
+    // below methods are all getters/setters for class variables
     public String getName(){
         return name;
     }
@@ -68,7 +67,7 @@ public class Merchandise{
         this.isOTC = isOTC;
     }
     
-
+    // outputs merchandise object by specifying all instance variables
     public String toString(){
         return "Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + "\n";
     }

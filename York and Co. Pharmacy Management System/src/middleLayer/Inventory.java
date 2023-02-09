@@ -1,9 +1,8 @@
 package middleLayer;
 
 import java.util.ArrayList;
-
 import databaseDAO.MerchandiseDAO;
-import databaseDAO.UserDAO;
+
 public class Inventory{
     private static Inventory singletonInstance = null;
 
@@ -42,7 +41,7 @@ public class Inventory{
         return output;
     }
 
-    //increase quantity
+    // increase quantity of medication already existing in inventory (if exists)
     public boolean increaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationIncreased = false;
         for (int i = 0; i < list.size(); i ++){
@@ -51,10 +50,11 @@ public class Inventory{
                 medicationIncreased = true;
             }
         }
+        
         return medicationIncreased;
     }
 
-    //decrease quantity
+    // decrease quantity of medication already existing in inventory, if possible (if medication exists)
     public boolean[] decreaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationDecreased = false;
     	boolean enoughQuantityToDecrease = true;
@@ -70,6 +70,7 @@ public class Inventory{
             		medicationDecreased = true;
             	}
             	
+            	// variable that keeps track if item is low in stock
                 if(list.get(i).quantity < 3){
                     itemLowInStock = true;
                 }
@@ -80,6 +81,7 @@ public class Inventory{
     	return booleanArray;
     }
     
+    // delete a medication from inventory (if exists)
     public boolean delete(String name, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationRemoved = false;
         for (int i = 0; i < list.size(); i ++){
@@ -88,9 +90,11 @@ public class Inventory{
                 medicationRemoved = true;
             }
         }
+        
         return medicationRemoved;
     }
     
+    // add a new medication to inventory (if it already doesn't exist)
     public boolean addToInventory(Merchandise m){
     	
     	boolean medicationAlreadyExists = false;
@@ -105,19 +109,13 @@ public class Inventory{
         	list.add(m);
         	medicationAdded = true;
         }
+        
         return medicationAdded;
     }
     
     public ArrayList<Merchandise> getMerchandise(){
     	return list;
     }
-    
-//    public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		Inventory merList = Inventory.getInstance();
-//		for (Merchandise i : merList.getMerchandise())
-//			System.out.println(i);
-//	}
 
 }
     
