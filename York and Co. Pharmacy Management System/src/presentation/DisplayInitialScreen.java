@@ -301,7 +301,7 @@ public class DisplayInitialScreen {
 				
 				Inventory inv1 = Inventory.getInstance();
 				
-				boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false};
+				boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
 				try {
 					medicationDecreasedANDEnoughQuantityToDecrease = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 				}
@@ -321,6 +321,11 @@ public class DisplayInitialScreen {
 				}
 				else {
 					temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n\n";
+				}
+				
+				if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
+					System.out.println("LOW");
+					//notify popup for medication low in stock
 				}
 
 				temp += inv1.display();

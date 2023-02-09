@@ -58,6 +58,7 @@ public class Inventory{
     public boolean[] decreaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationDecreased = false;
     	boolean enoughQuantityToDecrease = true;
+    	boolean itemLowInStock = false;
     	for (int i = 0; i < list.size(); i ++){
             if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
                 int potentialNewQuantity = list.get(i).quantity - quantity;
@@ -70,12 +71,12 @@ public class Inventory{
             	}
             	
                 if(list.get(i).quantity < 3){
-                    System.out.print(list.get(i).name+" low in stock : only " +list.get(i).quantity+ " left." );
+                    itemLowInStock = true;
                 }
             }
         }
     	
-    	boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease};
+    	boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
     	return booleanArray;
     }
     
