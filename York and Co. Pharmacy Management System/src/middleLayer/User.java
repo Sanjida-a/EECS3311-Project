@@ -1,5 +1,7 @@
 package middleLayer;
 
+import java.util.ArrayList;
+
 public abstract class User {
 
 	public int username;
@@ -20,5 +22,9 @@ public abstract class User {
 	public int getPassword() {
 		return this.password;
 	}
+	
+	public abstract ArrayList<Merchandise> searchOTCMedicineByName (String name);
+	
+	public abstract ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type);
 	
 }

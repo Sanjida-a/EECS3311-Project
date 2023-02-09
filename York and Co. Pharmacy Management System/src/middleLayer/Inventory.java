@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import databaseDAO.MerchandiseDAO;
 import databaseDAO.UserDAO;
-class Inventory{
+public class Inventory{
     private static Inventory singletonInstance = null;
 
     ArrayList<Merchandise> list = new ArrayList<Merchandise>();
@@ -28,60 +28,73 @@ class Inventory{
         return singletonInstance;
     }
 
-    public void display(){
+    public String display(){
+    	String output = "";
         for (int i = 0; i < list.size(); i ++){
-             System.out.print(""+list.get(i).name+", ");
-            System.out.print(""+list.get(i).quantity+", ");
-            System.out.print(""+list.get(i).price+", ");
-            System.out.print(""+list.get(i).type+", ");
-            System.out.print(""+list.get(i).form+", ");
-            System.out.print(""+list.get(i).isOTC+"\n");
+           output += list.get(i).name+", ";
+           output += list.get(i).quantity+", ";
+           output += list.get(i).price+", ";
+           output += list.get(i).type+", ";
+           output += list.get(i).form+", ";
+           output += list.get(i).isOTC+" \n";
         }
+        
+        return output;
     }
 
     //increase quantity
-    public void increaseQuantity(String name, int quantity){
+    public boolean increaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    	boolean medicationIncreased = false;
         for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name == name){
+            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
                 list.get(i).quantity += quantity;
+                medicationIncreased = true;
             }
-            //add notification here
         }
+        return medicationIncreased;
     }
 
     //decrease quantity
-    public void decreaseQuantity(String name, int quantity){
-        for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name == name){
+    public boolean decreaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    	boolean medicationDecreased = false;
+    	for (int i = 0; i < list.size(); i ++){
+            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
                 list.get(i).quantity -= quantity;
-            }
-            //notifies low stock
-            if(list.get(i).name==name){
+                medicationDecreased = true;
+                
                 if(list.get(i).quantity < 3){
                     System.out.print(list.get(i).name+" low in stock : only " +list.get(i).quantity+ " left." );
                 }
             }
         }
+    	return medicationDecreased;
     }
-    public void delete(String name){
+    
+    public boolean delete(String name, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    	boolean medicationRemoved = false;
         for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name == name){
+            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
                 list.remove(i);
+                medicationRemoved = true;
             }
         }
+        return medicationRemoved;
     }
+    
     public void addToInventory(Merchandise m){
         list.add(m);
     }
+    
     public ArrayList<Merchandise> getMerchandise(){
     	return list;
     }
-    public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Inventory merList = Inventory.getInstance();
-		for (Merchandise i : merList.getMerchandise())
-			System.out.println(i);
-	}
+    
+//    public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		Inventory merList = Inventory.getInstance();
+//		for (Merchandise i : merList.getMerchandise())
+//			System.out.println(i);
+//	}
 
 }
     

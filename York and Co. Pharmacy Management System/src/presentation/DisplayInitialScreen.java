@@ -3,6 +3,7 @@ package presentation;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,12 +12,23 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+
 import java.awt.Color;
 import javax.swing.JToolBar;
 import javax.swing.JProgressBar;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.border.LineBorder;
+
+import middleLayer.AuthenticateUser;
+import middleLayer.Merchandise;
+import middleLayer.Owner;
+import middleLayer.Patient;
+import middleLayer.Inventory;
+import middleLayer.MERCHANDISE_FORM;
+import middleLayer.MERCHANDISE_TYPE;
+
 import javax.swing.JList;
 import javax.swing.JFormattedTextField;
 
@@ -39,8 +51,12 @@ public class DisplayInitialScreen {
 	private static double price;
 	private static boolean isOTC;
 	private static String searchKeyword;
+	private static USER user;
+	
+	JTextArea textboxOutput;
 	
 	public void displayInitialScreen(USER user) {
+		this.user = user;
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("York and Co. Pharmacy Management System");
         DisplayInitialScreen background = new DisplayInitialScreen();
@@ -155,24 +171,164 @@ public class DisplayInitialScreen {
         ButtonGroup group = new ButtonGroup();
         group.add(rdbtnOTC);
         group.add(rdbtnRx);
+        
         //isOTC = rdbtnOTC.isEnabled();
         
         JButton btnAdd = new JButton("Add");
         btnAdd.setFont(new Font("굴림", Font.BOLD, 20));
         btnAdd.setBounds(500, 135, 125, 35);
         panelVisibleToAdmin.add(btnAdd);
-        
-        JButton btnModify = new JButton("Modify");
-        btnModify.setFont(new Font("굴림", Font.BOLD, 20));
-        btnModify.setBounds(637, 135, 125, 35);
-        panelVisibleToAdmin.add(btnModify);
+        btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String _inputFieldName = inputFieldName.getText();
+				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+				double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
+				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+				Boolean _isOTC = false;
+				if(rdbtnOTC.isSelected()) {
+					_isOTC = true;
+				}
+				
+				Inventory inv1 = Inventory.getInstance();
+				
+				Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
+				inv1.addToInventory(newMerchandise);
+				
+				String temp = "Add successful. See updated inventory below: \n";
+				temp += inv1.display();
+				
+				textboxOutput.setText(temp);
+			
+			}
+		});
         
         JButton btnDelete = new JButton("Delete");
         btnDelete.setFont(new Font("굴림", Font.BOLD, 20));
-        btnDelete.setBounds(774, 135, 125, 35);
+        btnDelete.setBounds(637, 135, 125, 35);
         panelVisibleToAdmin.add(btnDelete);
-        totalGUI.add(panelVisibleToAdmin);
+        btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String _inputFieldName = inputFieldName.getText();
+				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+				Boolean _isOTC = false;
+				if(rdbtnOTC.isSelected()) {
+					_isOTC = true;
+				}
+				
+				Inventory inv1 = Inventory.getInstance();
+				
+				Boolean medicationRemoved = false;
+				medicationRemoved = inv1.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+				
+				String temp = "";
+				if (medicationRemoved == false) {
+					temp += "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+				}
+				else {
+					temp += "Remove successful. See updated inventory below: \n";
+				}
+
+				temp += inv1.display();
+				
+				textboxOutput.setText(temp);
+			
+			}
+		});
         
+        JButton btnIncrease = new JButton("Increase");
+        btnIncrease.setFont(new Font("굴림", Font.BOLD, 20));
+        btnIncrease.setBounds(774, 135, 125, 35);
+        panelVisibleToAdmin.add(btnIncrease);
+        btnIncrease.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String _inputFieldName = inputFieldName.getText();
+				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+				Boolean _isOTC = false;
+				if(rdbtnOTC.isSelected()) {
+					_isOTC = true;
+				}
+				
+				Inventory inv1 = Inventory.getInstance();
+				
+				Boolean medicationIncreased = false;
+				medicationIncreased = inv1.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+				
+				String temp = "";
+				if (medicationIncreased == false) {
+					temp += "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+				}
+				else {
+					temp += "Increase successful. See updated inventory below: \n";
+				}
+
+				temp += inv1.display();
+				
+				textboxOutput.setText(temp);
+			
+			}
+		});
+        
+        JButton btnDecrease = new JButton("Decrease");
+        btnDecrease.setFont(new Font("굴림", Font.BOLD, 20));
+        btnDecrease.setBounds(911, 135, 125, 35);
+        panelVisibleToAdmin.add(btnDecrease);
+        btnDecrease.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String _inputFieldName = inputFieldName.getText();
+				int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+				MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+				MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+				Boolean _isOTC = false;
+				if(rdbtnOTC.isSelected()) {
+					_isOTC = true;
+				}
+				
+				Inventory inv1 = Inventory.getInstance();
+				
+				Boolean medicationDecreased = false;
+				medicationDecreased = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+				
+				String temp = "";
+				if (medicationDecreased == false) {
+					temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n";
+				}
+				else {
+					temp += "Decrease successful. See updated inventory below: \n";
+				}
+
+				temp += inv1.display();
+				
+				textboxOutput.setText(temp);
+			
+			}
+		});
+        
+        JButton btnDisplay = new JButton("Display");
+        btnDisplay.setFont(new Font("굴림", Font.BOLD, 20));
+        btnDisplay.setBounds(1011, 135, 125, 35);
+        panelVisibleToAdmin.add(btnDisplay);
+        btnDisplay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inventory inv1 = Inventory.getInstance();
+				
+				String temp = "";
+				temp += inv1.display();
+				
+				textboxOutput.setText(temp);
+			
+			}
+		});
+        
+        totalGUI.add(panelVisibleToAdmin);
 	}
 	
 	private void createExtraContents(JPanel totalGUI) {
@@ -209,12 +365,47 @@ public class DisplayInitialScreen {
         btnSearch.setFont(new Font("굴림", Font.BOLD, 20));
         btnSearch.setBounds(819, 0, 125, 35);
         panelVisibleToAll.add(btnSearch);
+        btnSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String _inputKeyword = inputKeyword.getText();
+				if(user == USER.OWNER || user == USER.PHARMACIST) {
+					Owner owner1 = new Owner(1,1);
+					ArrayList<Merchandise> methodResult = owner1.searchOTCMedicineByName(_inputKeyword);
+					
+					String temp = "";
+					for (Merchandise i: methodResult) {
+						temp += i.toString();
+					}
+					textboxOutput.setText(temp);
+				}
+				else {
+					Patient patient1 = new Patient(1,1);
+					ArrayList<Merchandise> methodResult = patient1.searchOTCMedicineByName(_inputKeyword);
+					
+					String temp = "";
+					for (Merchandise i: methodResult) {
+						temp += i.toString();
+					}
+					textboxOutput.setText(temp);
+				}
+			}
+		});
         
-        JList list = new JList();
-        list.setBorder(new LineBorder(new Color(0, 0, 0)));
-        list.setFont(new Font("굴림", Font.PLAIN, 15));
-        list.setBounds(0, 58, 944, 397);
-        panelVisibleToAll.add(list);
+//        JList list = new JList();
+//        list.setBorder(new LineBorder(new Color(0, 0, 0)));
+//        list.setFont(new Font("굴림", Font.PLAIN, 15));
+//        list.setBounds(0, 58, 944, 397);
+//        panelVisibleToAll.add(list);
+        
+        textboxOutput = new JTextArea();
+       // textboxOutput.setBorder
+        textboxOutput.setBorder(new LineBorder(new Color(0, 0, 0)));
+        textboxOutput.setFont(new Font("굴림", Font.PLAIN, 15));
+        textboxOutput.setBounds(0, 58, 944, 397);
+        panelVisibleToAll.add(textboxOutput);
+        
 		
         //totalGUI.add(panelVisibleToAdmin);
         totalGUI.add(panelVisibleToAll);
@@ -247,12 +438,12 @@ public class DisplayInitialScreen {
 	
 	
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//displayInitialScreen(USER.PATIENT); 
-		DisplayInitialScreen screen = new DisplayInitialScreen();
-		screen.displayInitialScreen(USER.PATIENT);
-//		screen.displayInitialScreen(USER.OWNER);
-//		screen.displayInitialScreen(USER.PHARMACIST);
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		//displayInitialScreen(USER.PATIENT); 
+//		DisplayInitialScreen screen = new DisplayInitialScreen();
+//		screen.displayInitialScreen(USER.PATIENT);
+////		screen.displayInitialScreen(USER.OWNER);
+////		screen.displayInitialScreen(USER.PHARMACIST);
+//	}
 }
