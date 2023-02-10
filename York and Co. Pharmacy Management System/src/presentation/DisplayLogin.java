@@ -87,9 +87,9 @@ public class DisplayLogin {
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 				if(validateInput(totalGUI, userNameField, passwordField)) {
-					//Minh changed AuthenticateUser to singleton class					
+										
 					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password);
 					if (userType != null) {
 						frame.dispose();
@@ -98,8 +98,7 @@ public class DisplayLogin {
 						
 					}
 					else {
-						//System.out.println("INCORRECT MATCH");
-						// have to add label "username or password is not found in system/ or is invalid here"
+						
 						DisplayLogin.authenticationFailed(totalGUI);
 					}
 				}
@@ -146,13 +145,5 @@ public class DisplayLogin {
 		return password;
 	}
 	
-
-
-
-//	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//		DisplayLogin login = new DisplayLogin();
-//		login.displayLogin();
-//	}
 }
 

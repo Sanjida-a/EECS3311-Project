@@ -56,3 +56,6 @@
 
 16. 2023/02/08 23:15 contributor: Geon Kim
 * dropdown menu for search method is implemented with minor bug fix
+
+17. 2023/02/09 19:00 - 20:45 contributor: Minh Tran
+* added Order class and its subclasses. fixed ListofUser class and addPatient method. fixed UML diagram 

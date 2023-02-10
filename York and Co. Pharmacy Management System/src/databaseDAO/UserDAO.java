@@ -29,4 +29,8 @@ public class UserDAO {
 		return allUsernamesAndPasswordsList;
 	
 	}
+	
+	public void addPatient( Patient newPatient) {
+		allUsernamesAndPasswordsList.add(newPatient);
+	}
 }
