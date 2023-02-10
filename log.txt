@@ -13,58 +13,61 @@
 5. 2023/02/03 22:25 contributor: Geon Kim
 *basic implementation of GUI uploaded.
 
-5. 2023/02/04 17:00 ~ 19:00 contributor: all
+6. 2023/02/04 17:00 ~ 19:00 contributor: all
 *virtual discussion regarding editing UML diagram, discussion about detailed implementation of some classes, assigned detailed stories to each member
 
-6. 2023/02/04 20:30-23:00 contributor: Aiza Bajwa, Minh Tran
+7. 2023/02/04 20:30-23:00 contributor: Aiza Bajwa, Minh Tran
 *virtually worked together on connecting front end to middle tier (main java starting application); also created basic implementation of AuthenticateUser class and connected it to front end
 
-7. 2023/02/04 21:00-23:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
+8. 2023/02/04 21:00-23:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
 *virtually worked together to fix and finish connecting front end to middle tier since experienced GitHub problems with conflicts as still learning how to use all operations properly
 
-8. 2023/02/05 20:00-23:00 contributor: Alvin Ta
+9. 2023/02/05 20:00-23:00 contributor: Alvin Ta
 *created Merchandise.java and Inventory.java; implemented all methods for Inventory.java to allow all modifications
 
-7. 2023/02/04 21:00-00:00 contributor: Aiza Bajwa
+10. 2023/02/04 21:00-00:00 contributor: Aiza Bajwa
 *completed checkUserValid method and addPatient method
 
-8. 2023/02/06 20:00 contributor: Sanjida Afreen
+11. 2023/02/06 20:00 contributor: Sanjida Afreen
 *made changes to the inventory.java - added low stock notification. added setters and getters in merchandise.java
 
-9. 2023/02/07 10:30 - 1:30, 6:00 - 7:45 contributor: Minh Tran
+12. 2023/02/07 10:30 - 1:30, 6:00 - 7:45 contributor: Minh Tran
 *created dataDAO package
 *search merchandise methods for patients, owner, pharmacist
 *change/ update Inventory/ Owner/Pharmacist classes
 
-10. 2023/02/07 15:30 - 20:30 contributor: Sanjida Afreen
+13. 2023/02/07 15:30 - 20:30 contributor: Sanjida Afreen
 *added Wiki to github, link to UML Class diagram
 
-11. 2023/02/07 23:00-01:00 contributor: Sanjida Afreen, Aiza Bajwa
+14. 2023/02/07 23:00-01:00 contributor: Sanjida Afreen, Aiza Bajwa
 *worked on UML diagram and system architecture
 
-12. 2023/02/08 16:40 contributor: Geon Kim
+15. 2023/02/08 16:40 contributor: Geon Kim
 * transition from Login Screen to InitialScreen implemented with minor bug fix
 
-13. 2023/02/08 17:00 - 17:30 contributor: Aiza Bajwa, Minh Tran
+16. 2023/02/08 17:00 - 17:30 contributor: Aiza Bajwa, Minh Tran
 * virtual meeting to start connecting Inventory methods to DisplayInitialScreen.java
 
-14. 2023/02/08 17:30 - 20:00 contributor: Aiza Bajwa
+17. 2023/02/08 17:30 - 20:00 contributor: Aiza Bajwa
 * finished connecting all Inventory methods to DisplayInitialScreen.java
 
-15. 2023/02/08 20:00-22:30 contributor: Alvin Ta
+18. 2023/02/08 20:00-22:30 contributor: Alvin Ta
 * updated class diagram to make sure abides by classes made in code, connected dependencies, and associations *
 
-16. 2023/02/08 23:15 contributor: Geon Kim
+19. 2023/02/08 21:00-23:00 contributor: Alvin Ta, Aiza Bajwa, Geon Kim, Sanjida Afreen
+* Virtual meeting: confirmed UML diagram, E-mailed client team, discussed wiki creation, and tested new interface screen for all users *
+
+20. 2023/02/08 23:15 contributor: Geon Kim
 * dropdown menu for search method is implemented with minor bug fix
 
-17. 2023/02/09 13:00 - 15:30 contributor: Sanjida Afreen
+21. 2023/02/09 13:00 - 15:30 contributor: Sanjida Afreen
 * fixed UML Diagram and System Architecture
 
-18. 2023/02/09 19:00 - 20:45 contributor: Minh Tran
+22. 2023/02/09 19:00 - 20:45 contributor: Minh Tran
 * added Order class and its subclasses. fixed ListofUser class and addPatient method. fixed UML diagram 
 
-19. 2023/02/09 13:00-13:30 contributor: Alvin Ta
-* edited UML diagram to revise and add design choice *
+23. 2023/02/09 13:00-13:30 contributor: Alvin Ta
+* edited UML diagram to revise and add design choices *
 
-19. 2023/02/09 19:00 - 21:15 contributor: Sanjida Afreen
+24. 2023/02/09 19:00 - 21:15 contributor: Sanjida Afreen
 * added links of UML Diagram, System architecture to the wiki, added final details to wiki, updated README.md
