@@ -5,4 +5,5 @@ Links to the UML Class Diagram and System Architecture are included in the Wiki.
 
 To execute the program, ensure you have the latest version of Java. Download the Iteration1ExecutableDemo.jar file and run it from your system (you can simply double-click on it).
 
+To see the java code files, please first click on the "York and Co. Pharmacy Management System" folder and then the "src" folder.
 -------------------------------------------------------------------------------------------
