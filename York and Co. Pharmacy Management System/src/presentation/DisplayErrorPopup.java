@@ -18,17 +18,16 @@ import java.awt.Dimension;
 public class DisplayErrorPopup {
 	
 	public static void displayErrorPopup(String error) {
-		//creates frame
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frmPopup = new JFrame("Error");
+        
         frmPopup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel_1 = new JPanel();
-        frmPopup.setContentPane(panel_1);
+        frmPopup.setContentPane(new JPanel());
         frmPopup.setSize(600, 400);
         frmPopup.getContentPane().setLayout(null);
         
         JPanel panelError = new JPanel();
-        panelError.setBounds(12, 28, 562, 88);
+        panelError.setBounds(12, 81, 562, 88);
         frmPopup.getContentPane().add(panelError);
         panelError.setLayout(null);
         
@@ -48,19 +47,6 @@ public class DisplayErrorPopup {
         btnOk.setFont(new Font("굴림", Font.BOLD, 20));
         btnOk.setPreferredSize(new Dimension(125, 35));
         panel.add(btnOk);
-        
-        JPanel panel_2 = new JPanel();
-        panel_2.setBounds(12, 126, 562, 88);
-        panel_1.add(panel_2);
-        panel_2.setLayout(null);
-        
-        JLabel lblNewLabel = new JLabel("**PLEASE PRESS 'OK' BUTTON TO CLOSE THIS POPUP**");
-        lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-        lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        lblNewLabel.setForeground(new Color(255, 0, 0));
-        lblNewLabel.setFont(new Font("굴림", Font.BOLD, 20));
-        lblNewLabel.setBounds(0, 0, 562, 88);
-        panel_2.add(lblNewLabel);
         btnOk.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -71,5 +57,4 @@ public class DisplayErrorPopup {
         frmPopup.setVisible(true);
 	}
 	
-
 }
