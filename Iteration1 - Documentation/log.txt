@@ -65,3 +65,6 @@
 
 19. 2023/02/09 19:00 - 21:15 contributor: Sanjida Afreen
 * added links of UML Diagram, System architecture to the wiki, added final details to wiki, updated README.md
+
+20. 2023/02/09 21:30 contributor: Geon Kim
+* minor bug fix and added text in DisplayErrorPopup
