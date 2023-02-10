@@ -1,4 +1,6 @@
-# EECS3311-project-group8
-Group project repository, the name is a subject to change.
+# EECS3311-Group8-PharmacyManagementSystem
+Iteration 1:
+
+Links to the UML Class Diagram and System Architecture are included in the Wiki.
 
 -------------------------------------------------------------------------------------------
