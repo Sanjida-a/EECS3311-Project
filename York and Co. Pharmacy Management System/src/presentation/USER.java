@@ -6,7 +6,7 @@ public enum USER {
 	OWNER;
 	
 	
-	public static USER getValue(String s) {
+	public static USER getValue(String s) {	//convert string into USER enum
 		USER result;
 		if(s.compareTo("Owner") == 0) {
 			result = USER.OWNER;
