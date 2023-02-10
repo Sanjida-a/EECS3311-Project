@@ -54,7 +54,7 @@ public class DisplayErrorPopup {
         panel_1.add(panel_2);
         panel_2.setLayout(null);
         
-        JLabel lblNewLabel = new JLabel("Please press Ok button to dismiss");
+        JLabel lblNewLabel = new JLabel("**PLEASE PRESS 'OK' BUTTON TO CLOSE THIS POPUP**");
         lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         lblNewLabel.setForeground(new Color(255, 0, 0));
