@@ -59,3 +59,6 @@
 
 17. 2023/02/09 19:00 - 20:45 contributor: Minh Tran
 * added Order class and its subclasses. fixed ListofUser class and addPatient method. fixed UML diagram 
+
+19. 2023/02/09 13:00-13:30 contributor: Alvin Ta
+* edited UML diagram to revise and add design choice *
