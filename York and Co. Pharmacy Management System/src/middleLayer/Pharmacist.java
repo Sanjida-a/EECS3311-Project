@@ -2,6 +2,8 @@ package middleLayer;
 
 import java.util.ArrayList;
 
+import presentation.DisplayLogin;
+
 public class Pharmacist extends User {
 	
 	private Inventory merListByPhar = Inventory.getInstance();
@@ -12,7 +14,7 @@ public class Pharmacist extends User {
 		this.password = password;
 	}
 	
-	//Minh moved 2 methods here from ListOfUsers
+	
 	public Pharmacist getPharmacistUser() {
 		return this;
 	}
@@ -23,7 +25,7 @@ public class Pharmacist extends User {
 	}
 	
 	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
-		// maybe have textboxes for each parameter so users can actually pharmacists can actually type in there???
+		
 		Patient newPatient = new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);
 		
 		ListOfUsers listOfUsersInstance = ListOfUsers.getInstance();
@@ -57,5 +59,7 @@ public class Pharmacist extends User {
 		
 		return searchMedTypePhar;
 	}
+	
+
 	
 }

@@ -2,12 +2,23 @@ package middleLayer;
 
 import java.util.ArrayList;
 
+import databaseDAO.UserDAO;
+
 public class ListOfUsers {
 	
-	private static ListOfUsers ListOfUsersInstance;
+	private static ListOfUsers ListOfUsersInstance = null;
 	private ArrayList<Patient> allPatientUsersList = new ArrayList<Patient>();
+	private ArrayList<User> allUsersList = new ArrayList<User>();
+	private UserDAO _userDAO;
 	
-	private ListOfUsers() {
+	public ListOfUsers() {
+		try {
+			_userDAO = new UserDAO();
+			allUsersList = _userDAO.getListOfUsers();
+		} catch (ClassNotFoundException e) {
+	
+			e.printStackTrace();
+		}
 	}
 	
 	public static ListOfUsers getInstance(){
@@ -18,10 +29,8 @@ public class ListOfUsers {
     }
 
 	public void addPatientToList(Patient newPatient) {
-		ListOfUsersInstance.allPatientUsersList.add(newPatient);
+		_userDAO.addPatient(newPatient);
 	}
-	
-	//Minh moved some methods to Owner and Pharmacist class to comply with SOLID principles
 
 	public ArrayList<Patient> getAllPatientUsersList() {
 		return allPatientUsersList;
@@ -29,6 +38,10 @@ public class ListOfUsers {
 
 	public void setAllPatientUsersList(ArrayList<Patient> allPatientUsersList) {
 		this.allPatientUsersList = allPatientUsersList;
+	}
+	
+	public ArrayList<User> getAllUsersList() {
+		return allUsersList;
 	}
 		
 }

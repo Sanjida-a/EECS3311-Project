@@ -8,7 +8,6 @@ public class Inventory{
 
     ArrayList<Merchandise> list = new ArrayList<Merchandise>();
  
-    //Minh changed here
 	private MerchandiseDAO _merDAO;
 	
 	public Inventory() {
