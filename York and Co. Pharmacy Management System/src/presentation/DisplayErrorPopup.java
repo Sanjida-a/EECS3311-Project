@@ -13,19 +13,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.Dimension;
+import javax.swing.JPopupMenu;
 
 public class DisplayErrorPopup {
+
+
 	
-	public static void displayErrorPopup(String error) {
+	public static void displayErrorPopup(String error, JFrame superFrame) {
 		//creates frame
+		superFrame.setEnabled(false);
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frmPopup = new JFrame("Error");
-        frmPopup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmPopup.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         JPanel panel_1 = new JPanel();
         frmPopup.setContentPane(panel_1);
         frmPopup.setSize(600, 400);
         frmPopup.getContentPane().setLayout(null);
+
+		
         
         JPanel panelError = new JPanel();
         panelError.setBounds(12, 28, 562, 88);
@@ -66,8 +74,11 @@ public class DisplayErrorPopup {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				frmPopup.dispose();
+				superFrame.setEnabled(true);
+				superFrame.toFront();
 			}
 		});
+
         frmPopup.setVisible(true);
 	}
 	
