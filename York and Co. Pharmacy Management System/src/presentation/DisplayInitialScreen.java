@@ -179,7 +179,7 @@ public class DisplayInitialScreen {
 				try {	//Exception is thrown when insufficient number of arguments is passed to Merchandise constructor. if all argument is fed, 
 						//addToInventory is bound to success
 				
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
@@ -190,11 +190,20 @@ public class DisplayInitialScreen {
 					}
 				
 					Inventory inv1 = Inventory.getInstance();
-				
-					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-					inv1.addToInventory(newMerchandise);
 					
-					String temp = "Add successful. See updated inventory below: \n\n";
+					Boolean medicationAdded = false;
+					
+					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationAdded = inv1.addToInventory(newMerchandise);
+					
+					String temp = "";
+					if (medicationAdded == true) {
+						temp += "Add successful. See updated inventory below: \n\n";
+					}
+					else {
+						temp += "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory below: \n\n";
+					}
+					
 					temp += inv1.display();
 				
 					textboxOutput.setText(temp);
@@ -214,7 +223,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
 					Boolean _isOTC = false;
@@ -255,7 +264,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
@@ -297,7 +306,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
@@ -408,7 +417,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String _inputKeyword = inputKeyword.getText();
+				String _inputKeyword = inputKeyword.getText().toUpperCase();
 				String searchBy = (String)comboBox.getSelectedItem();
 				if(userType == USER.OWNER || userType == USER.PHARMACIST) {
 					Owner owner1 = new Owner(1,1);
@@ -424,9 +433,15 @@ public class DisplayInitialScreen {
 					}
 					
 					String temp = "";
-					for (Merchandise i: methodResult) {
-						temp += i.toString();
+					if (methodResult.isEmpty() == true) {
+						temp += "No results for " + _inputKeyword + " as a " + searchBy + " have been found in the inventory.";
 					}
+					else {
+						for (Merchandise i: methodResult) {
+							temp += i.toString();
+						}
+					}
+					
 					textboxOutput.setText(temp);
 				}
 				else {
@@ -444,9 +459,15 @@ public class DisplayInitialScreen {
 					}
 					
 					String temp = "";
-					for (Merchandise i: methodResult) {
-						temp += i.toString();
+					if (methodResult.isEmpty() == true) {
+						temp += "No results for " + _inputKeyword + " as a " + searchBy + " have been found in the inventory.";
 					}
+					else {
+						for (Merchandise i: methodResult) {
+							temp += i.toString();
+						}
+					}
+					
 					textboxOutput.setText(temp);
 				}
 			}

@@ -13,12 +13,12 @@ public class MerchandiseDAO {
 	
 	public MerchandiseDAO() throws ClassNotFoundException {
 		try {
-			Merchandise mer1 = new Merchandise( "Advil",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
-			Merchandise mer2 = new Merchandise( "Tylenol",  5,  8.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, true);
-			Merchandise mer3 = new Merchandise( "Advil",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.TABLET, true);
-			Merchandise mer4 = new Merchandise( "Tylenol",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
-			Merchandise mer5 = new Merchandise( "Pill1",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, false);
-			Merchandise mer6 = new Merchandise( "Pill2",  10,  5.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, false);
+			Merchandise mer1 = new Merchandise( "ADVIL",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
+			Merchandise mer2 = new Merchandise( "TYLENOL",  5,  8.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, true);
+			Merchandise mer3 = new Merchandise( "ADVIL",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.TABLET, true);
+			Merchandise mer4 = new Merchandise( "TYLENOL",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
+			Merchandise mer5 = new Merchandise( "PILL1",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, false);
+			Merchandise mer6 = new Merchandise( "PILL2",  10,  5.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, false);
 
 			allInventory.add(mer1);
 			allInventory.add(mer2);
