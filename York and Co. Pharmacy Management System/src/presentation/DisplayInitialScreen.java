@@ -44,6 +44,7 @@ public class DisplayInitialScreen {
 	private static JTextField inputFieldQty;
 	private static JTextField inputFieldPrice;
 	private static JTextField inputKeyword;
+	private static JFrame frame;
 	
 	private static String name;
 	private static int username;
@@ -60,13 +61,13 @@ public class DisplayInitialScreen {
 	public void displayInitialScreen(USER user) {
 		userType = user;
 		JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("York and Co. Pharmacy Management System");
+        frame = new JFrame("York and Co. Pharmacy Management System");
         DisplayInitialScreen background = new DisplayInitialScreen();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(background.createContentPanel(userType));
         frame.setSize(1400, 800);
         frame.getContentPane().setLayout(null);
-        
+        //frame.setEnabled(false);
 
         frame.setVisible(true);
 	}
@@ -199,7 +200,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
-					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
 				}
 			
 			}
@@ -240,7 +241,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch (Exception ex) {	//display error popup
-					DisplayErrorPopup.displayErrorPopup("name, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
 				}
 			
 			}
@@ -282,7 +283,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch(Exception ex) {
-					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
 				}
 			
 			}
@@ -327,7 +328,7 @@ public class DisplayInitialScreen {
 				
 					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
 						//notify popup for medication low in stock
-						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.\n");
+						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
 					}
 
 					temp += inv1.display();
@@ -335,7 +336,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
-					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
 				}
 			
 			}
