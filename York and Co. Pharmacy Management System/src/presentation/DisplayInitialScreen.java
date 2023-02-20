@@ -44,6 +44,7 @@ public class DisplayInitialScreen {
 	private static JTextField inputFieldQty;
 	private static JTextField inputFieldPrice;
 	private static JTextField inputKeyword;
+	private static JFrame frame;
 	
 	private static String name;
 	private static int username;
@@ -60,13 +61,13 @@ public class DisplayInitialScreen {
 	public void displayInitialScreen(USER user) {
 		userType = user;
 		JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("York and Co. Pharmacy Management System");
+        frame = new JFrame("York and Co. Pharmacy Management System");
         DisplayInitialScreen background = new DisplayInitialScreen();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(background.createContentPanel(userType));
         frame.setSize(1400, 800);
         frame.getContentPane().setLayout(null);
-        
+        //frame.setEnabled(false);
 
         frame.setVisible(true);
 	}
@@ -178,7 +179,7 @@ public class DisplayInitialScreen {
 				try {	//Exception is thrown when insufficient number of arguments is passed to Merchandise constructor. if all argument is fed, 
 						//addToInventory is bound to success
 				
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
@@ -189,17 +190,26 @@ public class DisplayInitialScreen {
 					}
 				
 					Inventory inv1 = Inventory.getInstance();
-				
-					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-					inv1.addToInventory(newMerchandise);
 					
-					String temp = "Add successful. See updated inventory below: \n\n";
+					Boolean medicationAdded = false;
+					
+					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationAdded = inv1.addToInventory(newMerchandise);
+					
+					String temp = "";
+					if (medicationAdded == true) {
+						temp += "Add successful. See updated inventory below: \n\n";
+					}
+					else {
+						temp += "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory below: \n\n";
+					}
+					
 					temp += inv1.display();
 				
 					textboxOutput.setText(temp);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
-					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
 				}
 			
 			}
@@ -213,7 +223,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
 					Boolean _isOTC = false;
@@ -240,7 +250,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch (Exception ex) {	//display error popup
-					DisplayErrorPopup.displayErrorPopup("name, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
 				}
 			
 			}
@@ -254,7 +264,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
@@ -282,7 +292,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch(Exception ex) {
-					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
 				}
 			
 			}
@@ -296,7 +306,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
-					String _inputFieldName = inputFieldName.getText();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
@@ -327,7 +337,7 @@ public class DisplayInitialScreen {
 				
 					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
 						//notify popup for medication low in stock
-						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.\n");
+						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
 					}
 
 					temp += inv1.display();
@@ -335,7 +345,7 @@ public class DisplayInitialScreen {
 					textboxOutput.setText(temp);
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
-					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required");
+					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
 				}
 			
 			}
@@ -407,7 +417,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String _inputKeyword = inputKeyword.getText();
+				String _inputKeyword = inputKeyword.getText().toUpperCase();
 				String searchBy = (String)comboBox.getSelectedItem();
 				if(userType == USER.OWNER || userType == USER.PHARMACIST) {
 					Owner owner1 = new Owner(1,1);
@@ -423,9 +433,15 @@ public class DisplayInitialScreen {
 					}
 					
 					String temp = "";
-					for (Merchandise i: methodResult) {
-						temp += i.toString();
+					if (methodResult.isEmpty() == true) {
+						temp += "No results for " + _inputKeyword + " as a " + searchBy + " have been found in the inventory.";
 					}
+					else {
+						for (Merchandise i: methodResult) {
+							temp += i.toString();
+						}
+					}
+					
 					textboxOutput.setText(temp);
 				}
 				else {
@@ -443,9 +459,15 @@ public class DisplayInitialScreen {
 					}
 					
 					String temp = "";
-					for (Merchandise i: methodResult) {
-						temp += i.toString();
+					if (methodResult.isEmpty() == true) {
+						temp += "No results for " + _inputKeyword + " as a " + searchBy + " have been found in the inventory.";
 					}
+					else {
+						for (Merchandise i: methodResult) {
+							temp += i.toString();
+						}
+					}
+					
 					textboxOutput.setText(temp);
 				}
 			}
