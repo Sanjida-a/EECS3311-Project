@@ -1,6 +1,9 @@
 package middleLayer;
 
 public class Merchandise{
+	static int medicationIDClassVar = 0;
+	
+	int medicationID;
     String name;
     int quantity;
     double price;
@@ -10,6 +13,9 @@ public class Merchandise{
 
     // constructor
     public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    	medicationIDClassVar++;
+    	
+    	this.medicationID = medicationIDClassVar;
         this.name = name;
         this.quantity = quantity;
         this.price = price;

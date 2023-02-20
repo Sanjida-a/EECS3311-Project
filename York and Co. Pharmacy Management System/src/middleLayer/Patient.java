@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Patient extends User {
 	
+	private String ID;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -22,6 +23,9 @@ public class Patient extends User {
 		this.dateOfBirth = dateOfBirth;
 		this.username = healthCardNum;
 		this.password = dateOfBirth;
+		
+		String stringDOB = Integer.toString(dateOfBirth);
+		this.ID = firstName.charAt(0) + lastName.charAt(0) + stringDOB;
 	}
 
 	public Patient(int healthCardNum, int dateOfBirth) {
@@ -71,6 +75,14 @@ public class Patient extends User {
 
 	public int getDateOfBirth() {
 		return dateOfBirth;
+	}
+	
+	public ArrayList<Order> getOrdersMade() {
+		return ordersMade;
+	}
+
+	public void setOrdersMade(ArrayList<Order> ordersMade) {
+		this.ordersMade = ordersMade;
 	}
 
 	// implementation of inherited abstract method from User superclass
