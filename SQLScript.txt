@@ -1,0 +1,40 @@
+CREATE SCHEMA 3311Team8Project;
+
+USE 3311Team8Project;
+
+CREATE TABLE Patient (
+ID Integer NOT NULL,
+firstName VARCHAR(200) NOT NULL,
+lastName VARCHAR(200) NOT NULL,
+Address VARCHAR(200) NOT NULL,
+phoneNumber Integer NOT NULL,
+healthCardNumber Integer NOT NULL,
+dateOfBirth Integer NOT NULL, 
+/* adding list of orders patient made? would need another table because multivalued attribute */
+PRIMARY KEY (ID)
+);
+
+CREATE TABLE Orders (
+orderNum Integer NOT NULL,
+medicationID Integer NOT NULL,
+patientID Integer NOT NULL,
+quantityBought Integer NOT NULL,
+priceAtPurchase Double NOT NULL,
+PRIMARY KEY (orderNUM)
+);
+
+CREATE TABLE Prescriptions (
+prescriptionNum Integer NOT NULL,
+medicationID Integer NOT NULL,
+patientID Integer NOT NULL,
+numOfRefillsRemaning Integer NOT NULL, /* this will be modified every time an order about that prescription is made */
+PRIMARY KEY (prescriptionNum)
+);
+
+CREATE TABLE PrescriptionOrders (
+orderNum Integer NOT NULL,
+prescriptionNum Integer NOT NULL,
+PRIMARY KEY (orderNUM),
+FOREIGN KEY (orderNum) REFERENCES Orders(orderNum),
+FOREIGN KEY (prescriptionNum) REFERENCES Prescriptions(prescriptionNum)
+);

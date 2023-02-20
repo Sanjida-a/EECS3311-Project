@@ -3,8 +3,9 @@ package middleLayer;
 import java.util.ArrayList;
 
 public class Patient extends User {
+	private static int IDClassVar = 0;
 	
-	private String ID;
+	private int ID;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -15,6 +16,9 @@ public class Patient extends User {
 	private Inventory merList = Inventory.getInstance(); 
 	
 	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
+		IDClassVar++;
+		
+		this.ID = IDClassVar;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -23,9 +27,6 @@ public class Patient extends User {
 		this.dateOfBirth = dateOfBirth;
 		this.username = healthCardNum;
 		this.password = dateOfBirth;
-		
-		String stringDOB = Integer.toString(dateOfBirth);
-		this.ID = firstName.charAt(0) + lastName.charAt(0) + stringDOB;
 	}
 
 	public Patient(int healthCardNum, int dateOfBirth) {
