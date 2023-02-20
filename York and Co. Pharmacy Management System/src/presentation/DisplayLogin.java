@@ -14,26 +14,27 @@ import middleLayer.*;
 import javax.swing.SwingConstants;
 
 public class DisplayLogin {
-	private JTextField userNameField;
-	private JPasswordField passwordField;
-	AuthenticateUser _authUser;
+	private static JTextField userNameField;
+	private static JPasswordField passwordField;
+	static AuthenticateUser _authUser;
 
     private static int username;
 	private static int password;
 
 
-	public void displayLogin() {
+	public void displayLogin(JFrame superFrame) {
+		superFrame.setEnabled(false);
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frmLogin = new JFrame("York and Co. Pharmacy Management System");
         frmLogin.setTitle("Login");
         DisplayLogin background = new DisplayLogin();
-        frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frmLogin.setContentPane(background.createContentPanel(frmLogin));
+        frmLogin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frmLogin.setContentPane(background.createContentPanel(frmLogin, superFrame));
         frmLogin.setSize(600, 400);
         frmLogin.setVisible(true);
 	}
 	
-	public JPanel createContentPanel(JFrame frame) {
+	private JPanel createContentPanel(JFrame frame, JFrame superFrame) {
 		JPanel totalGUI = new JPanel();
 		totalGUI.setLayout(null);
 
@@ -72,17 +73,33 @@ public class DisplayLogin {
 		totalGUI.add(lblTitle);
 		
 		
-		this.loginButton(totalGUI, frame);
+		loginButton(totalGUI, frame, superFrame);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("굴림", Font.BOLD, 25));
+		btnCancel.setBounds(300, 243, 150, 50);
+		btnCancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				frame.dispose();
+				superFrame.setEnabled(true);
+				superFrame.toFront();
+			}
+			
+		});
+		totalGUI.add(btnCancel);
 		
 		
 		totalGUI.setVisible(true);
 		return totalGUI;
 	}
 	
-	private void loginButton(JPanel totalGUI, JFrame frame) {
+	private static void loginButton(JPanel totalGUI, JFrame frame, JFrame superFrame) {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("굴림", Font.BOLD, 25));
-		btnLogin.setBounds(225, 244, 150, 50);
+		btnLogin.setBounds(100, 243, 150, 50);
 		totalGUI.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
@@ -93,8 +110,13 @@ public class DisplayLogin {
 					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password);
 					if (userType != null) {
 						frame.dispose();
+						superFrame.dispose();
 						DisplayInitialScreen screen = new DisplayInitialScreen();
 						screen.displayInitialScreen(userType);
+						screen.getFrame().toFront();
+						
+						//DisplayInitialScreen screen = new DisplayInitialScreen();
+						//screen.displayInitialScreen(userType);
 						
 					}
 					else {
@@ -107,7 +129,7 @@ public class DisplayLogin {
 
 	}
 	
-	private boolean validateInput(JPanel totalGUI, JTextField inputUsername, JPasswordField inputPassword) {
+	private static boolean validateInput(JPanel totalGUI, JTextField inputUsername, JPasswordField inputPassword) {
 		try {
 			username = Integer.parseInt(inputUsername.getText());
 			password = Integer.parseInt(new String(inputPassword.getPassword()));
@@ -144,6 +166,9 @@ public class DisplayLogin {
 	public int getPassword() {
 		return password;
 	}
-	
+	//public static void main(String[] args) {
+	//	DisplayLogin screen = new DisplayLogin();
+	//	screen.displayLogin(new JFrame());
+	//}
 }
 
