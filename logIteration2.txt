@@ -1,0 +1,8 @@
+1. 2023/02/13 18:09 contributor: Geon Kim
+*Fixed Iteration1 Bug: disabled x button on popup so users don't accidentally close entire application
+
+2. 2023/02/13 18:09 contributor: Aiza Bajwa
+*Fixed minor Iteration1 bugs: Allowed users to type any mix of uppercase/lowercase for medication names;
+*Fixed output for 'Add' button if adding was unsuccessful so that user is updated with proper info;
+*Added output message to let user know if no results were found when using search button/method.
+

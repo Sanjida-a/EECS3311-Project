@@ -3,7 +3,8 @@ package presentation;
 public enum USER {
 	PATIENT,
 	PHARMACIST,
-	OWNER;
+	OWNER,
+	GUEST;
 	
 	
 	public static USER getValue(String s) {
