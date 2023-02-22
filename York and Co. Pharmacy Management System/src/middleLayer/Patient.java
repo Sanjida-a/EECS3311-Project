@@ -10,7 +10,7 @@ public class Patient extends User {
 	private int phoneNum;
 	private int healthCardNum;
 	private int dateOfBirth;
-	private ArrayList<Order> ordersMade; 
+	private ArrayList<Order> ordersMade;  
 	private Inventory merList = Inventory.getInstance(); 
 	
 	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
