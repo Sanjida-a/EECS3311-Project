@@ -70,18 +70,4 @@
 * edited UML diagram to revise and add design choices *
 
 24. 2023/02/09 19:00 - 21:15 contributor: Sanjida Afreen
-
-25. 2023/02/09 15:00-14:00 contributor: Aiza Bajwa
-* added lowInStock notification to GUI; cleaned up code and added some comments
-
-26. 2023/02/09 19:00 - 20:45 contributor: Minh Tran
-* added Order class and its subclasses. fixed ListofUser class and addPatient method. fixed UML diagram 
-
-27. 2023/02/09 19:00 - 21:15 contributor: Sanjida Afreen
 * added links of UML Diagram, System architecture to the wiki, added final details to wiki, updated README.md
-
-28. 2023/02/09 21:30 contributor: Geon Kim
-* minor bug fix and added text in DisplayErrorPopup
-
-29. 2023/02/09 21:00 - 22:00 contributor: All
-* virtual meeting: final commits; finalizing documentation and submission and organizing into folders; prepared jar file; uploaded jar file to Github Repo and sent to client
