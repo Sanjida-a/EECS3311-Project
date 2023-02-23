@@ -20,7 +20,7 @@ public class ListOfUsers {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static ListOfUsers getInstance(){
         if (ListOfUsersInstance == null) {
         	ListOfUsersInstance = new ListOfUsers();
@@ -32,6 +32,7 @@ public class ListOfUsers {
 		_userDAO.addPatient(newPatient);
 	}
 
+	//look into this
 	public ArrayList<Patient> getAllPatientUsersList() {
 		return allPatientUsersList;
 	}
