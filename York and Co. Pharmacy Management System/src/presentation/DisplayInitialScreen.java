@@ -457,7 +457,7 @@ public class DisplayInitialScreen {
 					else if(searchBy.compareTo("Type") == 0) {
 						methodResult = owner1.searchOTCMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword));
 					}
-					else {
+					else {	//left empty intentionally for further expansion of feature in the future
 						
 					}
 					
