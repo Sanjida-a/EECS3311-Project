@@ -21,9 +21,10 @@ class ListOfUsersTest {
     private User pharma1;
 
     void setUp() {
-
+        patient1 = new Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
         patient2 = new Patient(null, null, null, 1112224444, 1111144444, 11222012);
-
+        owner = new Owner(1111111111, 11111111);
+        pharma1 = new Pharmacist(1234567890,12345678);
 
     }
 
@@ -34,7 +35,7 @@ class ListOfUsersTest {
 
     @Test
     void addPatientToListCheck() {
-        patient1 = new Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
+
         ListOfUsers val = new ListOfUsers();
         val.addPatientToList(patient1);
         assertEquals("Test",patient1.getFirstName());
@@ -58,33 +59,38 @@ class ListOfUsersTest {
 //
 //    }
 
-//    @Test
-//    void getAllPatientUsersList() {
-//        ListOfUsers val = new ListOfUsers();
-//        val.getAllPatientUsersList();
-//        assertEquals(null, val);
-//    }
-    @Test
-    void getAllUsersListCheck() {
-        ListOfUsers val = new ListOfUsers();
-        assertEquals("Owner, Pharmacist, Patient",val.getAllUsersList().toString());
-    }
-//
-//    @Test
-//    void getAllUsersListCheck2(){
-//        patient1 = new Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
-//        ListOfUsers val = new ListOfUsers();
-//        val.addPatientToList(patient1);
-//        assertEquals("Owner, Pharmacist, Patient, Patient", val.getAllUsersList());
-//    }
-
     @Test
     void getAllPatientUsersList() {
         ListOfUsers val = new ListOfUsers();
-        assertEquals("[]",val.getAllPatientUsersList().toString());
-
+        val.getAllPatientUsersList();
+        assertEquals(null, val);
+    }
+    @Test
+    void getAllUsersListCheck() {
+        ListOfUsers val = new ListOfUsers();
+        val.getAllUsersList();
+        assertEquals(null, val);
     }
 
+    @Test
+    void getAllUsersListCheck2(){
+        ListOfUsers val = new ListOfUsers();
+        val.addPatientToList(patient1);
+        assertEquals(patient1, val);
+    }
+
+//    @Test
+//    void getInstance() {
+//    }
+//
+//    @Test
+//    void addPatientToList() {
+//    }
+//
+//    @Test
+//    void getAllPatientUsersList() {
+//    }
+//
 //    @Test
 //    void setAllPatientUsersList() {
 //    }
