@@ -33,12 +33,12 @@ import javax.swing.JList;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingConstants;
 
 
 
 public class DisplayInitialScreen {
 	private static JTextField inputFieldName;
-	private static JTextField inputFieldHCN;
 	private static JTextField inputFieldType;
 	private static JTextField inputFieldForm;
 	private static JTextField inputFieldQty;
@@ -67,12 +67,11 @@ public class DisplayInitialScreen {
         frame.setContentPane(background.createContentPanel(userType));
         frame.setSize(1400, 800);
         frame.getContentPane().setLayout(null);
-        //frame.setEnabled(false);
 
         frame.setVisible(true);
 	}
 	
-	public JPanel createContentPanel(USER user) {
+	private JPanel createContentPanel(USER user) {
 		JPanel totalGUI = new JPanel();
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
@@ -80,9 +79,29 @@ public class DisplayInitialScreen {
 		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
 			this.createPanelVisibleToAdmin(totalGUI);
 		}
-
+		else if(user == USER.PATIENT){
+			this.createPanalVisibleToPatient(totalGUI);
+		}
+		//this.createPanelVisibleToAdmin(totalGUI); //for test purpose
+		//this.createPanalVisibleToPatient(totalGUI);//for test purpose
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
+        
+        JButton btnNewButton = new JButton("Login");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		DisplayLogin login = new DisplayLogin();
+        		
+        		login.displayLogin(frame);
+        	}
+        });
+        btnNewButton.setFont(new Font("굴림", Font.BOLD, 18));
+        btnNewButton.setBounds(1100, 40, 125, 35);
+        totalGUI.add(btnNewButton);
+        
+        
+        
+
         		
 		return totalGUI;
 		
@@ -103,34 +122,24 @@ public class DisplayInitialScreen {
         panelVisibleToAdmin.add(inputFieldName);
         inputFieldName.setColumns(20);
         
-        JLabel lblHCN = new JLabel("Health card#");
-        lblHCN.setFont(new Font("굴림", Font.BOLD, 18));
-        lblHCN.setBounds(0, 45, 125, 35);
-        panelVisibleToAdmin.add(lblHCN);
-        
-        inputFieldHCN = new JTextField();
-        inputFieldHCN.setBounds(125, 45, 350, 35);
-        panelVisibleToAdmin.add(inputFieldHCN);
-        inputFieldHCN.setColumns(20);      
-        
         JLabel lblType = new JLabel("Type");
         lblType.setFont(new Font("굴림", Font.BOLD, 18));
-        lblType.setBounds(0, 90, 125, 35);
+        lblType.setBounds(0, 45, 125, 35);
         panelVisibleToAdmin.add(lblType);
         
         JLabel lblForm = new JLabel("Form");
         lblForm.setFont(new Font("굴림", Font.BOLD, 18));
-        lblForm.setBounds(0, 135, 125, 35);
+        lblForm.setBounds(0, 90, 125, 35);
         panelVisibleToAdmin.add(lblForm);
         
         inputFieldType = new JTextField();
-        inputFieldType.setBounds(125, 90, 350, 35);
+        inputFieldType.setBounds(125, 45, 350, 35);
         panelVisibleToAdmin.add(inputFieldType);
         inputFieldType.setColumns(30);
         
         inputFieldForm = new JTextField();
         inputFieldForm.setColumns(10);
-        inputFieldForm.setBounds(125, 135, 350, 35);
+        inputFieldForm.setBounds(125, 90, 350, 35);
         panelVisibleToAdmin.add(inputFieldForm);       
         
         JLabel lblQty = new JLabel("Qty");
@@ -346,6 +355,7 @@ public class DisplayInitialScreen {
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
 					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
+					
 				}
 			
 			}
@@ -367,14 +377,33 @@ public class DisplayInitialScreen {
 			
 			}
 		});
+        JPanel panelVisibleToAdminSub1 = new JPanel();
+        panelVisibleToAdminSub1.setBounds(1001, 98, 170, 397);
+        totalGUI.add(panelVisibleToAdminSub1);
+        panelVisibleToAdminSub1.setLayout(null);
+        
+        JButton btnManagePatients = new JButton("<html>Manage<br>Patients</html> ");
+        btnManagePatients.setFont(new Font("굴림", Font.BOLD, 18));
+        btnManagePatients.setBounds(0, 0, 170, 60);
+        btnManagePatients.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DisplayPatientManage.displayPatientManage(frame);
+			}
+        	
+        });
+        panelVisibleToAdminSub1.add(btnManagePatients);
         
         totalGUI.add(panelVisibleToAdmin);
+        totalGUI.add(panelVisibleToAdminSub1);
 	}
 	
 	private void createExtraContents(JPanel totalGUI) {
         JButton btnExit = new JButton("Exit");
         btnExit.setFont(new Font("굴림", Font.BOLD, 20));
-        btnExit.setBounds(1213, 40, 125, 35);
+        btnExit.setBounds(1249, 40, 125, 35);
         btnExit.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		System.exit(0);
@@ -428,7 +457,7 @@ public class DisplayInitialScreen {
 					else if(searchBy.compareTo("Type") == 0) {
 						methodResult = owner1.searchOTCMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword));
 					}
-					else {	//left empty intentionally for further expansion of feature in the future
+					else {
 						
 					}
 					
@@ -486,6 +515,24 @@ public class DisplayInitialScreen {
 
 	}
 	
+	private void createPanalVisibleToPatient(JPanel totalGUI) {
+		JPanel panelVisibleToPatient = new JPanel();
+        panelVisibleToPatient.setBounds(1183, 98, 170, 397);
+        totalGUI.add(panelVisibleToPatient);
+        panelVisibleToPatient.setLayout(null);
+        
+        JButton btnNewButton_1 = new JButton("<html>Change<br>Profile</html>");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnNewButton_1.setFont(new Font("굴림", Font.BOLD, 17));
+        btnNewButton_1.setBounds(0, 0, 170, 60);
+        panelVisibleToPatient.add(btnNewButton_1);
+        
+        totalGUI.add(panelVisibleToPatient);
+	}
+	
 	public String getName() {
 		return new String(name);
 	}
@@ -510,5 +557,11 @@ public class DisplayInitialScreen {
 	public String getSearchKeyword() {
 		return new String(searchKeyword);
 	}
-
+	public JFrame getFrame() {
+		return frame;
+	}
+	//public static void main(String[] args) {	//for test purpose
+	//	DisplayInitialScreen screen = new DisplayInitialScreen();
+	//	screen.displayInitialScreen(USER.GUEST);
+	//}
 }

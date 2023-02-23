@@ -1,8 +1,7 @@
 Iteration 1 - Updated Plan
 
 CHANGES IN PLAN
-No changes to the previous plan for Iteration 1 as we were able to implement all of our detailed stories as planned in Iteration 0. The only difference is that since we weren’t expected to implement all aspects of the GUI in this iteration, we left out addPatient's connection to the front-end for now since we need persistent data storage for this (and database is coming in next iteration).
-We also only implemented the Order class and its subclass partially for completeness of our overall UML diagram. It was not part of our Iteration 1 plan.
+No changes to the previous plan for Iteration 1 as we were able to implement all of our detailed stories as planned in Iteration 0. The only difference is that since we weren’t expected to implement all aspects of the GUI in this iteration, we left addPatient's connection to the front-end for now since we need persistent data storage for this (and database is coming in next iteration).
 
 BIG USER STORIES
 Please see the Planning Document to see big user stories for iteration 2, as we intend on following that same plan.
