@@ -1,6 +1,8 @@
 package middleLayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import databaseDAO.MerchandiseDAO;
 
 public class Inventory{
@@ -77,6 +79,7 @@ public class Inventory{
         }
     	
     	boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
+       // System.out.println(Arrays.toString(booleanArray));
     	return booleanArray;
     }
     
