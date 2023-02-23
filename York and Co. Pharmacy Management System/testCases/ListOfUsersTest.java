@@ -67,7 +67,8 @@ class ListOfUsersTest {
     @Test
     void getAllUsersListCheck() {
         ListOfUsers val = new ListOfUsers();
-        assertEquals("Owner, Pharmacist, Patient",val.getAllUsersList().toString());
+
+        assertEquals("[Owner, Pharmacist, Patient]",val.getAllUsersList().toString());
     }
 //
 //    @Test
@@ -82,6 +83,14 @@ class ListOfUsersTest {
     void getAllPatientUsersList() {
         ListOfUsers val = new ListOfUsers();
         assertEquals("[]",val.getAllPatientUsersList().toString());
+
+    }
+    @Test
+    void getAllPatientUsersList2() {
+        patient1 = new Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
+        ListOfUsers val = new ListOfUsers();
+        val.addPatientToList(patient1);
+        assertEquals("[]",val.getAllPatientUsersList());
 
     }
 
