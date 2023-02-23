@@ -196,7 +196,6 @@ public class Inventory{
         }
     	
     	boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
-       // System.out.println(Arrays.toString(booleanArray));
     	return booleanArray;
     }
     

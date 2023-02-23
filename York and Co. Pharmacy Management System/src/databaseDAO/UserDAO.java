@@ -10,7 +10,6 @@ import middleLayer.User;
 public class UserDAO {
 	
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
-	
 	public UserDAO() throws ClassNotFoundException {
 		try {
 			User owner = new Owner(1111111111, 11111111);
@@ -19,7 +18,7 @@ public class UserDAO {
 			allUsernamesAndPasswordsList.add(owner);
 			allUsernamesAndPasswordsList.add(pharma1);
 			allUsernamesAndPasswordsList.add(patient);
-			
+
 		} catch (Exception e) {
 			throw e;
 		}
