@@ -2,12 +2,19 @@ CREATE SCHEMA 3311Team8Project;
 
 USE 3311Team8Project;
 
+CREATE TABLE AllUsernamesAndPasswords (
+usernameID Integer NOT NULL,
+passwordID Integer NOT NULL,
+userType VARCHAR(20) NOT NULL,
+PRIMARY KEY (usernameID)
+);
+
 CREATE TABLE Patient (
 ID Integer NOT NULL,
 firstName VARCHAR(200) NOT NULL,
 lastName VARCHAR(200) NOT NULL,
-Address VARCHAR(200) NOT NULL,
-phoneNumber Integer NOT NULL,
+Address VARCHAR(200),
+phoneNumber Integer,
 healthCardNumber Integer NOT NULL,
 dateOfBirth Integer NOT NULL, 
 /* adding list of orders patient made? would need another table because multivalued attribute */
@@ -20,7 +27,8 @@ medicationID Integer NOT NULL,
 patientID Integer NOT NULL,
 quantityBought Integer NOT NULL,
 priceAtPurchase Double NOT NULL,
-PRIMARY KEY (orderNUM)
+PRIMARY KEY (orderNUM),
+FOREIGN KEY (patientID) REFERENCES Patient(ID)
 );
 
 CREATE TABLE Prescriptions (
@@ -38,3 +46,15 @@ PRIMARY KEY (orderNUM),
 FOREIGN KEY (orderNum) REFERENCES Orders(orderNum),
 FOREIGN KEY (prescriptionNum) REFERENCES Prescriptions(prescriptionNum)
 );
+
+INSERT INTO AllUsernamesAndPasswords
+VALUES (1111111111, 11111111, "Owner"), (1234567890, 12345678, "Pharmacist");
+
+INSERT INTO AllUsernamesAndPasswords
+VALUES (1111122222, 11111222, "Patient");
+
+INSERT INTO Patient
+VALUES (1, "Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222);
+
+Select * from AllUsernamesAndPasswords;
+Select * from Patient;

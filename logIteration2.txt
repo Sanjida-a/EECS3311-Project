@@ -24,7 +24,12 @@
 *Implemented Search by filters for "Display" of inventory (not connected to UI yet)
 *Started implementation of Order detailed stories
 
-7. 2023/02/16 22:00 - 23:00 contributor: Aiza Bajwa, Minh Tran
+7. 2023/02/19 22:00 - 23:00 contributor: Aiza Bajwa, Minh Tran
 *Virtual call
 *Discussed and brainstormed implentation of Order detailed stories; brainstormed about database implementation
+
+7. 2023/02/23 14:00 - 20:00 contributor: Aiza Bajwa
+*Fixed bug in DisplayInitialScreen that added a medication with no name
+*connected UserDAO to database and updated its methods accordingly (so that contain Query Statements)
+*implemented "Add" patient button in DispalyPatientManage.java so works correctly
 
