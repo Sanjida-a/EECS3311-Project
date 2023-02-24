@@ -73,7 +73,6 @@ class InventoryTest {
         Inventory val = new Inventory();
         Merchandise m = new Merchandise("ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true);
        assertEquals(true, val.addToInventory(m));
-
     }
 
     @Test

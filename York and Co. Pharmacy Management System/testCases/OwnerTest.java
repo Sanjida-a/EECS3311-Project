@@ -22,6 +22,7 @@ class OwnerTest {
                 "]", val.searchOTCMedicineByName ("PILL1").toString());
     }
 
+
     @Test
     void searchOTCMedicineByType() {
         Owner val = new Owner(1111111111, 11111111);

@@ -11,7 +11,6 @@ class AuthenticateUserTest {
     void getInstance() {
 
     }
-
     @Test
     void checkUserValidTest() { //for incorrect entry
         AuthenticateUser val = new AuthenticateUser();

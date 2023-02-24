@@ -51,7 +51,6 @@ class PatientTest {
                 ", Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true\n" +
                 "]", val.searchOTCMedicineByName ("ADVIL").toString());
     }
-
     @Test
     void searchOTCMedicineByType() {
         Patient val = new Patient(123456789, 1234567);
