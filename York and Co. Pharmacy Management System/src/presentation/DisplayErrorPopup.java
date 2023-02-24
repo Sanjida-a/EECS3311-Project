@@ -44,7 +44,7 @@ public class DisplayErrorPopup {
 		
         
         JPanel panelError = new JPanel();
-        panelError.setBounds(12, 81, 562, 88);
+        panelError.setBounds(12, 28, 562, 88);
         frmPopup.getContentPane().add(panelError);
         panelError.setLayout(null);
         
@@ -92,4 +92,5 @@ public class DisplayErrorPopup {
         frmPopup.setVisible(true);
 	}
 	
+
 }
