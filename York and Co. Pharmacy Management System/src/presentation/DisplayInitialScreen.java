@@ -189,6 +189,7 @@ public class DisplayInitialScreen {
 						//addToInventory is bound to success
 				
 					String _inputFieldName = inputFieldName.getText().toUpperCase();
+					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
@@ -233,6 +234,7 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
 					String _inputFieldName = inputFieldName.getText().toUpperCase();
+					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
 					Boolean _isOTC = false;
@@ -274,6 +276,7 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
 					String _inputFieldName = inputFieldName.getText().toUpperCase();
+					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
@@ -316,6 +319,7 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
 					String _inputFieldName = inputFieldName.getText().toUpperCase();
+					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());

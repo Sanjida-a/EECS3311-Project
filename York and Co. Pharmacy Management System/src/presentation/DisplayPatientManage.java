@@ -13,7 +13,12 @@ import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 
+import middleLayer.Inventory;
 import middleLayer.ListOfUsers;
+import middleLayer.Pharmacist;
+import middleLayer.MERCHANDISE_FORM;
+import middleLayer.MERCHANDISE_TYPE;
+import middleLayer.Merchandise;
 import middleLayer.Patient;
 import middleLayer.User;
 
@@ -203,6 +208,30 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//call method for add patient
+				try {	//Exception is thrown when insufficient number of arguments is passed to Patient constructor. if all argument is fed, 
+					//addPatient is bound to success
+
+					String _textFieldFName = textFieldFName.getText().toUpperCase();
+					String _textFieldLName = textFieldLName.getText().toUpperCase();
+					String _textFieldAddress = textFieldAddress.getText().toUpperCase();
+					
+					if (_textFieldFName.isEmpty() || _textFieldLName.isEmpty() || _textFieldAddress.isEmpty()) {
+						throw new Exception(); // ensures a first name, last name and address have been entered
+					}
+					
+					int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText());
+					int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText());
+					int _textFieldDOB = Integer.parseInt(textFieldDOB.getText());
+					
+					Pharmacist p1 = new Pharmacist(1,1);
+					p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
+					
+//					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
+					
+				}
+				catch(Exception exception) { //catch any exceptions and show popup error
+					DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+				}
 				
 				//displayList(patientList);		//by calling this as the last instruction, it refreshes the list
 			}

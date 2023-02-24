@@ -14,8 +14,8 @@ public class ListOfUsers {
 	public ListOfUsers() {
 		try {
 			_userDAO = new UserDAO();
-			allUsersList = _userDAO.getListOfUsers();
-		} catch (ClassNotFoundException e) {
+			//allUsersList = _userDAO.getListOfUsers();
+		} catch (Exception e) {
 	
 			e.printStackTrace();
 		}
@@ -29,7 +29,7 @@ public class ListOfUsers {
     }
 
 	public void addPatientToList(Patient newPatient) {
-		_userDAO.addPatient(newPatient);
+		//_userDAO.addPatient(newPatient);
 	}
 
 	//look into this

@@ -2,16 +2,25 @@ package middleLayer;
 
 import java.util.ArrayList;
 
+import databaseDAO.UserDAO;
 import presentation.DisplayLogin;
 
 public class Pharmacist extends User {
 	
+	private UserDAO _userDAO;
 	private Inventory merListByPhar = Inventory.getInstance();
 	
 	// having only this constructor avoids having an owner without a username and password
 	public Pharmacist(int username, int password) {
-		this.username = username;
-		this.password = password;
+		try {
+			_userDAO = new UserDAO();
+			this.username = username;
+			this.password = password;
+		} catch (Exception e) {
+	
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -27,9 +36,11 @@ public class Pharmacist extends User {
 	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
 		
 		Patient newPatient = new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);
-		
-		ListOfUsers listOfUsersInstance = ListOfUsers.getInstance();
-		listOfUsersInstance.addPatientToList(newPatient);
+		try {
+			_userDAO.addPatient(newPatient);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// implementation of inherited abstract method from User superclass

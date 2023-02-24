@@ -3,7 +3,7 @@ package middleLayer;
 import java.util.ArrayList;
 
 public class Patient extends User {
-	private static int IDClassVar = 0;
+	private static int IDClassVar = 1; //starting at 1 because 1 (fake) patient already populated in database
 	
 	private int ID;
 	private String firstName;
@@ -38,6 +38,10 @@ public class Patient extends User {
 	
 	// below methods are all getters/setters for class variables (except no setters for username/password/healthCardNumber/dateOfBirth...
 	// ...because assuming a health card number and date of birth don't change for a client in a lifetime)
+	public int getID() {
+		return ID;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

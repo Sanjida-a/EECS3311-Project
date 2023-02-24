@@ -13,7 +13,7 @@ public class AuthenticateUser {
 	public AuthenticateUser() {
 		try {
 			_userDAO = new UserDAO();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 	
 			e.printStackTrace();
 		}
@@ -27,16 +27,21 @@ public class AuthenticateUser {
 	}
 	
 	public USER checkUserValid(int username, int password) {
-		
-		ArrayList<User> _users = _userDAO.getListOfUsers();
+		ArrayList<User> _users;
+		try {
+			_users = _userDAO.getListOfUsernamesAndPasswords();
 
-		for (int i = 0; i < _users.size(); i++) {
-			
-			if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
-				return USER.getValue(_users.get(i).getClass().getSimpleName());
+			for (int i = 0; i < _users.size(); i++) {
+				if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
+					return USER.getValue(_users.get(i).getClass().getSimpleName());
+				}
 			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 	
