@@ -94,6 +94,8 @@ public class UserDAO {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
+			// TO DO FOR AIZA: have to make sure healthcard already doesn't exist bc two patients can't have same healthcard number
+			
 			String queryAddToUserAndPassTable = "INSERT INTO AllUsernamesAndPasswords VALUES ('"+newPatient.username+"','"+newPatient.password+"','"+"Patient"+"');";
 			PreparedStatement statement1 = con.prepareStatement(queryAddToUserAndPassTable);
 			int newRow1 = statement1.executeUpdate(queryAddToUserAndPassTable);
