@@ -3,6 +3,7 @@ package presentation;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 //import middleLayer.AuthenticateUser;
@@ -29,6 +30,8 @@ public class DisplayErrorPopup {
 		JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frmPopup = new JFrame("Error");
         frmPopup.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+
 
         JPanel panel_1 = new JPanel();
         frmPopup.setContentPane(panel_1);
@@ -84,6 +87,10 @@ public class DisplayErrorPopup {
 		});
 
         frmPopup.setVisible(true);
+        
+	}
+	public static void main(String[] args) {
+		DisplayErrorPopup.displayErrorPopup("error", new JFrame());
 	}
 	
 

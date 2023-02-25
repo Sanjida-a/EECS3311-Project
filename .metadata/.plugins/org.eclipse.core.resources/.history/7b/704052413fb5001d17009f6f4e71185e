@@ -1,0 +1,7 @@
+package presentation;
+
+import javax.swing.ListCellRenderer;
+
+public class MerchandiseListCellRenderer implements ListCellRenderer<E> {
+
+}

@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
@@ -25,6 +27,8 @@ public class DisplayAddOrder implements ActionListener {
 	
     private static int patientID;
 	private static int medID;
+	private static JTextField textFieldRefill;
+	private static JTextField textFieldIsOTC;
 
 	public static void displayAddOrder(JFrame previous) {
 		superFrame = previous;
@@ -49,6 +53,22 @@ public class DisplayAddOrder implements ActionListener {
 		createLabels(panelAddOrder);
 		createButtons(panelAddOrder);
 		createInputFields(panelAddOrder);
+		
+		textFieldRefill = new JTextField();
+		textFieldRefill.setBounds(400, 130, 150, 35);
+		panelAddOrder.add(textFieldRefill);
+		textFieldRefill.setColumns(10);
+		
+		JLabel lblIsOTC = new JLabel("isOTC");
+		lblIsOTC.setFont(new Font("굴림", Font.BOLD, 18));
+		lblIsOTC.setBounds(0, 200, 100, 35);
+		panelAddOrder.add(lblIsOTC);
+		
+		textFieldIsOTC = new JTextField();
+		textFieldIsOTC.setFont(new Font("굴림", Font.PLAIN, 15));
+		textFieldIsOTC.setBounds(100, 200, 150, 35);
+		panelAddOrder.add(textFieldIsOTC);
+		textFieldIsOTC.setColumns(10);
 
 	}
 	
@@ -112,11 +132,6 @@ public class DisplayAddOrder implements ActionListener {
 		textFieldQty.setBounds(100, 130, 150, 35);
 		panel.add(textFieldQty);
 		textFieldQty.setColumns(10);
-		
-		JSpinner spinnerRefill = new JSpinner();
-		spinnerRefill.setFont(new Font("굴림", Font.PLAIN, 15));
-		spinnerRefill.setBounds(395, 130, 150, 35);
-		panel.add(spinnerRefill);
 	}
 	
 	@Override
@@ -145,7 +160,9 @@ public class DisplayAddOrder implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
-				DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", superFrame);
+				//DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", frame);
+				JOptionPane.showMessageDialog(frame,"No medicine or Patient Found", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				
 			}
 		}
 	}	
@@ -169,5 +186,4 @@ public class DisplayAddOrder implements ActionListener {
 		
 		
 	}
-
 }
