@@ -29,7 +29,7 @@ public class Order {
 		 _orderDao = new OrderDAO();
 	}
 	
-	public void Save() {
+	public void Save() throws Exception {
 		
 		_orderDao.saveToOrder(patientID, medicationID, quantityBought, priceAtPurchase);
 	}

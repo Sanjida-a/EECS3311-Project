@@ -58,3 +58,21 @@ VALUES (1, "Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222);
 
 Select * from AllUsernamesAndPasswords;
 Select * from Patient;
+
+
+
+
+
+--------------------------------------------------------------------------------------
+MINH CHANGED 
+--------------------------------------------------------------------------------------
+ALTER TABLE Orders 
+DROP FOREIGN KEY `orders_ibfk_1` ; 
+ALTER TABLE Patient 
+DROP PRIMARY KEY;
+
+ALTER TABLE Patient 
+ADD PRIMARY KEY (healthCardNumber);
+
+ALTER TABLE Orders 
+ADD FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber) ON DELETE CASCADE; 

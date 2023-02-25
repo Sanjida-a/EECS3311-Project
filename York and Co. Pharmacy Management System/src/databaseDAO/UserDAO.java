@@ -16,6 +16,7 @@ public class UserDAO {
 	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
 	
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
+	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
 	public UserDAO() throws Exception {//what to put in constructor? don't think weven need to open a connection.
 		try {
@@ -85,6 +86,8 @@ public class UserDAO {
 		
 		return allUsernamesAndPasswordsList;
 	}
+	
+	
 	
 	public void addPatient(Patient newPatient) throws Exception {
 		

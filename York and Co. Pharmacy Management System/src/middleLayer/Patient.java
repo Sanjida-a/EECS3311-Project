@@ -3,9 +3,10 @@ package middleLayer;
 import java.util.ArrayList;
 
 public class Patient extends User {
-	private static int IDClassVar = 1; //starting at 1 because 1 (fake) patient already populated in database
+//	private static int IDClassVar = 1; //starting at 1 because 1 (fake) patient already populated in database
+										//deleting static instance, as this will generate wrong number on different computers
 	
-	private int ID;
+//	private int ID;                  // no need ID as healthCardNum is unique, can be used as ID
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -16,9 +17,9 @@ public class Patient extends User {
 	private Inventory merList = Inventory.getInstance(); 
 	
 	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
-		IDClassVar++;
+//		IDClassVar++;
 		
-		this.ID = IDClassVar;
+//		this.ID = IDClassVar;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
@@ -38,8 +39,8 @@ public class Patient extends User {
 	
 	// below methods are all getters/setters for class variables (except no setters for username/password/healthCardNumber/dateOfBirth...
 	// ...because assuming a health card number and date of birth don't change for a client in a lifetime)
-	public int getID() {
-		return ID;
+	public int getID() {             // to return healthCardNum as ID
+		return healthCardNum;
 	}
 	
 	public String getFirstName() {
@@ -117,5 +118,7 @@ public class Patient extends User {
 		
 		return searchMedType;
 	}
+	
+	
 
 }

@@ -45,4 +45,23 @@ public class AuthenticateUser {
 		return null;
 	}
 	
+//	public boolean checkPatientValid(int ID) {
+//		ArrayList<Patient> patient;
+//		try {
+//			patient = _userDAO.getListOfPatient();
+//
+//			for (int i = 0; i < patient.size(); i++) {
+//				if (patient.get(i).getID() == ID)  {
+//					return true;
+//				}
+//			}
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return false;
+//	}
+	
 }

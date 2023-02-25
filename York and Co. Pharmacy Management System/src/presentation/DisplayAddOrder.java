@@ -3,9 +3,14 @@ package presentation;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import middleLayer.AuthenticateUser;
+import middleLayer.Order;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,6 +21,10 @@ public class DisplayAddOrder implements ActionListener {
 	private static JTextField textFieldPatientID;
 	private static JTextField textFieldMercID;
 	private static JTextField textFieldQty;
+	
+    private static int patientID;
+	private static int medID;
+
 	public static void displayAddOrder(JFrame superFrame) {
 		superFrame.setEnabled(false);
 		frame = new JFrame("Add order");
@@ -121,10 +130,33 @@ public class DisplayAddOrder implements ActionListener {
 		else if(e.getActionCommand().equals("Add order")) {
 			//call method for adding new order to a patient
 			//System.out.println("invoking add_order()");	//delete me
+			patientID = Integer.parseInt(textFieldPatientID.getText());
+			medID = Integer.parseInt(textFieldMercID.getText());
+			
+			Order orderToAdd = new Order();
+			try {
+				orderToAdd.addOrderToPatient(patientID, medID, 1, 1.1);
+				orderToAdd.Save();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
+			}
 		}
 	}	
 	
-
+//	private static boolean validateInput(JTextField textFieldPatientID, JTextField textFieldMercID) {
+//		try {
+//			patientID = Integer.parseInt(textFieldPatientID.getText());
+//			medID = Integer.parseInt(textFieldMercID.getText());
+//			
+//			return true;
+//		}
+//		catch(Exception e) {
+//			System.out.println("no patient or med found");           // daniel please output warning for this
+//			return false;
+//		}
+//	}
 
 	//public static void main(String[] args) {		//for test purpose
 		 //TODO Auto-generated method stub

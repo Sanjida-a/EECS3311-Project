@@ -29,12 +29,26 @@ public class OrderDAO {
 		}
 	}
 	
-	public void saveToOrder(int _patientID, int _medicationId, int _qty, double _price) {
+	public void saveToOrder(int _patientID, int _medicationId, int _qty, double _price) throws Exception {
 		try {
+			
+			
 			con = DriverManager.getConnection(url, user, password);
+			
+			
+			//check patient
+			String queryPatientStatement = "SELECT * FROM Patient where healthCardNumber = " + _patientID; 
+			Statement statement = con.createStatement();
+			ResultSet patientResult = statement.executeQuery(queryPatientStatement);
+			
+			if(!patientResult.next()) {
+				throw new Exception("Non-existent patient");
+			}
+			
 			String preparedStatement = " insert into Orders (orderNum , medicationID , patientID , quantityBought , priceAtPurchase )"
 					+ " values (?, ?, ?, ?, ?)";
-			int _orderNumber = 1;
+			int _orderNumber = 2;
+
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
 			stmt.setInt(1, _orderNumber);
 			stmt.setInt(2, _medicationId);
@@ -49,39 +63,30 @@ public class OrderDAO {
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			throw e1;
 		}
 		
 		
 		
 	}
 	
-//	public ArrayList<User> getListOfUsernamesAndPasswords() throws Exception {
+//	public ArrayList<Patient> getListOfPatient() throws Exception {
 //		try {
 //			con = DriverManager.getConnection(url, user, password);
 //			
-//			String queryGetAllRows = "SELECT * FROM AllUsernamesAndPasswords;";
+//			String queryGetAllRows = "SELECT * FROM Patient ;"; 
 //			Statement statement = con.createStatement();
 //			ResultSet result = statement.executeQuery(queryGetAllRows);
-//			int username, password;
-//			String userType;
-//			User user;
+//			int ID;
+//			int DOB;
+//			Patient patient;
 //			
 //			while (result.next()) { 
-//				username =  result.getInt("usernameID");
-//				password = result.getInt("passwordID") ;
-//				userType = result.getString("userType") ;
+//				ID =  result.getInt("healthCardNumber");
+//				DOB = result.getInt("dateOfBirth") ;
+//					patient = new Patient(ID, DOB);
 //				
-//				if (userType.equalsIgnoreCase("Owner")) {
-//					user = new Owner(username, password);
-//				}
-//				else if (userType.equalsIgnoreCase("Pharmacist")) {
-//					user = new Pharmacist(username, password);
-//				}
-//				else { // case where user is a Patient
-//					user = new Patient(username, password);
-//				}
-//				
-//				allUsernamesAndPasswordsList.add(user);
+//				patientList.add(patient);
 //			}
 //			
 //			con.close();
@@ -90,27 +95,6 @@ public class OrderDAO {
 //			throw e;
 //		}
 //		
-//		return allUsernamesAndPasswordsList;
-//	}
-//	
-//	public void addPatient(Patient newPatient) throws Exception {
-//		
-//		try {
-//			con = DriverManager.getConnection(url, user, password);
-//			
-//			String queryAddToUserAndPassTable = "INSERT INTO AllUsernamesAndPasswords VALUES ('"+newPatient.username+"','"+newPatient.password+"','"+"Patient"+"');";
-//			PreparedStatement statement1 = con.prepareStatement(queryAddToUserAndPassTable);
-//			int newRow1 = statement1.executeUpdate(queryAddToUserAndPassTable);
-//			
-//			String queryAddToPatientTable = "INSERT INTO Patient VALUES ('"+newPatient.getID()+"','"+newPatient.getFirstName()+"','"+newPatient.getLastName()+"','"+newPatient.getAddress()+"','"+newPatient.getPhoneNum()+"','"+newPatient.getHealthCardNum()+"','"+newPatient.getDateOfBirth()+"');";
-//			PreparedStatement statement2 = con.prepareStatement(queryAddToPatientTable);
-//			int newRow2 = statement2.executeUpdate(queryAddToPatientTable);
-//			
-//			con.close();
-//		}
-//		catch (Exception e) {
-//			throw e;
-//		}
-//		
+//		return patientList;
 //	}
 }

@@ -23,6 +23,7 @@ import javax.swing.border.LineBorder;
 
 import middleLayer.AuthenticateUser;
 import middleLayer.Merchandise;
+import middleLayer.Order;
 import middleLayer.Owner;
 import middleLayer.Patient;
 import middleLayer.Inventory;
@@ -398,6 +399,7 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				DisplayPatientManage.displayPatientManage(frame);
+
 			}
         	
         });
@@ -415,6 +417,7 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				DisplayAddOrder.displayAddOrder(frame);
+
 			}
         	
         });

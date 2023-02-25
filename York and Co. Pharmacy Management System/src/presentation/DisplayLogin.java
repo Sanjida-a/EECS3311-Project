@@ -107,15 +107,7 @@ public class DisplayLogin {
 				
 				if(validateInput(totalGUI, userNameField, passwordField)) {
 									
-					// to test database for order
-//					Order test = new Order();
-//					try {
-//						test.addOrderToPatient(1, 1, 1, 1.1);
-//						test.Save();
-//					} catch (Exception e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
+
 					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password);
 					if (userType != null) {
 						frame.dispose();
