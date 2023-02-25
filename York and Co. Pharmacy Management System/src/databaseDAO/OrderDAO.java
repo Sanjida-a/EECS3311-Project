@@ -29,35 +29,59 @@ public class OrderDAO {
 		}
 	}
 	
-	public void saveToOrder(int _patientID, int _medicationId, int _qty, double _price) throws Exception {
+	public void saveToOrder(int _patientID, int _medicationId, int _qty, boolean isPres) throws Exception {
 		try {
 			
 			
 			con = DriverManager.getConnection(url, user, password);
-			
+			Statement statement = con.createStatement();
 			
 			//check patient
 			String queryPatientStatement = "SELECT * FROM Patient where healthCardNumber = " + _patientID; 
-			Statement statement = con.createStatement();
 			ResultSet patientResult = statement.executeQuery(queryPatientStatement);
 			
 			if(!patientResult.next()) {
 				throw new Exception("Non-existent patient");
 			}
+			patientResult.close();
 			
-			String preparedStatement = " insert into Orders (orderNum , medicationID , patientID , quantityBought , priceAtPurchase )"
-					+ " values (?, ?, ?, ?, ?)";
-			int _orderNumber = 2;
+			// get last order Id number
+			
+//			String queryOrderStatement = "SELECT  orderNum FROM Orders order by orderNum desc limit 1;"; 
+//			ResultSet lastOrderResult = statement.executeQuery(queryOrderStatement);					
+			
+//			int lastOrderNumber = 1;
+//			if(lastOrderResult.next()) {
+//				int lastId= lastOrderResult.getInt("orderNum");
+//				lastOrderNumber = lastId + 1;
+//			}
+//			lastOrderResult.close();
+			
+			String queryMedStatement = "SELECT * FROM Medications where medicationID = " + _medicationId; 
+			ResultSet medResult = statement.executeQuery(queryMedStatement);					
+			
+			if(!medResult.next()) {
+				throw new Exception("Non-existent medication");
+			}
+			double price = medResult.getDouble("price");
+			
+			medResult.close();
+			
+			price = price * _qty;
+			String preparedStatement = " insert into Orders ( medicationID , patientID , quantityBought , priceAtPurchase, isPrescription )"
+					+ " values ( ?, ?, ?, ?)";
+//			int _orderNumber = lastOrderNumber;
 
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
-			stmt.setInt(1, _orderNumber);
-			stmt.setInt(2, _medicationId);
-			stmt.setInt(3, _patientID);
-			stmt.setInt(4, _qty);
-			stmt.setDouble(5, _price);
-
-			
+	//		stmt.setInt(1, _orderNumber);
+			stmt.setInt(1, _medicationId);
+			stmt.setInt(2, _patientID);
+			stmt.setInt(3, _qty);
+			stmt.setDouble(4, price);
+			stmt.setBoolean(5, isPres);
 				stmt.execute(); // execute the preparedstatement
+
+
 				con.close();
 		
 		} catch (SQLException e1) {
@@ -66,7 +90,35 @@ public class OrderDAO {
 			throw e1;
 		}
 		
+	}
+	
+	public void addNewPres (int _patientID, int _medicationId, int _numOfRefills) throws Exception{
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			Statement statement = con.createStatement();
+			
+			String preparedStatement = " insert into Prescriptions ( medicationID , patientID , numOfRefills )"
+					+ " values ( ?, ?, ?)";
+//			int _orderNumber = lastOrderNumber;
+
+			PreparedStatement stmt = con.prepareStatement(preparedStatement);
+	//		stmt.setInt(1, _orderNumber);
+			stmt.setInt(1, _medicationId);
+			stmt.setInt(2, _patientID);
+			stmt.setInt(3, _numOfRefills);
+
+				stmt.execute(); // execute the preparedstatement
+				
+
+				con.close();
+			
+		}
 		
+		catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			throw e1;
+		}
 		
 	}
 	

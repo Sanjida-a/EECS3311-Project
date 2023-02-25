@@ -76,3 +76,61 @@ ADD PRIMARY KEY (healthCardNumber);
 
 ALTER TABLE Orders 
 ADD FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber) ON DELETE CASCADE; 
+
+--------------------------------------------------------------------------------------
+MINH CHANGED -- TO BE ADDED AND RUN BEFORE ORDERS TABLE
+--------------------------------------------------------------------------------------
+
+
+CREATE TABLE Medications (
+medicationID Integer NOT NULL,
+medName VARCHAR(200) NOT NULL,
+quantity Integer NOT NULL,
+price decimal(10,2) NOT NULL,
+medType ENUM('COUGH', 'COLD', 'FEVER', 'SINUS') NOT NULL,
+medForm ENUM('LIQUID' ,'TABLET') NOT NULL,
+isOTC boolean NOT NULL,
+PRIMARY KEY (medicationID)
+
+);
+
+--------------------------------------------------------------------------------------
+MINH CHANGED 
+--------------------------------------------------------------------------------------
+
+
+DROP  TABLE PrescriptionOrders;
+
+ALTER TABLE Prescriptions 
+RENAME COLUMN numOfRefillsRemaning TO numOfRefills; 
+
+ALTER TABLE Orders
+ADD FOREIGN KEY (medicationID) REFERENCES Medications(medicationID); 
+
+ALTER TABLE Prescriptions 
+Add FOREIGN KEY (medicationID) REFERENCES Orders(medicationID),
+ADD CONSTRAINT `fk_prescription_patientId` FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber);
+
+ALTER TABLE Orders 
+ADD isPrescription boolean;
+
+ALTER TABLE Orders 
+DROP FOREIGN KEY `orders_ibfk_2` ;
+ALTER TABLE Medications MODIFY COLUMN medicationID INT AUTO_INCREMENT; 
+
+ALTER TABLE Orders
+ADD CONSTRAINT `fk_orders_med`  FOREIGN KEY (medicationID) REFERENCES Medications(medicationID); 
+INSERT INTO Medications (medName , quantity , price , medType , medForm , isOTC ) VALUES 
+("ADVIL",  10,  5.00, 'COLD' , 'LIQUID', true),
+( "TYLENOL",  5,  8.00, 'FEVER' , 'TABLET', true),
+( "ADVIL",  10,  5.00, 'COLD' , 'TABLET', true),
+( "TYLENOL",  10,  5.00,'COLD' , 'LIQUID', true),
+( "PILL1",  10,  5.00,'COLD' , 'LIQUID', false),
+( "PILL2",  10,  5.00, 'FEVER' , 'TABLET', false);
+
+SELECT * FROM Medications;
+Select * from Prescriptions;
+
+
+ALTER TABLE Orders MODIFY COLUMN orderNum INT AUTO_INCREMENT; 
+ALTER TABLE Prescriptions MODIFY COLUMN prescriptionNum INT AUTO_INCREMENT; 
