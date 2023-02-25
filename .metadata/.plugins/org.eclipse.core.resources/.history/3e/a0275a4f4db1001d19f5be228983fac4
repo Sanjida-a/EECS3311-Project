@@ -1,0 +1,14 @@
+package presentation;
+
+import javax.swing.JFrame;
+
+public class DisplayPatientManage {
+	private static JFrame frame;
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+	}
+}
