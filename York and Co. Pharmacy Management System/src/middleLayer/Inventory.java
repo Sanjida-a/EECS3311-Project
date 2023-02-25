@@ -15,11 +15,15 @@ public class Inventory{
 	
 	public Inventory() {
 		try {
-			_merDAO = new MerchandiseDAO();
+			try {
+				_merDAO = new MerchandiseDAO();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			list = _merDAO.getListOfMerchandise();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 	
-			e.printStackTrace();
 		}
 	}
 

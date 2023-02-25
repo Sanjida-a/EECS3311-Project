@@ -16,7 +16,7 @@ public class NewPrescriptionOrder extends Order{
 		this.medicationID = medicationID;
 		this.patientID = patientID;
 		this.quantityBought = quantityBought;
-		this.priceAtPurchase = m.price; // will give price at purchase time
+//		this.priceAtPurchase = m.price; // will give price at purchase time
 		
 		//this.addOrderToPatient(patientBought);
 		this.numOfRefillsFromDoctor = numOfRefillsFromDoctor;

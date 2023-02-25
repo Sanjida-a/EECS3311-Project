@@ -22,9 +22,12 @@ public class DisplayAddOrder implements ActionListener {
 	private static JTextField textFieldPatientID;
 	private static JTextField textFieldMercID;
 	private static JTextField textFieldQty;
+	private static JTextField textFieldRefill;
 	
     private static int patientID;
 	private static int medID;
+	private static int qty;
+	private static int refills;
 
 	public static void displayAddOrder(JFrame previous) {
 		superFrame = previous;
@@ -113,10 +116,16 @@ public class DisplayAddOrder implements ActionListener {
 		panel.add(textFieldQty);
 		textFieldQty.setColumns(10);
 		
-		JSpinner spinnerRefill = new JSpinner();
-		spinnerRefill.setFont(new Font("굴림", Font.PLAIN, 15));
-		spinnerRefill.setBounds(395, 130, 150, 35);
-		panel.add(spinnerRefill);
+//		JSpinner spinnerRefill = new JSpinner();
+//		spinnerRefill.setFont(new Font("굴림", Font.PLAIN, 15));
+//		spinnerRefill.setBounds(395, 130, 150, 35);
+//		panel.add(spinnerRefill);
+		textFieldRefill = new JTextField();
+		textFieldRefill.setFont(new Font("굴림", Font.PLAIN, 15));
+		textFieldRefill.setBounds(100, 130, 150, 35);
+		panel.add(textFieldRefill);
+		textFieldRefill.setColumns(10);
+		
 	}
 	
 	@Override
@@ -136,10 +145,13 @@ public class DisplayAddOrder implements ActionListener {
 			//System.out.println("invoking add_order()");	//delete me
 			patientID = Integer.parseInt(textFieldPatientID.getText());
 			medID = Integer.parseInt(textFieldMercID.getText());
+			qty = Integer.parseInt(textFieldQty.getText()) ;
+			refills = Integer.parseInt(textFieldQty.getText()) ;
 			
 			Order orderToAdd = new Order();
 			try {
-				orderToAdd.addOrderToPatient(patientID, medID, 1, 1.1);
+//				orderToAdd.addOrderToPatient(patientID, medID, qty, price, refills, true);
+				orderToAdd.addOrderToPatient(patientID, medID, qty, true, 5);
 				orderToAdd.Save();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -163,11 +175,11 @@ public class DisplayAddOrder implements ActionListener {
 //		}
 //	}
 
-	public static void main(String[] args) {		//for test purpose
-		 //TODO Auto-generated method stub
-		DisplayAddOrder.displayAddOrder(new JFrame());
+//	public static void main(String[] args) {		//for test purpose
+//		 //TODO Auto-generated method stub
+//		DisplayAddOrder.displayAddOrder(new JFrame());
 		
 		
-	}
+//	}
 
 }
