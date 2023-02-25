@@ -1,0 +1,21 @@
+package presentation;
+
+import javax.swing.JFrame;
+
+public class DisplayAddOrder {
+	private static JFrame frame;
+	public static void displayAddOrder(JFrame superFrame) {
+		superFrame.setEnabled(false);
+		frame = new JFrame("Add order");
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setSize(800, 500);
+		frame.getContentPane().setLayout(null);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
