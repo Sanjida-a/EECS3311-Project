@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -232,17 +233,17 @@ public class DisplayPatientManage {
 					
 					Pharmacist p1 = new Pharmacist(1,1);
 					p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
-					displayList(patientList);
+					displayList(patientList);	//by invoking this method, the list is refreshed.
 					
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
-					DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					
+					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					JOptionPane.showMessageDialog(frame,"First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
-				//displayList(patientList);		//by calling this as the last instruction, it refreshes the list
+
 			}
 			
 		});
@@ -250,7 +251,7 @@ public class DisplayPatientManage {
 		
 
 	}
-	private static void patientListField(JPanel panel) {
+	private static void patientListField(JPanel panel) { //this is called only once when Manage Patient button is clicked in Initial Screen
 		patientList = new JList<String>();
 		patientList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		patientList.setBounds(0, 62, 380, 338);

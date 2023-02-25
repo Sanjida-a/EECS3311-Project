@@ -74,6 +74,7 @@ public class Merchandise{
     }
     
     // outputs merchandise object by specifying all instance variables
+    @Override
     public String toString(){
         return "Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + "\n";
     }

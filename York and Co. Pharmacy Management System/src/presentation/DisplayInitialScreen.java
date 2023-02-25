@@ -3,6 +3,8 @@ package presentation;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -10,13 +12,17 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
+
+//import javax.swin//////JTextAreaea;
 
 import java.awt.Color;
-import javax.swing.JToolBar;
-import javax.swing.JProgressBar;
+import java.awt.Component;
+
+
+import javax.swing.ListCellRenderer;
+
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.border.LineBorder;
@@ -31,10 +37,16 @@ import middleLayer.MERCHANDISE_FORM;
 import middleLayer.MERCHANDISE_TYPE;
 
 import javax.swing.JList;
-import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+
+
 
 
 
@@ -46,6 +58,9 @@ public class DisplayInitialScreen {
 	private static JTextField inputFieldPrice;
 	private static JTextField inputKeyword;
 	private static JFrame frame;
+	private static JList<Merchandise> outputList;
+	private static Inventory inv = Inventory.getInstance();
+	private static JLabel lblOperationResult;
 	
 	private static String name;
 	private static int username;
@@ -57,7 +72,9 @@ public class DisplayInitialScreen {
 	private static String searchKeyword;
 	private static USER userType;
 	
-	JTextArea textboxOutput;
+	private static String operationResult;
+	
+
 	
 	public void displayInitialScreen(USER user) {
 		userType = user;
@@ -84,8 +101,8 @@ public class DisplayInitialScreen {
 		else if(user == USER.PATIENT){
 			this.createPanalVisibleToPatient(totalGUI);
 		}
-		//this.createPanelVisibleToAdmin(totalGUI); //for test purpose
-		//this.createPanalVisibleToPatient(totalGUI);//for test purpose
+		this.createPanelVisibleToAdmin(totalGUI); //for test purpose
+		this.createPanalVisibleToPatient(totalGUI);//for test purpose
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
         if(user != USER.GUEST) {
@@ -102,10 +119,6 @@ public class DisplayInitialScreen {
         btnNewButton.setFont(new Font("굴림", Font.BOLD, 18));
         btnNewButton.setBounds(1100, 40, 125, 35);
         totalGUI.add(btnNewButton);
-        
-        
-        
-
         		
 		return totalGUI;
 		
@@ -157,6 +170,7 @@ public class DisplayInitialScreen {
         panelVisibleToAdmin.add(lblPrice);
         
         inputFieldQty = new JTextField();
+        inputFieldQty.setFont(new Font("굴림", Font.BOLD, 18));
         inputFieldQty.setBounds(625, 0, 90, 35);
         panelVisibleToAdmin.add(inputFieldQty);
         inputFieldQty.setColumns(10);     
@@ -203,27 +217,27 @@ public class DisplayInitialScreen {
 						_isOTC = true;
 					}
 				
-					Inventory inv1 = Inventory.getInstance();
+
 					
 					Boolean medicationAdded = false;
 					
 					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-					medicationAdded = inv1.addToInventory(newMerchandise);
+					medicationAdded = inv.addToInventory(newMerchandise);
 					
-					String temp = "";
+					//String temp = "";
 					if (medicationAdded == true) {
-						temp += "Add successful. See updated inventory below: \n\n";
+						operationResult = "Add successful. See updated inventory";
 					}
 					else {
-						temp += "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory below: \n\n";
+						operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
 					}
-					
-					temp += inv1.display();
-				
-					textboxOutput.setText(temp);
+
+					displayMercList(outputList, inv.getMerchandise());
+					lblOperationResult.setText(operationResult);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
-					DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
+					//DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"name, Qty, price, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
 			}
@@ -246,26 +260,24 @@ public class DisplayInitialScreen {
 						_isOTC = true;
 					}
 				
-					Inventory inv1 = Inventory.getInstance();
-				
 					Boolean medicationRemoved = false;
 				
-					medicationRemoved = inv1.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
 				
-					String temp = "";
+					
 					if (medicationRemoved == false) {
-						temp += "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
+						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
 					}
 					else {
-						temp += "Remove successful. See updated inventory below: \n\n";
+						operationResult = "Remove successful. See updated inventory";
 					}
 
-					temp += inv1.display();
-				
-					textboxOutput.setText(temp);
+					displayMercList(outputList, inv.getMerchandise());
+					lblOperationResult.setText(operationResult);
 				}
 				catch (Exception ex) {	//display error popup
-					DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
+					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"name, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
 			}
@@ -289,26 +301,25 @@ public class DisplayInitialScreen {
 						_isOTC = true;
 					}
 				
-					Inventory inv1 = Inventory.getInstance();
-				
 					Boolean medicationIncreased = false;
 			
-					medicationIncreased = inv1.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationIncreased = inv.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 				
-					String temp = "";
+				
 					if (medicationIncreased == false) {
-						temp += "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory below: \n\n";
+						operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
 					}
 					else {
-						temp += "Increase successful. See updated inventory below: \n";
+						operationResult = "Increase successful. See updated inventory";
 					}
 
-					temp += inv1.display();
 				
-					textboxOutput.setText(temp);
+					displayMercList(outputList, inv.getMerchandise());
+					lblOperationResult.setText(operationResult);
 				}
 				catch(Exception ex) {
-					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
+					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"name, Qty, type, and form are required","Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
 			}
@@ -332,37 +343,36 @@ public class DisplayInitialScreen {
 						_isOTC = true;
 					}
 				
-					Inventory inv1 = Inventory.getInstance();
 				
 					boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
 				
-					medicationDecreasedANDEnoughQuantityToDecrease = inv1.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 					
-					String temp = "";
+					
 					if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
 						//entry to decrease its quantity is found in the list and the current_quantity >= quantity_to_decrease 
-						temp += "Decrease successful. See inventory below: \n\n";
+						operationResult = "Decrease successful. See inventory";
 					}
 					else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
 						//entry to decrease its quantity is not found in the list
-						temp += "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory below: \n\n";
+						operationResult = "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory";
 					}
 					else {
 						//entry is found but current_quantity < quantity_to_decrease
-						temp += "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory below: \n\n";
+						operationResult = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory";
 					}
 				
 					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
 						//notify popup for medication low in stock
-						DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
+						//DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
+						JOptionPane.showMessageDialog(frame,_inputFieldName + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
 					}
-
-					temp += inv1.display();
-				
-					textboxOutput.setText(temp);
+					lblOperationResult.setText(operationResult);
+					displayMercList(outputList, inv.getMerchandise());
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
-					DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
+					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"name, Qty, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 					
 				}
 			
@@ -376,12 +386,7 @@ public class DisplayInitialScreen {
         btnDisplay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Inventory inv1 = Inventory.getInstance();
-				
-				String temp = "";
-				temp += inv1.display();
-				
-				textboxOutput.setText(temp);
+				displayMercList(outputList, inv.getMerchandise());
 			
 			}
 		});
@@ -444,27 +449,26 @@ public class DisplayInitialScreen {
 	
 	private void createPanelVisibleToAll(JPanel totalGUI) {
 		JPanel panelVisibleToAll = new JPanel();
-        panelVisibleToAll.setBounds(45, 40, 944, 455);
- 
+        panelVisibleToAll.setBounds(45, 40, 944, 465);
         panelVisibleToAll.setLayout(null);
         
         inputKeyword = new JTextField();
         inputKeyword.setBounds(0, 0, 650, 35);
         panelVisibleToAll.add(inputKeyword);
         inputKeyword.setColumns(40);
-        //searchKeyword = inputKeyword.getText();
+        
         JComboBox comboBox = new JComboBox();
+        comboBox.setBounds(650, 0, 145, 35);
         comboBox.setBorder(new LineBorder(new Color(0, 0, 0)));
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"Name", "Type"}));
         comboBox.setSelectedIndex(0);
         comboBox.setFont(new Font("굴림", Font.BOLD, 18));
         comboBox.setBackground(new Color(255, 255, 255));
-        comboBox.setBounds(650, 0, 145, 35);
         panelVisibleToAll.add(comboBox);
         
         JButton btnSearch = new JButton("Search");
-        btnSearch.setFont(new Font("굴림", Font.BOLD, 20));
         btnSearch.setBounds(819, 0, 125, 35);
+        btnSearch.setFont(new Font("굴림", Font.BOLD, 20));
         panelVisibleToAll.add(btnSearch);
         btnSearch.addActionListener(new ActionListener() {
 			@Override
@@ -472,9 +476,10 @@ public class DisplayInitialScreen {
 				// TODO Auto-generated method stub
 				String _inputKeyword = inputKeyword.getText().toUpperCase();
 				String searchBy = (String)comboBox.getSelectedItem();
+				ArrayList<Merchandise> methodResult = new ArrayList<Merchandise>();
 				if(userType == USER.OWNER || userType == USER.PHARMACIST) {
 					Owner owner1 = new Owner(1,1);
-					ArrayList<Merchandise> methodResult = null;
+
 					if(searchBy.compareTo("Name") == 0) {
 						methodResult = owner1.searchOTCMedicineByName(_inputKeyword);
 					}
@@ -485,21 +490,10 @@ public class DisplayInitialScreen {
 						
 					}
 					
-					String temp = "";
-					if (methodResult.isEmpty() == true) {
-						temp += "No results for " + _inputKeyword + " as a " + searchBy + " have been found in the inventory.";
-					}
-					else {
-						for (Merchandise i: methodResult) {
-							temp += i.toString();
-						}
-					}
 					
-					textboxOutput.setText(temp);
 				}
 				else {
 					Patient patient1 = new Patient(1,1);
-					ArrayList<Merchandise> methodResult = null;
 					
 					if(searchBy.compareTo("Name") == 0) {
 						methodResult = patient1.searchOTCMedicineByName(_inputKeyword);
@@ -511,31 +505,81 @@ public class DisplayInitialScreen {
 						
 					}
 					
-					String temp = "";
-					if (methodResult.isEmpty() == true) {
-						temp += "No results for " + _inputKeyword + " as a " + searchBy + " have been found in the inventory.";
-					}
-					else {
-						for (Merchandise i: methodResult) {
-							temp += i.toString();
-						}
-					}
-					
-					textboxOutput.setText(temp);
 				}
+				if(methodResult.isEmpty()) {
+					operationResult = _inputKeyword + " is not in the inventory";
+					lblOperationResult.setText(operationResult);
+				}
+				displayMercList(outputList, methodResult);
 			}
 		});
         
-
         
-        textboxOutput = new JTextArea();
-        textboxOutput.setBorder(new LineBorder(new Color(0, 0, 0)));
-        textboxOutput.setFont(new Font("굴림", Font.PLAIN, 15));
-        textboxOutput.setBounds(0, 58, 944, 397);
-        panelVisibleToAll.add(textboxOutput);
-            
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(0, 75, 944, 350);
+        outputList = new JList<Merchandise>();
+        outputList.setFont(new Font("굴림", Font.PLAIN, 15));
+        outputList.setLocation(0, 45);
+        outputList.setSize(944, 410);
+
+        outputList.setLayoutOrientation(JList.VERTICAL);
+        outputList.setCellRenderer(createListRenderer());
+        scrollPane.setViewportView(outputList);
+
+        panelVisibleToAll.add(scrollPane);
+        displayMercList(outputList, inv.getMerchandise());
         totalGUI.add(panelVisibleToAll);
         
+        JPanel panelColumn = new JPanel();
+        panelColumn.setBounds(0, 56, 944, 20);
+        panelVisibleToAll.add(panelColumn);
+        panelColumn.setLayout(null);
+        
+        JButton btnNewButton_2 = new JButton("Name");
+        btnNewButton_2.setFont(new Font("굴림", Font.BOLD, 12));
+        btnNewButton_2.setHorizontalAlignment(SwingConstants.LEFT);
+        btnNewButton_2.setHorizontalTextPosition(SwingConstants.LEFT);
+        btnNewButton_2.setBounds(0, 0, 365, 20);
+        panelColumn.add(btnNewButton_2);
+        
+        JButton btnNewButton_3 = new JButton("Qty");
+        btnNewButton_3.setFont(new Font("굴림", Font.BOLD, 12));
+        btnNewButton_3.setHorizontalAlignment(SwingConstants.LEFT);
+        btnNewButton_3.setBounds(364, 0, 80, 20);
+        panelColumn.add(btnNewButton_3);
+        
+        JButton btnNewButton_4 = new JButton("Price");
+        btnNewButton_4.setHorizontalAlignment(SwingConstants.LEFT);
+        btnNewButton_4.setFont(new Font("굴림", Font.BOLD, 12));
+        btnNewButton_4.setBounds(443, 0, 100, 20);
+        panelColumn.add(btnNewButton_4);
+        
+        JButton btnNewButton_5 = new JButton("Type");
+        btnNewButton_5.setHorizontalAlignment(SwingConstants.LEFT);
+        btnNewButton_5.setFont(new Font("굴림", Font.BOLD, 12));
+        btnNewButton_5.setBounds(542, 0, 150, 20);
+        panelColumn.add(btnNewButton_5);
+        
+        JButton btnNewButton_6 = new JButton("Form");
+        btnNewButton_6.setHorizontalAlignment(SwingConstants.LEFT);
+        btnNewButton_6.setFont(new Font("굴림", Font.BOLD, 12));
+        btnNewButton_6.setBounds(691, 0, 150, 20);
+        panelColumn.add(btnNewButton_6);
+        
+        JButton btnNewButton_7 = new JButton("isOTC");
+        btnNewButton_7.setHorizontalAlignment(SwingConstants.LEFT);
+        btnNewButton_7.setFont(new Font("굴림", Font.BOLD, 12));
+        btnNewButton_7.setBounds(840, 0, 104, 20);
+        panelColumn.add(btnNewButton_7);
+        
+        lblOperationResult = new JLabel();
+        lblOperationResult.setForeground(new Color(255, 0, 0));
+        lblOperationResult.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 18));
+        lblOperationResult.setBounds(0, 425, 944, 40);
+        panelVisibleToAll.add(lblOperationResult);
+        
+
 
 	}
 	
@@ -557,6 +601,50 @@ public class DisplayInitialScreen {
         totalGUI.add(panelVisibleToPatient);
 	}
 	
+	private static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
+
+		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
+		list.removeAll();
+		for(Merchandise m : merchandises) {
+
+			model.addElement(m);
+			
+		}
+		list.setModel(model);
+	}
+	
+	private static ListCellRenderer<? super Merchandise> createListRenderer(){
+		 return new DefaultListCellRenderer() {
+	          private Color background = new Color(0, 100, 255, 15);
+	          private Color defaultBackground = (Color) UIManager.get("List.background");
+
+	          @Override
+	          public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+	                                                        boolean isSelected, boolean cellHasFocus) {
+	              Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	              if (c instanceof JLabel) {
+	                  JLabel label = (JLabel) c;
+	                  Merchandise merc = (Merchandise) value;
+	                  
+	                  label.setText(String.format("%s %s %s %s %s %s", merc.getName(), merc.getQuantity(), merc.getPrice(), merc.getType(), merc.getForm(), merc.getisOTC()));
+	                  //label.setText(MercString(merc));
+	                  if (!isSelected) {
+	                      label.setBackground(index % 2 == 0 ? background : defaultBackground);
+	                  }
+	              }
+	              return c;
+	          }
+	      };
+	}
+	
+	/*private static String MercString(Merchandise m) {
+		String result = new String();
+		int paddingLength;
+
+		result += String.format("%" + (-(78 - m.getName().length())) + "s", m.getName());
+		result += String.format("%" + (-(10 - String.valueOf(m.getQuantity()).length())) + "s", m.getQuantity());
+		return result;
+	}*/
 	public String getName() {
 		return new String(name);
 	}
@@ -585,8 +673,8 @@ public class DisplayInitialScreen {
 		return frame;
 	}
 	
-	//public static void main(String[] args) {	//for test purpose
-		//DisplayInitialScreen screen = new DisplayInitialScreen();
-		//screen.displayInitialScreen(USER.GUEST);
-	//}
+	public static void main(String[] args) {	//for test purpose
+		DisplayInitialScreen screen = new DisplayInitialScreen();
+		screen.displayInitialScreen(USER.OWNER);
+	}
 }
