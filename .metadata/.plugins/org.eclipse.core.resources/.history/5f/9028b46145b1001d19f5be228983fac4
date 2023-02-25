@@ -1,0 +1,10 @@
+package presentation;
+
+public class DisplayPatientManage {
+	
+	
+	
+	public static void main(String[] args) {
+		
+	}
+}

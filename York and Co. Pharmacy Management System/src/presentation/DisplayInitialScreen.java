@@ -72,6 +72,7 @@ public class DisplayInitialScreen {
 	}
 	
 	private JPanel createContentPanel(USER user) {
+		String loginButton = "Login";
 		JPanel totalGUI = new JPanel();
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
@@ -86,8 +87,10 @@ public class DisplayInitialScreen {
 		//this.createPanalVisibleToPatient(totalGUI);//for test purpose
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
-        
-        JButton btnNewButton = new JButton("Login");
+        if(user != USER.GUEST) {
+        	loginButton = "Logout";
+        }
+        JButton btnNewButton = new JButton(loginButton);
         btnNewButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		DisplayLogin login = new DisplayLogin();
@@ -402,6 +405,20 @@ public class DisplayInitialScreen {
         
         totalGUI.add(panelVisibleToAdmin);
         totalGUI.add(panelVisibleToAdminSub1);
+        
+        JButton btnAddOrder = new JButton("<html>Add<br>Order</html>");
+        btnAddOrder.setFont(new Font("굴림", Font.BOLD, 18));
+        btnAddOrder.setBounds(0, 70, 170, 60);
+        btnAddOrder.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DisplayAddOrder.displayAddOrder(frame);
+			}
+        	
+        });
+        panelVisibleToAdminSub1.add(btnAddOrder);
 	}
 	
 	private void createExtraContents(JPanel totalGUI) {
@@ -564,8 +581,9 @@ public class DisplayInitialScreen {
 	public JFrame getFrame() {
 		return frame;
 	}
+	
 	//public static void main(String[] args) {	//for test purpose
-	//	DisplayInitialScreen screen = new DisplayInitialScreen();
-	//	screen.displayInitialScreen(USER.GUEST);
+		//DisplayInitialScreen screen = new DisplayInitialScreen();
+		//screen.displayInitialScreen(USER.GUEST);
 	//}
 }
