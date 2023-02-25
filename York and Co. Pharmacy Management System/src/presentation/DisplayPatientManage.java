@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 
+import databaseDAO.UserDAO;
 import middleLayer.Inventory;
 import middleLayer.ListOfUsers;
 import middleLayer.Pharmacist;
@@ -25,9 +26,11 @@ import middleLayer.User;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
 
 public class DisplayPatientManage {
 	private static JFrame frame;
+	private static JFrame superFrame;
 	private static JTextField textFieldSearchKeyword;
 	private static JTextField textFieldFName;
 	private static JTextField textFieldLName;
@@ -38,8 +41,10 @@ public class DisplayPatientManage {
 	private static JTextField textFieldAccount;
 	private static JTextField textFieldPassword;
 	private static JList<String> patientList;
+	private static UserDAO userList;	
 	
-	public static void displayPatientManage(JFrame superFrame) {
+	public static void displayPatientManage(JFrame previous) {
+		superFrame = previous;
 		superFrame.setEnabled(false);
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame = new JFrame("Patient management");
@@ -94,11 +99,13 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//call method for patient search
+
 			}
 			
 		});
 		panelPatientList.add(btnSearch);
 		
+
 		
 	}
 	
@@ -225,12 +232,14 @@ public class DisplayPatientManage {
 					
 					Pharmacist p1 = new Pharmacist(1,1);
 					p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
+					displayList(patientList);
 					
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
 					DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					
 				}
 				
 				//displayList(patientList);		//by calling this as the last instruction, it refreshes the list
@@ -245,30 +254,40 @@ public class DisplayPatientManage {
 		patientList = new JList<String>();
 		patientList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		patientList.setBounds(0, 62, 380, 338);
-		displayList(patientList);
+
+		try {
+			userList = new UserDAO();
+			displayList(patientList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		panel.add(patientList);
+
 	}
 	
-	private static void displayList(JList<String> list) {	
-		ArrayList<User> userList= ListOfUsers.getInstance().getAllUsersList();
-		ArrayList<Patient> patientList = new ArrayList<Patient>();
-		//patientList.add(new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222)); //delete me
-		DefaultListModel<String> model = new DefaultListModel<String>();
+	private static void displayList(JList<String> list)throws Exception{	//if this method is invoked at the end of every  button click operation,													
+		DefaultListModel<String> model = new DefaultListModel<String>();	//the list will automatically be refreshed
 		Patient temp;
 		list.removeAll();
-		for(User u : userList) {
-			if(u instanceof Patient) {
-				temp = (Patient) u;
-				model.addElement(temp.getFirstName() + ", " + temp.getLastName());
+		try {
+			for(User u : userList.getListOfUsernamesAndPasswords()) {
+				if(u instanceof Patient) {
+					temp = (Patient) u;
+					model.addElement(temp.getUsername() + ", " + temp.getPassword());
+				}
+				//System.out.println(p.toString() + " entry");	//delete me. test purpose
 			}
-			//System.out.println(p.toString() + " entry");	//delete me. test purpose
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		list.setModel(model);
 	}
 	
 	
-	//public static void main(String[] args) {	//for test purpose
-	//	DisplayPatientManage.displayPatientManage(new JFrame());
-	//}
+	public static void main(String[] args) {	//for test purpose
+		DisplayPatientManage.displayPatientManage(new JFrame());
+	}
 }

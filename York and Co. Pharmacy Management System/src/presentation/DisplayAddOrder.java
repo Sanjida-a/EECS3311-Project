@@ -18,6 +18,7 @@ import javax.swing.JSpinner;
 
 public class DisplayAddOrder implements ActionListener {
 	private static JFrame frame;
+	private static JFrame superFrame;
 	private static JTextField textFieldPatientID;
 	private static JTextField textFieldMercID;
 	private static JTextField textFieldQty;
@@ -25,7 +26,8 @@ public class DisplayAddOrder implements ActionListener {
     private static int patientID;
 	private static int medID;
 
-	public static void displayAddOrder(JFrame superFrame) {
+	public static void displayAddOrder(JFrame previous) {
+		superFrame = previous;
 		superFrame.setEnabled(false);
 		frame = new JFrame("Add order");
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -122,6 +124,8 @@ public class DisplayAddOrder implements ActionListener {
 		// TODO Auto-generated method stub
 		if(e.getActionCommand().equals("Cancel")) {
 			frame.dispose();
+			superFrame.setEnabled(true);
+			superFrame.toFront();
 		}
 		else if(e.getActionCommand().equals("Give refill")) {
 			//call method for giving a patient refill order
@@ -140,7 +144,8 @@ public class DisplayAddOrder implements ActionListener {
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
+				//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
+				DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", superFrame);
 			}
 		}
 	}	
@@ -158,11 +163,11 @@ public class DisplayAddOrder implements ActionListener {
 //		}
 //	}
 
-	//public static void main(String[] args) {		//for test purpose
+	public static void main(String[] args) {		//for test purpose
 		 //TODO Auto-generated method stub
-		//DisplayAddOrder.displayAddOrder(new JFrame());
+		DisplayAddOrder.displayAddOrder(new JFrame());
 		
 		
-	//}
+	}
 
 }
