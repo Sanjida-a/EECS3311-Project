@@ -1,5 +1,6 @@
 package middleLayer;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import databaseDAO.UserDAO;
@@ -9,6 +10,7 @@ public class Pharmacist extends User {
 	
 	private UserDAO _userDAO;
 	private Inventory merListByPhar = Inventory.getInstance();
+	private ListOfPatients listOfPatientsByPhar = ListOfPatients.getInstance();
 	
 	// having only this constructor avoids having an owner without a username and password
 	public Pharmacist(int username, int password) {
@@ -33,13 +35,13 @@ public class Pharmacist extends User {
 		this.password = pharmacistUser.password;
 	}
 	
-	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
+	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) throws Exception {
 		
 		Patient newPatient = new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);
 		try {
 			_userDAO.addPatient(newPatient);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			throw e;
 		}
 	}
 	
@@ -71,6 +73,36 @@ public class Pharmacist extends User {
 		return searchMedTypePhar;
 	}
 	
-
+	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) {
+		
+		ArrayList<Patient> searchResult = new ArrayList <Patient> ();
+		
+		if (typeOfSearch.equals("FirstName")) {
+			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
+				if (p.getFirstName().equals(patientName)) {
+					searchResult.add(p);
+				}
+			}
+		}
+		else if (typeOfSearch.equals("LastName")) {
+			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
+				if (p.getLastName().equals(patientName)) {
+					searchResult.add(p);
+				}
+			}
+		}
+		else { //typeOfSearch contains full name (first + last name)
+			int indexOfSpace = patientName.indexOf(' ');
+			String firstName = patientName.substring(0, indexOfSpace);
+			String lastName = patientName.substring(indexOfSpace);
+			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
+				if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+					searchResult.add(p);
+				}
+			}
+		}
+		
+		return searchResult;
+	}
 	
 }

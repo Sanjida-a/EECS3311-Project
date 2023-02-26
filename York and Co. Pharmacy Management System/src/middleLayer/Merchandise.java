@@ -25,6 +25,10 @@ public class Merchandise{
     }
 
     // below methods are all getters/setters for class variables
+    public int getMedicationID() {
+    	return medicationID;
+    }
+    
     public String getName(){
         return name;
     }

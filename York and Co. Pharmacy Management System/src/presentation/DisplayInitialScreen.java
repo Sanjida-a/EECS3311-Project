@@ -629,7 +629,7 @@ public class DisplayInitialScreen {
 	                  JLabel label = (JLabel) c;
 	                  Merchandise merc = (Merchandise) value;
 	                  
-	                  label.setText(String.format("%s %s %s %s %s %s", merc.getName(), merc.getQuantity(), merc.getPrice(), merc.getType(), merc.getForm(), merc.getisOTC()));
+	                  label.setText(String.format("%s %s %s %s %s %s %s", merc.getMedicationID(), merc.getName(), merc.getQuantity(), merc.getPrice(), merc.getType(), merc.getForm(), merc.getisOTC()));
 	                  //label.setText(MercString(merc));
 	                  if (!isSelected) {
 	                      label.setBackground(index % 2 == 0 ? background : defaultBackground);

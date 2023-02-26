@@ -10,7 +10,7 @@ public class AuthenticateUser {
 	private UserDAO _userDAO;
 	private static AuthenticateUser instance = null;
 	
-	public AuthenticateUser() {
+	private AuthenticateUser() { //constructor of all singleton classes should be private
 		try {
 			_userDAO = new UserDAO();
 		} catch (Exception e) {

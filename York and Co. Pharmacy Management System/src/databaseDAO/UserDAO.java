@@ -13,7 +13,7 @@ public class UserDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
+	private String password = "hello123"; //make sure to change password based on your password for MySQL
 	
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
@@ -51,6 +51,8 @@ public class UserDAO {
 	
 	public ArrayList<User> getListOfUsernamesAndPasswords() throws Exception {
 		try {
+			allUsernamesAndPasswordsList = new ArrayList<User>(); //need to empty current list first so new list overrides
+			
 			con = DriverManager.getConnection(url, user, password);
 			
 			String queryGetAllRows = "SELECT * FROM AllUsernamesAndPasswords;";
@@ -87,6 +89,43 @@ public class UserDAO {
 		return allUsernamesAndPasswordsList;
 	}
 	
+	public ArrayList<Patient> getListOfAllPatients() throws Exception {
+		try {
+			patientList = new ArrayList<Patient>(); //need to empty current list first so new list overrides
+			
+			con = DriverManager.getConnection(url, user, password);
+			
+			String queryGetAllRows = "SELECT * FROM Patient;";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int phoneNumber, healthCardNumber, dateOfBirth;
+			String firstName, lastName, address;
+			
+			Patient patient;
+			
+			while (result.next()) { 
+				firstName =  result.getString("firstName");
+				lastName =  result.getString("lastName");
+				address =  result.getString("Address");
+				phoneNumber =  result.getInt("phoneNumber");
+				healthCardNumber =  result.getInt("healthCardNumber");
+				dateOfBirth =  result.getInt("dateOfBirth");
+				
+				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
+				
+				
+				patientList.add(patient);
+			}
+			
+			con.close();
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
+		return patientList;
+	}
+	
 	
 	
 	public void addPatient(Patient newPatient) throws Exception {
@@ -100,13 +139,13 @@ public class UserDAO {
 			PreparedStatement statement1 = con.prepareStatement(queryAddToUserAndPassTable);
 			int newRow1 = statement1.executeUpdate(queryAddToUserAndPassTable);
 			
-			String queryAddToPatientTable = "INSERT INTO Patient VALUES ('"+newPatient.getID()+"','"+newPatient.getFirstName()+"','"+newPatient.getLastName()+"','"+newPatient.getAddress()+"','"+newPatient.getPhoneNum()+"','"+newPatient.getHealthCardNum()+"','"+newPatient.getDateOfBirth()+"');";
+			String queryAddToPatientTable = "INSERT INTO Patient VALUES ('"+newPatient.getFirstName()+"','"+newPatient.getLastName()+"','"+newPatient.getAddress()+"','"+newPatient.getPhoneNum()+"','"+newPatient.getHealthCardNum()+"','"+newPatient.getDateOfBirth()+"');";
 			PreparedStatement statement2 = con.prepareStatement(queryAddToPatientTable);
 			int newRow2 = statement2.executeUpdate(queryAddToPatientTable);
 			
 			con.close();
 		}
-		catch (Exception e) {
+		catch (SQLException e) {
 			throw e;
 		}
 		

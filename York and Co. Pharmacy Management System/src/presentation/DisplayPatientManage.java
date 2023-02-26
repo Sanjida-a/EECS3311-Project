@@ -10,17 +10,19 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 
 import databaseDAO.UserDAO;
 import middleLayer.Inventory;
-import middleLayer.ListOfUsers;
+import middleLayer.ListOfPatients;
 import middleLayer.Pharmacist;
 import middleLayer.MERCHANDISE_FORM;
 import middleLayer.MERCHANDISE_TYPE;
 import middleLayer.Merchandise;
+import middleLayer.Owner;
 import middleLayer.Patient;
 import middleLayer.User;
 
@@ -42,7 +44,7 @@ public class DisplayPatientManage {
 	private static JTextField textFieldAccount;
 	private static JTextField textFieldPassword;
 	private static JList<String> patientList;
-	private static UserDAO userList;	
+	private static ListOfPatients listOfPatientsInstance = ListOfPatients.getInstance();	
 	
 	public static void displayPatientManage(JFrame previous) {
 		superFrame = previous;
@@ -100,7 +102,37 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//call method for patient search
+				try {	//Exception is thrown when insufficient number of arguments is passed to Patient constructor. if all argument is fed, 
+					//addPatient is bound to success
 
+					String _textFieldSearchKeyword = textFieldSearchKeyword.getText().toUpperCase();
+					
+					if (_textFieldSearchKeyword.isEmpty()) {
+						throw new Exception(); // ensures something is entered 
+					}
+					
+					Owner o1 = new Owner(1,1);
+					
+					ArrayList<Patient> searchResult;
+					
+					//Daniel can you please add the drop down and use the drop down to send as parameter instead of the hardcoded string
+					searchResult = o1.searchPatientByName(_textFieldSearchKeyword, "fullname");
+					
+					for (Patient p: searchResult) {
+						// Daniel, PRINT IT TO SCREEN as you need
+						System.out.println(p.getFirstName() + ", " + p.getLastName() + ", " + p.getAddress() + ", " + p.getPhoneNum() + ", " + p.getHealthCardNum() + ", " + p.getDateOfBirth());
+					}
+					
+				}
+				catch(SQLException exception) { //catch any exceptions and show popup error
+					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception exception) { //catch any exceptions and show popup error
+					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					JOptionPane.showMessageDialog(frame,"First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				
 			}
 			
 		});
@@ -238,6 +270,10 @@ public class DisplayPatientManage {
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
 				}
+				catch(SQLException exception) { //catch any exceptions and show popup error
+					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
+				}
 				catch(Exception exception) { //catch any exceptions and show popup error
 					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
 					JOptionPane.showMessageDialog(frame,"First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
@@ -255,9 +291,9 @@ public class DisplayPatientManage {
 		patientList = new JList<String>();
 		patientList.setBorder(new LineBorder(new Color(0, 0, 0)));
 		patientList.setBounds(0, 62, 380, 338);
-
+		
 		try {
-			userList = new UserDAO();
+		//	userList = new UserDAO();
 			displayList(patientList);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -269,14 +305,15 @@ public class DisplayPatientManage {
 	
 	private static void displayList(JList<String> list)throws Exception{	//if this method is invoked at the end of every  button click operation,													
 		DefaultListModel<String> model = new DefaultListModel<String>();	//the list will automatically be refreshed
-		Patient temp;
+		
 		list.removeAll();
+
 		try {
-			for(User u : userList.getListOfUsernamesAndPasswords()) {
-				if(u instanceof Patient) {
-					temp = (Patient) u;
-					model.addElement(temp.getUsername() + ", " + temp.getPassword());
-				}
+			
+			for(Patient p : listOfPatientsInstance.getAllPatientsList()) {
+				
+				model.addElement(p.getFirstName() + ", " + p.getLastName() + ", " + p.getAddress() + ", " + p.getPhoneNum() + ", " + p.getHealthCardNum() + ", " + p.getDateOfBirth());
+				
 				//System.out.println(p.toString() + " entry");	//delete me. test purpose
 			}
 		} catch (Exception e) {

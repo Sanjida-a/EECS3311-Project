@@ -24,7 +24,7 @@ public class DisplayAddOrder implements ActionListener {
 	private static JTextField textFieldPatientID;
 	private static JTextField textFieldMercID;
 	private static JTextField textFieldQty;
-	private static JTextField textFieldRefill;
+//	private static JTextField textFieldRefill;
 	
     private static int patientID;
 	private static int medID;
