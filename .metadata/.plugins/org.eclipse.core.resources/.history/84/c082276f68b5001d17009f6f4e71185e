@@ -101,11 +101,8 @@ public class DisplayInitialScreen {
 		else if(user == USER.PATIENT){
 			this.createPanalVisibleToPatient(totalGUI);
 		}
-		else if(user == USER.DEVELOPER) {
-			this.createPanelVisibleToAdmin(totalGUI); //for test purpose
-			this.createPanalVisibleToPatient(totalGUI);//for test purpose
-		}
-
+		this.createPanelVisibleToAdmin(totalGUI); //for test purpose
+		this.createPanalVisibleToPatient(totalGUI);//for test purpose
         this.createExtraContents(totalGUI);
         this.createPanelVisibleToAll(totalGUI);
         if(user != USER.GUEST) {
@@ -676,8 +673,8 @@ public class DisplayInitialScreen {
 		return frame;
 	}
 	
-	//public static void main(String[] args) {	//for test purpose
-	//	DisplayInitialScreen screen = new DisplayInitialScreen();
-	//	screen.displayInitialScreen(USER.OWNER);
-	//}
+	public static void main(String[] args) {	//for test purpose
+		DisplayInitialScreen screen = new DisplayInitialScreen();
+		screen.displayInitialScreen(USER.OWNER);
+	}
 }

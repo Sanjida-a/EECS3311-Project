@@ -4,7 +4,6 @@ public enum USER {
 	PATIENT,
 	PHARMACIST,
 	OWNER,
-	DEVELOPER,
 	GUEST;
 	
 	
@@ -15,9 +14,6 @@ public enum USER {
 		}
 		else if(s.compareTo("Pharmacist") == 0) {
 			result = USER.PHARMACIST;
-		}
-		else if(s.compareTo("Developer") == 0) {
-			result = USER.DEVELOPER;
 		}
 		else {
 			result = USER.PATIENT;
