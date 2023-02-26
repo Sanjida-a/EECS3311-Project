@@ -180,8 +180,10 @@ public class DisplayAddOrder implements ActionListener {
 //		}
 //	}
 
-	//public static void main(String[] args) {		//for test purpose
+	public static void main(String[] args) {		//for test purpose
 		 //TODO Auto-generated method stub
-	//	DisplayAddOrder.displayAddOrder(new JFrame());	
-	//}
+		DisplayAddOrder.displayAddOrder(new JFrame());
+		
+		
+	}
 }

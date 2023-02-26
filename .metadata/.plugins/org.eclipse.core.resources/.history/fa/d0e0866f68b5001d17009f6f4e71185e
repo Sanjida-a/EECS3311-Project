@@ -288,7 +288,7 @@ public class DisplayPatientManage {
 	}
 	
 	
-	//public static void main(String[] args) {	//for test purpose
-	//	DisplayPatientManage.displayPatientManage(new JFrame());
-	//}
+	public static void main(String[] args) {	//for test purpose
+		DisplayPatientManage.displayPatientManage(new JFrame());
+	}
 }

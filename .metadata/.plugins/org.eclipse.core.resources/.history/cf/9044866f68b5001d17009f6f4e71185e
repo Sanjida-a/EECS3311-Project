@@ -89,9 +89,9 @@ public class DisplayErrorPopup {
         frmPopup.setVisible(true);
         
 	}
-	//public static void main(String[] args) {
-	//	DisplayErrorPopup.displayErrorPopup("error", new JFrame());
-	//}
+	public static void main(String[] args) {
+		DisplayErrorPopup.displayErrorPopup("error", new JFrame());
+	}
 	
 
 }
