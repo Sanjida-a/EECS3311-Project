@@ -31,7 +31,7 @@ public class OTCOrder extends Order{
 				newOrder.medicationID = medicationID;
 				newOrder.patientID = patientID;
 				newOrder.quantityBought = quantityBought;
-				newOrder.priceAtPurchase = m.price; // will give price at purchase time
+	//			newOrder.priceAtPurchase = m.price; // will give price at purchase time
 				
 				//this.addOrderToPatient(patientBought);
 			}
