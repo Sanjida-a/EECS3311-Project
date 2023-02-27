@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 
 public class DisplayModifyMerchandise implements ActionListener{
 	private static JFrame superFrame;
@@ -21,7 +22,6 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JTextField textFieldType;
 	private static JTextField textFieldForm;
 	private static JTextField textFieldPrice;
-	private static JTextField textFieldDesciption;
 	private static JTextField textFieldMercID;
 	
 	public static void displayModifyMerchandise(JFrame previous) {
@@ -30,7 +30,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		frame = new JFrame();
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setSize(new Dimension(700,500));
+		frame.setSize(new Dimension(700,400));
 		DisplayModifyMerchandise.createContentsPanel(superFrame);
 		
 		frame.setVisible(true);
@@ -48,33 +48,37 @@ public class DisplayModifyMerchandise implements ActionListener{
 		createInputFields(panel);
 		createButtons(panel);
 		
+		JTextArea textAreaDescription = new JTextArea();
+		textAreaDescription.setBounds(0, 135, 429, 193);
+		panel.add(textAreaDescription);
+		
 		
 	}
 	
 	public static void createLabels(JPanel panel) {
 		JLabel lblName = new JLabel("Name");
 		lblName.setFont(new Font("굴림", Font.BOLD, 18));
-		lblName.setBounds(0, 70, 145, 35);
+		lblName.setBounds(0, 45, 145, 35);
 		panel.add(lblName);
 		
-		JLabel lblType = new JLabel("Type");
+		/*JLabel lblType = new JLabel("Type");
 		lblType.setFont(new Font("굴림", Font.BOLD, 18));
-		lblType.setBounds(0, 115, 145, 35);
+		lblType.setBounds(0, 161, 145, 35);
 		panel.add(lblType);
 		
 		JLabel lblForm = new JLabel("Form");
 		lblForm.setFont(new Font("굴림", Font.BOLD, 18));
 		lblForm.setBounds(325, 116, 145, 35);
-		panel.add(lblForm);
+		panel.add(lblForm);*/
 		
 		JLabel lblPrice = new JLabel("Price");
 		lblPrice.setFont(new Font("굴림", Font.BOLD, 18));
-		lblPrice.setBounds(0, 160, 145, 35);
+		lblPrice.setBounds(354, 90, 145, 35);
 		panel.add(lblPrice);
 		
 		JLabel lblDescription = new JLabel("Description");
 		lblDescription.setFont(new Font("굴림", Font.BOLD, 18));
-		lblDescription.setBounds(0, 205, 125, 35);
+		lblDescription.setBounds(0, 90, 125, 35);
 		panel.add(lblDescription);
 		
 		JLabel lblMercID = new JLabel("MerchandiseID");
@@ -85,32 +89,27 @@ public class DisplayModifyMerchandise implements ActionListener{
 	
 	public static void createInputFields(JPanel panel) {
 		textFieldName = new JTextField();
-		textFieldName.setBounds(145, 71, 505, 35);
+		textFieldName.setBounds(145, 45, 505, 35);
 		panel.add(textFieldName);
 		textFieldName.setColumns(10);
 		
-		textFieldType = new JTextField();
-		textFieldType.setBounds(145, 116, 168, 35);
+		/*textFieldType = new JTextField();
+		textFieldType.setBounds(145, 162, 168, 35);
 		panel.add(textFieldType);
 		textFieldType.setColumns(10);
 		
 		textFieldForm = new JTextField();
 		textFieldForm.setBounds(470, 116, 180, 35);
 		panel.add(textFieldForm);
-		textFieldForm.setColumns(10);
+		textFieldForm.setColumns(10);*/
 		
 		textFieldPrice = new JTextField();
-		textFieldPrice.setBounds(145, 161, 168, 35);
+		textFieldPrice.setBounds(500, 91, 150, 35);
 		panel.add(textFieldPrice);
 		textFieldPrice.setColumns(10);
 		
-		textFieldDesciption = new JTextField();
-		textFieldDesciption.setBounds(0, 239, 445, 204);
-		panel.add(textFieldDesciption);
-		textFieldDesciption.setColumns(10);
-		
 		textFieldMercID = new JTextField();
-		textFieldMercID.setBounds(145, 0, 505, 35);
+		textFieldMercID.setBounds(145, 0, 150, 35);
 		panel.add(textFieldMercID);
 		textFieldMercID.setColumns(10);
 	}
@@ -118,13 +117,13 @@ public class DisplayModifyMerchandise implements ActionListener{
 	public static void createButtons(JPanel panel) {
 		JButton btnOk = new JButton("Ok");
 		btnOk.setFont(new Font("굴림", Font.BOLD, 20));
-		btnOk.setBounds(457, 360, 190, 35);
+		btnOk.setBounds(460, 248, 190, 35);
 		btnOk.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnOk);
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("굴림", Font.BOLD, 20));
-		btnCancel.setBounds(457, 405, 190, 35);
+		btnCancel.setBounds(460, 293, 190, 35);
 		btnCancel.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnCancel);
 		
