@@ -55,19 +55,18 @@ public class Owner extends User {
 		
 		ArrayList<Patient> searchResult = new ArrayList <Patient> ();
 		
-		for (Patient p: searchResult) {
-			System.out.println(p.getFirstName() + ", " + p.getLastName() + ", " + p.getAddress() + ", " + p.getPhoneNum() + ", " + p.getHealthCardNum() + ", " + p.getDateOfBirth());
-		}
+
 		if (typeOfSearch.equals("FirstName")) {
+
 			for (Patient p : listOfPatientsByOwner.getAllPatientsList()) {
-				if (p.getFirstName().equals(patientName)) {
+				if (p.getFirstName().toUpperCase().equals(patientName)) {
 					searchResult.add(p);
 				}
 			}
 		}
 		else if (typeOfSearch.equals("LastName")) {
 			for (Patient p : listOfPatientsByOwner.getAllPatientsList()) {
-				if (p.getLastName().equals(patientName)) {
+				if (p.getLastName().toUpperCase().equals(patientName)) {
 					searchResult.add(p);
 				}
 			}
@@ -78,12 +77,12 @@ public class Owner extends User {
 			String lastName = patientName.substring(indexOfSpace+1);
 			
 			for (Patient p : listOfPatientsByOwner.getAllPatientsList()) {
-				if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+				if (p.getFirstName().toUpperCase().equals(firstName) && p.getLastName().toUpperCase().equals(lastName)) {
 					searchResult.add(p);
 				}
 			}
 		}
-		
+
 		return searchResult;
 	}
 	
