@@ -684,19 +684,10 @@ public class DisplayInitialScreen {
 
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		list.removeAll();
-		if(userType == USER.GUEST || userType == USER.PATIENT) {
-			for(Merchandise m : merchandises) {
-				if(m.getisOTC()) {
-					model.addElement(m);
-				}
-			}
-		}
-		else {
-			for(Merchandise m : merchandises) {
+		for(Merchandise m : merchandises) {
 
-				model.addElement(m);
+			model.addElement(m);
 			
-			}
 		}
 		list.setModel(model);
 	}
