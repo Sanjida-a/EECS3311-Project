@@ -40,3 +40,7 @@
 *Fixed bug where reading from database in DAO classes was adding to arrayList instead of overriding it
 *Implemented patient search for owner/pharmacist - search by first name, search by last name and search by full name
 
+10. 2023/03/02 23:00 - 02:00 contributor: Aiza Bajwa
+*Connected MerchandiseDAO.java class to actual database
+*Implemented methods for modifying medication details (name, price, description) and started its connection to front end
+
