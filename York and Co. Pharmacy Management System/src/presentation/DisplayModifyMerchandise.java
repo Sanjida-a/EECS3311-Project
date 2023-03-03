@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
+
+import middleLayer.Inventory;
+import middleLayer.Pharmacist;
+
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
@@ -141,6 +145,45 @@ public class DisplayModifyMerchandise implements ActionListener{
 
 			try {
 				//invoke method(s) for modifying Merchandise here
+				// Daniel can you add 3 buttons here and 3 different actionPerformed methods for them? will make it clearer and easier because only 1 parameter
+				// i have tested all methods from main and they seem to work
+				String _textFieldName = textFieldName.getText().toUpperCase();
+				int _textFieldPrice = Integer.parseInt(textFieldPrice.getText());
+				int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
+				// what is the description jtextfield called?
+				
+				// how to throw exception when all textboxes empty?
+//				if (_textFieldFName.isEmpty() && _textFieldPrice.isEmpty() && _textFieldMercID.) {
+//					throw new Exception(); // ensures a first name, last name and address have been entered
+//				}
+				
+				Inventory inv = Inventory.getInstance();
+				
+				inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
+//				p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
+//				displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+				
+//				should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
+				
+				// aiza code in main below that she used to test methods (can delete once buttons work properly)
+//				MerchandiseDAO m = new MerchandiseDAO();
+//				ArrayList<Merchandise> list = m.getListOfMerchandise();
+//				for (Merchandise mer : list) {
+//					System.out.println(mer.toString());
+//				}
+//				
+//				Merchandise med = list.get(0);
+//				
+//				Inventory i = Inventory.getInstance();
+//				i.modifyMedicationDescription(3, "THIS IS A TEST DESCRIPTION");
+//				
+//				list = m.getListOfMerchandise();
+//				for (Merchandise mer : list) {
+//					System.out.println(mer.toString());
+//				}
+//				i.modifyMedicationPrice(1, 2000);
+//				public boolean modifyMedicationPrice(int medicationID, int newPrice) {
+				
 			}
 			catch(Exception ex) {
 				JOptionPane.showMessageDialog(frame,"Name, type, form, and price are required", "Invalid input", JOptionPane.WARNING_MESSAGE);

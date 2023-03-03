@@ -164,6 +164,8 @@ public class Inventory{
     }
 
     // increase quantity of medication already existing in inventory (if exists)
+    
+    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE
     public boolean increaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationIncreased = false;
         for (int i = 0; i < list.size(); i ++){
@@ -177,6 +179,8 @@ public class Inventory{
     }
 
     // decrease quantity of medication already existing in inventory, if possible (if medication exists)
+    
+    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE
     public boolean[] decreaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationDecreased = false;
     	boolean enoughQuantityToDecrease = true;
@@ -204,6 +208,7 @@ public class Inventory{
     }
     
     // delete a medication from inventory (if exists)
+    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE
     public boolean delete(String name, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
     	boolean medicationRemoved = false;
         for (int i = 0; i < list.size(); i ++){
@@ -217,6 +222,7 @@ public class Inventory{
     }
     
     // add a new medication to inventory (if it already doesn't exist)
+    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE
     public boolean addToInventory(Merchandise m){
     	
     	boolean medicationAlreadyExists = false;
@@ -249,6 +255,62 @@ public class Inventory{
     	}
     	
     	return foundMWithID;
+    }
+    
+    //should these 3 methods below be in this class? or admin?
+    public boolean modifyMedicationName(int medicationID, String newName) {
+    	
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return false;
+    	}
+    	
+    	// check to see if an identical medication with name newNAME already exists --> if does, can't make modification
+    	boolean medicationAlreadyExists = false;
+        for (int i = 0; i < list.size(); i ++){ //notice using newNAME
+            if (list.get(i).name.equals(newName) && list.get(i).type == specificMedication.type && list.get(i).form == specificMedication.form && list.get(i).isOTC == specificMedication.isOTC){
+            	medicationAlreadyExists = true;
+            }
+        }
+        
+        if (medicationAlreadyExists == true) {
+        	return false;
+        }
+        
+    	specificMedication.setName(newName);
+    	
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	return true;
+    }
+    
+    public boolean modifyMedicationPrice(int medicationID, int newPrice) {
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return false;
+    	}
+    	
+    	specificMedication.setPrice(newPrice);
+    	
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	return true;
+    }
+
+    public boolean modifyMedicationDescription(int medicationID, String newDescription) {
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return false;
+    	}
+    	
+    	specificMedication.setDescription(newDescription);
+    	
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	return true;
     }
 
 }
