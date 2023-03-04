@@ -411,7 +411,9 @@ public class DisplayInitialScreen {
 					Boolean medicationRemoved = false;
 				
 
+
 					medicationRemoved = inv.delete(Integer.parseInt(inputFieldID.getText()));
+
 				
 					
 					if (medicationRemoved == false) {

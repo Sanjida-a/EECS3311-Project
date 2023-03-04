@@ -7,7 +7,10 @@
 		</attributes>
 	</classpathentry>
 
-	<classpathentry kind="lib" path="E:/EECS3311-project-group8/York and Co. Pharmacy Management System/src/mysql-connector-j-8.0.32.jar">
+
+
+	<classpathentry kind="lib" path="C:/Users/Tung/OneDrive/Documents/EECS3311-project-group8/York and Co. Pharmacy Management System/src/mysql-connector-j-8.0.32.jar">
+
 
 		<attributes>
 			<attribute name="module" value="true"/>
