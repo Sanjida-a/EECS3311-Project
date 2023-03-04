@@ -117,19 +117,16 @@ public class DisplayModifyMerchandise implements ActionListener{
 		btnChangeName.setHorizontalTextPosition(SwingConstants.LEFT);
 		btnChangeName.setFont(new Font("굴림", Font.BOLD, 16));
 		btnChangeName.setBounds(0, 45, 140, 35);
-		btnChangeName.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnChangeName);
 		
 		JButton btnChangePrice = new JButton("Change Price");
 		btnChangePrice.setFont(new Font("굴림", Font.BOLD, 16));
 		btnChangePrice.setBounds(348, 90, 145, 35);
-		btnChangePrice.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnChangePrice);
 		
 		JButton btnChangeDescription = new JButton("Change Description");
 		btnChangeDescription.setFont(new Font("굴림", Font.BOLD, 16));
 		btnChangeDescription.setBounds(0, 90, 189, 35);
-		btnChangeDescription.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnChangeDescription);
 		
 	}
@@ -169,9 +166,9 @@ public class DisplayModifyMerchandise implements ActionListener{
 		
 	}	
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//DisplayModifyMerchandise.displayModifyMerchandise(new JFrame());
 
-	}*/
+	}
 }
