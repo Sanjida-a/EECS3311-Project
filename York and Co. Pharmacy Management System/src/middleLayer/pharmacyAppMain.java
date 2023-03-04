@@ -9,8 +9,8 @@ public class pharmacyAppMain {
 		
 		//DisplayLogin logIn = new DisplayLogin();
 		//logIn.displayLogin();
-		DisplayInitialScreen screen = new DisplayInitialScreen();
-		screen.displayInitialScreen(USER.GUEST);
+		//DisplayInitialScreen screen = new DisplayInitialScreen();
+		DisplayInitialScreen.displayInitialScreen(USER.GUEST);
 		
 	}
 	

@@ -35,6 +35,7 @@ import middleLayer.Merchandise;
 import middleLayer.Order;
 import middleLayer.Owner;
 import middleLayer.Patient;
+import middleLayer.User;
 import middleLayer.Inventory;
 import middleLayer.MERCHANDISE_FORM;
 import middleLayer.MERCHANDISE_TYPE;
@@ -47,9 +48,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import java.awt.Rectangle;
 
 
 
@@ -77,52 +80,75 @@ public class DisplayInitialScreen {
 	private static String searchKeyword;
 	private static USER userType;
 	
+	private static int userLoggedIn;
+	
 	private static String operationResult;
-	private JTextField inputFieldID;
+	private static JTextField inputFieldID;
+	
+	private static ArrayList<Merchandise> currentList;
 	
 
 	
-	public void displayInitialScreen(USER user) {
+	public static void displayInitialScreen(USER user) {
 		userType = user;
+		if(userType == USER.PATIENT || userType == USER.GUEST) {
+			currentList = inv.getOnlyOTCMerchandise();
+		}
+		else {
+			currentList = inv.getMerchandise();
+		}
 		JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("York and Co. Pharmacy Management System");
-        DisplayInitialScreen background = new DisplayInitialScreen();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(background.createContentPanel(userType));
-        frame.setSize(1400, 800);
+        frame.setContentPane(DisplayInitialScreen.createContentPanel(userType));
+        frame.setSize(new Dimension(1400, 800));
         frame.getContentPane().setLayout(null);
+
 
         frame.setVisible(true);
 	}
 	
-	private JPanel createContentPanel(USER user) {
+	private static JPanel createContentPanel(USER user) {
 		String loginButton = "Login";
 		JPanel totalGUI = new JPanel();
+		totalGUI.setPreferredSize(new Dimension(1400, 800));
+		totalGUI.setBounds(new Rectangle(0, 0, 1400, 800));
 		totalGUI.setFont(new Font("굴림", Font.BOLD, 18));
 		totalGUI.setLayout(null);
 		
 		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
-			this.createPanelVisibleToAdmin(totalGUI);
+			createPanelVisibleToAdmin(totalGUI);
 		}
 		else if(user == USER.PATIENT){
-			this.createPanalVisibleToPatient(totalGUI);
+			createPanalVisibleToPatient(totalGUI);
 		}
 		else if(user == USER.DEVELOPER) {
-			this.createPanelVisibleToAdmin(totalGUI); //for test purpose
-			this.createPanalVisibleToPatient(totalGUI);//for test purpose
+			createPanelVisibleToAdmin(totalGUI); //for test purpose
+			createPanalVisibleToPatient(totalGUI);//for test purpose
 		}
 
-        this.createExtraContents(totalGUI);
-        this.createPanelVisibleToAll(totalGUI);
+        createExtraContents(totalGUI);
+        createPanelVisibleToAll(totalGUI);
         if(user != USER.GUEST) {
         	loginButton = "Logout";
         }
         JButton btnLogin = new JButton(loginButton);
+        btnLogin.setActionCommand(loginButton);
         btnLogin.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		DisplayLogin login = new DisplayLogin();
+        		if(e.getActionCommand().equals("Login")) {
+        			
+        			DisplayLogin login = new DisplayLogin();
         		
-        		login.displayLogin(frame);
+        			login.displayLogin(frame);
+        			
+        		}
+        		else {
+        			frame.dispose();
+        			displayInitialScreen(USER.GUEST);
+        		}
+
+
         	}
         });
         btnLogin.setFont(new Font("굴림", Font.BOLD, 18));
@@ -138,8 +164,13 @@ public class DisplayInitialScreen {
         btnDisplay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				displayMercList(outputList, inv.getMerchandise());
+				if(userType == USER.OWNER || userType == USER.PHARMACIST) {
+					currentList = inv.getMerchandise();
+				}
+				else {
+					currentList = inv.getOnlyOTCMerchandise();
+				}
+				displayMercList(outputList, currentList);
 			
 			}
 		});
@@ -148,7 +179,7 @@ public class DisplayInitialScreen {
 		
 	}
 	
-	private void createPanelVisibleToAdmin(JPanel totalGUI) {
+	private static void createPanelVisibleToAdmin(JPanel totalGUI) {
 		JPanel panelVisibleToAdmin = new JPanel();
         panelVisibleToAdmin.setBounds(66, 537, 1308, 202);
         panelVisibleToAdmin.setLayout(null);  
@@ -185,7 +216,7 @@ public class DisplayInitialScreen {
         
         JLabel lblQty = new JLabel("Qty");
         lblQty.setFont(new Font("굴림", Font.BOLD, 18));
-        lblQty.setBounds(0, 135, 125, 35);
+        lblQty.setBounds(619, 10, 125, 35);
         panelVisibleToAdmin.add(lblQty);
         
         JLabel lblPrice = new JLabel("Price");
@@ -195,7 +226,7 @@ public class DisplayInitialScreen {
         
         inputFieldQty = new JTextField();
         inputFieldQty.setFont(new Font("굴림", Font.BOLD, 18));
-        inputFieldQty.setBounds(125, 135, 90, 35);
+        inputFieldQty.setBounds(744, 10, 100, 35);
         panelVisibleToAdmin.add(inputFieldQty);
         inputFieldQty.setColumns(10);     
         
@@ -254,17 +285,17 @@ public class DisplayInitialScreen {
         lblNewLabel.setFont(new Font("굴림", Font.BOLD, 18));
         
         JButton btnDelete = new JButton("Delete");
-        btnDelete.setBounds(897, 134, 125, 35);
+        btnDelete.setBounds(1034, 134, 125, 35);
         panelVisibleToAdmin.add(btnDelete);
         btnDelete.setFont(new Font("굴림", Font.BOLD, 20));
         
         JButton btnIncrease = new JButton("Increase");
-        btnIncrease.setBounds(1034, 134, 125, 35);
+        btnIncrease.setBounds(744, 134, 125, 35);
         panelVisibleToAdmin.add(btnIncrease);
         btnIncrease.setFont(new Font("굴림", Font.BOLD, 20));
         
         JButton btnDecrease = new JButton("Decrease");
-        btnDecrease.setBounds(1171, 135, 125, 35);
+        btnDecrease.setBounds(888, 135, 125, 35);
         panelVisibleToAdmin.add(btnDecrease);
         btnDecrease.setFont(new Font("굴림", Font.BOLD, 18));
         
@@ -313,7 +344,8 @@ public class DisplayInitialScreen {
 						JOptionPane.showMessageDialog(frame,"Medication with ID: " + _inputFieldID + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
 					}
 					lblOperationResult.setText(operationResult);
-					displayMercList(outputList, inv.getMerchandise());
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
 					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
@@ -352,8 +384,8 @@ public class DisplayInitialScreen {
 						operationResult = "Increase successful. See updated inventory";
 					}
 
-				
-					displayMercList(outputList, inv.getMerchandise());
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
 					lblOperationResult.setText(operationResult);
 				}
 				catch(Exception ex) {
@@ -378,18 +410,20 @@ public class DisplayInitialScreen {
 				
 					Boolean medicationRemoved = false;
 				
-//					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
-//				
-//					
-//					if (medicationRemoved == false) {
-//						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
-//					}
-//					else {
-//						operationResult = "Remove successful. See updated inventory";
-//					}
-//
-//					displayMercList(outputList, inv.getMerchandise());
-//					lblOperationResult.setText(operationResult);
+
+					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+				
+					
+					if (medicationRemoved == false) {
+						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
+					}
+					else {
+						operationResult = "Remove successful. See updated inventory";
+					}
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
+					lblOperationResult.setText(operationResult);
+
 				}
 				catch (Exception ex) {	//display error popup
 					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
@@ -429,8 +463,8 @@ public class DisplayInitialScreen {
 					else {
 						operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
 					}
-
-					displayMercList(outputList, inv.getMerchandise());
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
 					lblOperationResult.setText(operationResult);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
@@ -474,13 +508,15 @@ public class DisplayInitialScreen {
 
 	}
 	
-	private void createExtraContents(JPanel totalGUI) {
+	private static void createExtraContents(JPanel totalGUI) {
         JButton btnExit = new JButton("Exit");
         btnExit.setFont(new Font("굴림", Font.BOLD, 20));
         btnExit.setBounds(1249, 40, 120, 35);
         btnExit.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		System.exit(0);
+        		//userType = USER.DEVELOPER;
+
         	}
         });
         Box horizontalBox = Box.createHorizontalBox();
@@ -492,7 +528,7 @@ public class DisplayInitialScreen {
         totalGUI.add(btnExit);
 	}
 	
-	private void createPanelVisibleToAll(JPanel totalGUI) {
+	private static void createPanelVisibleToAll(JPanel totalGUI) {
 		JPanel panelVisibleToAll = new JPanel();
         panelVisibleToAll.setBounds(45, 40, 944, 465);
         panelVisibleToAll.setLayout(null);
@@ -568,7 +604,8 @@ public class DisplayInitialScreen {
 						operationResult = "";
 						lblOperationResult.setText(operationResult);
 					}
-					displayMercList(outputList, methodResult);
+					currentList = methodResult;
+					displayMercList(outputList, currentList);
 				}	
 				catch(Exception ex) {
 					JOptionPane.showMessageDialog(frame,"search keyword is empty", "input required", JOptionPane.WARNING_MESSAGE);
@@ -600,7 +637,7 @@ public class DisplayInitialScreen {
         scrollPane.setViewportView(outputList);
 
         panelVisibleToAll.add(scrollPane);
-        displayMercList(outputList, inv.getMerchandise());
+        displayMercList(outputList, currentList);
         totalGUI.add(panelVisibleToAll);
         
         JPanel panelColumn = new JPanel();
@@ -613,35 +650,65 @@ public class DisplayInitialScreen {
         btnColumnName.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnName.setHorizontalTextPosition(SwingConstants.LEFT);
         btnColumnName.setBounds(75, 0, 290, 20);
-        sort(btnColumnName);
+        //sort(btnColumnName);
+        btnColumnName.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				currentList = inv.displayAlphabetically(currentList);
+				displayMercList(outputList, currentList);
+			}
+        	
+        });
         panelColumn.add(btnColumnName);
         
         JButton btnColumnQty = new JButton("Qty");
         btnColumnQty.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnQty.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnQty.setBounds(364, 0, 80, 20);
-        sort(btnColumnQty);
+        //sort(btnColumnQty);
+        btnColumnQty.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				currentList = inv.displayByQuantity(currentList);
+				displayMercList(outputList, currentList);
+			}
+        	
+        });
         panelColumn.add(btnColumnQty);
         
         JButton btnColumnPrice = new JButton("Price");
         btnColumnPrice.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnPrice.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnPrice.setBounds(443, 0, 100, 20);
-        sort(btnColumnPrice);
+       // sort(btnColumnPrice);
+        btnColumnPrice.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				currentList = inv.displayByPrice(currentList);
+				displayMercList(outputList,currentList);
+			}
+        	
+        });
         panelColumn.add(btnColumnPrice);
         
         JButton btnColumnType = new JButton("Type");
         btnColumnType.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnType.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnType.setBounds(542, 0, 150, 20);
-        sort(btnColumnType);
+        //sort(btnColumnType);
         panelColumn.add(btnColumnType);
         
         JButton btnColumnForm = new JButton("Form");
         btnColumnForm.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnForm.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnForm.setBounds(691, 0, 150, 20);
-        sort(btnColumnForm);
+        //sort(btnColumnForm);
         panelColumn.add(btnColumnForm);
         
         JButton btnColumnOTC = new JButton("isOTC");
@@ -654,7 +721,7 @@ public class DisplayInitialScreen {
         btnColumnID.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnID.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnID.setBounds(0, 0, 75, 20);
-        sort(btnColumnID);
+        //sort(btnColumnID);
         panelColumn.add(btnColumnID);
         
         ButtonGroup groupColumn = new ButtonGroup();
@@ -677,7 +744,7 @@ public class DisplayInitialScreen {
 
 	}
 	
-	private void createPanalVisibleToPatient(JPanel totalGUI) {
+	private static void createPanalVisibleToPatient(JPanel totalGUI) {
 		JPanel panelVisibleToPatient = new JPanel();
         panelVisibleToPatient.setBounds(1183, 98, 170, 366);
         totalGUI.add(panelVisibleToPatient);
@@ -686,6 +753,7 @@ public class DisplayInitialScreen {
         JButton btnNewButton_1 = new JButton("<html>Change<br>Profile</html>");
         btnNewButton_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		
         	}
         });
         btnNewButton_1.setFont(new Font("굴림", Font.BOLD, 17));
@@ -696,21 +764,21 @@ public class DisplayInitialScreen {
 	}
 	
 	private static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
-
+		//currentList = merchandises;
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		list.removeAll();
-		if(userType == USER.GUEST || userType == USER.PATIENT) {
+		//if(userType == USER.GUEST || userType == USER.PATIENT) {
 			for(Merchandise m : merchandises) {
 				model.addElement(m);
 			}
-		}
-		else {
-			for(Merchandise m : merchandises) {
+		//}
+		//else {
+		//	for(Merchandise m : merchandises) {
 
-				model.addElement(m);
+			//	model.addElement(m);
 			
-			}
-		}
+			//}
+		//}
 		list.setModel(model);
 	}
 	
@@ -726,7 +794,13 @@ public class DisplayInitialScreen {
 	              if (c instanceof JLabel) {
 	                  JLabel label = (JLabel) c;
 	                  Merchandise merc = (Merchandise) value;
-	                  
+	                  String isOTC = "";
+	                  if(merc.getisOTC()) {
+	                	  isOTC = "OTC";
+	                  }
+	                  else {
+	                	  isOTC = "Rx";
+	                  }
 	                  //label.setText(String.format("%s %s %s %s %s %s %s", merc.getMedicationID(), merc.getName(), merc.getQuantity(), merc.getPrice(), merc.getType(), merc.getForm(), merc.getisOTC()));
 	                  label.setText(formatString(String.valueOf(merc.getMedicationID()), 9) +
 	                		  formatString(merc.getName(), 33) + 
@@ -734,7 +808,7 @@ public class DisplayInitialScreen {
 	                		  formatString(String.valueOf(merc.getPrice()), 11) + 
 	                		  formatString(merc.getType().name(), 17) +
 	                		  formatString(merc.getForm().name(), 17) +
-	                		  formatString(String.valueOf(merc.getisOTC()), 10));
+	                		  formatString(isOTC, 10));
 	                  if (!isSelected) {
 	                      label.setBackground(index % 2 == 0 ? background : defaultBackground);
 	                  }
@@ -752,8 +826,31 @@ public class DisplayInitialScreen {
 		return input + new String(temp);
 	}
 	
+	private static USER userToUsertype(User u) {	//this method is for the next iteration
+		if(u == null) {
+			return USER.GUEST;
+		}
+		
+		USER result;
+		String className = u.getClass().toString();
+		if(className.equals("Patient")) {
+			result = USER.PATIENT;
+		}
+		else if(className.equals("Owner")) {
+			result = USER.OWNER;
+		}
+		else if(className.equals("Pharmacist")) {
+			result = USER.PHARMACIST;
+		}
+		else {
+			result = USER.DEVELOPER;
+		}
+		
+		return result;
+	}
 	
-	private static void sort(JButton button) {
+	
+	/*private static void sort(JButton button) {
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -761,19 +858,20 @@ public class DisplayInitialScreen {
 				// TODO Auto-generated method stub
 				if(e.getActionCommand().equals("Name")) {
 					//invoke sort merc by name
-
+					currentList = inv.displayAlphabetically(currentList);
 				}
 				else if(e.getActionCommand().equals("Price")) {
 					//invoke sort merc by price
-
+					currentList = inv.displayByPrice(currentList);
 				}
-				else {
+				else if(e.getActionCommand().equals("Qty")) {
 					//left intentionally for further expansion of sorting
+					currentList = inv.displayByQuantity(currentList);
 				}
 			}
 			
 		});
-	}
+	}*/
 	public String getName() {
 		return new String(name);
 	}
@@ -802,8 +900,13 @@ public class DisplayInitialScreen {
 		return frame;
 	}
 	
+	public static void LoggedInAs(int ID) {
+		userLoggedIn = ID;
+	}
+
+	
 	//public static void main(String[] args) {	//for test purpose
-		//DisplayInitialScreen screen = new DisplayInitialScreen();
-		//screen.displayInitialScreen(USER.OWNER);
+		
+		//DisplayInitialScreen.displayInitialScreen(USER.DEVELOPER);
 	//}
 }

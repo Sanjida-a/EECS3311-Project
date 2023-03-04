@@ -18,6 +18,7 @@ import middleLayer.Pharmacist;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 public class DisplayModifyMerchandise implements ActionListener{
 	private static JFrame superFrame;
@@ -27,6 +28,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JTextField textFieldForm;
 	private static JTextField textFieldPrice;
 	private static JTextField textFieldMercID;
+	private static JTextArea textAreaDescription;
 	
 	public static void displayModifyMerchandise(JFrame previous) {
 		superFrame = previous;
@@ -52,38 +54,14 @@ public class DisplayModifyMerchandise implements ActionListener{
 		createInputFields(panel);
 		createButtons(panel);
 		
-		JTextArea textAreaDescription = new JTextArea();
-		textAreaDescription.setBounds(0, 135, 429, 193);
-		panel.add(textAreaDescription);
+
+		
+
 		
 		
 	}
 	
 	public static void createLabels(JPanel panel) {
-		JLabel lblName = new JLabel("Name");
-		lblName.setFont(new Font("굴림", Font.BOLD, 18));
-		lblName.setBounds(0, 45, 145, 35);
-		panel.add(lblName);
-		
-		/*JLabel lblType = new JLabel("Type");
-		lblType.setFont(new Font("굴림", Font.BOLD, 18));
-		lblType.setBounds(0, 161, 145, 35);
-		panel.add(lblType);
-		
-		JLabel lblForm = new JLabel("Form");
-		lblForm.setFont(new Font("굴림", Font.BOLD, 18));
-		lblForm.setBounds(325, 116, 145, 35);
-		panel.add(lblForm);*/
-		
-		JLabel lblPrice = new JLabel("Price");
-		lblPrice.setFont(new Font("굴림", Font.BOLD, 18));
-		lblPrice.setBounds(354, 90, 145, 35);
-		panel.add(lblPrice);
-		
-		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setFont(new Font("굴림", Font.BOLD, 18));
-		lblDescription.setBounds(0, 90, 125, 35);
-		panel.add(lblDescription);
 		
 		JLabel lblMercID = new JLabel("MerchandiseID");
 		lblMercID.setFont(new Font("굴림", Font.BOLD, 18));
@@ -116,14 +94,18 @@ public class DisplayModifyMerchandise implements ActionListener{
 		textFieldMercID.setBounds(145, 0, 150, 35);
 		panel.add(textFieldMercID);
 		textFieldMercID.setColumns(10);
+		
+		textAreaDescription = new JTextArea();
+		textAreaDescription.setBounds(0, 135, 429, 193);
+		panel.add(textAreaDescription);
 	}
 	
 	public static void createButtons(JPanel panel) {
-		JButton btnOk = new JButton("Ok");
+		/*JButton btnOk = new JButton("Ok");
 		btnOk.setFont(new Font("굴림", Font.BOLD, 20));
 		btnOk.setBounds(460, 248, 190, 35);
 		btnOk.addActionListener(new DisplayModifyMerchandise());
-		panel.add(btnOk);
+		panel.add(btnOk);*/
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("굴림", Font.BOLD, 20));
@@ -131,71 +113,65 @@ public class DisplayModifyMerchandise implements ActionListener{
 		btnCancel.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnCancel);
 		
+		JButton btnChangeName = new JButton("Change name");
+		btnChangeName.setHorizontalTextPosition(SwingConstants.LEFT);
+		btnChangeName.setFont(new Font("굴림", Font.BOLD, 16));
+		btnChangeName.setBounds(0, 45, 140, 35);
+		btnChangeName.addActionListener(new DisplayModifyMerchandise());
+		panel.add(btnChangeName);
+		
+		JButton btnChangePrice = new JButton("Change Price");
+		btnChangePrice.setFont(new Font("굴림", Font.BOLD, 16));
+		btnChangePrice.setBounds(348, 90, 145, 35);
+		btnChangePrice.addActionListener(new DisplayModifyMerchandise());
+		panel.add(btnChangePrice);
+		
+		JButton btnChangeDescription = new JButton("Change Description");
+		btnChangeDescription.setFont(new Font("굴림", Font.BOLD, 16));
+		btnChangeDescription.setBounds(0, 90, 189, 35);
+		btnChangeDescription.addActionListener(new DisplayModifyMerchandise());
+		panel.add(btnChangeDescription);
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if(e.getActionCommand().equals("Cancel")) {
-			frame.dispose();
-			superFrame.setEnabled(true);
-			superFrame.toFront();
-		}
-		else {
+		// TODO Auto-generated method stub				
+		String _textFieldName = textFieldName.getText().toUpperCase();
+		int _textFieldPrice = Integer.parseInt(textFieldPrice.getText());
+		int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
+		String _textAreaDescription = textAreaDescription.getText();
+		Inventory inv = Inventory.getInstance();
+		String actionCommand = e.getActionCommand();
+		try {
+			if(actionCommand.equals("Cancel")) {
+				frame.dispose();
+				superFrame.setEnabled(true);
+				superFrame.toFront();
+			}
+			else if(actionCommand.equals("Change Price")) {
 
-			try {
 				//invoke method(s) for modifying Merchandise here
-				// Daniel can you add 3 buttons here and 3 different actionPerformed methods for them? will make it clearer and easier because only 1 parameter
-				// i have tested all methods from main and they seem to work
-				String _textFieldName = textFieldName.getText().toUpperCase();
-				int _textFieldPrice = Integer.parseInt(textFieldPrice.getText());
-				int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
-				// what is the description jtextfield called?
-				
-				// how to throw exception when all textboxes empty?
-//				if (_textFieldFName.isEmpty() && _textFieldPrice.isEmpty() && _textFieldMercID.) {
-//					throw new Exception(); // ensures a first name, last name and address have been entered
-//				}
-				
-				Inventory inv = Inventory.getInstance();
-				
+			/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
+				throw new Exception(); // ensures a first name, last name and address have been entered				
+			}*/
 				inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-//				p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
-//				displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
-				
-//				should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
-				
-				// aiza code in main below that she used to test methods (can delete once buttons work properly)
-//				MerchandiseDAO m = new MerchandiseDAO();
-//				ArrayList<Merchandise> list = m.getListOfMerchandise();
-//				for (Merchandise mer : list) {
-//					System.out.println(mer.toString());
-//				}
-//				
-//				Merchandise med = list.get(0);
-//				
-//				Inventory i = Inventory.getInstance();
-//				i.modifyMedicationDescription(3, "THIS IS A TEST DESCRIPTION");
-//				
-//				list = m.getListOfMerchandise();
-//				for (Merchandise mer : list) {
-//					System.out.println(mer.toString());
-//				}
-//				i.modifyMedicationPrice(1, 2000);
-//				public boolean modifyMedicationPrice(int medicationID, int newPrice) {
 				
 			}
-			catch(Exception ex) {
-				JOptionPane.showMessageDialog(frame,"Name, type, form, and price are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+			else if(actionCommand.equals("Change Description")) {
+				inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
 			}
 		}
+		catch(Exception ex) {
+			JOptionPane.showMessageDialog(frame,"Name, type, form, and price are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+		}
+
+		
 	}	
 	
-	//public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//DisplayModifyMerchandise.displayModifyMerchandise(new JFrame());
 
-	//}
-
-
+	}*/
 }
