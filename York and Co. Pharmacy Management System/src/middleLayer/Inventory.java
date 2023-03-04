@@ -88,7 +88,7 @@ public class Inventory{
         	for (int j = 0; j < copyOfList.size(); j++) {
         		
         		if (onlyMedicationNames.get(i).equals(copyOfList.get(j).name)) {
-        			Merchandise m = new Merchandise(copyOfList.get(i));
+        			Merchandise m = new Merchandise(copyOfList.get(j));
         			displayResult.add(m);
         			
                     copyOfList.remove(j); // if a match to sorted name, remove from list because already added to output (don't want to repeat same medication)
@@ -122,7 +122,7 @@ public class Inventory{
         	for (int j = 0; j < copyOfList.size(); j++) {
         		
         		if (onlyMedicationQuantities.get(i) == copyOfList.get(j).quantity) {
-        			Merchandise m = new Merchandise(copyOfList.get(i));
+        			Merchandise m = new Merchandise(copyOfList.get(j));
         			displayResult.add(m);
                     
                     copyOfList.remove(j); // if a match to sorted name, remove from list because already added to output (don't want to repeat same medication)
@@ -155,7 +155,7 @@ public class Inventory{
         	for (int j = 0; j < copyOfList.size(); j++) {
         		
         		if (onlyMedicationPrices.get(i) == copyOfList.get(j).price) {
-        			Merchandise m = new Merchandise(copyOfList.get(i));
+        			Merchandise m = new Merchandise(copyOfList.get(j));
         			displayResult.add(m);
                     
                     copyOfList.remove(j); // if a match to sorted name, remove from list because already added to output (don't want to repeat same medication)
