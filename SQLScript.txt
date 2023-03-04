@@ -140,3 +140,8 @@ DROP COLUMN ID;
 
 INSERT INTO Patient
 VALUES ("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222);
+
+/* Minh changed*/
+
+ALTER TABLE Medications 
+ADD priceIn int NOT NULL;
