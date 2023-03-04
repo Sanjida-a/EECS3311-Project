@@ -29,7 +29,7 @@ public class AuthenticateUser {
 	public USER checkUserValid(int username, int password) {
 		ArrayList<User> _users;
 		try {
-			_users = _userDAO.getListOfUsernamesAndPasswords();
+			_users = _userDAO.getListOfUsernamesAndPasswords(); //always makes sure variable is updated before checking
 
 			for (int i = 0; i < _users.size(); i++) {
 				if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {

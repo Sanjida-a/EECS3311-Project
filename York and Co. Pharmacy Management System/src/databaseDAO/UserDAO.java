@@ -126,8 +126,7 @@ public class UserDAO {
 		return patientList;
 	}
 	
-	
-	
+	// update database by adding new patient
 	public void addPatient(Patient newPatient) throws Exception {
 		
 		try {

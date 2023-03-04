@@ -13,7 +13,7 @@ public class Merchandise{
     String description;
 
     // constructor without description and ID? do we need constructor with same as this but with description or no are we not allowing admins to add description first only add later?
-    public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC){
     	medicationIDClassVar++;
     	
     	this.medicationID = medicationIDClassVar;
@@ -22,20 +22,31 @@ public class Merchandise{
         this.price = price;
         this.type = type;
         this.form = form;
-        this.isOTC = OTC;
+        this.isOTC = isOTC;
     }
     
     // constructor for when reading from database? since have to read medication ID?
     // how to set medicationIDclassvar accordingly or don't need to?
-    public Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC, String description){
+    public Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC, String description){
     	this.medicationID = medicationID;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.type = type;
         this.form = form;
-        this.isOTC = OTC;
+        this.isOTC = isOTC;
         this.description = description;
+    }
+    
+    public Merchandise(Merchandise m){
+    	this.medicationID = m.medicationID;
+        this.name = m.name;
+        this.quantity = m.quantity;
+        this.price = m.price;
+        this.type = m.type;
+        this.form = m.form;
+        this.isOTC = m.isOTC;
+        this.description = m.description;
     }
 
     // below methods are all getters/setters for class variables

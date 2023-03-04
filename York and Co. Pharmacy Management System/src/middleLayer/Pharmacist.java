@@ -9,7 +9,7 @@ import presentation.DisplayLogin;
 public class Pharmacist extends User {
 	
 	private UserDAO _userDAO;
-	private Inventory merListByPhar = Inventory.getInstance();
+//	private Inventory merListByPhar = Inventory.getInstance();
 	private ListOfPatients listOfPatientsByPhar = ListOfPatients.getInstance();
 	
 	// having only this constructor avoids having an owner without a username and password
@@ -46,33 +46,33 @@ public class Pharmacist extends User {
 	}
 	
 	// implementation of inherited abstract method from User superclass
-	public ArrayList<Merchandise> searchOTCMedicineByName (String name) {
-		
-		ArrayList<Merchandise> searchMedNamePhar = new ArrayList <Merchandise> ();
-		
-		for (Merchandise i : merListByPhar.getMerchandise()) {
-			if (i.getName().compareTo(name) == 0) {
-				searchMedNamePhar.add(i);
-			}
-		}
-		
-		return searchMedNamePhar;
-	}
-	
+//	public ArrayList<Merchandise> searchMedicineByName (String name) {
+//		
+//		ArrayList<Merchandise> searchMedNamePhar = new ArrayList <Merchandise> ();
+//		
+//		for (Merchandise i : merListByPhar.getMerchandise()) {
+//			if (i.getName().compareTo(name) == 0) {
+//				searchMedNamePhar.add(i);
+//			}
+//		}
+//		
+//		return searchMedNamePhar;
+//	}
+//	
 	// implementation of inherited abstract method from User superclass
-	public ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type) {
-		
-		ArrayList<Merchandise> searchMedTypePhar = new ArrayList <Merchandise> ();
-		
-		for (Merchandise i : merListByPhar.getMerchandise()) {
-			if (i.getType() == type) {
-				searchMedTypePhar.add(i);
-			}
-		}
-		
-		return searchMedTypePhar;
-	}
-	
+//	public ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type) {
+//		
+//		ArrayList<Merchandise> searchMedTypePhar = new ArrayList <Merchandise> ();
+//		
+//		for (Merchandise i : merListByPhar.getMerchandise()) {
+//			if (i.getType() == type) {
+//				searchMedTypePhar.add(i);
+//			}
+//		}
+//		
+//		return searchMedTypePhar;
+//	}
+//	
 	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) {
 		
 		ArrayList<Patient> searchResult = new ArrayList <Patient> ();

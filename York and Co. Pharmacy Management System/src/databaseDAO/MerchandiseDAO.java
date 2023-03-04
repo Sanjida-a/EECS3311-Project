@@ -49,7 +49,7 @@ public class MerchandiseDAO {
 		}
 	}
 	
-	public ArrayList<Merchandise> getListOfMerchandise() {
+	public ArrayList<Merchandise> getListOfMerchandise() { //reads all values from database
 		try {
 			allInventory = new ArrayList<Merchandise>(); //need to empty current list first so new list overrides
 			

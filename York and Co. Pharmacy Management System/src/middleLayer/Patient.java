@@ -14,7 +14,7 @@ public class Patient extends User {
 	private int healthCardNum;
 	private int dateOfBirth;
 	private ArrayList<Order> ordersMade; 
-	private Inventory merList = Inventory.getInstance(); 
+//	private Inventory merList = Inventory.getInstance(); 
 	
 	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
 //		IDClassVar++;
@@ -91,33 +91,33 @@ public class Patient extends User {
 		this.ordersMade = ordersMade;
 	}
 
-	// implementation of inherited abstract method from User superclass
-	public ArrayList<Merchandise> searchOTCMedicineByName (String name) {
-		
-		ArrayList<Merchandise> searchMedName = new ArrayList <Merchandise> ();
-		
-		for (Merchandise i : merList.getMerchandise()) {
-			if (i.getisOTC() == true && i.getName().compareTo(name) == 0) { // Patient can only search OVER-THE-COUNTER medications
-				searchMedName.add(i);
-			}
-		}
-		
-		return searchMedName;
-	}
-	
-	// implementation of inherited abstract method from User superclass
-	public ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type) {
-		
-		ArrayList<Merchandise> searchMedType = new ArrayList <Merchandise> ();
-		
-		for (Merchandise i : merList.getMerchandise()) {
-			if (i.getisOTC() == true && i.getType() == type) { // Patient can only search OVER-THE-COUNTER medications
-				searchMedType.add(i);
-			}
-		}
-		
-		return searchMedType;
-	}
+	// implementation of inherited abstract method from User superclass but notice that in this case only concerned with OTC medicine
+//	public ArrayList<Merchandise> searchMedicineByName (String name) {
+//		
+//		ArrayList<Merchandise> searchMedName = new ArrayList <Merchandise> ();
+//		
+//		for (Merchandise i : merList.getMerchandise()) {
+//			if (i.getisOTC() == true && i.getName().compareTo(name) == 0) { // Patient can only search OVER-THE-COUNTER medications
+//				searchMedName.add(i);
+//			}
+//		}
+//		
+//		return searchMedName;
+//	}
+//	
+//	// implementation of inherited abstract method from User superclass but notice that in this case only concerned with OTC medicine
+//	public ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type) {
+//		
+//		ArrayList<Merchandise> searchMedType = new ArrayList <Merchandise> ();
+//		
+//		for (Merchandise i : merList.getMerchandise()) {
+//			if (i.getisOTC() == true && i.getType() == type) { // Patient can only search OVER-THE-COUNTER medications
+//				searchMedType.add(i);
+//			}
+//		}
+//		
+//		return searchMedType;
+//	}
 	
 	
 

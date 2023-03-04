@@ -78,7 +78,7 @@ public class DisplayInitialScreen {
 	private static USER userType;
 	
 	private static String operationResult;
-	private JTextField textField;
+	private JTextField inputFieldID;
 	
 
 	
@@ -138,6 +138,7 @@ public class DisplayInitialScreen {
         btnDisplay.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				displayMercList(outputList, inv.getMerchandise());
 			
 			}
@@ -267,29 +268,31 @@ public class DisplayInitialScreen {
         panelVisibleToAdmin.add(btnDecrease);
         btnDecrease.setFont(new Font("굴림", Font.BOLD, 18));
         
-        textField = new JTextField();
-        textField.setBounds(1025, 10, 134, 35);
-        panelVisibleToAdmin.add(textField);
-        textField.setColumns(10);
+        inputFieldID = new JTextField();
+        inputFieldID.setBounds(1025, 10, 134, 35);
+        panelVisibleToAdmin.add(inputFieldID);
+        inputFieldID.setColumns(10);
         btnDecrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
-					String _inputFieldName = inputFieldName.getText().toUpperCase();
-					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+//					String _inputFieldName = inputFieldName.getText().toUpperCase();
+//					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+//					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+//					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+//					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+//					Boolean _isOTC = false;
+//					if(rdbtnOTC.isSelected()) {
+//						_isOTC = true;
+//					}
+				
+					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-					Boolean _isOTC = false;
-					if(rdbtnOTC.isSelected()) {
-						_isOTC = true;
-					}
-				
-				
+					
 					boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
 				
-					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
-					
+//					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
 					
 					if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
 						//entry to decrease its quantity is found in the list and the current_quantity >= quantity_to_decrease 
@@ -307,7 +310,7 @@ public class DisplayInitialScreen {
 					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
 						//notify popup for medication low in stock
 						//DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
-						JOptionPane.showMessageDialog(frame,_inputFieldName + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(frame,"Medication with ID: " + _inputFieldID + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
 					}
 					lblOperationResult.setText(operationResult);
 					displayMercList(outputList, inv.getMerchandise());
@@ -324,20 +327,23 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
-					String _inputFieldName = inputFieldName.getText().toUpperCase();
-					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+//					String _inputFieldName = inputFieldName.getText().toUpperCase();
+//					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+//					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+//					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+//					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+//					Boolean _isOTC = false;
+//					if(rdbtnOTC.isSelected()) {
+//						_isOTC = true;
+//					}
+					
+					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-					Boolean _isOTC = false;
-					if(rdbtnOTC.isSelected()) {
-						_isOTC = true;
-					}
-				
+					
 					Boolean medicationIncreased = false;
 			
-					medicationIncreased = inv.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
-				
+					//medicationIncreased = inv.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
 				
 					if (medicationIncreased == false) {
 						operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
@@ -520,37 +526,46 @@ public class DisplayInitialScreen {
 					if(_inputKeyword.isEmpty()) {
 						throw new Exception();
 					}
-					if(userType == USER.OWNER || userType == USER.PHARMACIST) {
-						Owner owner1 = new Owner(1,1);
-
-						if(searchBy.compareTo("Name") == 0) {
-							methodResult = owner1.searchOTCMedicineByName(_inputKeyword);
-						}
-						else if(searchBy.compareTo("Type") == 0) {
-							methodResult = owner1.searchOTCMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword));
-						}
-						else {	//left empty intentionally for further expansion of feature in the future
-						
-						}
 					
+					Owner owner1 = new Owner(1,1);
 					
+					if(searchBy.compareTo("Name") == 0) { //checking drop down list value
+						methodResult = owner1.searchMedicineByName(_inputKeyword, userType);
 					}
-					else {
-						Patient patient1 = new Patient(1,1);
-					
-						if(searchBy.compareTo("Name") == 0) {
-							methodResult = patient1.searchOTCMedicineByName(_inputKeyword);
-						}
-						else if(searchBy.compareTo("Type") == 0) {
-						methodResult = patient1.searchOTCMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword));
-						}
-						else {
-						
-						}
-					
+					else if(searchBy.compareTo("Type") == 0) {
+						methodResult = owner1.searchMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword), userType);
 					}
+					
+//					if(userType == USER.OWNER || userType == USER.PHARMACIST) {
+//						
+//
+//						
+//						else {	//left empty intentionally for further expansion of feature in the future
+//						
+//						}
+//					
+//					}
+//					else {
+//						Patient patient1 = new Patient(1,1);
+//					
+//						if(searchBy.compareTo("Name") == 0) {
+//							methodResult = patient1.searchMedicineByName(_inputKeyword, inv.getOnlyOTCMerchandise());
+//						}
+//						else if(searchBy.compareTo("Type") == 0) {
+//							methodResult = patient1.searchMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword), inv.getOnlyOTCMerchandise());
+//						}
+//						else {
+//						
+//						}
+//					
+//					}
+					
 					if(methodResult.isEmpty()) {
 						operationResult = _inputKeyword + " is not in the inventory";
+						lblOperationResult.setText(operationResult);
+					}
+					else {
+						operationResult = "";
 						lblOperationResult.setText(operationResult);
 					}
 					displayMercList(outputList, methodResult);
@@ -686,9 +701,7 @@ public class DisplayInitialScreen {
 		list.removeAll();
 		if(userType == USER.GUEST || userType == USER.PATIENT) {
 			for(Merchandise m : merchandises) {
-				if(m.getisOTC()) {
-					model.addElement(m);
-				}
+				model.addElement(m);
 			}
 		}
 		else {
