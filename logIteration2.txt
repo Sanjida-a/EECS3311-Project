@@ -44,8 +44,11 @@
 *Connected MerchandiseDAO.java class to actual database
 *Implemented methods for modifying medication details (name, price, description) and started its connection to front end
 
-11. 2023/03/02 17:30 - 18:20 contributor: Aiza Bajwa, Geon Kim
+11. 2023/03/02 17:30 - 20:20 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *Fixed Search methods for all users so that they are implemented in user abstract class so there's no repetition in Owner/Pharmacist class
 *Fixed display methods in inventory class so they return ArrayLists instead of strings
 *Started adding connections to update database accordingly for methods inside Inventory class (ex. increaseQuantity and decreaseQuantity)
+
+12. 2023/03/02 20:30 - 21:30 contributor: Aiza Bajwa
+*Implemented AddMedication and DeleteMedication Connections to Database
