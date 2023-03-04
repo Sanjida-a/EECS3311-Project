@@ -34,6 +34,7 @@ public class DisplayAddOrder implements ActionListener {
 
 	private static int qty;
 	private static int refills;
+	private static String isotc;
 
 
 	public static void displayAddOrder(JFrame previous) {
@@ -151,7 +152,14 @@ public class DisplayAddOrder implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		patientID = Integer.parseInt(textFieldPatientID.getText());
+		medID = Integer.parseInt(textFieldMercID.getText());
+		qty = Integer.parseInt(textFieldQty.getText()) ;
+		refills = Integer.parseInt(textFieldQty.getText()) ;
+		isotc = textFieldIsOTC.getText();	
+		Order orderToAdd = new Order();
+		
 		if(e.getActionCommand().equals("Cancel")) {
 			frame.dispose();
 			superFrame.setEnabled(true);
@@ -159,27 +167,33 @@ public class DisplayAddOrder implements ActionListener {
 		}
 		else if(e.getActionCommand().equals("Give refill")) {
 			//call method for giving a patient refill order
-			//System.out.println("invoking give_refill()");	//delete me
-		}
-		else if(e.getActionCommand().equals("Add order")) {
-			//call method for adding new order to a patient
-			//System.out.println("invoking add_order()");	//delete me
-			patientID = Integer.parseInt(textFieldPatientID.getText());
-			medID = Integer.parseInt(textFieldMercID.getText());
-			qty = Integer.parseInt(textFieldQty.getText()) ;
-			refills = Integer.parseInt(textFieldQty.getText()) ;
-			
-			Order orderToAdd = new Order();
 			try {
 //				orderToAdd.addOrderToPatient(patientID, medID, qty, price, refills, true);
-				orderToAdd.addOrderToPatient(patientID, medID, qty, true, 5);
+				orderToAdd.addOrderToPatient(patientID, medID, qty, isotc, 5);
 				orderToAdd.Save();
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
 				//DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", frame);
-				JOptionPane.showMessageDialog(frame,"No medicine or Patient Found", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input",  JOptionPane.WARNING_MESSAGE);
+				
+			}
+			
+		}
+		else if(e.getActionCommand().equals("Add order")) {
+			//call method for adding new order to a patient
+
+			try {
+//				orderToAdd.addOrderToPatient(patientID, medID, qty, price, refills, true);
+				orderToAdd.addOrderToPatient(patientID, medID, qty, isotc, 5);
+				orderToAdd.Save();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
+				//DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", frame);
+				JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input",  JOptionPane.WARNING_MESSAGE);
 				
 			}
 		}

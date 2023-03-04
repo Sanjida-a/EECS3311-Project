@@ -13,7 +13,7 @@ public class OrderDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello123"; //make sure to change password based on your password for MySQL
+	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
 	
 //	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	
@@ -29,7 +29,7 @@ public class OrderDAO {
 		}
 	}
 	
-	public void saveToOrder(int _patientID, int _medicationId, int _qty, boolean isPres) throws Exception {
+	public void saveToOrder(int _patientID, int _medicationId, int _qty, String isPres,  int _refill) throws Exception {
 		try {
 			
 			
@@ -44,18 +44,7 @@ public class OrderDAO {
 				throw new Exception("Non-existent patient");
 			}
 			patientResult.close();
-			
-			// get last order Id number
-			
-//			String queryOrderStatement = "SELECT  orderNum FROM Orders order by orderNum desc limit 1;"; 
-//			ResultSet lastOrderResult = statement.executeQuery(queryOrderStatement);					
-			
-//			int lastOrderNumber = 1;
-//			if(lastOrderResult.next()) {
-//				int lastId= lastOrderResult.getInt("orderNum");
-//				lastOrderNumber = lastId + 1;
-//			}
-//			lastOrderResult.close();
+
 			
 			String queryMedStatement = "SELECT * FROM Medications where medicationID = " + _medicationId; 
 			ResultSet medResult = statement.executeQuery(queryMedStatement);					
@@ -63,13 +52,56 @@ public class OrderDAO {
 			if(!medResult.next()) {
 				throw new Exception("Non-existent medication");
 			}
+			
 			double price = medResult.getDouble("price");
 			
 			medResult.close();
 			
+			if (isPres.equalsIgnoreCase("false") && _refill > 0) {
+				throw new Exception("Must be prescription to have refills");
+			}
+
+			
+			// check number of refills left
+			
+			String queryOrderStatement = "SELECT SUM(quantityBought) AS totalBought FROM Orders WHERE medicationID= " + _medicationId +" AND" + " patientID=" + _patientID;
+//			PreparedStatement ps = con.prepareStatement(queryOrderStatement);
+//			ps.setInt(1, _medicationId);
+//			ps.setInt(2, _patientID);
+			
+//			ResultSet numberOfOrder = statement.executeQuery(queryOrderStatement);	
+			ResultSet numberOfOrder = statement.executeQuery(queryOrderStatement);
+							
+			
+			int numOfOrder = 0;
+			if(numberOfOrder.next()) {
+				numOfOrder= numberOfOrder.getInt("totalBought");
+			}
+			numberOfOrder.close();
+			
+			String queryPresStatement = "SELECT SUM(numOfRefills) AS totalRefills  FROM Prescriptions WHERE medicationID= " + _medicationId +" AND" + " patientID=" + _patientID;
+//			PreparedStatement stae = con.prepareStatement(queryOrderStatement);
+//			stae.setInt(1, _medicationId);
+//			stae.setInt(2, _patientID);
+			
+			ResultSet numberOfRefill = statement.executeQuery(queryPresStatement);					
+			
+			int numOfRefill = 0;
+			if(numberOfRefill.next()) {
+				numOfRefill= numberOfRefill.getInt("totalRefills");
+			}
+			numberOfRefill.close();
+			
+			int refillLeft = numOfRefill - numOfOrder;
+			
+			if (refillLeft <= 0) {
+				throw new Exception("No more refill left!");
+			}
+
+			
 			price = price * _qty;
 			String preparedStatement = " insert into Orders ( medicationID , patientID , quantityBought , priceAtPurchase, isPrescription )"
-					+ " values ( ?, ?, ?, ?)";
+					+ " values ( ?, ?, ?, ?, ?)";
 //			int _orderNumber = lastOrderNumber;
 
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
@@ -78,7 +110,14 @@ public class OrderDAO {
 			stmt.setInt(2, _patientID);
 			stmt.setInt(3, _qty);
 			stmt.setDouble(4, price); //Minh, make sure the price is something like medicationM.getPrice() to allow for changes in prices
-			stmt.setBoolean(5, isPres);
+			boolean _isPres = false;
+			if ( isPres.equalsIgnoreCase("true")) {
+				_isPres = true;
+			}
+			else if ( isPres.equalsIgnoreCase("true")) {
+				_isPres = false;
+			}
+			stmt.setBoolean(5, _isPres);
 				stmt.execute(); // execute the preparedstatement
 
 

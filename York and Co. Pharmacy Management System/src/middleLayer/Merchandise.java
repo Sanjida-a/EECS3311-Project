@@ -2,7 +2,7 @@ package middleLayer;
 
 public class Merchandise{
 	static int medicationIDClassVar = 6; //was 0, but changed to account for the 6 pre-built medication in database
-	
+										//Cant use stat. does not work correctly with database.
 	int medicationID;
     String name;
     int quantity;

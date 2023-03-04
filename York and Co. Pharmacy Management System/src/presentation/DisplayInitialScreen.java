@@ -378,18 +378,18 @@ public class DisplayInitialScreen {
 				
 					Boolean medicationRemoved = false;
 				
-					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
-				
-					
-					if (medicationRemoved == false) {
-						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
-					}
-					else {
-						operationResult = "Remove successful. See updated inventory";
-					}
-
-					displayMercList(outputList, inv.getMerchandise());
-					lblOperationResult.setText(operationResult);
+//					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+//				
+//					
+//					if (medicationRemoved == false) {
+//						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
+//					}
+//					else {
+//						operationResult = "Remove successful. See updated inventory";
+//					}
+//
+//					displayMercList(outputList, inv.getMerchandise());
+//					lblOperationResult.setText(operationResult);
 				}
 				catch (Exception ex) {	//display error popup
 					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
