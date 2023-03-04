@@ -41,7 +41,7 @@ public class Inventory{
     }
     
     // can also be called "displayOnlyOTCMedication" for guest/home/main screen where only OTC medication information should be displayed for easy access
-    public ArrayList<Merchandise> getOnlyOTCMerchandise(){
+    public ArrayList<Merchandise> getOnlyOTCMerchandise(){ // for users like patients who only have access to OTCs
     	
     	ArrayList<Merchandise> allOTCOnlyMedication = new ArrayList<Merchandise>();
     	
@@ -250,15 +250,24 @@ public class Inventory{
     }
     
     // delete a medication from inventory (if exists)
-    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE
-    public boolean delete(String name, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    public boolean delete(int medicationID){
+    	
     	boolean medicationRemoved = false;
-        for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
-                list.remove(i);
-                medicationRemoved = true;
-            }
-        }
+    	
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return medicationRemoved;
+    	}
+    	
+    	list.remove(specificMedication);
+    	medicationRemoved = true;
+    	
+    	// modify database accordingly
+    	_merDAO.deleteMedicationInDatabase(medicationID);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
         
         return medicationRemoved;
     }
@@ -278,8 +287,14 @@ public class Inventory{
         if (medicationAlreadyExists == false) {
         	list.add(m);
         	medicationAdded = true;
+        	
+        	  // modify database accordingly
+        	_merDAO.addMedicationToDatabase(m);
+        	
+        	//once database is updated, also updated this class's list variable
+        	list = _merDAO.getListOfMerchandise();
         }
-        
+      
         return medicationAdded;
     }
     

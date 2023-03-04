@@ -33,19 +33,46 @@
 *connected UserDAO to database and updated its methods accordingly (so that contain Query Statements)
 *implemented "Add" patient button in DispalyPatientManage.java so works correctly
 
-9. 2023/02/26 22:00 - 00:30 contributor: Aiza Bajwa, Geon Kim
+8. 2023/02/23 21:00 - 2023/02/24 01:30 contributor: Minh Tran
+*Create UserDAO
+*Add order template
+*Update Database
+
+9. 2023/02/24 21:00 - 2023/02/25 02:30 contributor: Minh Tran
+*Update DB 
+*Add order method
+
+10. 2023/02/25 10:00 - 2023/02/25 16:00 contributor: Minh Tran
+*Change DB
+*Fix add to order
+*Refills method
+
+11. 2023/02/26 22:00 - 00:30 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *created a class called ListOfPatients.java that keeps track of all important patient info stored in database
 *Discussed and fixed add patient method and its connection to GUI
 *Fixed bug where reading from database in DAO classes was adding to arrayList instead of overriding it
 *Implemented patient search for owner/pharmacist - search by first name, search by last name and search by full name
 
-10. 2023/03/02 23:00 - 02:00 contributor: Aiza Bajwa
+12. 2023/03/02 23:00 - 02:00 contributor: Aiza Bajwa
 *Connected MerchandiseDAO.java class to actual database
 *Implemented methods for modifying medication details (name, price, description) and started its connection to front end
 
-11. 2023/03/02 17:30 - 18:20 contributor: Aiza Bajwa, Geon Kim
+13. 2023/03/02 17:30 - 20:20 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *Fixed Search methods for all users so that they are implemented in user abstract class so there's no repetition in Owner/Pharmacist class
 *Fixed display methods in inventory class so they return ArrayLists instead of strings
 *Started adding connections to update database accordingly for methods inside Inventory class (ex. increaseQuantity and decreaseQuantity)
+
+14. 2023/03/02 20:30 - 21:30 contributor: Aiza Bajwa
+*Implemented AddMedication and DeleteMedication Connections to Database
+
+15. 2023/03/04 00:00 - 2:00 contributor: Minh Tran
+*Change DB
+*Fix add to order
+*Refills method
+
+16. 2023/03/04 13:00 - 16:00 contributor: Minh Tran
+*Change DB
+*Complete add to order
+*Refills method

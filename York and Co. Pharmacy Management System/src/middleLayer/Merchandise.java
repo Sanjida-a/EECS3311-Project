@@ -1,8 +1,8 @@
 package middleLayer;
 
 public class Merchandise{
-	static int medicationIDClassVar = 6; //was 0, but changed to account for the 6 pre-built medication in database
-	
+//	static int medicationIDClassVar = 6; //was 0, but changed to account for the 6 pre-built medication in database
+										//Cant use stat. does not work correctly with database.
 	int medicationID;
     String name;
     int quantity;
@@ -14,9 +14,9 @@ public class Merchandise{
 
     // constructor without description and ID? do we need constructor with same as this but with description or no are we not allowing admins to add description first only add later?
     public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC){
-    	medicationIDClassVar++;
-    	
-    	this.medicationID = medicationIDClassVar;
+//    	medicationIDClassVar++;
+//    	
+//    	this.medicationID = medicationIDClassVar;
         this.name = name;
         this.quantity = quantity;
         this.price = price;

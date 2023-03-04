@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class MerchandiseDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello123"; //make sure to change password based on your password for MySQL
+	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
 
 	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
 	
@@ -96,7 +97,7 @@ public class MerchandiseDAO {
 	
 	}
 	
-	// whenever a medication from the inventory is updated (ex. name/price/quantity changed), this method makes sure that row of medication in the database is updated accordingly
+	// whenever a specific/individual medication from the inventory is updated (ex. name/price/quantity changed), this method makes sure that row of medication in the database is updated accordingly
 	public void updateMedicationInDatabase(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
 		try {
 			con = DriverManager.getConnection(url, user, password);
@@ -121,9 +122,52 @@ public class MerchandiseDAO {
 			e.printStackTrace();
 //			throw e;
 		}
-		
-	
 	}
+	
+	// delete medication row from database table (invoked whenever a medication has been deleted from inventory)
+	public void deleteMedicationInDatabase(int medIDOfDeletedMedication) {
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			
+			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?";
+			PreparedStatement statement = con.prepareStatement(deleteMedicationQuery);
+
+			statement.setInt(1, medIDOfDeletedMedication);
+			
+			statement.executeUpdate();
+		
+			con.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+//				throw e;
+		}
+	}
+	
+	public void addMedicationToDatabase(Merchandise newMedication) {
+		
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			
+			int isOTCBooleanIntValue = 0; // using .getisOTC() in the SQL statement line below wasn't working since it was returning boolean and not int
+			if (newMedication.getisOTC() == true) {
+				isOTCBooleanIntValue = 1;
+			}
+	
+			String queryAddToMedicationTable = "INSERT INTO Medications VALUES ('"+newMedication.getMedicationID()+"','"+newMedication.getName()+"','"+newMedication.getQuantity()+"','"+newMedication.getPrice()+"','"+newMedication.getType()+"','"+newMedication.getForm()+"','"+isOTCBooleanIntValue+"','"+newMedication.getDescription()+"');";
+			PreparedStatement statement2 = con.prepareStatement(queryAddToMedicationTable);
+			int newRow2 = statement2.executeUpdate(queryAddToMedicationTable);
+			
+			con.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+//			throw e;
+		}
+		
+	}
+		
+		
 	
 
 }

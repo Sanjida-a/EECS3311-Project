@@ -410,6 +410,7 @@ public class DisplayInitialScreen {
 				
 					Boolean medicationRemoved = false;
 				
+
 					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
 				
 					
@@ -422,6 +423,7 @@ public class DisplayInitialScreen {
 					currentList = inv.getMerchandise();
 					displayMercList(outputList, currentList);
 					lblOperationResult.setText(operationResult);
+
 				}
 				catch (Exception ex) {	//display error popup
 					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
