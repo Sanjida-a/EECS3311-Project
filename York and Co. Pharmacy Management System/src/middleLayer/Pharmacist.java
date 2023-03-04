@@ -39,7 +39,7 @@ public class Pharmacist extends User {
 		
 		Patient newPatient = new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);
 		try {
-			_userDAO.addPatient(newPatient);
+			_userDAO.addPatientToDatabase(newPatient);
 		} catch (SQLException e) {
 			throw e;
 		}

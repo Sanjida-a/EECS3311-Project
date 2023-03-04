@@ -127,7 +127,7 @@ public class UserDAO {
 	}
 	
 	// update database by adding new patient
-	public void addPatient(Patient newPatient) throws Exception {
+	public void addPatientToDatabase(Patient newPatient) throws Exception {
 		
 		try {
 			con = DriverManager.getConnection(url, user, password);
