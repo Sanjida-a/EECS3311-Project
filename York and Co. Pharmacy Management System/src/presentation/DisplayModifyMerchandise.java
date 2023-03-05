@@ -5,16 +5,19 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
 import middleLayer.Inventory;
 import middleLayer.Pharmacist;
+import middleLayer.Merchandise;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -29,10 +32,16 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JTextField textFieldPrice;
 	private static JTextField textFieldMercID;
 	private static JTextArea textAreaDescription;
+	private static ArrayList<Merchandise> list;
+	private static JList output;
+	private static Inventory inv = Inventory.getInstance();
 	
-	public static void displayModifyMerchandise(JFrame previous) {
+	
+	public static void displayModifyMerchandise(JFrame previous, JList outputList, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
+		list = currentList;
+		output = outputList;
 		frame = new JFrame();
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -53,11 +62,6 @@ public class DisplayModifyMerchandise implements ActionListener{
 		createLabels(panel);
 		createInputFields(panel);
 		createButtons(panel);
-		
-
-		
-
-		
 		
 	}
 	
@@ -107,27 +111,27 @@ public class DisplayModifyMerchandise implements ActionListener{
 		btnOk.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnOk);*/
 		
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setFont(new Font("굴림", Font.BOLD, 20));
-		btnCancel.setBounds(460, 293, 190, 35);
-		btnCancel.addActionListener(new DisplayModifyMerchandise());
-		panel.add(btnCancel);
+		JButton btnExit = new JButton("Exit");
+		btnExit.setFont(new Font("굴림", Font.BOLD, 20));
+		btnExit.setBounds(460, 293, 190, 35);
+		btnExit.addActionListener(new DisplayModifyMerchandise());
+		panel.add(btnExit);
 		
 		JButton btnChangeName = new JButton("Change name");
 		btnChangeName.setHorizontalTextPosition(SwingConstants.LEFT);
-		btnChangeName.setFont(new Font("굴림", Font.BOLD, 16));
+		btnChangeName.setFont(new Font("굴림", Font.BOLD, 14));
 		btnChangeName.setBounds(0, 45, 140, 35);
 		btnChangeName.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnChangeName);
 		
 		JButton btnChangePrice = new JButton("Change Price");
-		btnChangePrice.setFont(new Font("굴림", Font.BOLD, 16));
+		btnChangePrice.setFont(new Font("굴림", Font.BOLD, 14));
 		btnChangePrice.setBounds(348, 90, 145, 35);
 		btnChangePrice.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnChangePrice);
 		
 		JButton btnChangeDescription = new JButton("Change Description");
-		btnChangeDescription.setFont(new Font("굴림", Font.BOLD, 16));
+		btnChangeDescription.setFont(new Font("굴림", Font.BOLD, 14));
 		btnChangeDescription.setBounds(0, 90, 189, 35);
 		btnChangeDescription.addActionListener(new DisplayModifyMerchandise());
 		panel.add(btnChangeDescription);
@@ -140,17 +144,21 @@ public class DisplayModifyMerchandise implements ActionListener{
 		String actionCommand = e.getActionCommand();
 		
 		String errorMessage = "";
-		
+		inv.updateFromDatabase();
 		try {
 			
-			if(actionCommand.equals("Cancel")) {
+			if(actionCommand.equals("Exit")) {
 				frame.dispose();
 				superFrame.setEnabled(true);
 				superFrame.toFront();
+				//DisplayInitialScreen.refreshList(list);
+				//System.out.println("refreshed");
+				list = DisplayInitialScreen.refreshList(inv.getInstance(), list);
+				DisplayInitialScreen.displayMercList(output, list);
 			}
 			
-			else {
-				Inventory inv = Inventory.getInstance();
+			else{
+				
 				
 				errorMessage = "MediciationID is required";
 				int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
@@ -168,22 +176,27 @@ public class DisplayModifyMerchandise implements ActionListener{
 					}
 					try {
 						result = inv.modifyMedicationName(_textFieldMercID, _textFieldName);
+						//DisplayInitialScreen.refreshList(list);
+						//DisplayInitialScreen.displayMercList(output, list);
 					}
 					catch (Exception e1) {
 						// popup
-						System.out.println("Already exists");
+						//System.out.println("Already exists");
+						errorMessage = "Already exists";
+						JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					
 				}
 				else if(actionCommand.equals("Change Price")) {
 					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
-					int _textFieldPrice = Integer.parseInt(textFieldPrice.getText());
+					double _textFieldPrice = Double.parseDouble(textFieldPrice.getText());
 					//invoke method(s) for modifying Merchandise here
 				/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
 					throw new Exception(); // ensures a first name, last name and address have been entered				
 				}*/
 					result = inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-					
+					//DisplayInitialScreen.refreshList(list);
+					//DisplayInitialScreen.displayMercList(output, list);
 				}
 				else if(actionCommand.equals("Change Description")) {
 					String _textAreaDescription = textAreaDescription.getText();
@@ -192,15 +205,25 @@ public class DisplayModifyMerchandise implements ActionListener{
 						errorMessage = "MedicationID and/or Description are needed";
 						throw new Exception(); 
 					}
-					result = inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
+					try {
+						result = inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
+						//DisplayInitialScreen.refreshList(list);
+						//DisplayInitialScreen.displayMercList(output, list);
+						
+					}
+					catch(Exception ex) {
+						
+					}
 				}
 				
 				if (result == false) {
 					// popup
 					errorMessage = "MedicationID Does Not Exist in Inventory";
-					System.out.println(errorMessage);
+					//System.out.println(errorMessage);
+					JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			}
+			
 			
 		}
 		catch(Exception ex) {
@@ -212,7 +235,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 	
 	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//DisplayModifyMerchandise.displayModifyMerchandise(new JFrame());
+		DisplayModifyMerchandise.displayModifyMerchandise(new JFrame(), new ArrayList<Merchandise>());
 
 	}*/
 }
