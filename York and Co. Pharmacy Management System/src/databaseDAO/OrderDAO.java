@@ -3,6 +3,7 @@ package databaseDAO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import middleLayer.Order;
 
 import middleLayer.MERCHANDISE_FORM;
 import middleLayer.MERCHANDISE_TYPE;
@@ -18,7 +19,8 @@ public class OrderDAO {
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
 	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
-	
+	private ArrayList<Order> orderList = new ArrayList<Order>();
+
 //	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	
 	public OrderDAO() throws Exception {//what to put in constructor? don't think weven need to open a connection.
@@ -218,7 +220,41 @@ public class OrderDAO {
 			throw e1;
 		}
 	}
-	
+	public ArrayList<Order> getListOfAllOrders() throws Exception {
+		try {
+			orderList = new ArrayList<Order>(); //need to empty current list first so new list overrides
+			
+			con = DriverManager.getConnection(url, user, password);
+			
+			String queryGetAllRows = "SELECT * FROM Orders;";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int orderNum, medicationID, patientID, quantityBought;
+			double priceAtPurchase;
+			
+			Order order;
+			
+			while (result.next()) { 
+				orderNum =  result.getInt("orderNum");
+				medicationID =  result.getInt("medicationID");
+				patientID =  result.getInt("patientID");
+				quantityBought =  result.getInt("quantityBought");
+				priceAtPurchase =  result.getDouble("priceAtPurchase");
+				
+				order = new Order(orderNum, medicationID, patientID, quantityBought, priceAtPurchase);
+				
+				
+				orderList.add(order);
+			}
+			
+			con.close();
+		}
+		catch (Exception e) {
+			throw e; 
+		}
+		
+		return orderList;
+	}
 //	private Boolean checkOTC (int _medicationId) throws Exception{
 //		try {		
 //			con = DriverManager.getConnection(url, user, password);
@@ -238,6 +274,7 @@ public class OrderDAO {
 //			throw e1;
 //		}		
 //	}
+
 
 }
 	

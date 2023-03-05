@@ -13,9 +13,22 @@ public class Order {
 	int medicationID;
 	int patientID;
 	int quantityBought;
-	String isPres;
+	// String isPres;
 	int numOfRefills;
-	
+	double priceAtPurchase;
+
+	public Order(){
+		super();
+	}
+
+	public Order(int orderNum,int medicationID, int patientID, int quantityBought, double priceAtPurchase ){
+		this.orderNum = orderNum;
+		this.medicationID = medicationID;
+		this.patientID = patientID;
+		this.quantityBought = quantityBought;
+		this.priceAtPurchase = priceAtPurchase;
+	}
+
 	public void addOrderToPatient(int _patientID, int _medicationId, int _qty , int _numOfRefills) throws Exception {
 		// add to correct patient once we implement patient list 
 		// first search patient list w same patientId
@@ -53,7 +66,13 @@ public class Order {
 		return true;
 		
 	}
-	
+	public double calculateSellingPrice(){ // calculates selling price including HST and assigns it to priceAtPurchase
+		Inventory inv = new Inventory();
+		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
+		priceAtPurchase = m.price * 1.13;
+		return priceAtPurchase;
+	}
+
 	public int calculateRevenue() {
 		return 0;
 	}
@@ -61,3 +80,4 @@ public class Order {
 		return "";
 	}
 }
+
