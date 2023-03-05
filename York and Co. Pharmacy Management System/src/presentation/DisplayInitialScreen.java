@@ -349,7 +349,7 @@ public class DisplayInitialScreen {
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
 					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"name, Qty, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame,"ID and Quantity are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 					
 				}
 			
@@ -390,7 +390,7 @@ public class DisplayInitialScreen {
 				}
 				catch(Exception ex) {
 					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"name, Qty, type, and form are required","Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame,"ID and Quantity are required","Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
 			}
@@ -411,7 +411,9 @@ public class DisplayInitialScreen {
 					Boolean medicationRemoved = false;
 				
 
-					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
+					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
+					medicationRemoved = inv.delete(_inputFieldID);
+
 				
 					
 					if (medicationRemoved == false) {
@@ -427,7 +429,7 @@ public class DisplayInitialScreen {
 				}
 				catch (Exception ex) {	//display error popup
 					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"name, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame,"ID required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
 			}

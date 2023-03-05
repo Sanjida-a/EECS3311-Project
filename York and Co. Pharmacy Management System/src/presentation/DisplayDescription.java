@@ -37,7 +37,7 @@ public class DisplayDescription {
 		textArea.setWrapStyleWord(true);
 		textArea.setFont(new Font("Arial", Font.PLAIN, 18));
 		textArea.setBounds(0, 0, 586, 293);
-		textArea.setText("replace this to merc.getDescription() when it is implemented");
+		textArea.setText(merc.getDescription());
 		panel.add(textArea);
 		
 		JButton btnClose = new JButton("Close");

@@ -311,9 +311,11 @@ public class Inventory{
     }
     
     //should these 3 methods below be in this class? or admin?
-    public boolean modifyMedicationName(int medicationID, String newName) {
+    public boolean modifyMedicationName(int medicationID, String newName) throws Exception {
     	
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+//    	boolean[] returnArr = new boolean
     	
     	if (specificMedication == null) {
     		return false;
@@ -328,7 +330,7 @@ public class Inventory{
         }
         
         if (medicationAlreadyExists == true) {
-        	return false;
+        	throw new Exception();
         }
         
     	specificMedication.setName(newName);
@@ -339,6 +341,7 @@ public class Inventory{
     	//once database is updated, also updated this class's list variable
     	list = _merDAO.getListOfMerchandise();
     	
+//    	boolean[2] returnArr = {speciifcMedication
     	return true;
     }
     

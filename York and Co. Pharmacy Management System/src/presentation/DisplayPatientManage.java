@@ -344,6 +344,23 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//invoke method for modify
+				try {
+					int _textFieldPatientID = Integer.parseInt(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
+					Boolean result;
+					result = listOfPatientsInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
+					
+					if (result == false) {
+						// popup that says patient doesn't exist
+						System.out.println("patient doesn't exist. try again");
+					}
+					
+					displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList() );
+				}
+				catch (Exception e1) {
+					// add popup saying need at least 2 things: HCNum and one of fName, lName, PhoneNum, Add
+					System.out.println("not enough param");
+				}
+				
 			}
 			
 		});

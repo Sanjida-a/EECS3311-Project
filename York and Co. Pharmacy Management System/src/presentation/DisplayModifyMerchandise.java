@@ -137,33 +137,74 @@ public class DisplayModifyMerchandise implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub				
-		String _textFieldName = textFieldName.getText().toUpperCase();
-		int _textFieldPrice = Integer.parseInt(textFieldPrice.getText());
-		int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
-		String _textAreaDescription = textAreaDescription.getText();
-		Inventory inv = Inventory.getInstance();
 		String actionCommand = e.getActionCommand();
+		
+		String errorMessage = "";
+		
 		try {
+			
 			if(actionCommand.equals("Cancel")) {
 				frame.dispose();
 				superFrame.setEnabled(true);
 				superFrame.toFront();
 			}
-			else if(actionCommand.equals("Change Price")) {
-
-				//invoke method(s) for modifying Merchandise here
-			/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
-				throw new Exception(); // ensures a first name, last name and address have been entered				
-			}*/
-				inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
+			
+			else {
+				Inventory inv = Inventory.getInstance();
 				
+				errorMessage = "MediciationID is required";
+				int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
+				
+				Boolean result = true;
+				
+			
+				
+				if (actionCommand.equals("Change name")) {
+					String _textFieldName = textFieldName.getText().toUpperCase();
+					
+					if (_textFieldName.isEmpty()) { // ensures a medication name has been entered
+						errorMessage = "MedicationID and/or Name are needed";
+						throw new Exception(); 
+					}
+					try {
+						result = inv.modifyMedicationName(_textFieldMercID, _textFieldName);
+					}
+					catch (Exception e1) {
+						// popup
+						System.out.println("Already exists");
+					}
+					
+				}
+				else if(actionCommand.equals("Change Price")) {
+					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
+					int _textFieldPrice = Integer.parseInt(textFieldPrice.getText());
+					//invoke method(s) for modifying Merchandise here
+				/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
+					throw new Exception(); // ensures a first name, last name and address have been entered				
+				}*/
+					result = inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
+					
+				}
+				else if(actionCommand.equals("Change Description")) {
+					String _textAreaDescription = textAreaDescription.getText();
+					
+					if (_textAreaDescription.isEmpty()) { // ensures a description has been entered
+						errorMessage = "MedicationID and/or Description are needed";
+						throw new Exception(); 
+					}
+					result = inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
+				}
+				
+				if (result == false) {
+					// popup
+					errorMessage = "MedicationID Does Not Exist in Inventory";
+					System.out.println(errorMessage);
+				}
 			}
-			else if(actionCommand.equals("Change Description")) {
-				inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
-			}
+			
 		}
 		catch(Exception ex) {
-			JOptionPane.showMessageDialog(frame,"Name, type, form, and price are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
 		}
 
 		
