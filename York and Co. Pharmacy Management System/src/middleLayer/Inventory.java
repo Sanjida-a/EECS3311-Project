@@ -381,6 +381,10 @@ public class Inventory{
     	
     	return true;
     }
+    
+    public void updateFromDatabase() {
+    	this.list = _merDAO.getListOfMerchandise();
+    }
 
 }
     
