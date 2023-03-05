@@ -165,14 +165,8 @@ public class DisplayAddOrder implements ActionListener {
 				patientID = Integer.parseInt(textFieldPatientID.getText());
 				medID = Integer.parseInt(textFieldMercID.getText());
 				qty = Integer.parseInt(textFieldQty.getText()) ;
-				if(textFieldQty.getText().isEmpty()) {
-					refills = 0;
-				}
-				else {
-					refills = Integer.parseInt(textFieldQty.getText());
-				}
+				refills = Integer.parseInt(textFieldQty.getText()) ;
 //				isotc = textFieldIsOTC.getText();	
-				
 				Order orderToAdd = new Order();
 				
 				if(e.getActionCommand().equals("Give refill")) {
@@ -203,7 +197,7 @@ public class DisplayAddOrder implements ActionListener {
 				}
 			}
 			catch (Exception ex) {
-				JOptionPane.showMessageDialog(frame, "PatientID, MedID, and Qty must be provided", "Invalid input",  JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "inputs must be provided", "Invalid input",  JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}	
