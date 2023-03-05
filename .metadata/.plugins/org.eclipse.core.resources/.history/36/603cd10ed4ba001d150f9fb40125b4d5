@@ -399,21 +399,19 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
-					/*String _inputFieldName = inputFieldName.getText().toUpperCase();
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
 					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
 					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
 					Boolean _isOTC = false;
 					if(rdbtnOTC.isSelected()) {
 						_isOTC = true;
-					}*/
+					}
 				
 					Boolean medicationRemoved = false;
 				
 
-
-					medicationRemoved = inv.delete(Integer.parseInt(inputFieldID.getText()));
-
+					medicationRemoved = inv.delete(_inputFieldName, _inputFieldType, _inputFieldForm, _isOTC);
 				
 					
 					if (medicationRemoved == false) {
