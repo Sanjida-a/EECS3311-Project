@@ -1,17 +1,28 @@
 package middleLayer;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import databaseDAO.UserDAO;
 import presentation.DisplayLogin;
 
 public class Pharmacist extends User {
 	
-	private Inventory merListByPhar = Inventory.getInstance();
+	private UserDAO _userDAO;
+//	private Inventory merListByPhar = Inventory.getInstance();
+	private ListOfPatients listOfPatientsByPhar = ListOfPatients.getInstance();
 	
 	// having only this constructor avoids having an owner without a username and password
 	public Pharmacist(int username, int password) {
-		this.username = username;
-		this.password = password;
+		try {
+			_userDAO = new UserDAO();
+			this.username = username;
+			this.password = password;
+		} catch (Exception e) {
+	
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -24,42 +35,74 @@ public class Pharmacist extends User {
 		this.password = pharmacistUser.password;
 	}
 	
-	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
+	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) throws Exception {
 		
 		Patient newPatient = new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);
-		
-		ListOfUsers listOfUsersInstance = ListOfUsers.getInstance();
-		listOfUsersInstance.addPatientToList(newPatient);
+		try {
+			_userDAO.addPatientToDatabase(newPatient);
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 	
 	// implementation of inherited abstract method from User superclass
-	public ArrayList<Merchandise> searchOTCMedicineByName (String name) {
-		
-		ArrayList<Merchandise> searchMedNamePhar = new ArrayList <Merchandise> ();
-		
-		for (Merchandise i : merListByPhar.getMerchandise()) {
-			if (i.getName().compareTo(name) == 0) {
-				searchMedNamePhar.add(i);
-			}
-		}
-		
-		return searchMedNamePhar;
-	}
-	
+//	public ArrayList<Merchandise> searchMedicineByName (String name) {
+//		
+//		ArrayList<Merchandise> searchMedNamePhar = new ArrayList <Merchandise> ();
+//		
+//		for (Merchandise i : merListByPhar.getMerchandise()) {
+//			if (i.getName().compareTo(name) == 0) {
+//				searchMedNamePhar.add(i);
+//			}
+//		}
+//		
+//		return searchMedNamePhar;
+//	}
+//	
 	// implementation of inherited abstract method from User superclass
-	public ArrayList<Merchandise> searchOTCMedicineByType (MERCHANDISE_TYPE type) {
+//	public ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type) {
+//		
+//		ArrayList<Merchandise> searchMedTypePhar = new ArrayList <Merchandise> ();
+//		
+//		for (Merchandise i : merListByPhar.getMerchandise()) {
+//			if (i.getType() == type) {
+//				searchMedTypePhar.add(i);
+//			}
+//		}
+//		
+//		return searchMedTypePhar;
+//	}
+//	
+	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) {
 		
-		ArrayList<Merchandise> searchMedTypePhar = new ArrayList <Merchandise> ();
+		ArrayList<Patient> searchResult = new ArrayList <Patient> ();
 		
-		for (Merchandise i : merListByPhar.getMerchandise()) {
-			if (i.getType() == type) {
-				searchMedTypePhar.add(i);
+		if (typeOfSearch.equals("FirstName")) {
+			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
+				if (p.getFirstName().equals(patientName)) {
+					searchResult.add(p);
+				}
+			}
+		}
+		else if (typeOfSearch.equals("LastName")) {
+			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
+				if (p.getLastName().equals(patientName)) {
+					searchResult.add(p);
+				}
+			}
+		}
+		else { //typeOfSearch contains full name (first + last name)
+			int indexOfSpace = patientName.indexOf(' ');
+			String firstName = patientName.substring(0, indexOfSpace);
+			String lastName = patientName.substring(indexOfSpace);
+			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
+				if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+					searchResult.add(p);
+				}
 			}
 		}
 		
-		return searchMedTypePhar;
+		return searchResult;
 	}
-	
-
 	
 }

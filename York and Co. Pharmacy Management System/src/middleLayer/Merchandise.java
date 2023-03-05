@@ -1,24 +1,59 @@
 package middleLayer;
 
 public class Merchandise{
+//	static int medicationIDClassVar = 6; //was 0, but changed to account for the 6 pre-built medication in database
+										//Cant use stat. does not work correctly with database.
+	int medicationID;
     String name;
     int quantity;
     double price;
     MERCHANDISE_TYPE type;
     MERCHANDISE_FORM form;
     boolean isOTC;
+    String description;
 
-    // constructor
-    public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    // constructor without description and ID? do we need constructor with same as this but with description or no are we not allowing admins to add description first only add later?
+    public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC){
+//    	medicationIDClassVar++;
+//    	
+//    	this.medicationID = medicationIDClassVar;
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.type = type;
         this.form = form;
-        this.isOTC = OTC;
+        this.isOTC = isOTC;
+    }
+    
+    // constructor for when reading from database? since have to read medication ID?
+    // how to set medicationIDclassvar accordingly or don't need to?
+    public Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC, String description){
+    	this.medicationID = medicationID;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.type = type;
+        this.form = form;
+        this.isOTC = isOTC;
+        this.description = description;
+    }
+    
+    public Merchandise(Merchandise m){
+    	this.medicationID = m.medicationID;
+        this.name = m.name;
+        this.quantity = m.quantity;
+        this.price = m.price;
+        this.type = m.type;
+        this.form = m.form;
+        this.isOTC = m.isOTC;
+        this.description = m.description;
     }
 
     // below methods are all getters/setters for class variables
+    public int getMedicationID() {
+    	return medicationID;
+    }
+    
     public String getName(){
         return name;
     }
@@ -67,9 +102,18 @@ public class Merchandise{
         this.isOTC = isOTC;
     }
     
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description){
+        this.description = description;
+    }
+    
     // outputs merchandise object by specifying all instance variables
+    @Override
     public String toString(){
-        return "Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + "\n";
+        return "ID: " + medicationID + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + ", Description: " + description + "\n";
     }
 
 }

@@ -1,8 +1,78 @@
 1. 2023/02/13 18:09 contributor: Geon Kim
 *Fixed Iteration1 Bug: disabled x button on popup so users don't accidentally close entire application
 
-2. 2023/02/13 18:09 contributor: Aiza Bajwa
+2. 2023/02/13 contributor: Aiza Bajwa
 *Fixed minor Iteration1 bugs: Allowed users to type any mix of uppercase/lowercase for medication names;
 *Fixed output for 'Add' button if adding was unsuccessful so that user is updated with proper info;
 *Added output message to let user know if no results were found when using search button/method.
 
+3. 2023/02/15 20:00 - 21:00 contributor: All
+*Virtual call
+*Discussed and tested our dev team's demo
+*Came up with many ideas for additional big and details stories that can be added to dev team's application
+
+4. 2023/02/16 10:30 - 12:00 contributor: All
+*Met and discussed with client team during lab time; noted down their ideas for us
+*Met and discussed with developer team during lab time; shared our ideas to them
+
+5. 2023/02/19 13:00 - 14:00 contributor: All
+*Virtual call
+*Discussed and finalized big story/detailed stories from our client suggestions that we will implement this Iteration
+*Also updated Iteration2 plan from iteration0; created detailed stories and set priorities and times; modified 1 big story's placement
+
+6. 2023/02/19 20:00 - 22:00 contributor: Aiza Bajwa
+*Implemented Search by filters for "Display" of inventory (not connected to UI yet)
+*Started implementation of Order detailed stories
+
+7. 2023/02/19 22:00 - 23:00 contributor: Aiza Bajwa, Minh Tran
+*Virtual call
+*Discussed and brainstormed implentation of Order detailed stories; brainstormed about database implementation
+
+8. 2023/02/23 14:00 - 20:00 contributor: Aiza Bajwa
+*Fixed bug in DisplayInitialScreen that added a medication with no name
+*connected UserDAO to database and updated its methods accordingly (so that contain Query Statements)
+*implemented "Add" patient button in DispalyPatientManage.java so works correctly
+
+8. 2023/02/23 21:00 - 2023/02/24 01:30 contributor: Minh Tran
+*Create UserDAO
+*Add order template
+*Update Database
+
+9. 2023/02/24 21:00 - 2023/02/25 02:30 contributor: Minh Tran
+*Update DB 
+*Add order method
+
+10. 2023/02/25 10:00 - 2023/02/25 16:00 contributor: Minh Tran
+*Change DB
+*Fix add to order
+*Refills method
+
+11. 2023/02/26 22:00 - 00:30 contributor: Aiza Bajwa, Geon Kim
+*Virtual call
+*created a class called ListOfPatients.java that keeps track of all important patient info stored in database
+*Discussed and fixed add patient method and its connection to GUI
+*Fixed bug where reading from database in DAO classes was adding to arrayList instead of overriding it
+*Implemented patient search for owner/pharmacist - search by first name, search by last name and search by full name
+
+12. 2023/03/02 23:00 - 02:00 contributor: Aiza Bajwa
+*Connected MerchandiseDAO.java class to actual database
+*Implemented methods for modifying medication details (name, price, description) and started its connection to front end
+
+13. 2023/03/02 17:30 - 20:20 contributor: Aiza Bajwa, Geon Kim
+*Virtual call
+*Fixed Search methods for all users so that they are implemented in user abstract class so there's no repetition in Owner/Pharmacist class
+*Fixed display methods in inventory class so they return ArrayLists instead of strings
+*Started adding connections to update database accordingly for methods inside Inventory class (ex. increaseQuantity and decreaseQuantity)
+
+14. 2023/03/02 20:30 - 21:30 contributor: Aiza Bajwa
+*Implemented AddMedication and DeleteMedication Connections to Database
+
+15. 2023/03/04 00:00 - 2:00 contributor: Minh Tran
+*Change DB
+*Fix add to order
+*Refills method
+
+16. 2023/03/04 13:00 - 16:00 contributor: Minh Tran
+*Change DB
+*Complete add to order
+*Refills method

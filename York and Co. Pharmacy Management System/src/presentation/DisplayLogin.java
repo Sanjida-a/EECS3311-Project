@@ -106,14 +106,18 @@ public class DisplayLogin {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(validateInput(totalGUI, userNameField, passwordField)) {
-										
-					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password);
+									
+
+					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password); //returns null when validation fails
 					if (userType != null) {
-						frame.dispose();
-						superFrame.dispose();
-						DisplayInitialScreen screen = new DisplayInitialScreen();
-						screen.displayInitialScreen(userType);
-						screen.getFrame().toFront();
+						superFrame.dispose();	
+						DisplayInitialScreen.displayInitialScreen(userType);
+		        		frame.dispose();
+						//superFrame.dispose();
+						//DisplayInitialScreen screen = new DisplayInitialScreen();
+						//DisplayInitialScreen.displayInitialScreen(userType);
+						//DisplayInitialScreen.setUserType(userType);
+						
 						
 						//DisplayInitialScreen screen = new DisplayInitialScreen();
 						//screen.displayInitialScreen(userType);

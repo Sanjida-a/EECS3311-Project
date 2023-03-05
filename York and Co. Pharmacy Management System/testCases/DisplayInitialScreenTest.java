@@ -9,7 +9,6 @@ class DisplayInitialScreenTest {
 
 
     }
-
     @Test
     void getName() {
     }

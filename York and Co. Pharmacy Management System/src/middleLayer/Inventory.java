@@ -1,6 +1,11 @@
 package middleLayer;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import databaseDAO.MerchandiseDAO;
 
 public class Inventory{
@@ -12,11 +17,15 @@ public class Inventory{
 	
 	public Inventory() {
 		try {
-			_merDAO = new MerchandiseDAO();
+			try {
+				_merDAO = new MerchandiseDAO();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			list = _merDAO.getListOfMerchandise();
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 	
-			e.printStackTrace();
 		}
 	}
 
@@ -25,75 +34,246 @@ public class Inventory{
             singletonInstance = new Inventory();
         return singletonInstance;
     }
-
-    public String display(){
-    	String output = "";
+    
+    // this method is same as "displayAllMedication" (can be another name for it)
+    public ArrayList<Merchandise> getMerchandise(){
+    	return list;
+    }
+    
+    // can also be called "displayOnlyOTCMedication" for guest/home/main screen where only OTC medication information should be displayed for easy access
+    public ArrayList<Merchandise> getOnlyOTCMerchandise(){ // for users like patients who only have access to OTCs
+    	
+    	ArrayList<Merchandise> allOTCOnlyMedication = new ArrayList<Merchandise>();
+    	
         for (int i = 0; i < list.size(); i ++){
-           output += list.get(i).name+", ";
-           output += list.get(i).quantity+", ";
-           output += list.get(i).price+", ";
-           output += list.get(i).type+", ";
-           output += list.get(i).form+", ";
-           output += list.get(i).isOTC+" \n";
+        	if (list.get(i).isOTC == true) {
+        		allOTCOnlyMedication.add(list.get(i));
+        	}
         }
         
-        return output;
+        return allOTCOnlyMedication;
     }
+    
+    // might delete if not needed
+//    public String displayAllMedication(){
+//    	String output = "";
+//        for (int i = 0; i < list.size(); i ++){
+//           output += list.get(i).medicationID+", ";
+//           output += list.get(i).name+", ";
+//           output += list.get(i).quantity+", ";
+//           output += list.get(i).price+", ";
+//           output += list.get(i).type+", ";
+//           output += list.get(i).form+", ";
+//           output += list.get(i).isOTC+" \n";
+//        }
+//        
+//        return output;
+//    }
+    
+    // might need to change return value to ArrayList for easier management for the front end
+    public ArrayList<Merchandise> displayAlphabetically(ArrayList<Merchandise> listToSortAlphabetically){
+    	
+    	ArrayList<Merchandise> displayResult = new ArrayList<Merchandise>();
+    	ArrayList<Merchandise> copyOfList = new ArrayList<Merchandise>(listToSortAlphabetically); // so that original list doesn't get modified when removing elements below
+    	ArrayList<String> onlyMedicationNames = new ArrayList<String>();
+    	
+        for (int i = 0; i < listToSortAlphabetically.size(); i ++) { // ArrayList "onlyMedicationNames" only stores names of all medication
+        	onlyMedicationNames.add(listToSortAlphabetically.get(i).name);
+        }
+        
+        Collections.sort(onlyMedicationNames); // sort names of medication
 
-    // increase quantity of medication already existing in inventory (if exists)
-    public boolean increaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
-    	boolean medicationIncreased = false;
-        for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
-                list.get(i).quantity += quantity;
-                medicationIncreased = true;
+        for (int i = 0; i < onlyMedicationNames.size(); i++) { // iterate through sorted medication names and obtain all medication details
+        	
+        	for (int j = 0; j < copyOfList.size(); j++) {
+        		
+        		if (onlyMedicationNames.get(i).equals(copyOfList.get(j).name)) {
+        			Merchandise m = new Merchandise(copyOfList.get(j));
+        			displayResult.add(m);
+        			
+                    copyOfList.remove(j); // if a match to sorted name, remove from list because already added to output (don't want to repeat same medication)
+                    j = copyOfList.size(); // end this inner for loop so can start iterating again using next element in onlyMedicationNames list
+        		} 	
             }
         }
         
+        // just for testing without UI for now -- can delete below 2 lines later once UI implemented
+        // System.out.println(onlyMedicationNames.toString() + "\n\n");
+//        System.out.println(output);
+       
+        return displayResult;
+    }
+    
+    // might need to change return value to ArrayList for easier management for the front end
+    public ArrayList<Merchandise> displayByQuantity(ArrayList<Merchandise> listToSortByQuantity){
+    	
+    	ArrayList<Merchandise> displayResult = new ArrayList<Merchandise>();
+    	ArrayList<Merchandise> copyOfList = new ArrayList<Merchandise>(listToSortByQuantity); // so that original list doesn't get modified
+    	ArrayList<Integer> onlyMedicationQuantities = new ArrayList<Integer>();
+    	
+        for (int i = 0; i < listToSortByQuantity.size(); i ++) { // ArrayList "onlyMedicationQuantities" only stores quantities of all medication
+        	onlyMedicationQuantities.add(listToSortByQuantity.get(i).quantity);
+        }
+        
+        Collections.sort(onlyMedicationQuantities); // sort quantities of medication
+
+        for (int i = 0; i < onlyMedicationQuantities.size(); i++) { // iterate through sorted medication quantities and obtain all medication details
+        	
+        	for (int j = 0; j < copyOfList.size(); j++) {
+        		
+        		if (onlyMedicationQuantities.get(i) == copyOfList.get(j).quantity) {
+        			Merchandise m = new Merchandise(copyOfList.get(j));
+        			displayResult.add(m);
+                    
+                    copyOfList.remove(j); // if a match to sorted name, remove from list because already added to output (don't want to repeat same medication)
+                    j = copyOfList.size(); // end this inner for loop so can start iterating again using next element in onlyMedicationQuantities list
+        		} 	
+            }
+        }
+        
+        // just for testing without UI for now -- can delete below 2 lines later once UI implemented
+        // System.out.println(onlyMedicationQuantities.toString() + "\n\n");
+       
+        return displayResult;
+    }
+    
+    // might need to change return value to ArrayList for easier management for the front end
+    public ArrayList<Merchandise> displayByPrice(ArrayList<Merchandise> listToSortByPrice){
+    	
+    	ArrayList<Merchandise> displayResult = new ArrayList<Merchandise>();
+    	ArrayList<Merchandise> copyOfList = new ArrayList<Merchandise>(listToSortByPrice); // so that original list doesn't get modified
+    	ArrayList<Double> onlyMedicationPrices = new ArrayList<Double>();
+    	
+        for (int i = 0; i < listToSortByPrice.size(); i ++) { // ArrayList "onlyMedicationPrices" only stores prices of all medication
+        	onlyMedicationPrices.add(listToSortByPrice.get(i).price);
+        }
+        
+        Collections.sort(onlyMedicationPrices); // sort prices of medication
+
+        for (int i = 0; i < onlyMedicationPrices.size(); i++) { // iterate through sorted medication prices and obtain all medication details
+        	
+        	for (int j = 0; j < copyOfList.size(); j++) {
+        		
+        		if (onlyMedicationPrices.get(i) == copyOfList.get(j).price) {
+        			Merchandise m = new Merchandise(copyOfList.get(j));
+        			displayResult.add(m);
+                    
+                    copyOfList.remove(j); // if a match to sorted name, remove from list because already added to output (don't want to repeat same medication)
+                    j = copyOfList.size(); // end this inner for loop so can start iterating again using next element in onlyMedicationPrices list
+        		} 	
+            }
+        }
+        
+        // just for testing without UI for now -- can delete below 2 lines later once UI implemented
+        // System.out.println(onlyMedicationQuantities.toString() + "\n\n");
+    
+        return displayResult;
+    }
+
+    // increase quantity of medication already existing in inventory (if exists)
+    
+    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE -- DONE BELOW
+//    public boolean increaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+//    	boolean medicationIncreased = false;
+//        for (int i = 0; i < list.size(); i ++){
+//            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
+//                list.get(i).quantity += quantity;
+//                medicationIncreased = true;
+//            }
+//        }
+//        
+//        return medicationIncreased;
+//    }
+    
+    public boolean increaseQuantity(int medicationID, int increasedQuantity){
+    	boolean medicationIncreased = false;
+    	
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return medicationIncreased;
+    	}
+    	
+    	specificMedication.quantity += increasedQuantity;
+    	medicationIncreased = true;
+    	
+    	// modify database accordingly
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
+    	
         return medicationIncreased;
     }
 
     // decrease quantity of medication already existing in inventory, if possible (if medication exists)
-    public boolean[] decreaseQuantity(String name, int quantity, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+
+    public boolean[] decreaseQuantity(int medicationID, int decreasedQuantity){
     	boolean medicationDecreased = false;
     	boolean enoughQuantityToDecrease = true;
     	boolean itemLowInStock = false;
-    	for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
-                int potentialNewQuantity = list.get(i).quantity - quantity;
-            	if (potentialNewQuantity < 0) {
-            		enoughQuantityToDecrease = false;
-            	}
-            	else {
-            		list.get(i).quantity -= quantity;
-            		medicationDecreased = true;
-            	}
-            	
-            	// variable that keeps track if item is low in stock
-                if(list.get(i).quantity < 3){
-                    itemLowInStock = true;
-                }
-            }
-        }
+    	
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		//
+    	}
+    	
+    	//for (int i = 0; i < list.size(); i ++){
+//        if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
+    	else { 
+	        int potentialNewQuantity = specificMedication.quantity - decreasedQuantity;
+	    	if (potentialNewQuantity < 0) {
+	    		enoughQuantityToDecrease = false;
+	    	}
+	    	else {
+	    		specificMedication.quantity -= decreasedQuantity;
+	    		medicationDecreased = true;
+	    	}
+	    	
+	    	// variable that keeps track if item is low in stock
+	        if(specificMedication.quantity < 3){
+	            itemLowInStock = true;
+	        }
+	//        }
+	        //}
+    	}
+    	
+    	// modify database accordingly
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
     	
     	boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
     	return booleanArray;
     }
     
     // delete a medication from inventory (if exists)
-    public boolean delete(String name, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean OTC){
+    public boolean delete(int medicationID){
+    	
     	boolean medicationRemoved = false;
-        for (int i = 0; i < list.size(); i ++){
-            if (list.get(i).name.equals(name) && list.get(i).type == type && list.get(i).form == form && list.get(i).isOTC == OTC){
-                list.remove(i);
-                medicationRemoved = true;
-            }
-        }
+    	
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return medicationRemoved;
+    	}
+    	
+    	list.remove(specificMedication);
+    	medicationRemoved = true;
+    	
+    	// modify database accordingly
+    	_merDAO.deleteMedicationInDatabase(medicationID);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
         
         return medicationRemoved;
     }
     
     // add a new medication to inventory (if it already doesn't exist)
+    //TO-DO MAKE SURE DATABASE REFLECTS THIS UPDATE
     public boolean addToInventory(Merchandise m){
     	
     	boolean medicationAlreadyExists = false;
@@ -107,13 +287,96 @@ public class Inventory{
         if (medicationAlreadyExists == false) {
         	list.add(m);
         	medicationAdded = true;
+        	
+        	  // modify database accordingly
+        	_merDAO.addMedicationToDatabase(m);
+        	
+        	//once database is updated, also updated this class's list variable
+        	list = _merDAO.getListOfMerchandise();
         }
-        
+      
         return medicationAdded;
     }
     
-    public ArrayList<Merchandise> getMerchandise(){
-    	return list;
+    public Merchandise searchMerchandiseWithID(int medicationID){
+    	Merchandise foundMWithID = null;
+    	
+    	for (int i = 0; i < list.size(); i ++){
+    		if (list.get(i).medicationID == medicationID){
+    			foundMWithID = list.get(i);
+    		}
+    	}
+    	
+    	return foundMWithID;
+    }
+    
+    //should these 3 methods below be in this class? or admin?
+    public boolean modifyMedicationName(int medicationID, String newName) {
+    	
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return false;
+    	}
+    	
+    	// check to see if an identical medication with name newNAME already exists --> if does, can't make modification
+    	boolean medicationAlreadyExists = false;
+        for (int i = 0; i < list.size(); i ++){ //notice using newNAME
+            if (list.get(i).name.equals(newName) && list.get(i).type == specificMedication.type && list.get(i).form == specificMedication.form && list.get(i).isOTC == specificMedication.isOTC){
+            	medicationAlreadyExists = true;
+            }
+        }
+        
+        if (medicationAlreadyExists == true) {
+        	return false;
+        }
+        
+    	specificMedication.setName(newName);
+    	
+    	// modify database accordingly
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
+    	
+    	return true;
+    }
+    
+    // OCP not followed because in our opinion, no other details of a medication should be modifiable
+    public boolean modifyMedicationPrice(int medicationID, double newPrice) {
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return false;
+    	}
+    	
+    	specificMedication.setPrice(newPrice);
+    	
+    	// modify database accordingly
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
+    	
+    	return true;
+    }
+
+    public boolean modifyMedicationDescription(int medicationID, String newDescription) {
+    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
+    	
+    	if (specificMedication == null) {
+    		return false;
+    	}
+    	
+    	specificMedication.setDescription(newDescription);
+    	
+    	// modify database accordingly
+    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
+    	
+    	//once database is updated, also updated this class's list variable
+    	list = _merDAO.getListOfMerchandise();
+    	
+    	return true;
     }
 
 }
