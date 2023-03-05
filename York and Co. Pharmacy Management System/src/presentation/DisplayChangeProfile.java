@@ -124,8 +124,8 @@ public class DisplayChangeProfile implements ActionListener {
 		frame.dispose();
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		DisplayChangeProfile.displayChangeProfile(new JFrame(), 0, new Patient(0, 0));	
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		DisplayChangeProfile.displayChangeProfile(new JFrame(), 0, new Patient(0, 0));	
+//	}
 }

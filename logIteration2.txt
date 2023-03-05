@@ -76,3 +76,13 @@
 *Change DB
 *Complete add to order
 *Refills method
+
+17. 2023/03/04 17:00 - 18:30 contributor: All
+*Virtual call
+*Discussed remaining requirements for iteration
+*Assigned tasks for the last week for this iteration
+
+18. 2023/03/04 21:00 - 23:00 contributor: Aiza Bajwa, Geon Kim
+*Virtual Call
+*Implemented modifyPatientDetails method and connected to front end and database
+*Fixed other methods like modifyMedicationDetails to fix minor bugs

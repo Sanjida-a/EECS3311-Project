@@ -22,7 +22,7 @@ public class MerchandiseDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
+	private String password = "hello123"; //make sure to change password based on your password for MySQL
 
 	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
 	
@@ -129,6 +129,7 @@ public class MerchandiseDAO {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
+			// MINH YOU WILL HAVE TO ALTER THIS BASED ON THE COLUMN YOU ARE ADDING TO THE DATABASE TABLE SO THAT WE DON'T ACTUALLY DELETE IT
 			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?";
 			PreparedStatement statement = con.prepareStatement(deleteMedicationQuery);
 

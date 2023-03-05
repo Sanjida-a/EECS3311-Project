@@ -3,6 +3,7 @@ package databaseDAO;
 import java.sql.*;
 import java.util.ArrayList;
 
+import middleLayer.Merchandise;
 import middleLayer.Owner;
 import middleLayer.Patient;
 import middleLayer.Pharmacist;
@@ -13,7 +14,7 @@ public class UserDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
+	private String password = "hello123"; //make sure to change password based on your password for MySQL
 	
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
@@ -148,5 +149,30 @@ public class UserDAO {
 			throw e;
 		}
 		
+	}
+	
+	// whenever a specific/individual patient from the list of patients is updated (ex. firstname/lastname/phoneNo/address changed), this method makes sure that row of patient in the database is updated accordingly
+	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject) {
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			
+			String updatePatientQuery = "UPDATE Patient SET firstName = ?, lastName = ?, Address = ?, phoneNumber = ?, dateOfBirth = ? WHERE healthCardNumber = ?";
+			PreparedStatement statement = con.prepareStatement(updatePatientQuery);
+
+			statement.setString(1, actualPatientObject.getFirstName());
+			statement.setString(2, actualPatientObject.getLastName());
+			statement.setString(3, actualPatientObject.getAddress());
+			statement.setInt(4, actualPatientObject.getPhoneNum()); //check if works
+			statement.setInt(5, actualPatientObject.getDateOfBirth()); //check if works
+			statement.setInt(6, actualPatientObject.getHealthCardNum());
+			
+			statement.executeUpdate();
+		
+			con.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+//			throw e;
+		}
 	}
 }
