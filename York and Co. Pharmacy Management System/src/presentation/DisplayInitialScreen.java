@@ -58,7 +58,7 @@ import java.awt.Rectangle;
 
 
 
-public class DisplayInitialScreen {
+public class DisplayInitialScreen{
 	private static JTextField inputFieldName;
 	private static JTextField inputFieldType;
 	private static JTextField inputFieldForm;
@@ -119,12 +119,12 @@ public class DisplayInitialScreen {
 		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
 			createPanelVisibleToAdmin(totalGUI);
 		}
-		else if(user == USER.PATIENT){
+		/*else if(user == USER.PATIENT){
 			createPanalVisibleToPatient(totalGUI);
-		}
+		}*/
 		else if(user == USER.DEVELOPER) {
 			createPanelVisibleToAdmin(totalGUI); //for test purpose
-			createPanalVisibleToPatient(totalGUI);//for test purpose
+			//createPanalVisibleToPatient(totalGUI);//for test purpose
 		}
 
         createExtraContents(totalGUI);
@@ -151,20 +151,20 @@ public class DisplayInitialScreen {
 
         	}
         });
-        btnLogin.setFont(new Font("굴림", Font.BOLD, 18));
-        btnLogin.setBounds(1125, 41, 120, 35);
+        btnLogin.setFont(new Font("굴림", Font.BOLD, 20));
+        btnLogin.setBounds(1125, 40, 120, 35);
         totalGUI.add(btnLogin);
         
-        JButton btnDisplay = new JButton("Display");
-        btnDisplay.setBounds(1001, 40, 120, 35);
-        totalGUI.add(btnDisplay);
-        btnDisplay.setFont(new Font("굴림", Font.BOLD, 20));
+        JButton btnRefresh = new JButton("Refresh");
+        btnRefresh.setBounds(1001, 40, 120, 35);
+        totalGUI.add(btnRefresh);
+        btnRefresh.setFont(new Font("굴림", Font.BOLD, 20));
         
 
-        btnDisplay.addActionListener(new ActionListener() {
+        btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(userType == USER.OWNER || userType == USER.PHARMACIST) {
+				if(userType == USER.OWNER || userType == USER.PHARMACIST || userType == USER.DEVELOPER) {
 					currentList = inv.getMerchandise();
 				}
 				else {
@@ -266,6 +266,7 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				DisplayPatientManage.displayPatientManage(frame);
+				//refreshList(inv.getInstance(), currentList);
 
 			}
         	
@@ -276,6 +277,54 @@ public class DisplayInitialScreen {
         
         JButton btnAdd = new JButton("Add");
         btnAdd.setBounds(487, 134, 125, 35);
+        btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {	//Exception is thrown when insufficient number of arguments is passed to Merchandise constructor. if all argument is fed, 
+						//addToInventory is bound to success
+
+					String _inputFieldName = inputFieldName.getText().toUpperCase();
+					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					Boolean _isOTC = false;
+					if(rdbtnOTC.isSelected()) {
+						_isOTC = true;
+					}
+
+					
+
+					
+					Boolean medicationAdded = false;
+					
+					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationAdded = inv.addToInventory(newMerchandise);
+					//String temp = "";
+					if (medicationAdded == true) {
+						operationResult = "Add successful. See updated inventory";
+					}
+					else {
+						operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
+					}
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
+					lblOperationResult.setText(operationResult);
+					inputFieldName.setText("");
+					inputFieldQty.setText("");
+					inputFieldPrice.setText("");
+					inputFieldType.setText("");
+					inputFieldForm.setText("");
+
+				}
+				catch(Exception exception) { //catch any exceptions and show popup error
+					//DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"name, Qty, price, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+			
+			}
+		});
         panelVisibleToAdmin.add(btnAdd);
         btnAdd.setFont(new Font("굴림", Font.BOLD, 20));
         
@@ -286,23 +335,97 @@ public class DisplayInitialScreen {
         
         JButton btnDelete = new JButton("Delete");
         btnDelete.setBounds(1034, 134, 125, 35);
+        btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
+					//String _inputFieldName = inputFieldName.getText().toUpperCase();
+					//if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+					//MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+					//MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					//Boolean _isOTC = false;
+					//if(rdbtnOTC.isSelected()) {
+					//	_isOTC = true;
+					//}
+				
+					Boolean medicationRemoved = false;
+				
+
+					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
+					System.out.println("med ID initialized");
+					medicationRemoved = inv.delete(_inputFieldID);
+					System.out.println("med deleted");
+
+				
+					
+					if (medicationRemoved == false) {
+						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
+					}
+					else {
+						operationResult = "Remove successful. See updated inventory";
+					}
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
+					lblOperationResult.setText(operationResult);
+
+				}
+				catch (Exception ex) {	//display error popup
+					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"ID required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+			
+			}
+		});
         panelVisibleToAdmin.add(btnDelete);
         btnDelete.setFont(new Font("굴림", Font.BOLD, 20));
         
         JButton btnIncrease = new JButton("Increase");
         btnIncrease.setBounds(744, 134, 125, 35);
+        btnIncrease.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
+//					String _inputFieldName = inputFieldName.getText().toUpperCase();
+//					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
+//					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+//					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
+//					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+//					Boolean _isOTC = false;
+//					if(rdbtnOTC.isSelected()) {
+//						_isOTC = true;
+//					}
+					
+					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
+					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					
+					Boolean medicationIncreased = false;
+			
+					//medicationIncreased = inv.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
+					medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
+				
+					if (medicationIncreased == false) {
+						operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
+					}
+					else {
+						operationResult = "Increase successful. See updated inventory";
+					}
+
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
+					lblOperationResult.setText(operationResult);
+				}
+				catch(Exception ex) {
+					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
+					JOptionPane.showMessageDialog(frame,"ID and Quantity are required","Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+			
+			}
+		});
         panelVisibleToAdmin.add(btnIncrease);
         btnIncrease.setFont(new Font("굴림", Font.BOLD, 20));
         
         JButton btnDecrease = new JButton("Decrease");
         btnDecrease.setBounds(888, 135, 125, 35);
-        panelVisibleToAdmin.add(btnDecrease);
-        btnDecrease.setFont(new Font("굴림", Font.BOLD, 18));
-        
-        inputFieldID = new JTextField();
-        inputFieldID.setBounds(1025, 10, 134, 35);
-        panelVisibleToAdmin.add(inputFieldID);
-        inputFieldID.setColumns(10);
         btnDecrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -355,127 +478,14 @@ public class DisplayInitialScreen {
 			
 			}
 		});
-        btnIncrease.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
-//					String _inputFieldName = inputFieldName.getText().toUpperCase();
-//					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-//					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-//					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-//					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-//					Boolean _isOTC = false;
-//					if(rdbtnOTC.isSelected()) {
-//						_isOTC = true;
-//					}
-					
-					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
-					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-					
-					Boolean medicationIncreased = false;
-			
-					//medicationIncreased = inv.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
-					medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
-				
-					if (medicationIncreased == false) {
-						operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
-					}
-					else {
-						operationResult = "Increase successful. See updated inventory";
-					}
-
-					currentList = inv.getMerchandise();
-					displayMercList(outputList, currentList);
-					lblOperationResult.setText(operationResult);
-				}
-				catch(Exception ex) {
-					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"ID and Quantity are required","Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-			
-			}
-		});
-        btnDelete.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
-					String _inputFieldName = inputFieldName.getText().toUpperCase();
-					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-					Boolean _isOTC = false;
-					if(rdbtnOTC.isSelected()) {
-						_isOTC = true;
-					}
-				
-					Boolean medicationRemoved = false;
-				
-
-					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
-					medicationRemoved = inv.delete(_inputFieldID);
-
-				
-					
-					if (medicationRemoved == false) {
-						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
-					}
-					else {
-						operationResult = "Remove successful. See updated inventory";
-					}
-					currentList = inv.getMerchandise();
-					displayMercList(outputList, currentList);
-					lblOperationResult.setText(operationResult);
-
-				}
-				catch (Exception ex) {	//display error popup
-					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"ID required", "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-			
-			}
-		});
-        btnAdd.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {	//Exception is thrown when insufficient number of arguments is passed to Merchandise constructor. if all argument is fed, 
-						//addToInventory is bound to success
-				
-					String _inputFieldName = inputFieldName.getText().toUpperCase();
-					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
-					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-					Boolean _isOTC = false;
-					if(rdbtnOTC.isSelected()) {
-						_isOTC = true;
-					}
-				
-
-					
-					Boolean medicationAdded = false;
-					
-					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-					medicationAdded = inv.addToInventory(newMerchandise);
-					
-					//String temp = "";
-					if (medicationAdded == true) {
-						operationResult = "Add successful. See updated inventory";
-					}
-					else {
-						operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
-					}
-					currentList = inv.getMerchandise();
-					displayMercList(outputList, currentList);
-					lblOperationResult.setText(operationResult);
-				}
-				catch(Exception exception) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"name, Qty, price, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-			
-			}
-		});
+        panelVisibleToAdmin.add(btnDecrease);
+        btnDecrease.setFont(new Font("굴림", Font.BOLD, 18));
+        
+        inputFieldID = new JTextField();
+        inputFieldID.setBounds(1025, 10, 134, 35);
+        panelVisibleToAdmin.add(inputFieldID);
+        inputFieldID.setColumns(10);
+        
         totalGUI.add(panelVisibleToAdminSub1);
         
         JButton btnAddOrder = new JButton("<html>Add<br>Order</html>");
@@ -502,7 +512,9 @@ public class DisplayInitialScreen {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//invoke method for modify item detail
-				DisplayModifyMerchandise.displayModifyMerchandise(frame);
+				DisplayModifyMerchandise.displayModifyMerchandise(frame, outputList, currentList);
+		//		System.out.println("modify finished");
+				//displayMercList(outputList, currentList);
 			}
         	
         });
@@ -632,6 +644,7 @@ public class DisplayInitialScreen {
         	 public void mouseClicked(MouseEvent evt) {
         		 
         		 if(evt.getClickCount() == 2) {
+        			 
         			 DisplayDescription.displayDescription(frame, outputList.getSelectedValue());
         		 }
         	 }
@@ -658,8 +671,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				currentList = inv.displayAlphabetically(currentList);
-				displayMercList(outputList, currentList);
+				displayMercList(outputList, inv.displayAlphabetically(currentList));
 			}
         	
         });
@@ -675,8 +687,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				currentList = inv.displayByQuantity(currentList);
-				displayMercList(outputList, currentList);
+				displayMercList(outputList, inv.displayByQuantity(currentList));
 			}
         	
         });
@@ -692,8 +703,7 @@ public class DisplayInitialScreen {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				currentList = inv.displayByPrice(currentList);
-				displayMercList(outputList,currentList);
+				displayMercList(outputList,inv.displayByPrice(currentList));
 			}
         	
         });
@@ -746,7 +756,7 @@ public class DisplayInitialScreen {
 
 	}
 	
-	private static void createPanalVisibleToPatient(JPanel totalGUI) {
+	/*private static void createPanalVisibleToPatient(JPanel totalGUI) {
 		JPanel panelVisibleToPatient = new JPanel();
         panelVisibleToPatient.setBounds(1183, 98, 170, 366);
         totalGUI.add(panelVisibleToPatient);
@@ -763,10 +773,11 @@ public class DisplayInitialScreen {
         panelVisibleToPatient.add(btnNewButton_1);
         
         totalGUI.add(panelVisibleToPatient);
-	}
+	}*/
 	
-	private static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
+	protected static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
 		//currentList = merchandises;
+		merchandises = refreshList(inv.getInstance(),   merchandises);
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		list.removeAll();
 		//if(userType == USER.GUEST || userType == USER.PATIENT) {
@@ -810,7 +821,7 @@ public class DisplayInitialScreen {
 	                		  formatString(String.valueOf(merc.getPrice()), 11) + 
 	                		  formatString(merc.getType().name(), 17) +
 	                		  formatString(merc.getForm().name(), 17) +
-	                		  formatString(isOTC, 10));
+	                		  formatString(isOTC, 8));
 	                  if (!isSelected) {
 	                      label.setBackground(index % 2 == 0 ? background : defaultBackground);
 	                  }
@@ -828,7 +839,7 @@ public class DisplayInitialScreen {
 		return input + new String(temp);
 	}
 	
-	private static USER userToUsertype(User u) {	//this method is for the next iteration
+	/*private static USER userToUsertype(User u) {	//this method is for the next iteration
 		if(u == null) {
 			return USER.GUEST;
 		}
@@ -849,31 +860,23 @@ public class DisplayInitialScreen {
 		}
 		
 		return result;
-	}
+	}*/
 	
 	
-	/*private static void sort(JButton button) {
-		button.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(e.getActionCommand().equals("Name")) {
-					//invoke sort merc by name
-					currentList = inv.displayAlphabetically(currentList);
-				}
-				else if(e.getActionCommand().equals("Price")) {
-					//invoke sort merc by price
-					currentList = inv.displayByPrice(currentList);
-				}
-				else if(e.getActionCommand().equals("Qty")) {
-					//left intentionally for further expansion of sorting
-					currentList = inv.displayByQuantity(currentList);
+	protected static ArrayList<Merchandise> refreshList(Inventory invInstance, ArrayList<Merchandise> oldList) {
+		ArrayList<Merchandise> result = new ArrayList<Merchandise>();
+		invInstance.updateFromDatabase();
+		ArrayList<Merchandise> fresh = invInstance.getMerchandise();
+		for(Merchandise i : oldList) {
+			for(Merchandise j : fresh) {
+				if(i.getMedicationID() == j.getMedicationID()) {
+					result.add(j);
 				}
 			}
-			
-		});
-	}*/
+		}
+		return result;
+	}
+	
 	public String getName() {
 		return new String(name);
 	}
@@ -905,6 +908,11 @@ public class DisplayInitialScreen {
 	public static void LoggedInAs(int ID) {
 		userLoggedIn = ID;
 	}
+	public static void setCurrentList(ArrayList<Merchandise> newList) {
+		currentList = newList;
+	}
+
+	
 
 	
 	//public static void main(String[] args) {	//for test purpose
