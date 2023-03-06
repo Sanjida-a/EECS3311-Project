@@ -23,6 +23,12 @@ public class DisplayErrorPopup {
 
 
 	
+	public static void displayErrorPopup(String error) {
+		JFrame.setDefaultLookAndFeelDecorated(true);
+        JFrame frmPopup = new JFrame("Error");
+        
+        frmPopup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmPopup.setContentPane(new JPanel());
 
 	public static void displayErrorPopup(String error, JFrame superFrame) {
 		//creates frame
