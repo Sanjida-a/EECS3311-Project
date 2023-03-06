@@ -118,7 +118,11 @@ public class Patient extends User {
 //		
 //		return searchMedType;
 //	}
-	
-	
+
+	@Override
+	public String toString(){
+		return "First name: " + firstName + ", Last name: " + lastName + ", Address: " + address + ", Phone Number: " + phoneNum + ", Health Card: " + healthCardNum + ", Date of birth: " + dateOfBirth + "\n";
+	}
+
 
 }

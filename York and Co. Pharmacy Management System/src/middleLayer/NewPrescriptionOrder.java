@@ -10,7 +10,7 @@ public class NewPrescriptionOrder extends Order{
 		
 		this.orderNum = orderNumberClassVar;
 		
-		Inventory inv = new Inventory();
+		Inventory inv = Inventory.getInstance();
 		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
 		
 		this.medicationID = medicationID;

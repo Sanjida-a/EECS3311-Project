@@ -15,7 +15,7 @@ public class Inventory{
  
 	private MerchandiseDAO _merDAO;
 	
-	public Inventory() {
+	private Inventory() {
 		try {
 			try {
 				_merDAO = new MerchandiseDAO();

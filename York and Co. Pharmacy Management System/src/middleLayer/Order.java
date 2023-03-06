@@ -67,7 +67,7 @@ public class Order {
 		
 	}
 	public double calculateSellingPrice(){ // calculates selling price including HST and assigns it to priceAtPurchase
-		Inventory inv = new Inventory();
+		Inventory inv = Inventory.getInstance();
 		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
 		priceAtPurchase = m.price * 1.13;
 		return priceAtPurchase;
