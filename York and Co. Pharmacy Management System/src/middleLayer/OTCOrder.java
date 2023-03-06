@@ -9,7 +9,7 @@ public class OTCOrder extends Order{
 	}
 	
 	public boolean checkIfOrderPossible(int medicationID, int patientID, int quantityBought) {
-		Inventory inv = new Inventory();
+		Inventory inv = Inventory.getInstance();
 		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
 		// check if patient exists using database?
 		

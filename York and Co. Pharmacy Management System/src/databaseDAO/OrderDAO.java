@@ -18,12 +18,12 @@ public class OrderDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
+	private String password = "hello123"; //make sure to change password based on your password for MySQL
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
 //	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	
-	public OrderDAO() throws Exception {//what to put in constructor? don't think weven need to open a connection.
+	public OrderDAO() throws Exception {
 		try {
 			con = DriverManager.getConnection(url, user, password);			
 			con.close();			

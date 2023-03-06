@@ -22,26 +22,12 @@ public class MerchandiseDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
+	private String password = "hello123"; //make sure to change password based on your password for MySQL
 
 	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
 	
-	public MerchandiseDAO() throws Exception { //does constructor even need anything? MAYBE CALL GETLISTOFMERCHANDISE on initialization?
+	public MerchandiseDAO() throws Exception {
 		try {
-//			Merchandise mer1 = new Merchandise( "ADVIL",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
-//			Merchandise mer2 = new Merchandise( "TYLENOL",  5,  8.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, true);
-//			Merchandise mer3 = new Merchandise( "ADVIL",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.TABLET, true);
-//			Merchandise mer4 = new Merchandise( "TYLENOL",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, true);
-//			Merchandise mer5 = new Merchandise( "PILL1",  10,  5.00, MERCHANDISE_TYPE.COLD , MERCHANDISE_FORM.LIQUID, false);
-//			Merchandise mer6 = new Merchandise( "PILL2",  10,  5.00, MERCHANDISE_TYPE.FEVER , MERCHANDISE_FORM.TABLET, false);
-//
-//			allInventory.add(mer1);
-//			allInventory.add(mer2);
-//			allInventory.add(mer3);
-//			allInventory.add(mer4);
-//			allInventory.add(mer5);
-//			allInventory.add(mer6);
-//			
 			con = DriverManager.getConnection(url, user, password);
 			con.close();
 			
@@ -50,13 +36,14 @@ public class MerchandiseDAO {
 		}
 	}
 	
-	public ArrayList<Merchandise> getListOfMerchandise() { //reads all values from database
+	//reads all rows of medication from database and puts it into arrayList
+	public ArrayList<Merchandise> getListOfMerchandise() { 
 		try {
-			allInventory = new ArrayList<Merchandise>(); //need to empty current list first so new list overrides
+			allInventory = new ArrayList<Merchandise>(); //need to empty current list first so it gets overriden
 			
 			con = DriverManager.getConnection(url, user, password);
 			
-			String queryGetAllRows = "SELECT * FROM Medications;";
+			String queryGetAllRows = "SELECT * FROM Medications Where isValid = 1;";
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(queryGetAllRows);
 			int medicationID;
@@ -70,7 +57,6 @@ public class MerchandiseDAO {
 		    boolean isValid;
 		    
 		    Merchandise m;
-		    // String description; MAYBE don't put in database because so long?
 			
 			while (result.next()) { 
 				
@@ -99,22 +85,23 @@ public class MerchandiseDAO {
 	
 	}
 	
-	// whenever a specific/individual medication from the inventory is updated (ex. name/price/quantity changed), this method makes sure that row of medication in the database is updated accordingly
+	// whenever a specific/individual medication from the inventory is updated (ex. name/price/quantity changed), this method makes sure that that row of medication in the database is updated accordingly
 	public void updateMedicationInDatabase(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-			String updateMedicationQuery = "UPDATE Medications SET medName = ?, quantity = ?, price = ?, medType = ?, medForm = ?, isOTC = ?, medDescription = ? WHERE medicationID = ?";
+			String updateMedicationQuery = "UPDATE Medications SET medName = ?, quantity = ?, price = ?, medType = ?, medForm = ?, isOTC = ?, medDescription = ?, isValid = ? WHERE medicationID = ?";
 			PreparedStatement statement = con.prepareStatement(updateMedicationQuery);
 
 			statement.setString(1, actualMedicationObject.getName());
 			statement.setInt(2, actualMedicationObject.getQuantity());
 			statement.setDouble(3, actualMedicationObject.getPrice());
-			statement.setString(4, actualMedicationObject.getType().toString()); //check if works
-			statement.setString(5, actualMedicationObject.getForm().toString()); //check if works
+			statement.setString(4, actualMedicationObject.getType().toString());
+			statement.setString(5, actualMedicationObject.getForm().toString());
 			statement.setBoolean(6, actualMedicationObject.getisOTC());
 			statement.setString(7, actualMedicationObject.getDescription());
-			statement.setInt(8, medIDOfModifiedMedication);
+			statement.setBoolean(8, actualMedicationObject.getisValid());
+			statement.setInt(9, medIDOfModifiedMedication);
 			
 			statement.executeUpdate();
 		
@@ -131,9 +118,8 @@ public class MerchandiseDAO {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-			// MINH YOU WILL HAVE TO ALTER THIS BASED ON THE COLUMN YOU ARE ADDING TO THE DATABASE TABLE SO THAT WE DON'T ACTUALLY DELETE IT
-//			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?";
-			String deleteMedicationQuery = "UPDATE Medications SET isValid = 0 WHERE medicationID = ?";
+//			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?"; // we are not explicitly deleting the row since it would cause errors in other database tables...
+			String deleteMedicationQuery = "UPDATE Medications SET isValid = 0 WHERE medicationID = ?"; //... instead we are modifying the value of isValid for that medication
 			PreparedStatement statement = con.prepareStatement(deleteMedicationQuery);
 
 			statement.setInt(1, medIDOfDeletedMedication);
@@ -148,17 +134,22 @@ public class MerchandiseDAO {
 		}
 	}
 	
+	//add new medication row to database table (invoked whenever a new medication has been added to the inventory)
 	public void addMedicationToDatabase(Merchandise newMedication) {
 		
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
 			int isOTCBooleanIntValue = 0; // using .getisOTC() in the SQL statement line below wasn't working since it was returning boolean and not int
+			int isValidBooleanIntValue = 0; // same as above
 			if (newMedication.getisOTC() == true) {
 				isOTCBooleanIntValue = 1;
 			}
+			if (newMedication.getisValid() == true) {
+				isValidBooleanIntValue = 1;
+			}
 	
-			String queryAddToMedicationTable = "INSERT INTO Medications VALUES ('"+newMedication.getMedicationID()+"','"+newMedication.getName()+"','"+newMedication.getQuantity()+"','"+newMedication.getPrice()+"','"+newMedication.getType()+"','"+newMedication.getForm()+"','"+isOTCBooleanIntValue+"','"+newMedication.getDescription()+"');";
+			String queryAddToMedicationTable = "INSERT INTO Medications VALUES ('"+newMedication.getMedicationID()+"','"+newMedication.getName()+"','"+newMedication.getQuantity()+"','"+newMedication.getPrice()+"','"+newMedication.getType()+"','"+newMedication.getForm()+"','"+isOTCBooleanIntValue+"','"+newMedication.getDescription()+"','"+isValidBooleanIntValue+"');";
 			PreparedStatement statement2 = con.prepareStatement(queryAddToMedicationTable);
 			int newRow2 = statement2.executeUpdate(queryAddToMedicationTable);
 			
