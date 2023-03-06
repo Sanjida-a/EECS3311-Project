@@ -22,7 +22,7 @@ public class MerchandiseDAO {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello123"; //make sure to change password based on your password for MySQL
+	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
 
 	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
 	
@@ -67,6 +67,7 @@ public class MerchandiseDAO {
 		    MERCHANDISE_FORM form;
 		    boolean isOTC;
 		    String description;
+		    boolean isValid;
 		    
 		    Merchandise m;
 		    // String description; MAYBE don't put in database because so long?
@@ -81,8 +82,9 @@ public class MerchandiseDAO {
 				form = MERCHANDISE_FORM.valueOf(result.getString("medForm").toUpperCase());
 				isOTC = result.getBoolean("isOTC");
 				description = result.getString("medDescription") ;
+				isValid = result.getBoolean("isValid");
 				
-				m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description);
+				m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);
 				allInventory.add(m);
 			}
 			
@@ -130,7 +132,8 @@ public class MerchandiseDAO {
 			con = DriverManager.getConnection(url, user, password);
 			
 			// MINH YOU WILL HAVE TO ALTER THIS BASED ON THE COLUMN YOU ARE ADDING TO THE DATABASE TABLE SO THAT WE DON'T ACTUALLY DELETE IT
-			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?";
+//			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?";
+			String deleteMedicationQuery = "UPDATE Medications SET isValid = 0 WHERE medicationID = ?";
 			PreparedStatement statement = con.prepareStatement(deleteMedicationQuery);
 
 			statement.setInt(1, medIDOfDeletedMedication);
@@ -165,8 +168,35 @@ public class MerchandiseDAO {
 			e.printStackTrace();
 //			throw e;
 		}
-		
 	}
+		
+	public void updateQuantPurchase (int merID, int quantBought) {
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			int quant = 0;
+			String QuantQuery = "SELECT quantity FROM Medications WHERE medicationID = "+ merID;
+			PreparedStatement statement = con.prepareStatement(QuantQuery);
+			ResultSet setResult = statement.executeQuery(QuantQuery);
+			while(setResult.next()) {
+				quant = setResult.getInt("quantity");
+			}
+			int newQuant = quant - quantBought;
+	
+			String newQuantQuery = "UPDATE Medications SET quantity = ? WHERE medicationID = ?";
+			PreparedStatement st = con.prepareStatement(newQuantQuery);
+			st.setInt(1, newQuant);
+			st.setInt(2, merID);
+			st.execute();
+			
+			con.close();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+//			throw e;
+		}
+	}
+		
+	
 		
 		
 	

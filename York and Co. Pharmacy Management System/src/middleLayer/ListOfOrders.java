@@ -43,16 +43,16 @@ public class ListOfOrders {
 	}
 
 
-	public double calculateRevenue() { //calls calculateSellingPrice() to calculate total revenue
-		ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
-		double total = 0.00;
-		for(int i = 0; i <copyofList.size(); i++){
-			double sellingPrice = copyofList.get(i).calculateSellingPrice();
-			total += copyofList.get(i).quantityBought * sellingPrice ;
-		}
-		return total;
+//	public double calculateRevenue() { //calls calculateSellingPrice() to calculate total revenue
+//		ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
+//		double total = 0.00;
+//		for(int i = 0; i <copyofList.size(); i++){
+//			double sellingPrice = copyofList.get(i).calculateSellingPrice();
+//			total += copyofList.get(i).quantityBought * sellingPrice ;
+//		}
+//		return total;
 		
-	}
+//	}
 
 	// public int calculateProfit(){
 	// 	ArrayList<Order> copyofList2 = new ArrayList<Order>(allOrdersList);

@@ -197,13 +197,11 @@ public class DisplayAddOrder implements ActionListener {
 //					e1.printStackTrace();
 					//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
 					//DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", frame);
-					
-				
-				
 				}
 			}
 			catch (Exception ex) {
-				JOptionPane.showMessageDialog(frame, "PatientID, MedID, and Qty must be provided", "Invalid input",  JOptionPane.WARNING_MESSAGE);
+//				JOptionPane.showMessageDialog(frame, "PatientID, MedID, and Qty must be provided", "Invalid input",  JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(frame, ex.getMessage(), "Invalid input",  JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}	
