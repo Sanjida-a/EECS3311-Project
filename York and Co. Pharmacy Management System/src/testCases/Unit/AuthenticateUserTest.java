@@ -1,3 +1,5 @@
+package testCases.Unit;
+
 import middleLayer.AuthenticateUser;
 import presentation.USER;
 import org.junit.jupiter.api.Assertions;

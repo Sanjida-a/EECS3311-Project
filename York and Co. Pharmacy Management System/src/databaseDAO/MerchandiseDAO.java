@@ -17,12 +17,12 @@ import middleLayer.Pharmacist;
 import middleLayer.User;
 
 
-public class MerchandiseDAO {
+public class MerchandiseDAO extends DAOConnection implements MerchandiseRoot {
 	
-	Connection con;
+	/*private Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello123"; //make sure to change password based on your password for MySQL
+	private String password = "Motp1104#"; //make sure to change password based on your password for MySQL*/
 
 	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
 	
@@ -42,8 +42,8 @@ public class MerchandiseDAO {
 //			allInventory.add(mer5);
 //			allInventory.add(mer6);
 //			
-			con = DriverManager.getConnection(url, user, password);
-			con.close();
+			this.con = DriverManager.getConnection(url, user, password);
+			this.con.close();
 			
 		} catch (Exception e) {
 			throw e;

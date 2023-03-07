@@ -13,12 +13,12 @@ import middleLayer.Patient;
 import middleLayer.Pharmacist;
 import middleLayer.User;
 
-public class OrderDAO {
+public class OrderDAO extends DAOConnection implements OrderRoot{
 	
-	Connection con;
+	/*Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello@123456"; //make sure to change password based on your password for MySQL
+	private String password = "Motp1104#"; //make sure to change password based on your password for MySQL*/
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
 //	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
@@ -122,7 +122,7 @@ public class OrderDAO {
 		}
 	}
 	
-	private int numOfRefill (int _patientID, int _medicationId) throws SQLException {
+	public int numOfRefill (int _patientID, int _medicationId) throws SQLException {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
@@ -154,7 +154,7 @@ public class OrderDAO {
 		
 	}
 	
-	private Merchandise merResult (int _medicationId) throws SQLException{
+	public Merchandise merResult (int _medicationId) throws SQLException{
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
@@ -180,7 +180,7 @@ public class OrderDAO {
 		}
 	}
 	
-	private Patient patResult (int _patientID) throws SQLException{
+	public Patient patResult (int _patientID) throws SQLException{
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
@@ -203,7 +203,7 @@ public class OrderDAO {
 		}
 	}
 	
-	private Boolean checkPatMed (int _patientID, int _medicationId)  throws SQLException{
+	public Boolean checkPatMed (int _patientID, int _medicationId)  throws SQLException{
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();

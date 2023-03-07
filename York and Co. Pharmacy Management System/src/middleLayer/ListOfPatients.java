@@ -54,7 +54,6 @@ public class ListOfPatients {
 	    			foundPWithID = allPatientsList.get(i);
 	    		}
 	    	}
-	    	
 	    	return foundPWithID;
 	 }
 	
