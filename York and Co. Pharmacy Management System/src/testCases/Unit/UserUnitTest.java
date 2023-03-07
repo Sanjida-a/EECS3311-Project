@@ -1,0 +1,41 @@
+package testCases.Unit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import middleLayer.Owner;
+import middleLayer.User;
+
+class UserUnitTest {
+
+	@Test
+	void testSetUsername() {
+		Owner subject1 = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
+		subject1.setUsername(1);
+		assertEquals(subject1.username, 1);
+	}
+
+	@Test
+	void testSetPassword() {
+		Owner subject1 = new Owner(0, 0);
+		subject1.setPassword(1);
+		assertEquals(subject1.password, 1);
+	}
+
+	@Test
+	void testGetUsername() {
+		Owner subject1 = new Owner(0,0);
+		assertEquals(subject1.getUsername(), 0);
+
+	}
+
+	@Test
+	void testGetPassword() {
+		Owner subject1 = new Owner(0, 0);
+		assertEquals(subject1.getPassword(), 0);
+
+	}
+
+
+}

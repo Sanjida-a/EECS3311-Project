@@ -46,7 +46,7 @@ public class OrderDAO implements OrderRoot{
 			if(getMer == null) {
 				throw new Exception("Non-existent medication");
 			}
-			if (getMer.getQuantity() <= 0 || getMer.getisValid() == false) {
+			if (getMer.getQuantity() <= 0 || getMer.getisValid() == false || getMer.getQuantity() < _qty) {
 				throw new Exception("Check inventory!");
 			}
 			double price = getMer.getPrice();			

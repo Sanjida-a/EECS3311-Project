@@ -3,6 +3,7 @@ package middleLayer;
 import java.util.ArrayList;
 
 import databaseDAO.OrderDAO;
+import databaseDAO.OrderRoot;
 import middleLayer.Order;
 
 public class ListOfOrders {
@@ -10,7 +11,7 @@ public class ListOfOrders {
 	private static ListOfOrders ListOfOrdersInstance = null;
 	private ArrayList<Order> allOrdersList;
 	//private ArrayList<User> allUsersList = new ArrayList<User>();
-	private OrderDAO OrderDAO;
+	private OrderRoot OrderDAO;
 	
 	private ListOfOrders() { //constructor of all singleton classes should be private
 		try {
@@ -29,6 +30,16 @@ public class ListOfOrders {
         }
         return ListOfOrdersInstance;
     }
+	
+	public void setOrderDAO(OrderRoot dao) {
+		this.OrderDAO = dao;
+		try {
+			allOrdersList = OrderDAO.getListOfAllOrders();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	// keeps allOrdersList updated by reading from database
 	public void updateOrderListFromDatabase() { // always try to update at the beginning and end of each method

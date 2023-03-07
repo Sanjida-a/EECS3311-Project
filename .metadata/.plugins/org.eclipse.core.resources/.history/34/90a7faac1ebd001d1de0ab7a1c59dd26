@@ -1,0 +1,50 @@
+package testCases.Unit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import middleLayer.Owner;
+
+class OwnerUnitTest {
+
+	@Test
+	void testOwner() {
+		fail("Not yet implemented");
+		Owner subject1 = new Owner(0,0);
+		assertEquals(subject1.username, 0);
+		assertEquals(subject1.password, 0);
+	}
+
+	@Test
+	void testGetOwnerUser() {
+		fail("Not yet implemented");
+		Owner subject1 = new Owner(0,0);
+		assertEquals(subject1.getOwnerUser(), subject1);
+	}
+
+	@Test
+	void testSetOwnerUser() {
+		fail("Not yet implemented");
+		Owner subject1 = new Owner(0,0);
+	}
+
+	@Test
+	void testSearchPatientByName() {
+		fail("Not yet implemented");
+		Owner subject1 = new Owner(0,0);
+	}
+
+	@Test
+	void testSearchMedicineByName() {
+		fail("Not yet implemented");
+		Owner subject1 = new Owner(0,0);
+	}
+
+	@Test
+	void testSearchMedicineByType() {
+		fail("Not yet implemented");
+		Owner subject1 = new Owner(0,0);
+	}
+
+}

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="displayMercList"/>
+		<item key="selection" value="Owner"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Owner"/>
 			<item value="displayMercList"/>
 			<item value="System.out"/>
 			<item value="refreshList"/>
@@ -22,9 +23,9 @@
 			<item value="groupRadio"/>
 			<item value="panelVisibleToAdmin"/>
 			<item value="dialogPopup"/>
-			<item value="frmPopup"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Pharmacist"/>
 			<item value="panelVisibleToAdmin1"/>
 			<item value="frmPopup"/>
 			<item value="dialogPopup"/>
@@ -32,7 +33,7 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1580"/>
+		<item key="DIALOG_X_ORIGIN" value="1560"/>
 		<item key="DIALOG_Y_ORIGIN" value="247"/>
 		<item key="DIALOG_WIDTH" value="369"/>
 		<item key="DIALOG_HEIGHT" value="454"/>

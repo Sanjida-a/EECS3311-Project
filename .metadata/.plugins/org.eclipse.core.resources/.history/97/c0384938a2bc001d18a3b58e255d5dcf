@@ -1,0 +1,131 @@
+package testCases.Unit;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+
+import databaseDAO.MerchandiseRoot;
+import databaseDAO.MerchandiseStub;
+import middleLayer.Inventory;
+import middleLayer.MERCHANDISE_FORM;
+import middleLayer.MERCHANDISE_TYPE;
+import middleLayer.Merchandise;
+
+public class InventoryUnitTest {
+	@Test
+    void getInstance() {
+    }
+
+    @Test
+    void getMerchandiseTest() {
+        Inventory val = Inventory.getInstance();
+        MerchandiseStub mStub = new MerchandiseStub();
+        val.set_merDAO(mStub);
+        /*assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
+                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
+                "]",val.getMerchandise().toString());*/
+		
+        
+        assertEquals(val.getMerchandise().get(0), mStub.allInventoryStub.get(0));
+    }
+
+    @Test
+    void onlyOTC(){
+        Inventory val = Inventory.getInstance();
+        assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                "]",val.getOnlyOTCMerchandise().toString());
+    }
+
+    @Test
+    void alphabetically(){
+        Inventory val = Inventory.getInstance();
+        assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
+                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
+                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                "]",val.displayAlphabetically(val.getMerchandise()).toString());
+    }
+
+    @Test
+    void byQuantity(){
+        Inventory val = Inventory.getInstance();
+        assertEquals("[ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
+                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
+                "]",val.displayByQuantity(val.getMerchandise()).toString());
+    }
+
+    @Test
+    void byPrice(){
+        Inventory val = Inventory.getInstance();
+        assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+              //  ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
+                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
+                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
+                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
+                "]",val.displayByPrice(val.getMerchandise()).toString());
+    }
+
+    @Test
+    void increaseQuantity(){
+        Inventory val = Inventory.getInstance();
+        assertEquals(true, val.increaseQuantity(1,10));
+    }
+
+    @Test
+    void decreaseQuantity(){ //need condition
+        Inventory val = Inventory.getInstance();
+        boolean[] testCase = {true, true, true};
+        assertEquals(Arrays.toString(testCase), Arrays.toString(val.decreaseQuantity(1,10)));
+    }
+
+    @Test
+    void decreaseQuantity1(){ // by 7
+        Inventory val = Inventory.getInstance();
+        boolean[] testCase = {true, true, true};
+        assertEquals(Arrays.toString(testCase), Arrays.toString(val.decreaseQuantity(1,7)));
+    }
+
+    @Test
+    void delete(){
+        Inventory val = Inventory.getInstance();
+        assertEquals(true, val.delete(1));
+    }
+
+    @Test
+    void addTo(){
+        Inventory val = Inventory.getInstance();
+        Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+        assertEquals(true, val.addToInventory(m));
+    }
+
+    @Test
+    void searchByID(){
+        Inventory val = Inventory.getInstance();
+        Merchandise m = new Merchandise(5, "PILL1", 10, 5.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID,false, null, true);
+        assertEquals(m.toString(), val.searchMerchandiseWithID(5).toString());
+    }
+
+    @Test
+    void modifyPrice(){
+        Inventory val = Inventory.getInstance();
+        assertEquals(true, val.modifyMedicationPrice(5,19.0));
+    }
+}

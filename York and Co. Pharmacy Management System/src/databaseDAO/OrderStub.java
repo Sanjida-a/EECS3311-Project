@@ -28,7 +28,7 @@ public class OrderStub implements OrderRoot {
 		orderList.add(order2);
 		orderList.add(order2);
 	}
-	@Override
+	/*@Override
 	public void saveToOrder(int _patientID, int _medicationId, int _qty, int _refill) throws Exception {
 		// TODO Auto-generated method stub
 		
@@ -106,12 +106,12 @@ public class OrderStub implements OrderRoot {
 			int healthCardNum =patientResult.getInt("healthCardNumber");
 			int dateOfBirth =patientResult.getInt("dateOfBirth");			
 			return new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);	*/	
-		}
+		/*}
 		catch (SQLException e1) {
 			e1.printStackTrace();
 			throw e1;
 		}
-	}
+	}*/
 
 	@Override
 	public Boolean checkPatMed(int _patientID, int _medicationId) throws SQLException {
@@ -121,6 +121,42 @@ public class OrderStub implements OrderRoot {
 
 	@Override
 	public ArrayList<Order> getListOfAllOrders() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveToOrder(int _patientID, int _medicationId, int _qty, int _refill) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addNewPres(int _patientID, int _medicationId, int _numOfRefills) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void refillSave(int _patientID, int _medicationId, int _qty) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int numOfRefill(int _patientID, int _medicationId) throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Merchandise merResult(int _medicationId) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Patient patResult(int _patientID) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

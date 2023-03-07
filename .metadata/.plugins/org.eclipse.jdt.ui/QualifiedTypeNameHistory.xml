@@ -14,7 +14,6 @@
     <fullyQualifiedTypeName name="javax.swing.JDialog"/>
     <fullyQualifiedTypeName name="presentation.DisplayInitialScreen"/>
     <fullyQualifiedTypeName name="middleLayer.ListOfUsers"/>
-    <fullyQualifiedTypeName name="middleLayer.Patient"/>
     <fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
     <fullyQualifiedTypeName name="java.awt.event.FocusListener"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
@@ -25,6 +24,11 @@
     <fullyQualifiedTypeName name="middleLayer.Merchandise"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="javax.swing.JList"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
+    <fullyQualifiedTypeName name="middleLayer.ListOfPatients"/>
+    <fullyQualifiedTypeName name="middleLayer.Patient"/>
+    <fullyQualifiedTypeName name="databaseDAO.MerchandiseStub"/>
+    <fullyQualifiedTypeName name="databaseDAO.MerchandiseRoot"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
