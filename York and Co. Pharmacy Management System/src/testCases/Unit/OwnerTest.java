@@ -1,4 +1,6 @@
+
 package testCases.Unit;
+
 
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +43,7 @@ class OwnerTest {
     	assertEquals(subject1.username, subject2.username);
     	assertEquals(subject1.password, subject2.password);
     }
+
     
     @Test
     void searchPatientByNameTestValidInput1()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
@@ -89,4 +92,5 @@ class OwnerTest {
     
 
     
+
 }

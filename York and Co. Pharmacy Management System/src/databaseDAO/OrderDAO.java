@@ -18,12 +18,15 @@ public class OrderDAO implements OrderRoot{
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
+
 	private String password = "Motp1104#"; //make sure to change password based on your password for MySQL
+
+
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
 //	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	
-	public OrderDAO() throws Exception {//what to put in constructor? don't think weven need to open a connection.
+	public OrderDAO() throws Exception {
 		try {
 			con = DriverManager.getConnection(url, user, password);			
 			con.close();			
@@ -42,7 +45,10 @@ public class OrderDAO implements OrderRoot{
 			Merchandise getMer = merResult(_medicationId);		
 			if(getMer == null) {
 				throw new Exception("Non-existent medication");
-			}			
+			}
+			if (getMer.getQuantity() <= 0 || getMer.getisValid() == false) {
+				throw new Exception("Check inventory!");
+			}
 			double price = getMer.getPrice();			
 			price = price * _qty;
 			boolean _isPres = getMer.getisOTC();
@@ -55,7 +61,7 @@ public class OrderDAO implements OrderRoot{
 			stmt.setDouble(4, price); 
 			stmt.setBoolean(5, _isPres);			
 				stmt.execute(); 
-				if (_isPres == true) {
+				if (_isPres == false) {
 					addNewPres (_patientID, _medicationId, _refill);
 				}
 				con.close();		
@@ -97,6 +103,9 @@ public class OrderDAO implements OrderRoot{
 			Merchandise getMer = merResult(_medicationId);
 			if(getMer == null) {
 				throw new Exception("Non-existent medication!");
+			}
+			if (getMer.getQuantity() <= 0 || getMer.getisValid() == false) {
+				throw new Exception("Check inventory!");
 			}
 			// check number of refills left
 			int refillLeft = numOfRefill(_patientID,_medicationId ) ;
@@ -171,8 +180,9 @@ public class OrderDAO implements OrderRoot{
 			    MERCHANDISE_FORM form = MERCHANDISE_FORM.valueOf(medResult.getString("medForm"));
 			    boolean isOTC = medResult.getBoolean("isOTC");
 			    String description = medResult.getString("medDescription");
+			    boolean isValid = medResult.getBoolean("isValid");
 			
-			return new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description);		
+			return new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);		
 		}
 		catch (SQLException e1) {
 			e1.printStackTrace();
@@ -255,7 +265,9 @@ public class OrderDAO implements OrderRoot{
 		
 		return orderList;
 	}
-//	private Boolean checkOTC (int _medicationId) throws Exception{
+
+	
+	//	private Boolean checkOTC (int _medicationId) throws Exception{
 //		try {		
 //			con = DriverManager.getConnection(url, user, password);
 //			Statement statement = con.createStatement();		

@@ -3,8 +3,7 @@ package middleLayer;
 import java.util.ArrayList;
 
 public class Patient extends User {
-//	private static int IDClassVar = 1; //starting at 1 because 1 (fake) patient already populated in database
-										//deleting static instance, as this will generate wrong number on different computers
+//	private static int IDClassVar = 1; //deleting static instance, as this will generate wrong number on different computers
 	
 //	private int ID;                  // no need ID as healthCardNum is unique, can be used as ID
 	private String firstName;
@@ -118,7 +117,11 @@ public class Patient extends User {
 //		
 //		return searchMedType;
 //	}
-	
-	
+
+	@Override
+	public String toString(){
+		return "First name: " + firstName + ", Last name: " + lastName + ", Address: " + address + ", Phone Number: " + phoneNum + ", Health Card: " + healthCardNum + ", Date of birth: " + dateOfBirth + "\n";
+	}
+
 
 }

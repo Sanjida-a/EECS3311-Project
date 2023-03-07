@@ -12,7 +12,7 @@ public class ListOfOrders {
 	//private ArrayList<User> allUsersList = new ArrayList<User>();
 	private OrderDAO OrderDAO;
 	
-	public ListOfOrders() { //constructor of all singleton classes should be private
+	private ListOfOrders() { //constructor of all singleton classes should be private
 		try {
 			OrderDAO = new OrderDAO();
 			allOrdersList = OrderDAO.getListOfAllOrders();
@@ -22,13 +22,15 @@ public class ListOfOrders {
 		}
 	}
 	
+	// all singleton classes must implement this method
 	public static ListOfOrders getInstance(){
         if (ListOfOrdersInstance == null) {
         	ListOfOrdersInstance = new ListOfOrders();
         }
         return ListOfOrdersInstance;
     }
-
+	
+	// keeps allOrdersList updated by reading from database
 	public void updateOrderListFromDatabase() { // always try to update at the beginning and end of each method
 		try {
 			allOrdersList = OrderDAO.getListOfAllOrders(); 
@@ -36,23 +38,24 @@ public class ListOfOrders {
 			e.printStackTrace();
 		}
 	}
-
+	
+	// getter method
 	public ArrayList<Order> getListofAllOrders() {
-		updateOrderListFromDatabase(); //updates from database first
+		updateOrderListFromDatabase(); //updates from database first before returning
 		return allOrdersList;
 	}
 
 
-	public double calculateRevenue() { //calls calculateSellingPrice() to calculate total revenue
-		ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
-		double total = 0.00;
-		for(int i = 0; i <copyofList.size(); i++){
-			double sellingPrice = copyofList.get(i).calculateSellingPrice();
-			total += copyofList.get(i).quantityBought * sellingPrice ;
-		}
-		return total;
+//	public double calculateRevenue() { //calls calculateSellingPrice() to calculate total revenue
+//		ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
+//		double total = 0.00;
+//		for(int i = 0; i <copyofList.size(); i++){
+//			double sellingPrice = copyofList.get(i).calculateSellingPrice();
+//			total += copyofList.get(i).quantityBought * sellingPrice ;
+//		}
+//		return total;
 		
-	}
+//	}
 
 	// public int calculateProfit(){
 	// 	ArrayList<Order> copyofList2 = new ArrayList<Order>(allOrdersList);

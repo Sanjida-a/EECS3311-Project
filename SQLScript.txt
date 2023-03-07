@@ -145,3 +145,18 @@ VALUES ("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222);
 
 ALTER TABLE Medications 
 ADD priceIn int NOT NULL;
+
+/* Minh changed */
+
+ALTER TABLE Medications
+DROP COLUMN priceIn;
+
+ALTER TABLE Medications 
+ADD isValid boolean NOT NULL;
+
+UPDATE Medications SET isValid = 1 WHERE medicationID = 1;
+UPDATE Medications SET isValid = 1 WHERE medicationID = 2;
+UPDATE Medications SET isValid = 1 WHERE medicationID = 3;
+UPDATE Medications SET isValid = 1 WHERE medicationID = 4;
+UPDATE Medications SET isValid = 1 WHERE medicationID = 5;
+UPDATE Medications SET isValid = 1 WHERE medicationID = 6;

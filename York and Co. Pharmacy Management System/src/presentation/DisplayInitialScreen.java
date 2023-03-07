@@ -458,7 +458,7 @@ public class DisplayInitialScreen{
 					}
 					else {
 						//entry is found but current_quantity < quantity_to_decrease
-						operationResult = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See updated inventory";
+						operationResult = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See inventory";
 					}
 				
 					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {

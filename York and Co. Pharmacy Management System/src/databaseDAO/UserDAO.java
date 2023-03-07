@@ -19,30 +19,9 @@ public class UserDAO implements UserRoot {
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
-	public UserDAO() throws Exception {//what to put in constructor? don't think weven need to open a connection.
+	public UserDAO() throws Exception {
 		try {
-			//removed because added to database; establishing connection below to database instead
-//			User owner = new Owner(1111111111, 11111111);
-//			User pharma1 = new Pharmacist(1234567890,12345678);
-//			User patient = new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222);
-//			allUsernamesAndPasswordsList.add(owner);
-//			allUsernamesAndPasswordsList.add(pharma1);
-//			allUsernamesAndPasswordsList.add(patient);
-
 			con = DriverManager.getConnection(url, user, password);
-			
-			//tested using few lines before to see if get connection to database - works
-//			String query = "select * from AllUsernamesAndPasswords;";
-//			Statement statement = con.createStatement();
-//			ResultSet result = statement.executeQuery(query);
-//			String data = "";
-//			while (result.next()) { 
-//				String _ID = "ID: " + result.getString("usernameID") + "\t";
-//				String _Name = "Name: " + result.getString("passwordID") ;
-//				data += _ID + _Name + "\n";	
-//			}
-//			System.out.println(data);
-			
 			con.close();
 			
 		} catch (Exception e) {
@@ -50,9 +29,10 @@ public class UserDAO implements UserRoot {
 		}
 	}
 	
+	//reads all rows of usernames and passwords from database and puts it into arrayList
 	public ArrayList<User> getListOfUsernamesAndPasswords() throws Exception {
 		try {
-			allUsernamesAndPasswordsList = new ArrayList<User>(); //need to empty current list first so new list overrides
+			allUsernamesAndPasswordsList = new ArrayList<User>(); //need to empty current list first so it gets overriden
 			
 			con = DriverManager.getConnection(url, user, password);
 			
@@ -90,9 +70,10 @@ public class UserDAO implements UserRoot {
 		return allUsernamesAndPasswordsList;
 	}
 	
+	//reads all rows of patients from database and puts it into arrayList
 	public ArrayList<Patient> getListOfAllPatients() throws Exception {
 		try {
-			patientList = new ArrayList<Patient>(); //need to empty current list first so new list overrides
+			patientList = new ArrayList<Patient>(); //need to empty current list first so it gets overriden
 			
 			con = DriverManager.getConnection(url, user, password);
 			
@@ -127,13 +108,11 @@ public class UserDAO implements UserRoot {
 		return patientList;
 	}
 	
-	// update database by adding new patient
+	//add new patient row to database table (invoked whenever a new patient has been added to the system)
 	public void addPatientToDatabase(Patient newPatient) throws Exception {
 		
 		try {
 			con = DriverManager.getConnection(url, user, password);
-			
-			// TO DO FOR AIZA: have to make sure healthcard already doesn't exist bc two patients can't have same healthcard number
 			
 			String queryAddToUserAndPassTable = "INSERT INTO AllUsernamesAndPasswords VALUES ('"+newPatient.username+"','"+newPatient.password+"','"+"Patient"+"');";
 			PreparedStatement statement1 = con.prepareStatement(queryAddToUserAndPassTable);
@@ -145,13 +124,13 @@ public class UserDAO implements UserRoot {
 			
 			con.close();
 		}
-		catch (SQLException e) {
+		catch (SQLException e) { // exception is thrown if a health card number is entered that already exists in the system because HCNum has to be unique for every person
 			throw e;
 		}
 		
 	}
 	
-	// whenever a specific/individual patient from the list of patients is updated (ex. firstname/lastname/phoneNo/address changed), this method makes sure that row of patient in the database is updated accordingly
+	// whenever a specific/individual patient from the list of patients is updated (ex. firstname/lastname/phoneNo/address changed), this method makes sure that that row of patient in the database is updated accordingly
 	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject) {
 		try {
 			con = DriverManager.getConnection(url, user, password);
@@ -162,8 +141,8 @@ public class UserDAO implements UserRoot {
 			statement.setString(1, actualPatientObject.getFirstName());
 			statement.setString(2, actualPatientObject.getLastName());
 			statement.setString(3, actualPatientObject.getAddress());
-			statement.setInt(4, actualPatientObject.getPhoneNum()); //check if works
-			statement.setInt(5, actualPatientObject.getDateOfBirth()); //check if works
+			statement.setInt(4, actualPatientObject.getPhoneNum());
+			statement.setInt(5, actualPatientObject.getDateOfBirth());
 			statement.setInt(6, actualPatientObject.getHealthCardNum());
 			
 			statement.executeUpdate();
