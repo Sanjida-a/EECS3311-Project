@@ -82,14 +82,14 @@ public class Pharmacist extends User {
 		
 		if (typeOfSearch.equals("FirstName")) {
 			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
-				if (p.getFirstName().equals(patientName)) {
+				if (p.getFirstName().equalsIgnoreCase(patientName)) {
 					searchResult.add(p);
 				}
 			}
 		}
 		else if (typeOfSearch.equals("LastName")) {
 			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
-				if (p.getLastName().equals(patientName)) {
+				if (p.getLastName().equalsIgnoreCase(patientName)) {
 					searchResult.add(p);
 				}
 			}
@@ -99,7 +99,7 @@ public class Pharmacist extends User {
 			String firstName = patientName.substring(0, indexOfSpace);
 			String lastName = patientName.substring(indexOfSpace);
 			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
-				if (p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)) {
+				if (p.getFirstName().equalsIgnoreCase(firstName) && p.getLastName().equalsIgnoreCase(lastName)) {
 					searchResult.add(p);
 				}
 			}

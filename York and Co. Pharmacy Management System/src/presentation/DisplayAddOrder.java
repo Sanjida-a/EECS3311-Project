@@ -30,11 +30,11 @@ public class DisplayAddOrder implements ActionListener {
 	private static int medID;
 
 	private static JTextField textFieldRefill;
-	private static JTextField textFieldIsOTC;
+
 
 	private static int qty;
 	private static int refills;
-	private static String isotc;
+
 
 
 	public static void displayAddOrder(JFrame previous) {
@@ -66,16 +66,6 @@ public class DisplayAddOrder implements ActionListener {
 		panelAddOrder.add(textFieldRefill);
 		textFieldRefill.setColumns(10);
 		
-//		JLabel lblIsOTC = new JLabel("isOTC");
-//		lblIsOTC.setFont(new Font("굴림", Font.BOLD, 18));
-//		lblIsOTC.setBounds(0, 200, 100, 35);
-//		panelAddOrder.add(lblIsOTC);
-		
-//		textFieldIsOTC = new JTextField();
-//		textFieldIsOTC.setFont(new Font("굴림", Font.PLAIN, 15));
-//		textFieldIsOTC.setBounds(100, 200, 150, 35);
-//		panelAddOrder.add(textFieldIsOTC);
-//		textFieldIsOTC.setColumns(10);
 
 	}
 	
@@ -153,8 +143,6 @@ public class DisplayAddOrder implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-
-		
 		if(e.getActionCommand().equals("Cancel")) {
 			frame.dispose();
 			superFrame.setEnabled(true);
@@ -171,7 +159,6 @@ public class DisplayAddOrder implements ActionListener {
 				else {
 					refills = Integer.parseInt(textFieldQty.getText());
 				}
-//				isotc = textFieldIsOTC.getText();	
 				
 				Order orderToAdd = new Order();
 				
@@ -180,23 +167,22 @@ public class DisplayAddOrder implements ActionListener {
 				
 					orderToAdd.refillOrderPatient(patientID, medID, qty);
 					orderToAdd.refillAdd();
-			
-					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-					//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
-					//DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", frame);
-					//JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input",  JOptionPane.WARNING_MESSAGE);
+
 				
 				}
 				else if(e.getActionCommand().equals("Add order")) {
 					//call method for adding new order to a patient
 					orderToAdd.addOrderToPatient(patientID, medID, qty, refills);
 					orderToAdd.Save();
+
+
+
 				
 					// TODO Auto-generated catch block
 //					e1.printStackTrace();
 					//System.out.println("no patient or med found");    // DANIEL PLS HANDLE THIS
 					//DisplayErrorPopup.displayErrorPopup("No medicine or Patient Found", frame);
+
 				}
 			}
 			catch (Exception ex) {
@@ -206,18 +192,7 @@ public class DisplayAddOrder implements ActionListener {
 		}
 	}	
 	
-//	private static boolean validateInput(JTextField textFieldPatientID, JTextField textFieldMercID) {
-//		try {
-//			patientID = Integer.parseInt(textFieldPatientID.getText());
-//			medID = Integer.parseInt(textFieldMercID.getText());
-//			
-//			return true;
-//		}
-//		catch(Exception e) {
-//			System.out.println("no patient or med found");           // daniel please output warning for this
-//			return false;
-//		}
-//	}
+
 
 
 	//public static void main(String[] args) {		//for test purpose

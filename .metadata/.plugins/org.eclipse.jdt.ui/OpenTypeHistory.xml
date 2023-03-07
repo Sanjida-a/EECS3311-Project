@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
     <typeInfo handle="=York and Co. Pharmacy Management System/C:\/Users\/jewbe\/.p2\/pool\/plugins\/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.4.v20220805-1047\/jre\/lib\/jrt-fs.jar`java.desktop=/javadoc_location=/https:\/\/docs.oracle.com\/en\/java\/javase\/17\/docs\/api\/=/=/module=/true=/&lt;java.awt.event(ActionListener.class[ActionListener" modifiers="1537" timestamp="1659711030000"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;databaseDAO{MerchandiseRoot.java[MerchandiseRoot" modifiers="513" timestamp="1678161481474"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;databaseDAO{OrderRoot.java[OrderRoot" modifiers="513" timestamp="1678160563004"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;databaseDAO{UserRoot.java[UserRoot" modifiers="513" timestamp="1678157101403"/>
 </typeInfoHistroy>

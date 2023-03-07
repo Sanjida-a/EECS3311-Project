@@ -89,7 +89,7 @@ public class Patient extends User {
 	public void setOrdersMade(ArrayList<Order> ordersMade) {
 		this.ordersMade = ordersMade;
 	}
-
+	
 	// implementation of inherited abstract method from User superclass but notice that in this case only concerned with OTC medicine
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
 //		

@@ -5,13 +5,14 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import databaseDAO.UserDAO;
+import databaseDAO.UserRoot;
 
 public class ListOfPatients {
 	
 	private static ListOfPatients ListOfUsersInstance = null;
 	private ArrayList<Patient> allPatientsList;
 	//private ArrayList<User> allUsersList = new ArrayList<User>();
-	private UserDAO _userDAO;
+	private UserRoot _userDAO;
 	
 	private ListOfPatients() { //constructor of all singleton classes should be private
 		try {
@@ -30,6 +31,15 @@ public class ListOfPatients {
         }
         return ListOfUsersInstance;
     }
+	public void set_userDAO(UserRoot dao) {
+		this._userDAO = dao;
+		try {
+			allPatientsList = this._userDAO.getListOfAllPatients();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	// update instance variable by reading from database
 	public void updatePatientListFromDatabase() { // always try to update at the beginning and end of each method
@@ -55,9 +65,11 @@ public class ListOfPatients {
 	    			foundPWithID = allPatientsList.get(i);
 	    		}
 	    	}
+
 	    	
 	    	return foundPWithID; //if patient with such ID not found, return false
 	}
+
 	
 	// modifies the details of the medication
 	// OCP Followed (all in 1 method instead of 4 methods)
