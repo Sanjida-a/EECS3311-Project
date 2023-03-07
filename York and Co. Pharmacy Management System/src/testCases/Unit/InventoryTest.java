@@ -1,3 +1,5 @@
+package Unit;
+
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import org.junit.platform.commons.annotation.Testable;
@@ -100,14 +102,14 @@ class InventoryTest {
     @Test
     void addTo(){
         Inventory val = Inventory.getInstance();
-        Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null);
+        Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         assertEquals(true, val.addToInventory(m));
     }
 
     @Test
     void searchByID(){
         Inventory val = Inventory.getInstance();
-        Merchandise m = new Merchandise(5, "PILL1", 10, 5.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID,false, null);
+        Merchandise m = new Merchandise(5, "PILL1", 10, 5.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID,false, null, true);
         assertEquals(m.toString(), val.searchMerchandiseWithID(5).toString());
     }
 
