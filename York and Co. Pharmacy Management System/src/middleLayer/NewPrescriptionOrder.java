@@ -29,11 +29,3 @@ public class NewPrescriptionOrder extends Order{
 		// pharm just has to ender orderID and quantityBOught
 	}
 }
-
-//
-//Aiza Bajwa, Pill1, bought 1, refillstotal: 10
-//refills remaining = 9
-
-//Aiza Bajwa, Pill1, bought 1, numrefillsremaining = 8
-
-// _____________   ___________ __________

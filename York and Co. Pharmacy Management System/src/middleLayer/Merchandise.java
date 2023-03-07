@@ -1,8 +1,7 @@
 package middleLayer;
 
 public class Merchandise{
-//	static int medicationIDClassVar = 6; //was 0, but changed to account for the 6 pre-built medication in database
-										//Cant use stat. does not work correctly with database.
+//	static int medicationIDClassVar = 6; //Cant use static variable because does not work correctly with database.
 	int medicationID;
     String name;
     int quantity;
@@ -11,6 +10,7 @@ public class Merchandise{
     MERCHANDISE_FORM form;
     boolean isOTC;
     String description;
+    boolean isValid; // added due to column added in database that depicts whether a medication has been deleted or not
 
     // constructor without description and ID? do we need constructor with same as this but with description or no are we not allowing admins to add description first only add later?
     public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC){
@@ -23,11 +23,12 @@ public class Merchandise{
         this.type = type;
         this.form = form;
         this.isOTC = isOTC;
+        this.isValid = true; // automatic??
     }
     
-    // constructor for when reading from database? since have to read medication ID?
-    // how to set medicationIDclassvar accordingly or don't need to?
-    public Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC, String description){
+    // constructor for when reading from database (ID is being read and isValid is being read --> need those as parameters)
+    public Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, 
+    		            MERCHANDISE_FORM form, boolean isOTC, String description, boolean isValid){
     	this.medicationID = medicationID;
         this.name = name;
         this.quantity = quantity;
@@ -36,6 +37,7 @@ public class Merchandise{
         this.form = form;
         this.isOTC = isOTC;
         this.description = description;
+        this.isValid = isValid;
     }
     
     public Merchandise(Merchandise m){
@@ -47,6 +49,7 @@ public class Merchandise{
         this.form = m.form;
         this.isOTC = m.isOTC;
         this.description = m.description;
+        this.isValid = m.isValid;
     }
 
     // below methods are all getters/setters for class variables
@@ -96,6 +99,10 @@ public class Merchandise{
 
     public boolean getisOTC(){
         return isOTC;
+    }
+    
+    public boolean getisValid(){
+        return isValid;
     }
 
     public void setForm(boolean isOTC){

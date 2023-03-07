@@ -1,5 +1,6 @@
 package middleLayer;
 
+import databaseDAO.MerchandiseDAO;
 import databaseDAO.OrderDAO;
 
 public class Order {
@@ -7,6 +8,7 @@ public class Order {
 	
 	private Inventory merList = Inventory.getInstance();
 	private OrderDAO _orderDao;
+	private MerchandiseDAO _merDao;
 	
 	int orderNum;
 
@@ -38,11 +40,14 @@ public class Order {
 		 quantityBought = _qty;		
 		 numOfRefills = _numOfRefills;	 
 		 _orderDao = new OrderDAO();
+		 _merDao = new MerchandiseDAO();
 	}
 	
 	public void Save() throws Exception {
 		
 		_orderDao.saveToOrder(patientID, medicationID, quantityBought , numOfRefills);
+		_merDao.updateQuantPurchase(medicationID, quantityBought);
+		
 	}
 	
 	public void refillOrderPatient(int _patientID, int _medicationId, int _qty) throws Exception {
@@ -50,10 +55,12 @@ public class Order {
 		 patientID = _patientID;
 		 quantityBought = _qty;				 
 		 _orderDao = new OrderDAO();
+		 _merDao = new MerchandiseDAO();
 	} 
 	
 	public void refillAdd() throws Exception {
 		_orderDao.refillSave(patientID, medicationID, quantityBought);
+		_merDao.updateQuantPurchase(medicationID, quantityBought);
 	}
 	
 	public Boolean checkEnoughQuantity(Merchandise m, int quantityWantToBuy) {
@@ -79,5 +86,24 @@ public class Order {
 	public String seeSummaryOfSales() {
 		return "";
 	}
+
+	public int getQuantityBought() {
+		return quantityBought;
+	}
+
+	public double getPriceAtPurchase() {
+		return priceAtPurchase;
+	}
+
+	public int getOrderNum() {
+		return orderNum;
+	}
+
+	public int getMedicationID() {
+		return medicationID;
+	}
+
+
+	
 }
 

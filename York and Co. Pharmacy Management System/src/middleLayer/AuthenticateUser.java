@@ -19,6 +19,7 @@ public class AuthenticateUser {
 		}
 	}
 	
+	// singleton classes must have this method
 	public static AuthenticateUser getInstance() {
 		if (instance == null) {
 			instance = new AuthenticateUser();
@@ -26,10 +27,11 @@ public class AuthenticateUser {
 		return instance;
 	}
 	
+	// using the list of usernames and passwords retrieved from database, check to see if a login attempt was successful or not
 	public USER checkUserValid(int username, int password) {
 		ArrayList<User> _users;
 		try {
-			_users = _userDAO.getListOfUsernamesAndPasswords(); //always makes sure variable is updated before checking
+			_users = _userDAO.getListOfUsernamesAndPasswords(); // always makes sure variable is updated before checking
 
 			for (int i = 0; i < _users.size(); i++) {
 				if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
@@ -38,30 +40,10 @@ public class AuthenticateUser {
 			}
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return null;
 	}
-	
-//	public boolean checkPatientValid(int ID) {
-//		ArrayList<Patient> patient;
-//		try {
-//			patient = _userDAO.getListOfPatient();
-//
-//			for (int i = 0; i < patient.size(); i++) {
-//				if (patient.get(i).getID() == ID)  {
-//					return true;
-//				}
-//			}
-//			
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return false;
-//	}
 	
 }

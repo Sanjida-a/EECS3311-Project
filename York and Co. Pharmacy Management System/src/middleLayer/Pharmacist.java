@@ -45,6 +45,7 @@ public class Pharmacist extends User {
 		}
 	}
 	
+	// two below methods have the implementation of the below two methods to decrease repeated code
 	// implementation of inherited abstract method from User superclass
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
 //		
@@ -73,6 +74,8 @@ public class Pharmacist extends User {
 //		return searchMedTypePhar;
 //	}
 //	
+	// OCP followed to allow search by any type of name (first, last, or both) in 1 method
+	// searches and returns list of patients in system that have same entered name
 	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) {
 		
 		ArrayList<Patient> searchResult = new ArrayList <Patient> ();

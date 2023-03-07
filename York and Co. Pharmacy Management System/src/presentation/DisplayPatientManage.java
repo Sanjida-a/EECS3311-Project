@@ -48,9 +48,9 @@ public class DisplayPatientManage {
 	private static JComboBox<String> comboBox;
 	//private static JTextField textFieldAccount;
 	//private static JTextField textFieldPassword;\
+	private static JLabel lblNotice;
 	private static JTextArea textAreaOutput;
 	private static ListOfPatients listOfPatientsInstance = ListOfPatients.getInstance();	
-	private static JTextField textFieldPatientID;
 
 	
 	public static void displayPatientManage(JFrame previous) {
@@ -93,7 +93,7 @@ public class DisplayPatientManage {
 		
 		textFieldSearchKeyword = new JTextField();
 		textFieldSearchKeyword.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textFieldSearchKeyword.setBounds(0, 0, 528, 35);
+		textFieldSearchKeyword.setBounds(0, 0, 396, 35);
 		panelPatientList.add(textFieldSearchKeyword);
 		textFieldSearchKeyword.setColumns(10);
 		
@@ -102,7 +102,7 @@ public class DisplayPatientManage {
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setFont(new Font("굴림", Font.BOLD, 18));
-		btnSearch.setBounds(650, -1, 130, 35);
+		btnSearch.setBounds(508, 0, 130, 35);
 		btnSearch.addActionListener(new ActionListener() {
 
 			@Override
@@ -111,7 +111,7 @@ public class DisplayPatientManage {
 				//call method for patient search
 				try {	//Exception is thrown when insufficient number of arguments is passed to Patient constructor. if all argument is fed, 
 					//addPatient is bound to success
-
+					lblNotice.setText("");
 					String _textFieldSearchKeyword = textFieldSearchKeyword.getText().toUpperCase();
 					if (_textFieldSearchKeyword.isEmpty()) {
 						throw new Exception(); // ensures something is entered 
@@ -143,10 +143,33 @@ public class DisplayPatientManage {
 		
 		comboBox = new JComboBox<String>();
 		comboBox.setFont(new Font("굴림", Font.BOLD, 12));
-		comboBox.setBounds(528, 0, 110, 35);
+		comboBox.setBounds(397, 0, 110, 35);
 		comboBox.setBorder(new LineBorder(new Color(0, 0, 0)));
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"FirstName", "LastName", "FullName"}));
 		panelPatientList.add(comboBox);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setFont(new Font("굴림", Font.BOLD, 18));
+		btnRefresh.setBounds(650, 0, 130, 35);
+		btnRefresh.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+				lblNotice.setText("Patient is added successfully");
+			}
+			
+		});
+		panelPatientList.add(btnRefresh);
+		
+		lblNotice = new JLabel("");
+		lblNotice.setBounds(0, 45, 507, 45);
+		panelPatientList.add(lblNotice);
+		lblNotice.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNotice.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNotice.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		lblNotice.setForeground(new Color(255, 0, 0));
 
 		
 
@@ -164,71 +187,64 @@ public class DisplayPatientManage {
 		JLabel lblFName = new JLabel("First name");
 		lblFName.setForeground(new Color(0, 0, 0));
 		lblFName.setFont(new Font("굴림", Font.BOLD, 15));
-		lblFName.setBounds(0, 120, 110, 35);
+		lblFName.setBounds(0, 295, 110, 35);
 		panelInputFields.add(lblFName);
 		
 		textFieldFName = new JTextField();
-		textFieldFName.setBounds(110, 120, 260, 35);
+		textFieldFName.setBounds(110, 295, 260, 35);
 		panelInputFields.add(textFieldFName);
 		textFieldFName.setColumns(10);
 		
 		JLabel lblLName = new JLabel("Last name");
 		lblLName.setForeground(new Color(0, 0, 0));
 		lblLName.setFont(new Font("굴림", Font.BOLD, 15));
-		lblLName.setBounds(0, 165, 110, 35);
+		lblLName.setBounds(0, 343, 110, 35);
 		panelInputFields.add(lblLName);
 		
 		textFieldLName = new JTextField();
-		textFieldLName.setBounds(110, 165, 260, 35);
+		textFieldLName.setBounds(110, 343, 260, 35);
 		panelInputFields.add(textFieldLName);
 		textFieldLName.setColumns(10);
 		
-		JLabel lblNotice = new JLabel("");
-		lblNotice.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNotice.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNotice.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
-		lblNotice.setForeground(new Color(255, 0, 0));
-		lblNotice.setBounds(0, 85, 370, 25);
-		panelInputFields.add(lblNotice);
-		
 		JLabel lblHCNumber = new JLabel("Healthcard#");
 		lblHCNumber.setFont(new Font("굴림", Font.BOLD, 15));
-		lblHCNumber.setForeground(new Color(0, 0, 0));
-		lblHCNumber.setBounds(0, 210, 110, 35);
+		lblHCNumber.setForeground(new Color(255, 0, 0));
+		lblHCNumber.setBounds(0, 91, 110, 35);
 		panelInputFields.add(lblHCNumber);
 		
 		textFieldHCNumber = new JTextField();
-		textFieldHCNumber.setBounds(110, 210, 260, 35);
+		textFieldHCNumber.setBounds(110, 91, 260, 35);
 		panelInputFields.add(textFieldHCNumber);
 		textFieldHCNumber.setColumns(10);
 		
 		JLabel lblPhoneNumber = new JLabel("Phone#");
 		lblPhoneNumber.setFont(new Font("굴림", Font.BOLD, 15));
-		lblPhoneNumber.setBounds(0, 255, 110, 35);
+		lblPhoneNumber.setBounds(0, 390, 110, 35);
 		panelInputFields.add(lblPhoneNumber);
 		
 		textFieldPhoneNumber = new JTextField();
-		textFieldPhoneNumber.setBounds(110, 255, 260, 35);
+		textFieldPhoneNumber.setBounds(110, 390, 260, 35);
 		panelInputFields.add(textFieldPhoneNumber);
 		textFieldPhoneNumber.setColumns(10);
 		
 		JLabel lblAddress = new JLabel("Address");
 		lblAddress.setFont(new Font("굴림", Font.BOLD, 15));
-		lblAddress.setBounds(0, 300, 110, 35);
+		lblAddress.setBounds(0, 435, 110, 35);
 		panelInputFields.add(lblAddress);
 		
 		textFieldAddress = new JTextField();
-		textFieldAddress.setBounds(110, 300, 260, 35);
+		textFieldAddress.setBounds(110, 435, 260, 35);
 		panelInputFields.add(textFieldAddress);
 		textFieldAddress.setColumns(10);
 		
 		JLabel lblDOB = new JLabel("Date of Birth");
+		lblDOB.setForeground(new Color(0, 0, 0));
 		lblDOB.setFont(new Font("굴림", Font.BOLD, 15));
-		lblDOB.setBounds(0, 345, 110, 35);
+		lblDOB.setBounds(0, 136, 110, 35);
 		panelInputFields.add(lblDOB);
 		
 		textFieldDOB = new JTextField();
-		textFieldDOB.setBounds(110, 345, 260, 35);
+		textFieldDOB.setBounds(110, 136, 260, 35);
 		panelInputFields.add(textFieldDOB);
 		textFieldDOB.setColumns(10);
 		
@@ -279,7 +295,7 @@ public class DisplayPatientManage {
 					Pharmacist p1 = new Pharmacist(1,1);
 					p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
 					displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
-					
+					lblNotice.setText("Patient is added successfully");
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
 				}
@@ -298,43 +314,6 @@ public class DisplayPatientManage {
 		});
 		panelInputFields.add(btnAdd);
 		
-		textFieldPatientID = new JTextField();
-		textFieldPatientID.setFont(new Font("굴림", Font.ITALIC, 15));
-		textFieldPatientID.setForeground(new Color(128, 128, 128));
-		textFieldPatientID.setText("Patient ID");
-
-		textFieldPatientID.setBounds(0, 0, 245, 35);
-		textFieldPatientID.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				textFieldPatientID.setFont(new Font("굴림", Font.PLAIN, 15));
-				textFieldPatientID.setText("");
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				textFieldPatientID.setFont(new Font("굴림", Font.ITALIC, 15));
-				textFieldPatientID.setForeground(new Color(128, 128, 128));
-				textFieldPatientID.setText("Patient ID");
-			}
-			
-		});
-		panelInputFields.add(textFieldPatientID);
-		textFieldPatientID.setColumns(10);
-		
-		JButton btnFind = new JButton("Find");
-		btnFind.setFont(new Font("굴림", Font.BOLD, 15));
-		btnFind.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//invoke method for search by ID
-			}
-		});
-		btnFind.setBounds(245, 0, 125, 35);
-		panelInputFields.add(btnFind);
-		
 		JButton btnModify = new JButton("Modify");
 		btnModify.setFont(new Font("굴림", Font.BOLD, 18));
 		btnModify.setBounds(0, 480, 170, 35);
@@ -344,10 +323,37 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//invoke method for modify
+				try {
+					int _textFieldPatientID = Integer.parseInt(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
+					Boolean result;
+					result = listOfPatientsInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
+					
+					if (result == false) {
+						// popup that says patient doesn't exist
+						//System.out.println("patient doesn't exist. try again");
+						JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					
+					displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList() );
+					lblNotice.setText("Patient is modified successfully");
+					
+				}
+				catch (Exception e1) {
+					// add popup saying need at least 2 things: HCNum and one of fName, lName, PhoneNum, Add
+					//System.out.println("not enough param");
+					JOptionPane.showMessageDialog(frame,"Healthcard# and one of fName, lName, PhoneNum are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				
 			}
 			
 		});
 		panelInputFields.add(btnModify);
+		
+		JLabel lblNewLabel = new JLabel("The fields below are modifiable");
+		lblNewLabel.setForeground(new Color(128, 128, 128));
+		lblNewLabel.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 18));
+		lblNewLabel.setBounds(0, 250, 370, 35);
+		panelInputFields.add(lblNewLabel);
 		
 
 	}
@@ -355,7 +361,7 @@ public class DisplayPatientManage {
 		textAreaOutput = new JTextArea();
 		textAreaOutput.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		textAreaOutput.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		textAreaOutput.setBounds(0, 75, 780, 450);
+		textAreaOutput.setBounds(0, 100, 780, 415);
 		displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList() );
 		panel.add(textAreaOutput);
 	}
@@ -368,7 +374,7 @@ public class DisplayPatientManage {
 			
 			for(Patient p : pList) {
 				
-				result += String.format("| %-20s ", p.getFirstName() + ", " + p.getLastName());
+				result += String.format("| %-20s ", p.getFirstName() + " " + p.getLastName());
 				result += String.format("| %-20s ", p.getAddress());
 				result += String.format("| %-10s ", p.getPhoneNum());
 				result += String.format("| %-10s ", p.getHealthCardNum());
@@ -383,7 +389,7 @@ public class DisplayPatientManage {
 	}
 	
 	
-	//public static void main(String[] args) {	//for test purpose
-		//DisplayPatientManage.displayPatientManage(new JFrame());
-	//}
+	/*public static void main(String[] args) {	//for test purpose
+		DisplayPatientManage.displayPatientManage(new JFrame());
+	}*/
 }

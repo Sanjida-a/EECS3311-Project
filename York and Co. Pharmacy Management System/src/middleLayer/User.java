@@ -31,6 +31,7 @@ public abstract class User {
 //	// abstract method to be implemented by Owner, Pharmacist and Patient (not implemented here because implementation for patient is different)
 //	public abstract ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type);
 	
+	// two below methods are the reimplementation of the above two methods that have been commented out to decrease repeated code
 	// all users implement these same two methods as their parameters have been modified so that the list of medications they have access to can be sent accordingly
 	public  ArrayList<Merchandise> searchMedicineByName (String name, USER user) {
 		
