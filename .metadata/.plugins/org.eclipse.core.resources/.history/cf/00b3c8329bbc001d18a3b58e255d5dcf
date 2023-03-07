@@ -17,7 +17,7 @@ import middleLayer.Pharmacist;
 import middleLayer.User;
 
 
-public class MerchandiseDAO implements MerchandiseRoot {
+public class MerchandiseDAO extends DAOConnection implements MerchandiseRoot {
 	
 	private Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";

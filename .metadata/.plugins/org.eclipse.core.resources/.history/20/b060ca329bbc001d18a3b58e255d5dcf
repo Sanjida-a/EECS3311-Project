@@ -13,7 +13,7 @@ import middleLayer.Patient;
 import middleLayer.Pharmacist;
 import middleLayer.User;
 
-public class OrderDAO implements OrderRoot{
+public class OrderDAO extends DAOConnection implements OrderRoot{
 	
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
