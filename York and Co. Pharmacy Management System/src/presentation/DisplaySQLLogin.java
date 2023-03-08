@@ -10,6 +10,9 @@ import java.awt.Font;
 import javax.swing.JPasswordField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+
+import databaseDAO.superDAO;
+
 import javax.swing.JButton;
 
 public class DisplaySQLLogin implements ActionListener {
@@ -76,7 +79,13 @@ public class DisplaySQLLogin implements ActionListener {
 			}
 			else {
 				//invoke method for password validation
+				String _passwordField = new String(passwordField.getPassword());
+//						password = Integer.parseInt(new String(inputPassword.getPassword()));
+				if (_passwordField.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 				
+				
+//				superDAO superDBObject = new superDAO(_passwordField);
+				superDAO.setPassword(_passwordField);
 				
 				//executed after validation succeed
 				DisplayInitialScreen.displayInitialScreen(USER.GUEST);
