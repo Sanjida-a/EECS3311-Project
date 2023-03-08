@@ -17,16 +17,14 @@ public class Inventory{
     private MerchandiseRoot _merDAO; // Dependency Injection Principle
 	
 	private Inventory() {  //constructor of all singleton classes should be private
+		
 		try {
-			try {
-				_merDAO = new MerchandiseDAO();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			_merDAO = new MerchandiseDAO();
 			list = _merDAO.getListOfMerchandise();
-		} catch (Exception e) {
-	
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -44,12 +42,13 @@ public class Inventory{
 
 	// can also be called "displayAllMedication" (can be another name for it)
     public ArrayList<Merchandise> getMerchandise(){
+    	list =_merDAO.getListOfMerchandise();
     	return list;
     }
     
     // can also be called "displayOnlyOTCMedication" for guest/home/main screen where only OTC medication information should be displayed for easy access...
     public ArrayList<Merchandise> getOnlyOTCMerchandise(){ //... for users like patients who only have access to OTCs
-    	
+    	list =_merDAO.getListOfMerchandise();
     	ArrayList<Merchandise> allOTCOnlyMedication = new ArrayList<Merchandise>();
     	
         for (int i = 0; i < list.size(); i ++){

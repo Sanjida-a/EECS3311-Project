@@ -13,10 +13,10 @@ public class MerchandiseStub implements MerchandiseRoot {
 	public ArrayList<Merchandise> allInventoryStub = new ArrayList<Merchandise>();
 	
 	public MerchandiseStub() {
-		Merchandise merc1 = new Merchandise(1, "pill1", 10, 5.99, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
-		Merchandise merc2 = new Merchandise(2, "pill2", 9, 6.99, MERCHANDISE_TYPE.COUGH, MERCHANDISE_FORM.TABLET, true, "description for piil2", true);
-		Merchandise merc3 = new Merchandise(3, "pill3", 8, 7.99, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, false, "description for pill3", true);
-		Merchandise merc4 = new Merchandise(4, "pill4", 7, 8.99, MERCHANDISE_TYPE.SINUS, MERCHANDISE_FORM.LIQUID, false, null, true);
+		Merchandise merc1 = new Merchandise(1, "pill1", 10, 2.00, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
+		Merchandise merc2 = new Merchandise(2, "pill2", 9, 3.00, MERCHANDISE_TYPE.COUGH, MERCHANDISE_FORM.TABLET, true, "description for piil2", true);
+		Merchandise merc3 = new Merchandise(3, "pill3", 8, 4.00, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, false, "description for pill3", true);
+		Merchandise merc4 = new Merchandise(4, "pill4", 7, 5.00, MERCHANDISE_TYPE.SINUS, MERCHANDISE_FORM.LIQUID, false, null, true);
 		allInventoryStub.add(merc1);
 		allInventoryStub.add(merc2);
 		allInventoryStub.add(merc3);
