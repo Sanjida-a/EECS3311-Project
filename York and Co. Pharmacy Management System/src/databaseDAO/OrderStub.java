@@ -14,151 +14,220 @@ import java.util.ArrayList;
 import middleLayer.Merchandise;
 import middleLayer.Order;
 import middleLayer.Patient;
+import middleLayer.Prescription;
 
 public class OrderStub implements OrderRoot {
 	public ArrayList<Order> orderList; 
-	
+	public ArrayList<Prescription> prescriptionList;
+//    public ArrayList<> presList;
+    MerchandiseStub _merStub = new MerchandiseStub();
+    UserStub _userStub = new UserStub();
+	ArrayList<Patient> patients ;
+    ArrayList<Merchandise> medications;
+    //where can i get the fake patient id?
+
+    
+
 	public OrderStub() {
-		Order order1 = new Order(1, 1, 1, 10, 10.99);
-		Order order2 = new Order(2, 2, 2, 11, 9.99);
-		Order order3 = new Order(3, 3, 3, 12, 8.99);
-		Order order4 = new Order(4, 4, 4, 13, 7.99);
+		medications = _merStub.getListOfMerchandise();
+		patients = _userStub.getListOfAllPatients();
+		
+		//daniel if problems with using userStub just hard code this patient below into patients list
+//		Patient patient = new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222);
+//		int orderNum;
+//		int medicationID;
+//		int patientID;
+//		int quantityBought;
+//		double totalPriceOfOrder;
+//		boolean isPrescription;
+//		
+		Order order1 = new Order(1, 1, 1111122222, 5, 10.00, false);   //does it match med and patient?
+		Order order2 = new Order(2, 2, 1111122222, 5, 15.00, false);
+		Order order3 = new Order(3, 3, 1111122222, 5, 20.00, true);
+		Order order4 = new Order(4, 4, 1111122222, 5, 25.00, true);
 		orderList.add(order1);
 		orderList.add(order2);
 		orderList.add(order3);
 		orderList.add(order4);
-	}
-	/*@Override
-	public void saveToOrder(int _patientID, int _medicationId, int _qty, int _refill) throws Exception {
-		// TODO Auto-generated method stub
 		
-		Patient getPat = patResult ( _patientID);		
-		if(getPat == null) {
-			throw new Exception("Non-existent patient");
-		}
-		Merchandise getMer = merResult(_medicationId);		
-		if(getMer == null) {
-			throw new Exception("Non-existent medication");
-		}			
-		double price = getMer.getPrice();			
-		price = price * _qty;
-		boolean _isPres = getMer.getisOTC();
-		String preparedStatement = " insert into Orders ( medicationID , patientID , quantityBought , priceAtPurchase, isPrescription )"
-				+ " values ( ?, ?, ?, ?, ?)";
-		PreparedStatement stmt = con.prepareStatement(preparedStatement);
-		stmt.setInt(1, _medicationId);
-		stmt.setInt(2, _patientID);
-		stmt.setInt(3, _qty);
-		stmt.setDouble(4, price); 
-		stmt.setBoolean(5, _isPres);			
-			stmt.execute(); 
-			if (_isPres == true) {
-				addNewPres (_patientID, _medicationId, _refill);
-			}
-			con.close();		
-	} catch (SQLException e1) {
-		e1.printStackTrace();
-		throw e1;
-	}		
-	}
-
-	@Override
-	public void addNewPres(int _patientID, int _medicationId, int _numOfRefills) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void refillSave(int _patientID, int _medicationId, int _qty) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int numOfRefill(int _patientID, int _medicationId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Merchandise merResult(int _medicationId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Patient patResult(int _patientID) throws SQLException {
-		// TODO Auto-generated method stub
-		ArrayList<Patient> patients = new ArrayList<Patient>();
-		Patient patient = new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222);
-		try {		
-			/*con = DriverManager.getConnection(url, user, password);
-			Statement statement = con.createStatement();
-			String queryPatientStatement = "SELECT * FROM Patient where healthCardNumber = " + _patientID; 
-			ResultSet patientResult = statement.executeQuery(queryPatientStatement);		
-			if(!patientResult.next()) {
-				return null;
-			}	
-			String firstName = patientResult.getString("firstName");
-			String lastName = patientResult.getString("lastName");
-			String address = patientResult.getString("Address");
-			int phoneNum =patientResult.getInt("phoneNumber");
-			int healthCardNum =patientResult.getInt("healthCardNumber");
-			int dateOfBirth =patientResult.getInt("dateOfBirth");			
-			return new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);	*/	
-		/*}
-		catch (SQLException e1) {
-			e1.printStackTrace();
-			throw e1;
-		}
-	}*/
-
-	@Override
-	public Boolean checkPatMed(int _patientID, int _medicationId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+		Prescription pres1 = new Prescription(1, 3, 1111122222, 10);
+		Prescription pres2 = new Prescription(1, 4, 1111122222, 20);
+		prescriptionList.add(pres1);
+		prescriptionList.add(pres2);
+    }
+	
 	@Override
 	public ArrayList<Order> getListOfAllOrders() throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return orderList;
 	}
-
 	@Override
-	public void saveToOrder(int _patientID, int _medicationId, int _qty, int _refill) throws Exception {
+	public void addToOrderTable(Order o) throws Exception {
 		// TODO Auto-generated method stub
+		orderList.add(o);
+	}
+	@Override
+	public void addToPrescriptionTable(Prescription p) throws Exception {
+		// TODO Auto-generated method stub
+		prescriptionList.add(p);
+	}
+	@Override
+	public void addRefillToOrderTable(Order o) throws Exception {
+		// TODO Auto-generated method stub
+		orderList.add(o);
+	}
+	
+	@Override
+	public int numOfRefill(int _patientID, int _medicationId)  {
+		// TODO Auto-generated method stub
+		int sumQuantityBought = 0;
+		for (Order o: orderList) {
+			if ((o.getMedicationID() == _medicationId) && (o.getPatientID() == _patientID)) {
+				sumQuantityBought += o.getQuantityBought();
+			}
+		}
+		
+		int numOfOriginalRefills = 0;
+		for (Prescription p: prescriptionList) {
+			if ((p.getMedicationID() == _medicationId) && (p.getPatientID() == _patientID)) {
+				numOfOriginalRefills += p.getOriginalNumOfRefills();
+			}
+		}
+		
+		int refillsLeft = numOfOriginalRefills - sumQuantityBought;
+		return refillsLeft;
+
+	}
+	
+	@Override
+	public Boolean checkIfExistsInPrescriptionTable(int _patientID, int _medicationId) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		Boolean existsInPrescriptionList = false;
+		for (Prescription p: prescriptionList) {
+			if ((p.getMedicationID() == _medicationId) && (p.getPatientID() == _patientID)) {
+				existsInPrescriptionList = true;
+				break;
+			}
+		}
+		
+		return existsInPrescriptionList;
 		
 	}
 
-	@Override
-	public void addNewPres(int _patientID, int _medicationId, int _numOfRefills) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void saveToOrder(int _patientID, int _medicationId, int _qty, int _refill) throws Exception {
+//		// TODO Auto-generated method stub
+//		
+//		Patient getPat = patResult ( _patientID);		
+//		if(getPat == null) {
+//			throw new Exception("Non-existent patient");
+//		}
+//		Merchandise getMer = merResult(_medicationId);		
+//		if(getMer == null) {
+//			throw new Exception("Non-existent medication");
+//		}			
+//		
+//		double price = getMer.getPrice();			
+//		price = price * _qty;
+//		boolean _isPres = !getMer.getisOTC(); // had to negate result of method because before it was logically invalid
+//        
+//		int maxOrderNum = 0;
+//        for (Order e : getListOfAllOrders()){
+//        	maxOrderNum = Math.max(maxOrderNum, e.getOrderNum());
+//        }
+//        maxOrderNum += 1;
+//		Order newOrder = new Order(maxOrderNum, _medicationId, _patientID, _qty, price);
+//        if (_isPres == true){ // had to change false to true because before it was logically invalid
+//            addNewPres(_patientID,_medicationId,_refill);
+//        }
+//        
+//        orderList.add(newOrder);
+//	}
 
-	@Override
-	public void refillSave(int _patientID, int _medicationId, int _qty) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void addNewPres(int _patientID, int _medicationId, int _numOfRefills) throws Exception {
+//		// TODO Auto-generated method stub
+//        //NEED TO ADD TO PRESCRIPTION TABLE
+////		try {
+////			con = DriverManager.getConnection(url, user, password);		
+////			String preparedStatement = " insert into Prescriptions ( medicationID , patientID , numOfRefills )"
+////					+ " values ( ?, ?, ?)";
+////			PreparedStatement stmt = con.prepareStatement(preparedStatement);
+////			stmt.setInt(1, _medicationId);
+////			stmt.setInt(2, _patientID);
+////			stmt.setInt(3, _numOfRefills);
+////				stmt.execute(); // execute the preparedstatement
+////				con.close();		
+////		}	
+////		catch (SQLException e1) {
+////			e1.printStackTrace();
+////			throw e1;
+////		}
+////		
+////        presList.add()
+//
+//	}
 
-	@Override
-	public int numOfRefill(int _patientID, int _medicationId) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+//	@Override
+//	public void refillSave(int _patientID, int _medicationId, int _qty) throws Exception {
+//		// TODO Auto-generated method stub
+//        if (!checkPatMed(_patientID, _medicationId)) {
+//			throw new Exception ("No record found!");
+//		}
+//		Patient getPat = patResult ( _patientID);	
+//		if(getPat == null) {
+//			throw new Exception("Non-existent patient!");
+//		}
+//		Merchandise getMer = merResult(_medicationId);
+//		if(getMer == null) {
+//			throw new Exception("Non-existent medication!");
+//		}
+//		// check number of refills left
+//		int refillLeft = numOfRefill(_patientID,_medicationId ) ;
+//		if (refillLeft <= 0) {
+//			throw new Exception("No more refill left!");
+//		}
+//		double price = getMer.getPrice();
+//		
+//
+//	}
+    //ALMOST DONE BUTTTTT WE HAVE PROB WITH PRESCRIPTION TABLE. CAN WE CREATE ANOTHER CLASS EXTENDS ORDERSTUB
+    //BUT THEN WE NEED CONSTRUCTOR FOR ORDER IN THAT 
 
-	@Override
-	public Merchandise merResult(int _medicationId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	@Override
-	public Patient patResult(int _patientID) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Merchandise merResult(int _medicationId) {
+//		// TODO Auto-generated method stub
+//        for (Merchandise m : medications){
+//            if (_medicationId == m.getMedicationID()){
+//                return m;
+//            }
+//        }
+//		return null;
+//	}
 
+//	@Override
+//	public Patient patResult(int _patientID) {
+//		// TODO Auto-generated method stub
+//        for (Patient p : patients){
+//            if (_patientID == p.getID()){
+//                return p;
+//            }
+//        }	
+//
+//        return null; // patient with that ID not found in system
+//       
+//	}
+
+//	@Override
+//	public Boolean checkPatMed(int _patientID, int _medicationId) {
+//		// TODO Auto-generated method stub
+//        boolean isRecord = false;
+//
+//		return null;
+//	}
+
+	
 }

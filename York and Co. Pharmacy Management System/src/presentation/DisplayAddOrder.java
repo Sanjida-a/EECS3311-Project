@@ -11,7 +11,11 @@ import java.awt.Font;
 import javax.swing.JTextField;
 
 import middleLayer.AuthenticateUser;
+import middleLayer.Inventory;
+import middleLayer.ListOfOrders;
+import middleLayer.Merchandise;
 import middleLayer.Order;
+import middleLayer.Prescription;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -24,17 +28,9 @@ public class DisplayAddOrder implements ActionListener {
 	private static JTextField textFieldPatientID;
 	private static JTextField textFieldMercID;
 	private static JTextField textFieldQty;
-//	private static JTextField textFieldRefill;
-	
-    private static int patientID;
-	private static int medID;
-
 	private static JTextField textFieldRefill;
-
-
-	private static int qty;
-	private static int refills;
-
+	private static Inventory inv = Inventory.getInstance();
+	private static ListOfOrders listOfOrders = ListOfOrders.getInstance();
 
 
 	public static void displayAddOrder(JFrame previous) {
@@ -80,12 +76,12 @@ public class DisplayAddOrder implements ActionListener {
 		lblMercID.setBounds(0, 45, 150, 35);
 		panel.add(lblMercID);
 		
-		JLabel lblQty = new JLabel("Qty");
+		JLabel lblQty = new JLabel("Qty Bought");
 		lblQty.setFont(new Font("굴림", Font.BOLD, 18));
 		lblQty.setBounds(0, 130, 100, 35);
 		panel.add(lblQty);
 		
-		JLabel lblRefill = new JLabel("Refill");
+		JLabel lblRefill = new JLabel("Prescribed Refills");
 		lblRefill.setFont(new Font("굴림", Font.BOLD, 18));
 		lblRefill.setBounds(300, 130, 100, 35);
 		panel.add(lblRefill);
@@ -98,13 +94,13 @@ public class DisplayAddOrder implements ActionListener {
 		btnCancel.addActionListener(new DisplayAddOrder());
 		panel.add(btnCancel);
 		
-		JButton btnAdjustRefill = new JButton("Give refill");
+		JButton btnAdjustRefill = new JButton("Give refill for a prescription");
 		btnAdjustRefill.setFont(new Font("굴림", Font.BOLD, 18));
 		btnAdjustRefill.setBounds(300, 308, 125, 35);
 		btnAdjustRefill.addActionListener(new DisplayAddOrder());
 		panel.add(btnAdjustRefill);
 		
-		JButton btnAddOrder = new JButton("Add order");
+		JButton btnAddOrder = new JButton("Add order/prescription");
 		btnAddOrder.setFont(new Font("굴림", Font.BOLD, 18));
 		btnAddOrder.setBounds(163, 309, 125, 35);
 		btnAddOrder.addActionListener(new DisplayAddOrder());
@@ -149,31 +145,52 @@ public class DisplayAddOrder implements ActionListener {
 			superFrame.toFront();
 		}
 		else {
+
 			try {
+				int patientID, medID, qty, refills;
+				
 				patientID = Integer.parseInt(textFieldPatientID.getText());
 				medID = Integer.parseInt(textFieldMercID.getText());
 				qty = Integer.parseInt(textFieldQty.getText()) ;
-				if(textFieldQty.getText().isEmpty()) {
-					refills = 0;
-				}
-				else {
-					refills = Integer.parseInt(textFieldQty.getText());
-				}
 				
-				Order orderToAdd = new Order();
+//				if(textFieldRefill.getText().isEmpty()) {
+//					refills = 0;
+//					System.out.println("IN HERE: refills = " + refills);
+//				}
+//				else {
+//					refills = Integer.parseInt(textFieldRefill.getText());
+//				}
+//				
+				Order newOrder = new Order(medID, patientID, qty);
 				
-				if(e.getActionCommand().equals("Give refill")) {
+				if(e.getActionCommand().equals("Give refill for a prescription")) { // refill of an existing prescription
 					//call method for giving a patient refill order
-				
-					orderToAdd.refillOrderPatient(patientID, medID, qty);
-					orderToAdd.refillAdd();
+					listOfOrders.addRefillToDatabase(newOrder);
+//					orderToAdd.refillOrderPatient(patientID, medID, qty);
+//					orderToAdd.refillAdd();
 
 				
 				}
-				else if(e.getActionCommand().equals("Add order")) {
+				else if(e.getActionCommand().equals("Add order/prescription")) { // for OTC order and new prescription
+					refills = Integer.parseInt(textFieldRefill.getText());
 					//call method for adding new order to a patient
-					orderToAdd.addOrderToPatient(patientID, medID, qty, refills);
-					orderToAdd.Save();
+					Prescription potentialPrescription = new Prescription(medID, patientID, refills);
+					
+					listOfOrders.addOrderToDatabase(newOrder, potentialPrescription);
+//					Order newOrder = new Order(medID, patientID, qty);
+//					Prescription newPres;
+//					Merchandise m = inv.searchMerchandiseWithID(medID);
+					
+//					if (m.getisOTC() == true) {
+////						newOrder = ;
+//					}
+//					else {
+////						newOrder = new Order(medID, patientID, qty);
+//						newPres = new Prescription(medID, patientID, refills);
+//					}
+//					
+//					orderToAdd.addOrderToPatient(patientID, medID, qty, refills);
+//					orderToAdd.Save();
 
 
 
@@ -185,9 +202,12 @@ public class DisplayAddOrder implements ActionListener {
 
 				}
 			}
+			catch (NumberFormatException nFEx) {
+				JOptionPane.showMessageDialog(frame, "One or more fields are blank. Please fill it.", "Warning",  JOptionPane.WARNING_MESSAGE);
+			}
 			catch (Exception ex) {
 //				JOptionPane.showMessageDialog(frame, "PatientID, MedID, and Qty must be provided", "Invalid input",  JOptionPane.WARNING_MESSAGE);
-				JOptionPane.showMessageDialog(frame, ex.getMessage(), "Invalid input",  JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(frame, ex.getMessage(), "Warning",  JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}	

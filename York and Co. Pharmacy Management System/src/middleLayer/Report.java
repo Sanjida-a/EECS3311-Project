@@ -3,15 +3,22 @@ package middleLayer;
 import java.util.ArrayList;
 
 public class Report {
-
-	private ArrayList<Order> orderList = new ArrayList<>();
+	
+	private ListOfOrders listOfOrders;
+	private ArrayList<Order> allOrders = new ArrayList<>();
+	
+	public Report() {
+		listOfOrders = ListOfOrders.getInstance();
+		allOrders = listOfOrders.getListofAllOrders();
+	}
 	
 	public double calculateRevenue () throws Exception {
 		double revenue = 0.0;		
-		ListOfOrders orders = ListOfOrders.getInstance();
-		orderList = orders.getListofAllOrders();
-		for ( Order e : orderList) {
-			revenue = revenue + e.getPriceAtPurchase();
+		
+		allOrders = listOfOrders.getListofAllOrders();
+		
+		for ( Order e : allOrders) {
+			revenue = revenue + e.getTotalPriceOfOrder();
 		}
 		return revenue;
 		
@@ -25,17 +32,20 @@ public class Report {
 	}
 	
 	 public String seeSummaryOfSales() {
-		ListOfOrders orders = ListOfOrders.getInstance();
-		orderList = orders.getListofAllOrders();
+		
+		allOrders = listOfOrders.getListofAllOrders();
+		
 	 	String output = "";
-	 	for (Order e : orderList){
+	 	for (Order e : allOrders){
 
              output = String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %f\n", 
-            		 e.getOrderNum(),e.getMedicationID(),e.getQuantityBought(),  e.getPriceAtPurchase() );
+            		 e.getOrderNum(),e.getMedicationID(),e.getQuantityBought(),  e.getTotalPriceOfOrder() );
 	 }
 	 	return output;
 	 }
 	
+
+	 
 	
 
 }
