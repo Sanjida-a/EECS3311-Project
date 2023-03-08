@@ -13,7 +13,7 @@ import middleLayer.MERCHANDISE_TYPE;
 import middleLayer.Merchandise;
 import middleLayer.Owner;
 import presentation.USER;
-//done
+
 class OwnerUnitTest {
 
 	@Test

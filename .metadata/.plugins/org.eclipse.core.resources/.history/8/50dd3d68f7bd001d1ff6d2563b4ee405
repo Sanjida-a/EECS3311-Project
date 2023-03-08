@@ -16,7 +16,7 @@ import middleLayer.MERCHANDISE_FORM;
 import middleLayer.MERCHANDISE_TYPE;
 import middleLayer.Merchandise;
 
-//done
+
 public class InventoryUnitTest {
 	@Test
     void getInstanceTest() {
