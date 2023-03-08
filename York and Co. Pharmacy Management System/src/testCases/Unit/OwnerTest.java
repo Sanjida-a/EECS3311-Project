@@ -17,6 +17,18 @@ class OwnerTest {
     void setOwnerUser() {
     }
 
+    @Test
+    void searchName(){
+        Owner o = new Owner(1111111111, 11111111);
+       assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("Smith", "FirstName").toString());
+    }
+
+    @Test
+    void searchNameFalse(){ //false
+        Owner o = new Owner(1111111111, 11111111);
+        assertEquals("[]", o.searchPatientByName("John", "FirstName").toString());
+    }
+
 //    @Test
 //    void searchOTCMedicineByName() {
 //        Owner val = new Owner(1111111111, 11111111);

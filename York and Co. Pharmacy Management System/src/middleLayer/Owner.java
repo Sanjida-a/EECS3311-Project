@@ -61,7 +61,7 @@ public class Owner extends User {
 		if (typeOfSearch.equals("FirstName")) {
 
 			for (Patient p : listOfPatientsByOwner.getAllPatientsList()) {
-				if (p.getFirstName().toUpperCase().equals(patientName)) {
+				if (p.getFirstName().equalsIgnoreCase(patientName)) { //changed from to uppercase to ignore case (compare SMITH with Smith doesn't work)
 					searchResult.add(p);
 				}
 			}
@@ -84,7 +84,6 @@ public class Owner extends User {
 				}
 			}
 		}
-
 		return searchResult;
 	}
 	
