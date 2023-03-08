@@ -4,4 +4,14 @@
     <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;databaseDAO{MerchandiseRoot.java[MerchandiseRoot" modifiers="513" timestamp="1678161481474"/>
     <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;databaseDAO{OrderRoot.java[OrderRoot" modifiers="513" timestamp="1678160563004"/>
     <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;databaseDAO{UserRoot.java[UserRoot" modifiers="513" timestamp="1678157101403"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{User.java[User" modifiers="1025" timestamp="1678161081724"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{Owner.java[Owner" modifiers="1" timestamp="1678161081720"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{Patient.java[Patient" modifiers="1" timestamp="1678161081721"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{AuthenticateUser.java[AuthenticateUser" modifiers="1" timestamp="1678225189169"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{ListOfOrders.java[ListOfOrders" modifiers="1" timestamp="1678219183383"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{ListOfPatients.java[ListOfPatients" modifiers="1" timestamp="1678219183335"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{Merchandise.java[Merchandise" modifiers="1" timestamp="1678161415478"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{Order.java[Order" modifiers="1" timestamp="1678225189163"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{OTCOrder.java[OTCOrder" modifiers="1" timestamp="1678161081719"/>
+    <typeInfo handle="=York and Co. Pharmacy Management System/src&lt;middleLayer{Pharmacist.java[Pharmacist" modifiers="1" timestamp="1678225188838"/>
 </typeInfoHistroy>

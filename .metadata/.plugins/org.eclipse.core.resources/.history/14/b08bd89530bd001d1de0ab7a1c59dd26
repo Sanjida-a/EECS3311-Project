@@ -1,16 +1,14 @@
 package middleLayer;
 
 import databaseDAO.MerchandiseDAO;
-import databaseDAO.MerchandiseRoot;
 import databaseDAO.OrderDAO;
-import databaseDAO.OrderRoot;
 
 public class Order {
 	static int orderNumberClassVar = 0; // keeps track of numbering all orders
 	
 	private Inventory merList = Inventory.getInstance();
-	private OrderRoot _orderDao;
-	private MerchandiseRoot _merDao;
+	private OrderDAO _orderDao;
+	private MerchandiseDAO _merDao;
 	
 	int orderNum;
 
@@ -103,14 +101,6 @@ public class Order {
 
 	public int getMedicationID() {
 		return medicationID;
-	}
-	
-	public void set_orderDAO(OrderRoot dao) {
-		this._orderDao = dao;
-	}
-	
-	public void set_merDAO(MerchandiseRoot dao) {
-		this._merDao = dao;
 	}
 
 

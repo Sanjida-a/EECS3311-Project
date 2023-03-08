@@ -78,7 +78,7 @@ class OwnerUnitTest {
 
 	@Test
 	void testSearchMedicineByType() {
-		//fail("Not yet implemented");
+		fail("Not yet implemented");
 		Owner subject1 = new Owner(0,0);
 		Inventory inv = Inventory.getInstance();
 		inv.set_merDAO(new MerchandiseStub());

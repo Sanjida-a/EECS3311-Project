@@ -49,7 +49,18 @@ public class InventoryUnitTest {
 
     @Test
     void displayAlphabeticallyTest(){
-  
+    	/*	Merchandise-
+    	 * 	int medicationID;
+    	    String name;
+    	    int quantity;
+    	    double price;
+    	    MERCHANDISE_TYPE type;
+    	    MERCHANDISE_FORM form;
+    	    boolean isOTC;
+    	    String description;
+    	    private boolean isValid;
+    	 * 
+    	 */
     	Inventory inv = Inventory.getInstance();
     	ArrayList<Merchandise> subject1 = new ArrayList<Merchandise>();
     	ArrayList<Merchandise> comparator1 = new ArrayList<Merchandise>();
@@ -136,7 +147,12 @@ public class InventoryUnitTest {
 
     @Test
     void decreaseQuantityTest1(){ //need condition
-
+    	/* Q = current qty, q = qty decreased by
+    	 * {false, false, false} - Q < q, decrease fail
+    	 * {true, true, false} - Q >= q, decrease successfull, result >= 3
+    	 * {true, true ,true} - Q >= q decreases successfull, result < 3
+    	 * {false, true, false} - medication not found or invalid qty decreased by, decrease fail
+    	 */
         Inventory val = Inventory.getInstance();
         MerchandiseStub mStub = new MerchandiseStub();
         val.set_merDAO(mStub);
