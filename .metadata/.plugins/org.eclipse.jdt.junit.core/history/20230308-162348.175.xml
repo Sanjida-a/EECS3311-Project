@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="OwnerUnitTest" project="York and Co. Pharmacy Management System" tests="6" started="6" failures="0" errors="0" ignored="0">
+  <testsuite name="testCases.Unit.OwnerUnitTest" time="0.528" displayname="OwnerUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]">
+    <testcase name="testSetOwnerUser" classname="testCases.Unit.OwnerUnitTest" time="0.45" displayname="testSetOwnerUser()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSetOwnerUser()]"/>
+    <testcase name="testOwner" classname="testCases.Unit.OwnerUnitTest" time="0.001" displayname="testOwner()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testOwner()]"/>
+    <testcase name="testSearchPatientByName" classname="testCases.Unit.OwnerUnitTest" time="0.07" displayname="testSearchPatientByName()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSearchPatientByName()]"/>
+    <testcase name="testGetOwnerUser" classname="testCases.Unit.OwnerUnitTest" time="0.003" displayname="testGetOwnerUser()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testGetOwnerUser()]"/>
+    <testcase name="testSearchMedicineByName" classname="testCases.Unit.OwnerUnitTest" time="0.003" displayname="testSearchMedicineByName()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSearchMedicineByName()]"/>
+    <testcase name="testSearchMedicineByType" classname="testCases.Unit.OwnerUnitTest" time="0.0" displayname="testSearchMedicineByType()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSearchMedicineByType()]"/>
+  </testsuite>
+</testrun>

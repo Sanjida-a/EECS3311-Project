@@ -13,7 +13,7 @@ import middleLayer.MERCHANDISE_TYPE;
 import middleLayer.Merchandise;
 import middleLayer.Owner;
 import presentation.USER;
-//done
+
 class OwnerUnitTest {
 
 	@Test
@@ -37,8 +37,7 @@ class OwnerUnitTest {
 		Owner subject1 = new Owner(0,0);
 		Owner subject2 = new Owner(1,1);
 		subject1.setOwnerUser(subject2);
-		assertEquals(subject1.username, subject2.username);
-		assertEquals(subject1.password, subject2.password);
+		assertEquals(subject1, subject2);
 	}
 
 	

@@ -25,7 +25,7 @@ class AuthenticateUserUnitTest {
 		//input account info for OWNER
 		result = auth.checkUserValid(0, 0);
 		assertEquals(result, USER.OWNER);
-		//input account info for PHARMACIST
+		//input account infor for PHARMACIST
 		result = auth.checkUserValid(0, 0);
 		assertEquals(result, USER.PHARMACIST);
 	}
