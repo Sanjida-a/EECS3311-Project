@@ -1,0 +1,32 @@
+package testCases.Unit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import databaseDAO.UserStub;
+import middleLayer.ListOfPatients;
+
+class PharmacistUnitTest {
+
+	@Test
+	void testAddPatient() {
+		//fail("Not yet implemented");
+		/* the dependency to UserDAO for AddPatient() is fixed
+		 * unit test cannot be done unless the design changes.
+		 */
+		ListOfPatients patients = ListOfPatients.getInstance();
+		UserStub stub = new UserStub();
+		patients.set_userDAO(stub);
+	}
+
+	@Test
+	void testSearchPatientByName() {
+		/*the implementation of the method SearchPatientByName() for this class
+		 * is exactly identical to the one of the same method in Owner class
+		 * no need to test twice 
+		 */
+		//fail("Not yet implemented");
+	}
+
+}

@@ -8,8 +8,6 @@ import middleLayer.User;
 public class UserStub implements UserRoot {
 	public ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	public ArrayList<Patient> patientList = new ArrayList<Patient>();
-	
-	
 	@Override
 	public ArrayList<User> getListOfUsernamesAndPasswords() throws Exception {
 		// TODO Auto-generated method stub

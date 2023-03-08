@@ -25,8 +25,8 @@ public class OrderStub implements OrderRoot {
 		Order order4 = new Order(4, 4, 4, 13, 7.99);
 		orderList.add(order1);
 		orderList.add(order2);
-		orderList.add(order3);
-		orderList.add(order4);
+		orderList.add(order2);
+		orderList.add(order2);
 	}
 	/*@Override
 	public void saveToOrder(int _patientID, int _medicationId, int _qty, int _refill) throws Exception {

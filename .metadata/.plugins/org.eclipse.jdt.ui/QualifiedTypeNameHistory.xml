@@ -2,14 +2,12 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="javax.swing.GroupLayout.SequentialGroup"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
-    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
     <fullyQualifiedTypeName name="javax.swing.JButton"/>
     <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
     <fullyQualifiedTypeName name="java.awt.event.KeyListener"/>
-    <fullyQualifiedTypeName name="presentation.USER"/>
     <fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
     <fullyQualifiedTypeName name="javax.swing.JDialog"/>
     <fullyQualifiedTypeName name="presentation.DisplayInitialScreen"/>
@@ -21,14 +19,27 @@
     <fullyQualifiedTypeName name="javax.swing.JTextArea"/>
     <fullyQualifiedTypeName name="java.awt.Dimension"/>
     <fullyQualifiedTypeName name="javax.swing.JFrame"/>
-    <fullyQualifiedTypeName name="middleLayer.Merchandise"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="javax.swing.JList"/>
     <fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
-    <fullyQualifiedTypeName name="middleLayer.ListOfPatients"/>
-    <fullyQualifiedTypeName name="middleLayer.Patient"/>
+    <fullyQualifiedTypeName name="middleLayer.User"/>
+    <fullyQualifiedTypeName name="middleLayer.Owner"/>
+    <fullyQualifiedTypeName name="middleLayer.Inventory"/>
     <fullyQualifiedTypeName name="databaseDAO.MerchandiseStub"/>
+    <fullyQualifiedTypeName name="middleLayer.Merchandise"/>
+    <fullyQualifiedTypeName name="middleLayer.MERCHANDISE_TYPE"/>
+    <fullyQualifiedTypeName name="presentation.USER"/>
+    <fullyQualifiedTypeName name="middleLayer.ListOfOrders"/>
+    <fullyQualifiedTypeName name="middleLayer.Order"/>
+    <fullyQualifiedTypeName name="javax.swing.JTextField"/>
+    <fullyQualifiedTypeName name="middleLayer.ListOfPatients"/>
+    <fullyQualifiedTypeName name="databaseDAO.OrderRoot"/>
     <fullyQualifiedTypeName name="databaseDAO.MerchandiseRoot"/>
+    <fullyQualifiedTypeName name="databaseDAO.UserRoot"/>
+    <fullyQualifiedTypeName name="middleLayer.AuthenticateUser"/>
+    <fullyQualifiedTypeName name="databaseDAO.UserStub"/>
+    <fullyQualifiedTypeName name="middleLayer.Pharmacist"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="middleLayer.Patient"/>
 </qualifiedTypeNameHistroy>

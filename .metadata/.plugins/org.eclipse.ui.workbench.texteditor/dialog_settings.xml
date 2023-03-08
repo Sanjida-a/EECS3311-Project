@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Owner"/>
+		<item key="selection" value="orderList"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="orderList"/>
 			<item value="Owner"/>
 			<item value="displayMercList"/>
 			<item value="System.out"/>
@@ -22,9 +23,9 @@
 			<item value="rdbtnOTC"/>
 			<item value="groupRadio"/>
 			<item value="panelVisibleToAdmin"/>
-			<item value="dialogPopup"/>
 		</list>
 		<list key="replacehistory">
+			<item value="expected"/>
 			<item value="Pharmacist"/>
 			<item value="panelVisibleToAdmin1"/>
 			<item value="frmPopup"/>
