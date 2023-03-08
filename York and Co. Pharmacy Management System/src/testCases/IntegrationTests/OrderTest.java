@@ -1,4 +1,4 @@
-package testCases.Unit;
+package testCases.IntegrationTests;
 
 import org.junit.jupiter.api.Test;
 

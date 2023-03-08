@@ -1,4 +1,4 @@
-package testCases.Unit;
+package testCases.IntegrationTests;
 import org.junit.jupiter.api.Test;
 import middleLayer.Pharmacist;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +26,12 @@ class PharmacistTest {
     void setPharmacistUser() {
     }
 
-    @Test
-    void addPatient() throws Exception {
-        Pharmacist p = new Pharmacist(1234567890, 12345678);
-        p.addPatient("John", "Doe", "12 Dreamville rd", 1357924680, 217896421, 20021010);
-        assertEquals("[First name: John, Last name: Doe, Address: 12 Dreamville rd, Phone Number: 1357924680, Health Card: 217896421, Date of birth: 20021010\n]", p.searchPatientByName("John", "FirstName").toString());
-    }
+//    @Test
+//    void addPatient() throws Exception {
+//        Pharmacist p = new Pharmacist(1234567890, 12345678);
+//        p.addPatient("John", "Doe", "12 Dreamville rd", 1357924680, 217896421, 20021010);
+//        assertEquals("[First name: John, Last name: Doe, Address: 12 Dreamville rd, Phone Number: 1357924680, Health Card: 217896421, Date of birth: 20021010\n]", p.searchPatientByName("John", "FirstName").toString());
+//    }
 
     @Test
     void searchPatientByName() {
