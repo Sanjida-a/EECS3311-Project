@@ -10,7 +10,7 @@ public class Merchandise{
     MERCHANDISE_FORM form;
     boolean isOTC;
     String description;
-    boolean isValid; // added due to column added in database that depicts whether a medication has been deleted or not
+    private boolean isValid; // added due to column added in database that depicts whether a medication has been deleted or not
 
     // constructor without description and ID? do we need constructor with same as this but with description or no are we not allowing admins to add description first only add later?
     public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC){
@@ -23,7 +23,7 @@ public class Merchandise{
         this.type = type;
         this.form = form;
         this.isOTC = isOTC;
-        this.isValid = true; // automatic??
+        this.setIsValid(true); // automatic??
     }
     
     // constructor for when reading from database (ID is being read and isValid is being read --> need those as parameters)
@@ -37,7 +37,7 @@ public class Merchandise{
         this.form = form;
         this.isOTC = isOTC;
         this.description = description;
-        this.isValid = isValid;
+        this.setIsValid(isValid);
     }
     
     public Merchandise(Merchandise m){
@@ -49,7 +49,7 @@ public class Merchandise{
         this.form = m.form;
         this.isOTC = m.isOTC;
         this.description = m.description;
-        this.isValid = m.isValid;
+        this.setIsValid(m.isValid());
     }
 
     // below methods are all getters/setters for class variables
@@ -102,7 +102,7 @@ public class Merchandise{
     }
     
     public boolean getisValid(){
-        return isValid;
+        return isValid();
     }
 
     public void setForm(boolean isOTC){
@@ -122,5 +122,13 @@ public class Merchandise{
     public String toString(){
         return "ID: " + medicationID + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + ", Description: " + description + "\n";
     }
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public void setIsValid(boolean isValid) {
+		this.isValid = isValid;
+	}
 
 }

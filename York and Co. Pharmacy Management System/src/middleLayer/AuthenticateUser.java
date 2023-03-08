@@ -3,11 +3,13 @@ package middleLayer;
 import java.util.ArrayList;
 
 import databaseDAO.UserDAO;
+import databaseDAO.UserRoot;
+import databaseDAO.UserStub;
 import presentation.USER;
 
 public class AuthenticateUser {
 	
-	private UserDAO _userDAO;
+	private UserRoot _userDAO;
 	private static AuthenticateUser instance = null;
 	
 	private AuthenticateUser() { //constructor of all singleton classes should be private
@@ -44,6 +46,10 @@ public class AuthenticateUser {
 		}
 
 		return null;
+	}
+	
+	public void set_userDAO(UserRoot dao) {
+		this._userDAO = dao;
 	}
 	
 }

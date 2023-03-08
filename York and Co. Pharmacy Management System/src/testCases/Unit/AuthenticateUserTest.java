@@ -1,4 +1,7 @@
-package Unit;
+
+package testCases.Unit;
+
+
 import org.junit.jupiter.api.Test;
 import middleLayer.AuthenticateUser;
 import presentation.USER;

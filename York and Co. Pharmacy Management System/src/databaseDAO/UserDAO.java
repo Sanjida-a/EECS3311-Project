@@ -9,7 +9,7 @@ import middleLayer.Patient;
 import middleLayer.Pharmacist;
 import middleLayer.User;
 
-public class UserDAO {
+public class UserDAO implements UserRoot {
 	
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";

@@ -1,0 +1,24 @@
+package testCases.Unit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class ListOfPatientsUnitTest {
+
+	@Test
+	void testUpdatePatientListFromDatabase() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSearchPatientWithID() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testModifyPatientDetails() {
+		fail("Not yet implemented");
+	}
+
+}

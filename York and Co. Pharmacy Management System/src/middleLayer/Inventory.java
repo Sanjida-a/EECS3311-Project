@@ -6,26 +6,25 @@ import java.util.Arrays;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import databaseDAO.MerchandiseDAO;
+import databaseDAO.*;
 
 public class Inventory{
     private static Inventory singletonInstance = null;
 
     ArrayList<Merchandise> list = new ArrayList<Merchandise>();
  
-	private MerchandiseDAO _merDAO;
+	//private MerchandiseDAO _merDAO;
+    private MerchandiseRoot _merDAO; // Dependency Injection Principle
 	
 	private Inventory() {  //constructor of all singleton classes should be private
+		
 		try {
-			try {
-				_merDAO = new MerchandiseDAO();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			_merDAO = new MerchandiseDAO();
 			list = _merDAO.getListOfMerchandise();
-		} catch (Exception e) {
-	
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -35,15 +34,21 @@ public class Inventory{
             singletonInstance = new Inventory();
         return singletonInstance;
     }
-    
-    // can also be called "displayAllMedication" (can be another name for it)
+
+	public void set_merDAO(MerchandiseRoot _merDAO) {
+		this._merDAO = _merDAO;
+		list =_merDAO.getListOfMerchandise();
+	}
+
+	// can also be called "displayAllMedication" (can be another name for it)
     public ArrayList<Merchandise> getMerchandise(){
+    	list =_merDAO.getListOfMerchandise();
     	return list;
     }
     
     // can also be called "displayOnlyOTCMedication" for guest/home/main screen where only OTC medication information should be displayed for easy access...
     public ArrayList<Merchandise> getOnlyOTCMerchandise(){ //... for users like patients who only have access to OTCs
-    	
+    	list =_merDAO.getListOfMerchandise();
     	ArrayList<Merchandise> allOTCOnlyMedication = new ArrayList<Merchandise>();
     	
         for (int i = 0; i < list.size(); i ++){
@@ -173,7 +178,8 @@ public class Inventory{
     	boolean itemLowInStock = false;
     	
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
-    	if (specificMedication == null) { // if medID does not exist in inventory, can't do anything
+    	
+    	if (specificMedication == null || decreasedQuantity < 0) { // if medID does not exist in inventory, can't do anything
     		// no change because want initial boolean values as above
     	}
     	
@@ -215,7 +221,7 @@ public class Inventory{
     	}
     	
 //    	list.remove(specificMedication);
-    	specificMedication.isValid = false;
+    	specificMedication.setIsValid(false);
     	medicationRemoved = true; // remove successful
     	
     	// modify database accordingly
@@ -255,7 +261,7 @@ public class Inventory{
     // finds and returns a medication with medID == medicationID
     public Merchandise searchMerchandiseWithID(int medicationID){
     	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
-    	
+    	this.updateFromDatabase();
     	for (int i = 0; i < list.size(); i ++){
     		if (list.get(i).medicationID == medicationID){
     			foundMWithID = list.get(i);
