@@ -3,96 +3,130 @@ package middleLayer;
 import databaseDAO.MerchandiseDAO;
 import databaseDAO.OrderDAO;
 
-public class Order {
-	static int orderNumberClassVar = 0; // keeps track of numbering all orders
-	
+public class Order { //ALL ORDER: both OTC and Prescription
 	private Inventory merList = Inventory.getInstance();
-	private OrderDAO _orderDao;
-	private MerchandiseDAO _merDao;
+	private ListOfPatients patList = ListOfPatients.getInstance();
+//	private OrderDAO _orderDao;
+	//private MerchandiseDAO _merDao;
 	
 	int orderNum;
-
 	int medicationID;
 	int patientID;
 	int quantityBought;
-	// String isPres;
-	int numOfRefills;
-	double priceAtPurchase;
+	double totalPriceOfOrder;
+	boolean isPrescription;
 
-	public Order(){
-		super();
+	// constructor for front end
+	public Order(int medicationID, int patientID, int quantityBought) throws Exception{
+		
+		this.medicationID = medicationID;
+		this.patientID = patientID;
+		
+		if (quantityBought < 0) {
+			throw new Exception("Quantity Bought Must Be Non-Negative!");
+		}
+		this.quantityBought = quantityBought;
+		
+		Merchandise mFound = merList.searchMerchandiseWithID(medicationID);
+		if (mFound == null) {
+			throw new Exception("Medication doesn't exist!");
+		}
+		
+		Patient pFound = patList.searchPatientWithID(patientID);
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
+		
+		this.totalPriceOfOrder = mFound.getPrice()*quantityBought;
+		this.isPrescription = !mFound.isOTC;
 	}
 
-	public Order(int orderNum,int medicationID, int patientID, int quantityBought, double priceAtPurchase ){
+	// constructor for reading from database
+	public Order(int orderNum,int medicationID, int patientID, int quantityBought, double totalPriceOfOrder, boolean isPrescription){
 		this.orderNum = orderNum;
 		this.medicationID = medicationID;
 		this.patientID = patientID;
 		this.quantityBought = quantityBought;
-		this.priceAtPurchase = priceAtPurchase;
+		this.totalPriceOfOrder = totalPriceOfOrder;
+		this.isPrescription = isPrescription;
+	}
+	
+	public Order(Order o){
+	 	this.orderNum = o.orderNum;
+		this.medicationID = o.medicationID;
+		this.patientID = o.patientID;
+		this.quantityBought = o.quantityBought;
+		this.totalPriceOfOrder = o.totalPriceOfOrder;
+		this.isPrescription = o.isPrescription;
+ 	}
+
+//	public OrderDAO get_orderDao() {
+//		return _orderDao;
+//	}
+//
+//	public void set_orderDao(OrderDAO _orderDao) {
+//		this._orderDao = _orderDao;
+//	}
+
+//	public MerchandiseDAO get_merDao() {
+//		return _merDao;
+//	}
+//
+//	public void set_merDao(MerchandiseDAO _merDao) {
+//		this._merDao = _merDao;
+//	}
+
+	public int getPatientID() {
+		return patientID;
 	}
 
-	public void addOrderToPatient(int _patientID, int _medicationId, int _qty , int _numOfRefills) throws Exception {
-		// add to correct patient once we implement patient list 
-		// first search patient list w same patientId
-		// then add this order to that patient's instance var of orders
-		 medicationID = _medicationId;
-		 patientID = _patientID;
-		 quantityBought = _qty;		
-		 numOfRefills = _numOfRefills;	 
-		 _orderDao = new OrderDAO();
-		 _merDao = new MerchandiseDAO();
-	}
-	
-	public void Save() throws Exception {
-		
-		_orderDao.saveToOrder(patientID, medicationID, quantityBought , numOfRefills);
-		_merDao.updateQuantPurchase(medicationID, quantityBought);
-		
-	}
-	
-	public void refillOrderPatient(int _patientID, int _medicationId, int _qty) throws Exception {
-		 medicationID = _medicationId;
-		 patientID = _patientID;
-		 quantityBought = _qty;				 
-		 _orderDao = new OrderDAO();
-		 _merDao = new MerchandiseDAO();
-	} 
-	
-	public void refillAdd() throws Exception {
-		_orderDao.refillSave(patientID, medicationID, quantityBought);
-		_merDao.updateQuantPurchase(medicationID, quantityBought);
-	}
-	
-	public Boolean checkEnoughQuantity(Merchandise m, int quantityWantToBuy) {
-		int quantityInInventory = m.quantity;
-		
-		if (quantityWantToBuy > quantityInInventory) {
-			return false;
-		}
-		
-		return true;
-		
-	}
-	public double calculateSellingPrice(){ // calculates selling price including HST and assigns it to priceAtPurchase
-		Inventory inv = Inventory.getInstance();
-		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
-		priceAtPurchase = m.price * 1.13;
-		return priceAtPurchase;
+	public void setPatientID(int patientID) {
+		this.patientID = patientID;
 	}
 
-	public int calculateRevenue() {
-		return 0;
-	}
-	public String seeSummaryOfSales() {
-		return "";
+	public boolean getIsPrescription() {
+		return isPrescription;
 	}
 
+	public void setIsPrescription(boolean isPrescription) {
+		this.isPrescription = isPrescription;
+	}
+
+	public void setOrderNum(int orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	public void setMedicationID(int medicationID) {
+		this.medicationID = medicationID;
+	}
+
+	public void setQuantityBought(int quantityBought) {
+		this.quantityBought = quantityBought;
+	}
+
+	public void setTotalPriceOfOrder(double totalPriceOfOrder) {
+		this.totalPriceOfOrder = totalPriceOfOrder;
+	}
+//	public double calculateSellingPrice(){ // calculates selling price including HST and assigns it to priceAtPurchase
+//		Inventory inv = Inventory.getInstance();
+//		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
+//		priceAtPurchase = m.price * 1.13;
+//		return priceAtPurchase;
+//	}
+
+//	public int calculateRevenue() {
+//		return 0;
+//	}
+//	public String seeSummaryOfSales() {
+//		return "";
+//	}
+//
 	public int getQuantityBought() {
 		return quantityBought;
 	}
 
-	public double getPriceAtPurchase() {
-		return priceAtPurchase;
+	public double getTotalPriceOfOrder() {
+		return totalPriceOfOrder;
 	}
 
 	public int getOrderNum() {

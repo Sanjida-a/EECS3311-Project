@@ -59,7 +59,7 @@ public class ListOfPatients {
 	// search for a patient in the patient list with certain healthcardNum/ID 
 	public Patient searchPatientWithID(int patientHealthCard){
 	    	Patient foundPWithID = null;
-	    	
+	    	updatePatientListFromDatabase();
 	    	for (int i = 0; i < allPatientsList.size(); i ++){
 	    		if (allPatientsList.get(i).getHealthCardNum() == patientHealthCard){
 	    			foundPWithID = allPatientsList.get(i);
@@ -67,7 +67,7 @@ public class ListOfPatients {
 	    	}
 
 	    	
-	    	return foundPWithID; //if patient with such ID not found, return false
+	    	return foundPWithID; //if patient with such ID not found, return null
 	}
 
 	
