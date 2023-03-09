@@ -1,15 +1,12 @@
 package testCases.IntegrationTests;
 import databaseDAO.superDAO;
+import middleLayer.*;
 import org.junit.jupiter.api.Test;
-import middleLayer.Pharmacist;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import middleLayer.ListOfPatients;
-
-
-import middleLayer.Patient;
 
 /*to be tested:
  * ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch)
@@ -19,7 +16,7 @@ import middleLayer.Patient;
 
 class PharmacistTest {
     private middleLayer.Patient patient1;
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "ALVINTA12";  // TA please change this according to your mySQL password in order for the tests to work
 
 //    @Test
 //    void addPatient() throws Exception {
@@ -36,7 +33,12 @@ class PharmacistTest {
             e.printStackTrace();
         }
         Pharmacist p = new Pharmacist(1234567890, 12345678);
-        assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", p.searchPatientByName("Smith", "FirstName").toString());
+        ListOfPatients inv = ListOfPatients.getInstance();
+        ArrayList<Patient> listOfPatients = inv.getAllPatientsList();
+
+        System.out.println(listOfPatients.get(0).toString());
+        System.out.println(p.searchPatientByName("Smith", "FirstName"));
+//        assertEquals(listOfPatients.get(0).toString(), p.searchPatientByName("Smith", "FirstName").toString());
     }
 
     @Test

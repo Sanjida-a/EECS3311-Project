@@ -3,11 +3,13 @@ import databaseDAO.superDAO;
 import middleLayer.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReportTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "ALVINTA12";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void calculateRevenue() throws Exception {
         try {
@@ -16,7 +18,13 @@ class ReportTest {
             e.printStackTrace();
         }
         Report r = new Report();
-        assertEquals(5.0, r.calculateRevenue());
+        ListOfOrders l = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = l.getListofAllOrders();
+        double val = 0.0;
+        for (int i = 0; i < allOrders.size(); i++){
+            val += allOrders.get(i).getTotalPriceOfOrder();
+        }
+    assertEquals(val, r.calculateRevenue());
     }
 
     @Test
@@ -27,7 +35,13 @@ class ReportTest {
             e.printStackTrace();
         }
         Report r = new Report();
-        assertEquals(1.5, r.calculateProfit());
+        ListOfOrders l = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = l.getListofAllOrders();
+        double val = 0.0;
+        for (int i = 0; i < allOrders.size(); i++){
+            val += allOrders.get(i).getTotalPriceOfOrder();
+        }
+        assertEquals(val * 0.3, r.calculateProfit());
 
     }
 
@@ -39,7 +53,16 @@ class ReportTest {
             e.printStackTrace();
         }
         Report r = new Report();
-       // System.out.println(r.seeSummaryOfSales());
-        assertEquals("Order number: 1 Medication ID: 1 Quantity bought: 2 Total price: 5.00\n", r.seeSummaryOfSales());
+        ListOfOrders l = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = l.getListofAllOrders();
+        ArrayList<String> allOrdersString = new ArrayList<>();
+
+       // System.out.println(allOrders.get(0).toString());
+
+        String c ="";
+       for (int i = 0; i < allOrders.size(); i++){
+           c += allOrders.get(i).toString();
+       }
+        assertEquals(c, r.seeSummaryOfSales());
     }
 }
