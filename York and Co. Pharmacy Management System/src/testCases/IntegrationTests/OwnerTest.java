@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 class OwnerTest {
-	static String pass = "user123";
+	static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void getOwnerUserTest() {
 		try {

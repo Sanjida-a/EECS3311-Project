@@ -12,8 +12,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListOfOrdersTest {
-	
-	static String pass = "user123";  // TA please change this according to your mySQL password in order for the tests to work
+
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 	
     @Test
     void updateOrderListFromDatabase() {

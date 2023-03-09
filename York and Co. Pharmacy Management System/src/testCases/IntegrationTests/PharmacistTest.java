@@ -19,7 +19,7 @@ import middleLayer.Patient;
 
 class PharmacistTest {
     private middleLayer.Patient patient1;
-    static String pass = "hello123"; //make sure to change password based on your password for MySQL
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
 //    @Test
 //    void addPatient() throws Exception {
