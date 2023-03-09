@@ -136,28 +136,6 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	public int getMedicationID() {
 		return medicationID;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if(	this.orderNum == ((Order)obj).orderNum && 
-		this.medicationID == ((Order)obj).medicationID &&
-		this.patientID == ((Order)obj).patientID &&
-		this.quantityBought == ((Order)obj).quantityBought &&
-		this.totalPriceOfOrder == ((Order)obj).totalPriceOfOrder &&
-		this.isPrescription == ((Order)obj).isPrescription) {
-			return true;
-		}
-		return false;
-
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %f\n", 
-            		 this.getOrderNum(),this.getMedicationID(),this.getQuantityBought(),  this.getTotalPriceOfOrder() );
-		
-	}
-
 
 
 	
