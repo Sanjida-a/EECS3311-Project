@@ -86,7 +86,7 @@ public class DisplaySQLLogin implements ActionListener {
 				
 //				superDAO superDBObject = new superDAO(_passwordField);
 				superDAO.setPassword(_passwordField);
-				
+				frame.dispose();
 				//executed after validation succeed
 				DisplayInitialScreen.displayInitialScreen(USER.GUEST);
 			}
