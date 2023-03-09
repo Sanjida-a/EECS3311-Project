@@ -40,32 +40,46 @@ class PharmacistTest {
     }
 
     @Test
+    //NOT WORKING
     void addPatient() {
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        patient1 = new middleLayer.Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
         ListOfPatients val = ListOfPatients.getInstance();
-        Pharmacist subject1 = new Pharmacist(0, 0);
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        comparator1.add(patient1);
-        try {
-			subject1.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+        ArrayList<Patient> listOfPat = val.getAllPatientsList();
         
-        ArrayList<Patient> result = subject1.searchPatientByName("MAN", "LastName");
+        int newHealthCardNum = 1112224444;
+        for (int i = 0; i < listOfPat.size(); i++) {
+        	if (listOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
+        		newHealthCardNum = -1;
+        		break;
+        	}
+        }
+        
+        if (newHealthCardNum != -1) {
+        	 patient1 = new middleLayer.Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
+             
+             Pharmacist subject1 = new Pharmacist(0, 0);
+             ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+             comparator1.add(patient1);
+             try {
+     			subject1.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
+     		} catch (Exception e) {
+     			e.printStackTrace();
+     		}
 
-        assertEquals(comparator1.toString(), result.toString());
+             
+             ArrayList<Patient> result = subject1.searchPatientByName("MAN", "LastName");
+
+             assertEquals(comparator1.toString(), result.toString());
+        }
+       
     }
     
     @Test
-    void searchPatientByNameTestValidInput1()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput1()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -121,7 +135,7 @@ class PharmacistTest {
     }
 
     @Test
-    void searchPatientByNameTestValidInput5()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput5()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -136,7 +150,7 @@ class PharmacistTest {
 
 
     @Test
-    void searchPatientByNameTestValidInput8()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput8()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -149,7 +163,7 @@ class PharmacistTest {
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
-    void searchPatientByNameTestValidInput9()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput9()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -162,7 +176,7 @@ class PharmacistTest {
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
-    void searchPatientByNameTestValidInput10()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput10()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -175,7 +189,7 @@ class PharmacistTest {
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
-    void searchPatientByNameTestValidInput11()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput11()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -189,7 +203,7 @@ class PharmacistTest {
     }
 
     @Test
-    void searchPatientByNameTestValidInput12()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput12()  {	
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {

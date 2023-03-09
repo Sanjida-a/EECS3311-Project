@@ -67,7 +67,7 @@ class OwnerTest {
 			e.printStackTrace();
 		}
         Owner o = new Owner(0, 0);
-       assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("Smith", "FirstName").toString());
+       assertEquals("First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n", o.searchPatientByName("Smith", "FirstName").get(0).toString());
     }
 
     @Test

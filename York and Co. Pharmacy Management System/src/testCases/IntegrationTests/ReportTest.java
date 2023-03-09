@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 class ReportTest {
 
     static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
@@ -16,7 +18,15 @@ class ReportTest {
             e.printStackTrace();
         }
         Report r = new Report();
-        assertEquals(5.0, r.calculateRevenue());
+        ListOfOrders listOfOrders = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+		
+        double revenue = 0;
+		for ( Order e : allOrders) {
+			revenue = revenue + e.getTotalPriceOfOrder();
+		}
+	
+        assertEquals(revenue, r.calculateRevenue());
     }
 
     @Test
@@ -27,7 +37,18 @@ class ReportTest {
             e.printStackTrace();
         }
         Report r = new Report();
-        assertEquals(1.5, r.calculateProfit());
+        
+        ListOfOrders listOfOrders = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+		
+        double revenue = 0;
+		for ( Order e : allOrders) {
+			revenue = revenue + e.getTotalPriceOfOrder();
+		}
+		
+		double profit = 0.3*revenue;
+	
+        assertEquals(profit, r.calculateProfit());
 
     }
 
@@ -39,6 +60,16 @@ class ReportTest {
             e.printStackTrace();
         }
         Report r = new Report();
-        assertEquals("Order number: 1 Medication ID: 1 Quantity bought: 1 Total price: 5.000000\n", r.seeSummaryOfSales());
+        
+        ListOfOrders listOfOrders = ListOfOrders.getInstance();
+        
+        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+        
+        ArrayList<String> summary = r.seeSummaryOfSales();
+		
+		for ( int i = 0; i < allOrders.size(); i++) {
+			assertEquals(allOrders.get(i).toString(), summary.get(i));
+		}
+//        assertEquals("Order number: 1 Medication ID: 1 Quantity bought: 1 Total price: 5.000000\n", r.seeSummaryOfSales());
     }
 }

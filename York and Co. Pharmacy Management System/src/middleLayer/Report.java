@@ -33,14 +33,13 @@ public class Report {
 		
 	}
 	
-	 public String seeSummaryOfSales() {
+	 public ArrayList<String> seeSummaryOfSales() {
 		
 		allOrders = listOfOrders.getListofAllOrders();
 		
-	 	String output = "";
+	 	ArrayList<String> output = new ArrayList<String>();
 	 	for (Order e : allOrders){
-
-             output += e.toString();
+             output.add(e.toString());
 	 	}
 	 	return output;
 	 }

@@ -147,9 +147,12 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.increaseQuantity(1,10);
+        val.increaseQuantity(originalList.get(0).getMedicationID(),10);
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(originalList.get(0).getQuantity() + 10, newList.get(0).getQuantity());
+        
+        // back to normal
+        val.decreaseQuantity(originalList.get(0).getMedicationID(), 10);
     }
     @Test
     void increaseQuantityInvalid(){
@@ -173,10 +176,13 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.decreaseQuantity(1,1);
+        val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(originalList.get(0).getQuantity()-1, newList.get(0).getQuantity());
 //        assertEquals(true, val.increaseQuantity(2,10))
+        
+        // back to normal
+        val.increaseQuantity(originalList.get(0).getMedicationID(), 1);
     }
 
 
@@ -189,7 +195,7 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.decreaseQuantity(1,11);
+        val.decreaseQuantity(originalList.get(0).getMedicationID(),originalList.get(0).getQuantity()+1);
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
 //        assertEquals(true, val.increaseQuantity(2,10))
@@ -219,9 +225,21 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
+        
+        Merchandise deletedM = originalList.get(originalList.size()-1);
+        
         val.delete(originalList.size());
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(originalList.size() - 1, newList.size());
+        
+        // back to normal
+       	deletedM.setIsValid(true);
+       	try {
+			_merDAO = new MerchandiseDAO();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+       	_merDAO.updateMedicationInDatabase(deletedM.getMedicationID(), deletedM);
 
 //        Inventory val = Inventory.getInstance();
 //        Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
@@ -238,7 +256,7 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.delete(originalList.size()+1);
+        val.delete(100);
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(originalList.size(), newList.size());
     }
@@ -275,10 +293,16 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationPrice(1, 10.00);
+        
+        double originalPrice = originalList.get(0).getPrice();
+        
+        val.modifyMedicationPrice(originalList.get(0).getMedicationID(), 10.00);
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(10.00, newList.get(0).getPrice());
-
+        
+        // back to normal
+       	val.modifyMedicationPrice(originalList.get(0).getMedicationID(), originalPrice);
+       
     }
 
     @Test
@@ -290,9 +314,13 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationPrice(originalList.size()+1, 100.00);
+        val.modifyMedicationPrice(100, 100.00);
         ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(originalList.get(0).getPrice(), newList.get(0).getPrice());
+        
+        for (int i = 0 ; i< originalList.size(); i++) {
+        	 assertEquals(originalList.get(0).getPrice(), newList.get(0).getPrice());
+        }
+       
     }
 
     @Test
@@ -304,9 +332,14 @@ class InventoryTest {
         }
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationDescription(1, "howdy");
+        
+        String originalDescription = originalList.get(0).getDescription();
+        val.modifyMedicationDescription(originalList.get(0).getMedicationID(), "howdy");
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals("howdy", newList.get(0).getDescription());
+        
+     // back to normal
+       	val.modifyMedicationDescription(originalList.get(0).getMedicationID(), originalDescription);
     }
 
     @Test
@@ -318,9 +351,13 @@ class InventoryTest {
         }
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationDescription(originalList.size() + 1, "howdy");
+        val.modifyMedicationDescription(100, "howdy");
         ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(originalList.get(0).getDescription(), newList.get(0).getDescription());
+        
+        for (int i = 0 ; i< originalList.size(); i++) {
+        	assertEquals(originalList.get(i).getDescription(), newList.get(i).getDescription());
+        }
+        
     }
 
     @Test
@@ -332,16 +369,21 @@ class InventoryTest {
         }
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-//        val.modifyMedicationName(1, "Buckleys");
+        
+        String originalName = originalList.get(0).getName();
+        val.modifyMedicationName(originalList.get(0).getMedicationID(), "Buckleys");
 //        ArrayList<Merchandise> newList = val.getMerchandise();
-        if (originalList.get(0).getName().equals("Buckleys")) {
-            assertEquals(false, val.modifyMedicationName(1, "Buckleys"));
-        }
+//        if (originalList.get(0).getName().equals("Buckleys")) {
+//            assertEquals(false, val.modifyMedicationName(1, "Buckleys"));
+//        }
 //        else {
 //             assertEquals(true, val.modifyMedicationName(1, "Buckleys"));
 //        }
 
 //        assertEquals("Buckleys", newList.get(0).getName());
+        // back to normal
+       	val.modifyMedicationName(originalList.get(0).getMedicationID(), originalName);
+        
     }
 
     @Test
@@ -353,8 +395,12 @@ class InventoryTest {
         }
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationName(originalList.size() + 1, "Buckleys");
+        val.modifyMedicationName(100, "Buckleys");
         ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(originalList.get(0).getName(), newList.get(0).getName());
+        
+        for (int i = 0 ; i< originalList.size(); i++) {
+        	assertEquals(originalList.get(i).getName(), newList.get(i).getName());
+        }
+        
     }
 }

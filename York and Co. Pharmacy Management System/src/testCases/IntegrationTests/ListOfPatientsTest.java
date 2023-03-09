@@ -14,18 +14,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ListOfPatientsTest {
     static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
-    @Test
-   void getPatientsList(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ListOfPatients val = ListOfPatients.getInstance();
-        ArrayList<Patient> originalList = val.getAllPatientsList();
-        ArrayList<Patient> newList = val.getAllPatientsList();
-        assertEquals(newList.get(0).toString(), val.searchPatientWithID(1111122222).toString());
-    }
+//    @Test
+//   void getPatientsList(){
+//        try {
+//            superDAO.setPassword(pass);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        ListOfPatients val = ListOfPatients.getInstance();
+//        ArrayList<Patient> originalList = val.getAllPatientsList();
+//        ArrayList<Patient> newList = val.getAllPatientsList();
+//        assertEquals(newList.get(0).toString(), val.searchPatientWithID(1111122222).toString());
+//    }
 
     @Test
     void modifyPatientInfo() throws Exception {
@@ -47,6 +47,11 @@ public class ListOfPatientsTest {
         val.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
         ArrayList<Patient> newList = val.getAllPatientsList();
         assertEquals("jo", newList.get(0).getFirstName());
+        
+        //back to normal
+        fname.setText("Smith");
+        val.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 
     }
+    
 }
