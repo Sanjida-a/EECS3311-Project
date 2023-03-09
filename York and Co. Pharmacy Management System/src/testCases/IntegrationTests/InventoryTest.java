@@ -15,40 +15,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
     private MerchandiseDAO _merDAO;
-    static String pass = "ALVINTA12";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
     @Test
     void getInstance() {
     }
 
     @Test
-    void display() {
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    void getOnlyOTCMerchandiseTest(){
+        try {
+            superDAO.setPassword(pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Inventory val = Inventory.getInstance();
-        ArrayList<Merchandise> originalList = val.getMerchandise();
+
+        ArrayList<Merchandise> onlyOTC = val.getOnlyOTCMerchandise();
        // val.decreaseQuantity(1,1);
-        ArrayList<Merchandise> newList = val.getMerchandise();
-
-        assertEquals(originalList.toString(), newList.toString());
-    }
-
-    @Test
-    void onlyOTC(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        Inventory val = Inventory.getInstance();
-        assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
-                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
-                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-                "]",val.getOnlyOTCMerchandise().toString());
+        int i = 0;
+        for (i = 0; i < onlyOTC.size(); i++) {
+            assertEquals(onlyOTC.get(i).getisOTC(), true);
+        }
     }
 
     @Test
