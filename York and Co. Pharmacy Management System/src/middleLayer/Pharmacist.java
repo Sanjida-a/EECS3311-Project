@@ -116,6 +116,7 @@ public class Pharmacist extends User {
 				if (firstName.equals("")){
 					patientName = lastName.trim();
 				}
+
 				else if (lastName.equals("")){
 					patientName = firstName.trim();
 				}
