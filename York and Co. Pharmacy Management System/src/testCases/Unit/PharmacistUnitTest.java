@@ -28,7 +28,7 @@ class PharmacistUnitTest {
 			e.printStackTrace();
 		}
 		expected.add(new Patient("test", "name", "address", 1111144444, 1111144444, 11111444));
-		result = 
+		//result =
 		
 	}	
 

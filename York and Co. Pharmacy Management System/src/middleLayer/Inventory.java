@@ -155,7 +155,6 @@ public class Inventory{
     	boolean medicationIncreased = false;
     	
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
-    	
     	if (specificMedication == null) {
     		return medicationIncreased;
     	}
@@ -186,7 +185,7 @@ public class Inventory{
     	
     	else { // otherwise it exists, then can potentially decrease
 	        int potentialNewQuantity = specificMedication.quantity - decreasedQuantity; // check to see new quantity if decreased
-	    	if (potentialNewQuantity < 0) {
+			if (potentialNewQuantity < 0) {
 	    		enoughQuantityToDecrease = false; // decrease will not occur if new quantity results in being less than 0
 	    	}
 	    	else { // otherwise, decrease can occur
