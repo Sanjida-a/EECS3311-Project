@@ -82,6 +82,23 @@ public class Pharmacist extends User {
 		ArrayList<Patient> searchResult = new ArrayList <Patient> ();
 		
 		if (typeOfSearch.equals("FirstName")) {
+			if (patientName.contains(" ")){
+
+				int indexOfSpace = patientName.indexOf(' ');
+				String firstName = patientName.substring(0, indexOfSpace); //added trim to remove white spaces
+				String lastName = patientName.substring(indexOfSpace + 1); //added trim to remove white spaces
+
+				if (firstName.equals("")){
+					patientName = lastName.trim();
+				}
+				else if (lastName.equals("")){
+					patientName = firstName.trim();
+				}
+				else{
+					patientName = firstName.trim();
+				}
+
+			}
 			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
 				if (p.getFirstName().equalsIgnoreCase(patientName)) {
 					searchResult.add(p);
@@ -89,6 +106,25 @@ public class Pharmacist extends User {
 			}
 		}
 		else if (typeOfSearch.equals("LastName")) {
+			if (patientName.contains(" ")){
+
+				int indexOfSpace = patientName.indexOf(' ');
+				String firstName = patientName.substring(0, indexOfSpace); //added trim to remove white spaces
+				String lastName = patientName.substring(indexOfSpace + 1); //added trim to remove white spaces
+
+
+				if (firstName.equals("")){
+					patientName = lastName.trim();
+				}
+				else if (lastName.equals("")){
+					patientName = firstName.trim();
+				}
+				else{
+					patientName = lastName.trim();
+				}
+
+			}
+			patientName.trim();
 			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
 				if (p.getLastName().equalsIgnoreCase(patientName)) {
 					searchResult.add(p);
@@ -97,10 +133,11 @@ public class Pharmacist extends User {
 		}
 		else { //typeOfSearch contains full name (first + last name)
 			int indexOfSpace = patientName.indexOf(' ');
-			String firstName = patientName.substring(0, indexOfSpace);
-			String lastName = patientName.substring(indexOfSpace);
+			String firstName = patientName.substring(0, indexOfSpace); //added trim to remove white spaces
+			String lastName = patientName.substring(indexOfSpace + 1); //added trim to remove white spaces
 			for (Patient p : listOfPatientsByPhar.getAllPatientsList()) {
 				if (p.getFirstName().equalsIgnoreCase(firstName) && p.getLastName().equalsIgnoreCase(lastName)) {
+
 					searchResult.add(p);
 				}
 			}

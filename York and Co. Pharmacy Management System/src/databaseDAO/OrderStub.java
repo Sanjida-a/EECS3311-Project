@@ -41,8 +41,6 @@ public class OrderStub implements OrderRoot {
 //		double totalPriceOfOrder;
 //		boolean isPrescription;
 //		
-		this.orderList = new ArrayList<Order>();
-		this.prescriptionList = new ArrayList<Prescription>();
 		Order order1 = new Order(1, 1, 1111122222, 5, 10.00, false);   //does it match med and patient?
 		Order order2 = new Order(2, 2, 1111122222, 5, 15.00, false);
 		Order order3 = new Order(3, 3, 1111122222, 5, 20.00, true);

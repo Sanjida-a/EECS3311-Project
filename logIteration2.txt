@@ -87,8 +87,18 @@
 *Implemented modifyPatientDetails method and connected to front end and database
 *Fixed other methods like modifyMedicationDetails to fix minor bugs
 
-19. 2023/03/05 21:30 - 2023/03/06 02:00 contributor: Minh Tran
+19. 2023/03/04 20:00 - 21:30 contributor: Aiza Bajwa
+*Created and uploaded documentation for Iteration 2 (updated plan; changes in iteration; planned vs actual time)
+
+20. 2023/03/05 21:30 - 2023/03/06 02:00 contributor: Minh Tran
 *Implement Revenue, getProfit
 *Fix DeleteMed
 *Fix Database
 *Fix add orders
+
+21. 2023/03/05 21:00 - 00:00 contributor: Aiza Bajwa, Geon Kim
+*Virtual call
+*Implementation of Stubs and applied dependency injection principle
+
+21. 2023/03/07 21:30 - 2023/03/08 02:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
+*Fixed and reorganized all order classes
