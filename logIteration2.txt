@@ -42,63 +42,79 @@
 *Update DB 
 *Add order method
 
-10. 2023/02/25 10:00 - 2023/02/25 16:00 contributor: Minh Tran
+10. 2023/02/24 17:00 - 2023/02/25 1:30 contributor: Sanjida Afreen
+*Added test cases
+
+11. 2023/02/25 10:00 - 2023/02/25 16:00 contributor: Minh Tran
 *Change DB
 *Fix add to order
 *Refills method
 
-11. 2023/02/26 22:00 - 00:30 contributor: Aiza Bajwa, Geon Kim
+12. 2023/02/26 22:00 - 00:30 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *created a class called ListOfPatients.java that keeps track of all important patient info stored in database
 *Discussed and fixed add patient method and its connection to GUI
 *Fixed bug where reading from database in DAO classes was adding to arrayList instead of overriding it
 *Implemented patient search for owner/pharmacist - search by first name, search by last name and search by full name
 
-12. 2023/03/02 23:00 - 02:00 contributor: Aiza Bajwa
+13. 2023/02/28 17:00 - 2023/02/25 1:30 contributor: Sanjida Afreen
+*created ListOfOrders and updated OrderDAO
+
+14. 2023/03/02 23:00 - 02:00 contributor: Aiza Bajwa
 *Connected MerchandiseDAO.java class to actual database
 *Implemented methods for modifying medication details (name, price, description) and started its connection to front end
 
-13. 2023/03/02 17:30 - 20:20 contributor: Aiza Bajwa, Geon Kim
+15. 2023/03/02 17:30 - 20:20 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *Fixed Search methods for all users so that they are implemented in user abstract class so there's no repetition in Owner/Pharmacist class
 *Fixed display methods in inventory class so they return ArrayLists instead of strings
 *Started adding connections to update database accordingly for methods inside Inventory class (ex. increaseQuantity and decreaseQuantity)
 
-14. 2023/03/02 20:30 - 21:30 contributor: Aiza Bajwa
+16. 2023/03/02 20:30 - 21:30 contributor: Aiza Bajwa
 *Implemented AddMedication and DeleteMedication Connections to Database
 
-15. 2023/03/04 00:00 - 2:00 contributor: Minh Tran
+17. 2023/03/04 00:00 - 2:00 contributor: Minh Tran
 *Change DB
 *Fix add to order
 *Refills method
 
-16. 2023/03/04 13:00 - 16:00 contributor: Minh Tran
+18. 2023/03/04 13:00 - 16:00 contributor: Minh Tran
 *Change DB
 *Complete add to order
 *Refills method
 
-17. 2023/03/04 17:00 - 18:30 contributor: All
+19. 2023/03/04 17:00 - 18:30 contributor: All
 *Virtual call
 *Discussed remaining requirements for iteration
 *Assigned tasks for the last week for this iteration
 
-18. 2023/03/04 21:00 - 23:00 contributor: Aiza Bajwa, Geon Kim
+20. 2023/03/04 21:00 - 23:00 contributor: Aiza Bajwa, Geon Kim
 *Virtual Call
 *Implemented modifyPatientDetails method and connected to front end and database
 *Fixed other methods like modifyMedicationDetails to fix minor bugs
 
-19. 2023/03/04 20:00 - 21:30 contributor: Aiza Bajwa
+21. 2023/03/04 20:00 - 21:30 contributor: Aiza Bajwa
 *Created and uploaded documentation for Iteration 2 (updated plan; changes in iteration; planned vs actual time)
 
-20. 2023/03/05 21:30 - 2023/03/06 02:00 contributor: Minh Tran
+22. 2023/03/05 21:30 - 2023/03/06 02:00 contributor: Minh Tran
 *Implement Revenue, getProfit
 *Fix DeleteMed
 *Fix Database
 *Fix add orders
 
-21. 2023/03/05 21:00 - 00:00 contributor: Aiza Bajwa, Geon Kim
+23. 2023/03/05 21:00 - 00:00 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *Implementation of Stubs and applied dependency injection principle
 
-21. 2023/03/07 21:30 - 2023/03/08 02:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
+24. 2023/03/05 13:00 - 16:00 contributor: Sanjida Afreen
+*Added UML Diagram
+
+25. 2023/03/07 21:30 - 2023/03/08 02:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
 *Fixed and reorganized all order classes
+
+26. 2023/03/07 21:00 - 23:00 contributor: Sanjida Afreen
+*Added system architecture and updated wiki
+
+27.  2023/03/08 20:00 - 23:50 contributor: Sanjida Afreen
+*Updated README, system architecture and UML Diagram
+
