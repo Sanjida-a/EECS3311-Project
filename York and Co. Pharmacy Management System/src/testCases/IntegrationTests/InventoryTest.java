@@ -1,6 +1,8 @@
 package testCases.IntegrationTests;
 
 import databaseDAO.MerchandiseDAO;
+import databaseDAO.superDAO;
+
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import org.junit.platform.commons.annotation.Testable;
@@ -12,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
     private MerchandiseDAO _merDAO;
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
     @Test
     void getInstance() {
@@ -19,6 +22,11 @@ class InventoryTest {
 
     @Test
     void display() {
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
                 ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
@@ -31,6 +39,11 @@ class InventoryTest {
 
     @Test
     void onlyOTC(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
                 ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
@@ -41,6 +54,11 @@ class InventoryTest {
 
     @Test
     void alphabetically(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
                 ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
@@ -53,6 +71,11 @@ class InventoryTest {
 
     @Test
     void byQuantity(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals("[ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
                 ", ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
@@ -65,6 +88,11 @@ class InventoryTest {
 
     @Test
     void byPrice(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
               //  ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
@@ -78,18 +106,33 @@ class InventoryTest {
 
     @Test
     void increaseQuantity(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals(true, val.increaseQuantity(2,10));
     }
 
     @Test
     void increaseQuantityInvalid(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals(false, val.increaseQuantity(10,10));
     }
 
     @Test
     void decreaseQuantity(){ //need condition
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         boolean[] testCase = {false, true, true};
         assertEquals(Arrays.toString(testCase), Arrays.toString(val.decreaseQuantity(2,3)));
@@ -97,6 +140,11 @@ class InventoryTest {
 
     @Test
     void decreaseQuantity1(){ // by 7
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         boolean[] testCase = {false, true, true};
         assertEquals(Arrays.toString(testCase), Arrays.toString(val.decreaseQuantity(2,7)));
@@ -104,8 +152,14 @@ class InventoryTest {
 
     @Test
     void decreaseQuantityInvalid(){ // by 7
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         boolean[] testCase = {false, true, false};
+//        assertThrows(NullPointerException.class, val.decreaseQuantity(10,7))
         assertEquals(Arrays.toString(testCase), Arrays.toString(val.decreaseQuantity(10,7)));
     }
 //    @Test
@@ -117,6 +171,11 @@ class InventoryTest {
 //    }
     @Test
     void delete(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         assertEquals(true, val.addToInventory(m));
@@ -125,6 +184,11 @@ class InventoryTest {
 
     @Test
     void deleteInvalid(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         Merchandise m = new Merchandise(10, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
        // assertEquals(true, val.addToInventory(m));
@@ -132,6 +196,11 @@ class InventoryTest {
     }
     @Test
     void searchByID(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         Merchandise m = new Merchandise(5, "PILL1", 10, 5.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID,false, null, true);
         assertEquals(m.toString(), val.searchMerchandiseWithID(5).toString());
@@ -139,17 +208,32 @@ class InventoryTest {
 
     @Test
     void searchByIDInvalid(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals(null, val.searchMerchandiseWithID(10));
     }
     @Test
     void modifyPrice(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals(true, val.modifyMedicationPrice(5,19.0));
     }
 
     @Test
     void modifyPriceInvalid(){
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Inventory val = Inventory.getInstance();
         assertEquals(false, val.modifyMedicationPrice(10,19.0));
     }
