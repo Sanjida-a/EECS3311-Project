@@ -160,3 +160,6 @@ UPDATE Medications SET isValid = 1 WHERE medicationID = 3;
 UPDATE Medications SET isValid = 1 WHERE medicationID = 4;
 UPDATE Medications SET isValid = 1 WHERE medicationID = 5;
 UPDATE Medications SET isValid = 1 WHERE medicationID = 6;
+
+INSERT INTO Orders
+VALUES (1, 1, 1111122222, 1, 5, 0); /* for integration tests */
