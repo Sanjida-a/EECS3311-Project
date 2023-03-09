@@ -122,6 +122,21 @@ public class Patient extends User {
 	public String toString(){
 		return "First name: " + firstName + ", Last name: " + lastName + ", Address: " + address + ", Phone Number: " + phoneNum + ", Health Card: " + healthCardNum + ", Date of birth: " + dateOfBirth + "\n";
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this.firstName == ((Patient)obj).firstName &&
+		this.lastName == ((Patient)obj).lastName &&
+		this.address == ((Patient)obj).address &&
+		this.phoneNum == ((Patient)obj).phoneNum &&
+		this.healthCardNum == ((Patient)obj).healthCardNum &&
+		this.dateOfBirth == ((Patient)obj).dateOfBirth) {
+			return true;
+		}
+		return false;
+		
+	}
+
 
 
 }
