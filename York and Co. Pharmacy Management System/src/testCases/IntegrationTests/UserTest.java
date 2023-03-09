@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
-    static String pass = "user123";
+    static String pass = "hello123"; //make sure to change password based on your password for MySQL
+
     @Test
     void searchMedicineByName() {
         try {
@@ -23,7 +24,7 @@ class UserTest {
             e.printStackTrace();
         }
         Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
-        assertEquals("[ID: 1, Name: ADVIL, Quantity: 6, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n, ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n]",
+        assertEquals("[ID: 1, Name: ADVIL, Quantity: 19, Price: 10.0, Type: COLD, Form: LIQUID, isOTC: true, Description: howdy\n, ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n]",
                 o.searchMedicineByName("ADVIL", USER.OWNER).toString());
     }
     @Test
@@ -44,7 +45,7 @@ class UserTest {
             e.printStackTrace();
         }
         Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
-        assertEquals("[ID: 1, Name: ADVIL, Quantity: 6, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n, ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n, ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
+        assertEquals("[ID: 1, Name: ADVIL, Quantity: 19, Price: 10.0, Type: COLD, Form: LIQUID, isOTC: true, Description: howdy\n, ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n, ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
                         ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n]",
                 o.searchMedicineByType(MERCHANDISE_TYPE.COLD, USER.OWNER).toString());
     }
