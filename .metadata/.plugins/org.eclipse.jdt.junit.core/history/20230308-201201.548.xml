@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ReportUnitTest.testSeeSummaryOfSales" project="York and Co. Pharmacy Management System" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="testCases.Unit.ReportUnitTest" time="0.527" displayname="ReportUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ReportUnitTest]">
-    <testcase name="testSeeSummaryOfSales" classname="testCases.Unit.ReportUnitTest" time="0.527" displayname="testSeeSummaryOfSales()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ReportUnitTest]/[method:testSeeSummaryOfSales()]"/>
-  </testsuite>
-</testrun>

@@ -18,8 +18,6 @@
     <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
     <fullyQualifiedTypeName name="javax.swing.JTextArea"/>
     <fullyQualifiedTypeName name="java.awt.Dimension"/>
-    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="javax.swing.JList"/>
     <fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
@@ -31,7 +29,6 @@
     <fullyQualifiedTypeName name="middleLayer.MERCHANDISE_TYPE"/>
     <fullyQualifiedTypeName name="presentation.USER"/>
     <fullyQualifiedTypeName name="middleLayer.ListOfOrders"/>
-    <fullyQualifiedTypeName name="middleLayer.Order"/>
     <fullyQualifiedTypeName name="javax.swing.JTextField"/>
     <fullyQualifiedTypeName name="middleLayer.ListOfPatients"/>
     <fullyQualifiedTypeName name="databaseDAO.OrderRoot"/>
@@ -42,4 +39,11 @@
     <fullyQualifiedTypeName name="middleLayer.Pharmacist"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="middleLayer.Patient"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="com.mysql.cj.x.protobuf.MysqlxCrud.Order"/>
+    <fullyQualifiedTypeName name="middleLayer.Report"/>
+    <fullyQualifiedTypeName name="middleLayer.Order"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="databaseDAO.superDAO"/>
 </qualifiedTypeNameHistroy>

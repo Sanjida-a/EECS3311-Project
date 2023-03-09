@@ -1,0 +1,158 @@
+package presentation;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
+import databaseDAO.OrderStub;
+import databaseDAO.superDAO;
+import middleLayer.ListOfOrders;
+import middleLayer.ListOfPatients;
+import middleLayer.Order;
+import middleLayer.Owner;
+import middleLayer.Patient;
+import middleLayer.Pharmacist;
+import middleLayer.Report;
+
+public class DisplayReport implements ActionListener{
+    private static final long serialVersionUID = 1L;
+    private JFrame superFrame;
+    private JFrame frame;
+    private JPanel contentPane;
+    private JTextField rev;
+    private JTextField prof;
+    private JTextArea salesSummary;
+    private Report report = new Report();
+    private double revenue;
+    private double profit;
+    private String summary;
+
+
+    
+    public void displayReport(JFrame previous) {
+    	this.superFrame = previous;
+    	this.superFrame.setEnabled(false);
+        this.frame = new JFrame();
+        this.contentPane = new JPanel();
+        this.frame.setTitle("Sales Overview");
+        this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.frame.setBounds(100, 100, 1200, 700);
+        this.frame.setContentPane(contentPane);
+        this.contentPane.setLayout(null);
+
+        this.createLabels();
+        this.createOutputFields();
+        this.displayContents();
+        
+        
+        JButton btnExit = new JButton("Exit");
+        btnExit.setFont(new Font("굴림", Font.BOLD, 18));
+        btnExit.setBounds(1010, 45, 150, 35);
+        btnExit.addActionListener(new DisplayReport());
+        this.contentPane.add(btnExit);
+        this.frame.setVisible(true);
+        this.report.setOrderDAO(new OrderStub());
+        this.frame.setVisible(true);
+    }
+
+    public void createLabels() {
+        JLabel lblProfit = new JLabel("Profit:");
+        lblProfit.setFont(new Font("굴림", Font.BOLD, 18));
+        lblProfit.setBounds(125, 90, 350, 35);
+        this.contentPane.add(lblProfit);
+        
+        JLabel lblHeader = new JLabel("Sales Overview");
+        lblHeader.setFont(new Font("굴림", Font.BOLD, 18));
+        lblHeader.setBounds(10, 10, 300, 35);
+        this.contentPane.add(lblHeader);
+
+        JLabel lblRevenue = new JLabel("Revenue:");
+        lblRevenue.setFont(new Font("굴림", Font.BOLD, 18));
+        lblRevenue.setBounds(125, 45, 350, 35);
+        this.contentPane.add(lblRevenue);
+        
+        JLabel lblSum = new JLabel("Sales Summary");
+        lblSum.setFont(new Font("굴림", Font.BOLD, 18));
+        lblSum.setBounds(10, 135, 350, 35);
+        this.contentPane.add(lblSum);
+    }
+    
+    public void createOutputFields() {
+    	JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 180, 1150, 450);
+        this.contentPane.add(scrollPane);
+    	
+        this.rev = new JTextField();
+        this.rev.setEditable(false);
+        this.rev.setBounds(285, 45, 150, 35);
+        this.contentPane.add(rev);
+        this.rev.setColumns(10);
+
+        this.prof = new JTextField();
+        this.prof.setEditable(false);
+        this.prof.setBounds(285, 90, 150, 35);
+        this.contentPane.add(prof);
+        this.prof.setColumns(10);
+         
+        this.salesSummary = new JTextArea();
+        this.salesSummary.setEditable(false);
+        this.salesSummary.setFont(new Font("monospaced", Font.PLAIN, 12));
+        scrollPane.setViewportView(salesSummary);
+    }
+    
+    public void displayContents() {
+        try {
+			this.revenue = this.report.calculateRevenue();
+	        this.profit =this. report.calculateProfit();
+	        this.summary = this.report.seeSummaryOfSales();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+
+     this.rev.setText(String.format("$%.2f", revenue));
+     this.prof.setText(String.format("$%.2f", profit));
+     this.salesSummary.setText(summary);
+    }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		this.frame.dispose();
+		this.superFrame.setEnabled(true);
+		this.superFrame.toFront();
+	}
+    public static void main(String[] args) {
+        
+        try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        DisplayReport screen = new DisplayReport();
+        screen.displayReport(new JFrame());
+    }
+
+
+}
+
