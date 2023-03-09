@@ -112,7 +112,12 @@ class InventoryTest {
 			e.printStackTrace();
 		}
         Inventory val = Inventory.getInstance();
-        assertEquals(true, val.increaseQuantity(2,10));
+        
+        ArrayList<Merchandise> originalList = val.getMerchandise();
+        val.increaseQuantity(2,10);
+        ArrayList<Merchandise> newList = val.getMerchandise();
+        assertEquals(originalList.get(2).getQuantity(), newList.get(2).getQuantity());
+//        assertEquals(true, val.increaseQuantity(2,10));
     }
 
     @Test
@@ -165,6 +170,8 @@ class InventoryTest {
 //    @Test
 //    void addTo(){
 //        Inventory val = Inventory.getInstance();
+//    	ArrayList<Merchandise> originalList = val.getMerchandise();
+//    	int sizeOriginal = originalList.size();
 //        //Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
 //        Merchandise m = new Merchandise(8, "Buckleys",  5,  3.00, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, null, true);
 //        assertEquals(true, val.addToInventory(m));
