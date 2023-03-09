@@ -29,8 +29,10 @@ public class OrderDAO extends superDAO implements OrderRoot{
 	
 	public OrderDAO() throws Exception {
 		try {
-			con = DriverManager.getConnection(url, user, password);			
-			con.close();			
+			if(password != null) {
+				con = DriverManager.getConnection(url, user, password);			
+				con.close();			
+			}
 		} catch (Exception e) {
 			throw e;
 		}

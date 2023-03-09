@@ -1,5 +1,7 @@
 package databaseDAO;
 
+import java.sql.Connection;
+
 //import static databaseDAO.superDAO.con;
 //import static databaseDAO.superDAO.password;
 //import static databaseDAO.superDAO.url;

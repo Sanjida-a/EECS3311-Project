@@ -1,6 +1,6 @@
 package databaseDAO;
 
-import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,9 +28,11 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 	
 	public MerchandiseDAO() throws Exception {
 		try {
+			if(password != null) {
 //			password = userPass;
-			con = DriverManager.getConnection(url, user, password);
-			con.close();
+				con = DriverManager.getConnection(url, user, password);
+				con.close();
+			}
 		} catch (Exception e) {
 			throw e;
 		}
