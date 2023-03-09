@@ -68,7 +68,7 @@ public class Owner extends User {
 		}
 		else if (typeOfSearch.equals("LastName")) {
 			for (Patient p : listOfPatientsByOwner.getAllPatientsList()) {
-				if (p.getLastName().toUpperCase().equals(patientName)) {
+				if (p.getLastName().equalsIgnoreCase(patientName)) {
 					searchResult.add(p);
 				}
 			}
@@ -79,7 +79,7 @@ public class Owner extends User {
 			String lastName = patientName.substring(indexOfSpace+1);
 			
 			for (Patient p : listOfPatientsByOwner.getAllPatientsList()) {
-				if (p.getFirstName().toUpperCase().equals(firstName) && p.getLastName().toUpperCase().equals(lastName)) {
+				if (p.getFirstName().equalsIgnoreCase(firstName) && p.getLastName().equalsIgnoreCase(lastName)) {
 					searchResult.add(p);
 				}
 			}

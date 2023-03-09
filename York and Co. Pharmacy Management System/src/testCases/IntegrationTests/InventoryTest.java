@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import org.junit.platform.commons.annotation.Testable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -82,6 +83,12 @@ class InventoryTest {
     }
 
     @Test
+    void increaseQuantityInvalid(){
+        Inventory val = Inventory.getInstance();
+        assertEquals(false, val.increaseQuantity(10,10));
+    }
+
+    @Test
     void decreaseQuantity(){ //need condition
         Inventory val = Inventory.getInstance();
         boolean[] testCase = {false, true, true};
@@ -96,18 +103,32 @@ class InventoryTest {
     }
 
     @Test
-    void addTo(){
+    void decreaseQuantityInvalid(){ // by 7
         Inventory val = Inventory.getInstance();
-        //Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
-        Merchandise m = new Merchandise(7, "Buckleys",  5,  3.00, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, null, true);
-        assertEquals(true, val.addToInventory(m));
+        boolean[] testCase = {false, true, false};
+        assertEquals(Arrays.toString(testCase), Arrays.toString(val.decreaseQuantity(10,7)));
     }
+//    @Test
+//    void addTo(){
+//        Inventory val = Inventory.getInstance();
+//        //Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+//        Merchandise m = new Merchandise(8, "Buckleys",  5,  3.00, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, null, true);
+//        assertEquals(true, val.addToInventory(m));
+//    }
     @Test
     void delete(){
         Inventory val = Inventory.getInstance();
         Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         assertEquals(true, val.addToInventory(m));
         assertEquals(true, val.delete(7));
+    }
+
+    @Test
+    void deleteInvalid(){
+        Inventory val = Inventory.getInstance();
+        Merchandise m = new Merchandise(10, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+       // assertEquals(true, val.addToInventory(m));
+        assertEquals(false, val.delete(7));
     }
     @Test
     void searchByID(){
@@ -117,12 +138,21 @@ class InventoryTest {
     }
 
     @Test
+    void searchByIDInvalid(){
+        Inventory val = Inventory.getInstance();
+        assertEquals(null, val.searchMerchandiseWithID(10));
+    }
+    @Test
     void modifyPrice(){
         Inventory val = Inventory.getInstance();
         assertEquals(true, val.modifyMedicationPrice(5,19.0));
     }
 
-
+    @Test
+    void modifyPriceInvalid(){
+        Inventory val = Inventory.getInstance();
+        assertEquals(false, val.modifyMedicationPrice(10,19.0));
+    }
 
 //
 //    @Test

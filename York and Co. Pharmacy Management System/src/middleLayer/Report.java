@@ -38,7 +38,7 @@ public class Report {
 	 	String output = "";
 	 	for (Order e : allOrders){
 
-             output = String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %f\n", 
+             output = String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %.2f\n", //added .2, without it 5.00 becomes 5.0000000
             		 e.getOrderNum(),e.getMedicationID(),e.getQuantityBought(),  e.getTotalPriceOfOrder() );
 	 }
 	 	return output;

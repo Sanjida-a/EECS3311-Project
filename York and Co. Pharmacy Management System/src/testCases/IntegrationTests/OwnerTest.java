@@ -44,17 +44,28 @@ class OwnerTest {
     }
 
     @Test
-    void searchName(){
-        Owner o = new Owner(1111111111, 11111111);
+    void searchFName(){
+        Owner o = new Owner(0, 0);
        assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("Smith", "FirstName").toString());
     }
 
     @Test
-    void searchNameFalse(){ //false
-        Owner o = new Owner(1111111111, 11111111);
+    void searchFNameFalse(){ //false
+        Owner o = new Owner(0, 0);
         assertEquals("[]", o.searchPatientByName("John", "FirstName").toString());
     }
 
+	@Test
+	void searchLName(){
+		Owner o = new Owner(0, 0);
+		assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("John", "LastName").toString());
+	}
+
+	@Test
+	void searchLNameFalse(){ //false
+		Owner o = new Owner(0, 0);
+		assertEquals("[]", o.searchPatientByName("Smith", "LastName").toString());
+	}
 //    @Test
 //    void searchOTCMedicineByName() {
 //        Owner val = new Owner(1111111111, 11111111);
@@ -79,7 +90,7 @@ class OwnerTest {
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("SMITH", "FirstName");
     	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
-    	assertEquals(comparator1, result);
+    	assertEquals(comparator1.toString(), result.toString());
     }
     
     @Test
@@ -88,7 +99,7 @@ class OwnerTest {
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("JOHN", "LastName");
     	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
-    	assertEquals(comparator1, result);
+    	assertEquals(comparator1.toString(), result.toString());
     }
     
     @Test
@@ -97,7 +108,7 @@ class OwnerTest {
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("SMITH JOHN", "FullName");
     	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
-    	assertEquals(comparator1, result);
+    	assertEquals(comparator1.toString(), result.toString());
     }
     
     @Test
@@ -106,7 +117,7 @@ class OwnerTest {
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
     	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
-    	assertNotEquals(comparator1, result);
+    	assertNotEquals(comparator1.toString(), result.toString());
     }
     
     @Test
@@ -115,7 +126,7 @@ class OwnerTest {
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName(null, "FirstName");
     	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
-    	assertNotEquals(comparator1, result);    	
+    	assertNotEquals(comparator1.toString(), result.toString());
     }
     
 
