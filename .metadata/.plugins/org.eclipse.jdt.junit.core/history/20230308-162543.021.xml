@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="UserUnitTest" project="York and Co. Pharmacy Management System" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="testCases.Unit.UserUnitTest" time="0.399" displayname="UserUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]">
+    <testcase name="testSetPassword" classname="testCases.Unit.UserUnitTest" time="0.395" displayname="testSetPassword()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testSetPassword()]"/>
+    <testcase name="testGetPassword" classname="testCases.Unit.UserUnitTest" time="0.0" displayname="testGetPassword()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testGetPassword()]"/>
+    <testcase name="testSetUsername" classname="testCases.Unit.UserUnitTest" time="0.002" displayname="testSetUsername()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testSetUsername()]"/>
+    <testcase name="testGetUsername" classname="testCases.Unit.UserUnitTest" time="0.001" displayname="testGetUsername()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testGetUsername()]"/>
+  </testsuite>
+</testrun>

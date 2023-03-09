@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import databaseDAO.UserStub;
 import middleLayer.ListOfPatients;
 import middleLayer.Patient;
-
+//done
 class ListOfPatientsUnitTest {
 
 	@Test
@@ -30,7 +30,7 @@ class ListOfPatientsUnitTest {
 		patients.set_userDAO(stub);
 		Patient result;
 		Patient expected;
-		result = patients.searchPatientWithID(0);
+		result = patients.searchPatientWithID(1111122222);
 		expected = stub.patientList.get(0);
 		assertEquals(result, expected);
 		result = patients.searchPatientWithID(99);
@@ -43,12 +43,9 @@ class ListOfPatientsUnitTest {
 		ListOfPatients patients = ListOfPatients.getInstance();
 		UserStub stub = new UserStub();
 		patients.set_userDAO(stub);
-		try {
-			assertFalse(patients.modifyPatientDetails(99, null, null, null, null));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		assertThrows(Exception.class, () -> patients.modifyPatientDetails(99, null, null, null, null));
+
 		JTextField fname = new JTextField();
 		JTextField lname = new JTextField();
 		JTextField phoneNum = new JTextField();
@@ -57,7 +54,8 @@ class ListOfPatientsUnitTest {
 		lname.setText("");
 		phoneNum.setText("");
 		address.setText("");
-		assertThrows(Exception.class, () -> patients.modifyPatientDetails(1, fname, lname, phoneNum, address));
+
+		assertThrows(Exception.class, () -> patients.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
 	}
 	
 	@Test
@@ -72,25 +70,25 @@ class ListOfPatientsUnitTest {
 		String result = new String();
 		fname.setText("fname");
 		try {
-			fname.setText("fname");
+			fname.setText("Smith");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getFirstName();
-			assertEquals(result, "fname");
+			assertEquals(result, "Smith");
 			
-			lname.setText("lname");
+			lname.setText("John");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getLastName();
-			assertEquals(result, "lname");
+			assertEquals(result, "John");
 			
-			phoneNum.setText("11122223333");
+			phoneNum.setText("1112223333");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = Integer.toString( patients.getAllPatientsList().get(0).getPhoneNum());
-			assertEquals(result, "11122223333");
+			assertEquals(result, "1112223333");
 			
-			address.setText("random address");
+			address.setText("5324 yonge St");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getAddress();
-			assertEquals(result, "random address");
+			assertEquals(result, "5324 yonge St");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -14,7 +14,7 @@ public class UserDAO implements UserRoot {
 	Connection con;
 	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
 	private String user = "root";
-	private String password = "hello123"; //make sure to change password based on your password for MySQL
+	private String password = "Motp1104#"; //make sure to change password based on your password for MySQL
 	
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();

@@ -12,7 +12,7 @@ import middleLayer.Patient;
 import middleLayer.Pharmacist;
 
 class PharmacistUnitTest {
-
+	//done
 	@Test
 	void testAddPatient() {
 		//fail("Not yet implemented");
@@ -27,8 +27,10 @@ class PharmacistUnitTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		expected.add(new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222));
 		expected.add(new Patient("test", "name", "address", 1111144444, 1111144444, 11111444));
-		result = 
+		result = stub.getListOfAllPatients();
+		assertEquals(expected, result);
 		
 	}	
 

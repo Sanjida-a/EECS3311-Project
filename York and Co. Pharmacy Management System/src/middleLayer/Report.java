@@ -1,6 +1,8 @@
 package middleLayer;
 
 import java.util.ArrayList;
+import databaseDAO.OrderRoot;
+
 
 public class Report {
 	
@@ -38,10 +40,14 @@ public class Report {
 	 	String output = "";
 	 	for (Order e : allOrders){
 
-             output = String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %f\n", 
-            		 e.getOrderNum(),e.getMedicationID(),e.getQuantityBought(),  e.getTotalPriceOfOrder() );
-	 }
+             output += e.toString();
+	 	}
 	 	return output;
+	 }
+	 
+	 public void setOrderDAO(OrderRoot dao) {
+		 this.listOfOrders.setOrderDAO(dao);
+		 this.allOrders = this.listOfOrders.getListofAllOrders();
 	 }
 	
 

@@ -76,7 +76,7 @@ public class ListOfPatients {
 	public boolean modifyPatientDetails(int patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
 		
 		String[] inputsAsStrings = new String[4];
-		
+
 		inputsAsStrings[0] = fName.getText();
 		inputsAsStrings[1] = lName.getText();
 		inputsAsStrings[2] = phoneNum.getText();

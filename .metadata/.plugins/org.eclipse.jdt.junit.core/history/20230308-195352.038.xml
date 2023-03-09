@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PharmacistUnitTest" project="York and Co. Pharmacy Management System" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="testCases.Unit.PharmacistUnitTest" time="0.448" displayname="PharmacistUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PharmacistUnitTest]">
+    <testcase name="testSearchPatientByName" classname="testCases.Unit.PharmacistUnitTest" time="0.013" displayname="testSearchPatientByName()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PharmacistUnitTest]/[method:testSearchPatientByName()]"/>
+    <testcase name="testAddPatient" classname="testCases.Unit.PharmacistUnitTest" time="0.434" displayname="testAddPatient()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PharmacistUnitTest]/[method:testAddPatient()]"/>
+  </testsuite>
+</testrun>
