@@ -153,7 +153,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	
 	@Override
 	public String toString() {
-		return String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %f\n", 
+		return String.format("Order number: %d Medication ID: %d Quantity bought: %d Total price: %.2f\n",
             		 this.getOrderNum(),this.getMedicationID(),this.getQuantityBought(),  this.getTotalPriceOfOrder() );
 		
 	}

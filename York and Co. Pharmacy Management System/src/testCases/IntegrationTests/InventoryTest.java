@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
     private MerchandiseDAO _merDAO;
-    static String pass = "ALVINTA12";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "user123";  // TA please change this according to your mySQL password in order for the tests to work
 
     @Test
     void getInstance() {

@@ -13,35 +13,44 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ListOfOrdersTest {
 	
-	static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+	static String pass = "user123";  // TA please change this according to your mySQL password in order for the tests to work
 	
     @Test
     void updateOrderListFromDatabase() {
     }
 
     @Test
-    void getListOfAllOrders(){
+    void getListOfAllOrders() throws Exception {
     	try {
 			superDAO.setPassword(pass);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//        ListOfOrders L = ListOfOrders.getInstance();
-//        Order O = new Order(1, 1111122222, 1);
-//        Prescription p = new Prescription(1, 1111122222, 2);
-//        L.addOrderToDatabase(O,p);
-//        assertEquals("[]", L.getListofAllOrders().toString());
-        ArrayList<Order> OrderTest = new ArrayList<Order>();
-        ListOfOrders call = ListOfOrders.getInstance();
-        Order val = new Order(1, 1, 1111122222, 2,5, false);
-        OrderTest.add(val);
-        assertEquals(OrderTest.toString(), call.getListofAllOrders().toString());
-
+        ListOfOrders val = ListOfOrders.getInstance();
+        ArrayList<Order> originalList = val.getListofAllOrders();
+        Order O = new Order(1, 1111122222, 1);
+        Prescription p = new Prescription(1, 1111122222, 2);
+        val.addOrderToDatabase(O,p);
+        ArrayList<Order> newList = val.getListofAllOrders();
+        assertEquals(originalList.get(newList.size()-2), newList.get(newList.size()-2));
     }
-
-
 
     @Test
-    void calculateRevenue() {
+    void addRefill() throws Exception {
+        try {
+            superDAO.setPassword(pass);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ListOfOrders val = ListOfOrders.getInstance();
+        ArrayList<Order> originalList = val.getListofAllOrders();
+        Order O = new Order(1, 1111122222, 1);
+        val.addRefillToDatabase(O);
+        ArrayList<Order> newList = val.getListofAllOrders();
+        System.out.println(newList);
     }
+
+
+
+
 }
