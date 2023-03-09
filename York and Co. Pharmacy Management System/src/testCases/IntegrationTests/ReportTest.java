@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReportTest {
-    static String pass = "user123";
+<<<<<<< Updated upstream
+
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void calculateRevenue() throws Exception {
         try {

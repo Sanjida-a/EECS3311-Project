@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
-    static String pass = "user123";
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void searchMedicineByName() {
         try {
