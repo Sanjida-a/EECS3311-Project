@@ -21,10 +21,8 @@ public class UserDAO extends superDAO implements UserRoot {
 	
 	public UserDAO() throws Exception {
 		try {
-			if(password != null) {
-				con = DriverManager.getConnection(url, user, password);
-				con.close();
-			}
+			con = DriverManager.getConnection(url, user, password);
+			con.close();
 			
 		} catch (Exception e) {
 			throw e;
