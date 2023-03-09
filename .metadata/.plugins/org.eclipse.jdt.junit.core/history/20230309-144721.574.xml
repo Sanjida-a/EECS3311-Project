@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="AuthenticateUserUnitTest" project="York and Co. Pharmacy Management System" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="testCases.Unit.AuthenticateUserUnitTest" time="0.325" displayname="AuthenticateUserUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.AuthenticateUserUnitTest]">
-    <testcase name="testCheckUserValid" classname="testCases.Unit.AuthenticateUserUnitTest" time="0.325" displayname="testCheckUserValid()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.AuthenticateUserUnitTest]/[method:testCheckUserValid()]"/>
-  </testsuite>
-</testrun>

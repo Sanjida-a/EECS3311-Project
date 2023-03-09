@@ -1,14 +1,9 @@
-org.opentest4j.AssertionFailedError: expected: java.util.ArrayList@354fc8f0<[First name: Smith, Last name: John, Address: 5324 yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222
-, First name: test, Last name: name, Address: address, Phone Number: 1111144444, Health Card: 1111144444, Date of birth: 11111444
-]> but was: java.util.ArrayList@41813449<[First name: Smith, Last name: John, Address: 5324 yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222
-, First name: test, Last name: name, Address: address, Phone Number: 1111144444, Health Card: 1111144444, Date of birth: 11111444
-]>
-	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
-	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
-	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)
-	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)
-	at testCases.Unit.PharmacistUnitTest.testAddPatient(PharmacistUnitTest.java:33)
+java.lang.AssertionError: expected:<true> but was:<false>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at testCases.Unit.InventoryUnitTest.modifyPrice(InventoryUnitTest.java:174)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

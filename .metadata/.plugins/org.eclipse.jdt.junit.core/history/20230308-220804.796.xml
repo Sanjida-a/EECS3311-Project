@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="testCases.Unit" project="York and Co. Pharmacy Management System" tests="41" started="41" failures="1" errors="0" ignored="0">
+  <testsuite name="testCases.Unit.ListOfPatientsUnitTest" time="0.59" displayname="ListOfPatientsUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]">
+    <testcase name="testModifyPatientDetails1" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.483" displayname="testModifyPatientDetails1()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testModifyPatientDetails1()]"/>
+    <testcase name="testModifyPatientDetails2" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.068" displayname="testModifyPatientDetails2()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testModifyPatientDetails2()]"/>
+    <testcase name="testSearchPatientWithID" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.019" displayname="testSearchPatientWithID()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testSearchPatientWithID()]"/>
+    <testcase name="testUpdatePatientListFromDatabase" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.016" displayname="testUpdatePatientListFromDatabase()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testUpdatePatientListFromDatabase()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.PharmacistUnitTest" time="0.033" displayname="PharmacistUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PharmacistUnitTest]">
+    <testcase name="testSearchPatientByName" classname="testCases.Unit.PharmacistUnitTest" time="0.001" displayname="testSearchPatientByName()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PharmacistUnitTest]/[method:testSearchPatientByName()]"/>
+    <testcase name="testAddPatient" classname="testCases.Unit.PharmacistUnitTest" time="0.031" displayname="testAddPatient()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PharmacistUnitTest]/[method:testAddPatient()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.MerchandiseUnitTest" time="0.001" displayname="MerchandiseUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.MerchandiseUnitTest]">
+    <testcase name="test" classname="testCases.Unit.MerchandiseUnitTest" time="0.001" displayname="test()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.MerchandiseUnitTest]/[method:test()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.UserUnitTest" time="0.004" displayname="UserUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]">
+    <testcase name="testSetPassword" classname="testCases.Unit.UserUnitTest" time="0.001" displayname="testSetPassword()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testSetPassword()]"/>
+    <testcase name="testGetPassword" classname="testCases.Unit.UserUnitTest" time="0.0" displayname="testGetPassword()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testGetPassword()]"/>
+    <testcase name="testSetUsername" classname="testCases.Unit.UserUnitTest" time="0.0" displayname="testSetUsername()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testSetUsername()]"/>
+    <testcase name="testGetUsername" classname="testCases.Unit.UserUnitTest" time="0.001" displayname="testGetUsername()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.UserUnitTest]/[method:testGetUsername()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.ReportUnitTest" time="0.104" displayname="ReportUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ReportUnitTest]">
+    <testcase name="testCalculateProfit" classname="testCases.Unit.ReportUnitTest" time="0.058" displayname="testCalculateProfit()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ReportUnitTest]/[method:testCalculateProfit()]"/>
+    <testcase name="testSeeSummaryOfSales" classname="testCases.Unit.ReportUnitTest" time="0.031" displayname="testSeeSummaryOfSales()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ReportUnitTest]/[method:testSeeSummaryOfSales()]"/>
+    <testcase name="testCalculateRevenue" classname="testCases.Unit.ReportUnitTest" time="0.013" displayname="testCalculateRevenue()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ReportUnitTest]/[method:testCalculateRevenue()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.PatientUnitTest" time="0.0" displayname="PatientUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PatientUnitTest]">
+    <testcase name="test" classname="testCases.Unit.PatientUnitTest" time="0.0" displayname="test()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PatientUnitTest]/[method:test()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.ListOfOrdersUnitTest" time="0.015" displayname="ListOfOrdersUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfOrdersUnitTest]">
+    <testcase name="testUpdateOrderListFromDatabase" classname="testCases.Unit.ListOfOrdersUnitTest" time="0.015" displayname="testUpdateOrderListFromDatabase()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfOrdersUnitTest]/[method:testUpdateOrderListFromDatabase()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.InventoryUnitTest" time="0.019" displayname="InventoryUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]">
+    <testcase name="displayByQuantityTest" classname="testCases.Unit.InventoryUnitTest" time="0.002" displayname="displayByQuantityTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:displayByQuantityTest()]"/>
+    <testcase name="modifyMedicationPrice" classname="testCases.Unit.InventoryUnitTest" time="0.0" displayname="modifyMedicationPrice()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:modifyMedicationPrice()]"/>
+    <testcase name="displayByPriceTest" classname="testCases.Unit.InventoryUnitTest" time="0.0" displayname="displayByPriceTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:displayByPriceTest()]"/>
+    <testcase name="searchMerchandiseWithIDTest" classname="testCases.Unit.InventoryUnitTest" time="0.003" displayname="searchMerchandiseWithIDTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:searchMerchandiseWithIDTest()]"/>
+    <testcase name="displayAlphabeticallyTest" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="displayAlphabeticallyTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:displayAlphabeticallyTest()]"/>
+    <testcase name="modifyMedicationNameTest" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="modifyMedicationNameTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:modifyMedicationNameTest()]"/>
+    <testcase name="decreaseQuantityTest1" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="decreaseQuantityTest1()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:decreaseQuantityTest1()]"/>
+    <testcase name="decreaseQuantityTest2" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="decreaseQuantityTest2()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:decreaseQuantityTest2()]"/>
+    <testcase name="getInstanceTest" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="getInstanceTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:getInstanceTest()]"/>
+    <testcase name="modifyMedicationDescription" classname="testCases.Unit.InventoryUnitTest" time="0.0" displayname="modifyMedicationDescription()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:modifyMedicationDescription()]"/>
+    <testcase name="increaseQuantityTest" classname="testCases.Unit.InventoryUnitTest" time="0.0" displayname="increaseQuantityTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:increaseQuantityTest()]"/>
+    <testcase name="getMerchandiseTest" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="getMerchandiseTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:getMerchandiseTest()]"/>
+    <testcase name="addToInventoryTest" classname="testCases.Unit.InventoryUnitTest" time="0.0" displayname="addToInventoryTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:addToInventoryTest()]"/>
+    <testcase name="getOnlyOTCMerchandiseTest" classname="testCases.Unit.InventoryUnitTest" time="0.0" displayname="getOnlyOTCMerchandiseTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:getOnlyOTCMerchandiseTest()]"/>
+    <testcase name="deleteTest" classname="testCases.Unit.InventoryUnitTest" time="0.001" displayname="deleteTest()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.InventoryUnitTest]/[method:deleteTest()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.OwnerUnitTest" time="0.004" displayname="OwnerUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]">
+    <testcase name="testSetOwnerUser" classname="testCases.Unit.OwnerUnitTest" time="0.001" displayname="testSetOwnerUser()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSetOwnerUser()]"/>
+    <testcase name="testOwner" classname="testCases.Unit.OwnerUnitTest" time="0.0" displayname="testOwner()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testOwner()]"/>
+    <testcase name="testSearchPatientByName" classname="testCases.Unit.OwnerUnitTest" time="0.0" displayname="testSearchPatientByName()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSearchPatientByName()]"/>
+    <testcase name="testGetOwnerUser" classname="testCases.Unit.OwnerUnitTest" time="0.0" displayname="testGetOwnerUser()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testGetOwnerUser()]"/>
+    <testcase name="testSearchMedicineByName" classname="testCases.Unit.OwnerUnitTest" time="0.001" displayname="testSearchMedicineByName()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSearchMedicineByName()]"/>
+    <testcase name="testSearchMedicineByType" classname="testCases.Unit.OwnerUnitTest" time="0.0" displayname="testSearchMedicineByType()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OwnerUnitTest]/[method:testSearchMedicineByType()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.AuthenticateUserUnitTest" time="0.028" displayname="AuthenticateUserUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.AuthenticateUserUnitTest]">
+    <testcase name="testCheckUserValid" classname="testCases.Unit.AuthenticateUserUnitTest" time="0.028" displayname="testCheckUserValid()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.AuthenticateUserUnitTest]/[method:testCheckUserValid()]">
+      <failure>
+        <expected>PHARMACIST</expected>
+        <actual>null</actual>
+        org.opentest4j.AssertionFailedError: expected: &lt;PHARMACIST&gt; but was: &lt;null&gt;&#13;
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)&#13;
+	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)&#13;
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)&#13;
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:177)&#13;
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:1141)&#13;
+	at testCases.Unit.AuthenticateUserUnitTest.testCheckUserValid(AuthenticateUserUnitTest.java:30)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)&#13;
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:725)&#13;
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)&#13;
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)&#13;
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)&#13;
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)&#13;
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)&#13;
+	at org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)&#13;
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)&#13;
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)&#13;
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)&#13;
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)&#13;
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)&#13;
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)&#13;
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:214)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:210)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:135)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)&#13;
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)&#13;
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)&#13;
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)&#13;
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)&#13;
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)&#13;
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:95)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:91)&#13;
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:60)&#13;
+	at org.eclipse.jdt.internal.junit5.runner.JUnit5TestReference.run(JUnit5TestReference.java:98)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:40)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:529)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:756)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:452)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:210)&#13;
+&#13;
+
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="testCases.Unit.pharmacyAppMainUnitTest" time="0.001" displayname="pharmacyAppMainUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.pharmacyAppMainUnitTest]">
+    <testcase name="testMain" classname="testCases.Unit.pharmacyAppMainUnitTest" time="0.001" displayname="testMain()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.pharmacyAppMainUnitTest]/[method:testMain()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.OrderUnitTest" time="0.015" displayname="OrderUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OrderUnitTest]">
+    <testcase name="testOrderIntIntInt" classname="testCases.Unit.OrderUnitTest" time="0.015" displayname="testOrderIntIntInt()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.OrderUnitTest]/[method:testOrderIntIntInt()]"/>
+  </testsuite>
+  <testsuite name="testCases.Unit.PrescriptionUnitTest" time="0.0" displayname="PrescriptionUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PrescriptionUnitTest]">
+    <testcase name="test" classname="testCases.Unit.PrescriptionUnitTest" time="0.0" displayname="test()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.PrescriptionUnitTest]/[method:test()]"/>
+  </testsuite>
+</testrun>
