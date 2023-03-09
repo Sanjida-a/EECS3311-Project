@@ -1,6 +1,8 @@
-package middleLayer;
+package middleLayer.Users;
 
 import java.util.ArrayList;
+
+import middleLayer.Orders.Order;
 
 public class Patient extends User {
 //	private static int IDClassVar = 1; //deleting static instance, as this will generate wrong number on different computers

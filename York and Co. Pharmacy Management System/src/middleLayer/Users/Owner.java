@@ -1,4 +1,4 @@
-package middleLayer;
+package middleLayer.Users;
 
 import java.util.ArrayList;
 

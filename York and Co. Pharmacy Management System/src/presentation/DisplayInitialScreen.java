@@ -30,15 +30,9 @@ import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.border.LineBorder;
 
-import middleLayer.AuthenticateUser;
-import middleLayer.Merchandise;
-import middleLayer.Order;
-import middleLayer.Owner;
-import middleLayer.Patient;
-import middleLayer.User;
-import middleLayer.Inventory;
-import middleLayer.MERCHANDISE_FORM;
-import middleLayer.MERCHANDISE_TYPE;
+import middleLayer.Users.*;
+import middleLayer.MerchandiseInventory.*;
+import middleLayer.Orders.*;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;

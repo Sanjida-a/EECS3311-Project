@@ -1,4 +1,4 @@
-package middleLayer;
+package middleLayer.MerchandiseInventory;
 
 public enum MERCHANDISE_TYPE { // hard coded values of medication types that are possible in our inventory
 	COUGH,

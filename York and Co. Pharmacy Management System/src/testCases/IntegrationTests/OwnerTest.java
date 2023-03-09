@@ -5,6 +5,7 @@ import databaseDAO.superDAO;
 import org.junit.jupiter.api.Test;
 
 import middleLayer.*;
+import middleLayer.Users.*;
 
 import java.util.ArrayList;
 

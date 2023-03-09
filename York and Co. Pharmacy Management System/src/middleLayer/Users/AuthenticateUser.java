@@ -1,10 +1,9 @@
-package middleLayer;
+package middleLayer.Users;
 
 import java.util.ArrayList;
 
-import databaseDAO.UserDAO;
-import databaseDAO.UserRoot;
-import databaseDAO.UserStub;
+import databaseDAO.UserData.UserDAO;
+import databaseDAO.UserData.UserRoot;
 import presentation.USER;
 
 public class AuthenticateUser {

@@ -1,15 +1,12 @@
 package testCases.IntegrationTests;
 import databaseDAO.superDAO;
 import org.junit.jupiter.api.Test;
-import middleLayer.Pharmacist;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import middleLayer.ListOfPatients;
-
-
-import middleLayer.Patient;
+import middleLayer.Users.*;
 
 /*to be tested:
  * ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch)
@@ -18,7 +15,7 @@ import middleLayer.Patient;
  */
 
 class PharmacistTest {
-    private middleLayer.Patient patient1;
+    private Patient patient1;
     static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
 //    @Test
@@ -50,19 +47,21 @@ class PharmacistTest {
         ListOfPatients val = ListOfPatients.getInstance();
         ArrayList<Patient> listOfPat = val.getAllPatientsList();
         
-        int newHealthCardNum = 1112224444;
+        int newHealthCardNum = 1111144444;
         for (int i = 0; i < listOfPat.size(); i++) {
         	if (listOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
-        		newHealthCardNum = -1;
+        		newHealthCardNum = -1; // patient already exists
         		break;
         	}
         }
         
+        Pharmacist subject1 = new Pharmacist(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        
         if (newHealthCardNum != -1) {
-        	 patient1 = new middleLayer.Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
+        	patient1 = new Patient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
              
-             Pharmacist subject1 = new Pharmacist(0, 0);
-             ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+            
              comparator1.add(patient1);
              try {
      			subject1.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
@@ -74,6 +73,15 @@ class PharmacistTest {
              ArrayList<Patient> result = subject1.searchPatientByName("MAN", "LastName");
 
              assertEquals(comparator1.toString(), result.toString());
+        }
+        else {
+        	try {
+        		assertThrows(Exception.class, () -> subject1.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012));
+        	}
+        	catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        	
         }
        
     }

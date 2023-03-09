@@ -3,6 +3,8 @@ package testCases.IntegrationTests;
 import databaseDAO.superDAO;
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
+import middleLayer.Users.*;
+
 import org.junit.platform.commons.annotation.Testable;
 
 import javax.swing.*;

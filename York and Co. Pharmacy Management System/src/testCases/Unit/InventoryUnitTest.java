@@ -7,17 +7,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.MerchandiseRoot;
-import databaseDAO.MerchandiseStub;
-import middleLayer.Inventory;
-import middleLayer.MERCHANDISE_FORM;
-import middleLayer.MERCHANDISE_TYPE;
-import middleLayer.Merchandise;
+import databaseDAO.*;
+import databaseDAO.MerchandiseData.MerchandiseStub;
+import middleLayer.MerchandiseInventory.*;
 
 //done
 public class InventoryUnitTest {
+	
+	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
+	
 	@Test
     void getInstanceTest() {
         Inventory subject1 = Inventory.getInstance();
@@ -228,7 +239,6 @@ public class InventoryUnitTest {
         try {
 			assertTrue(val.modifyMedicationName(1, "subject1"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         assertEquals(val.getMerchandise().get(0).getName(), "subject1");

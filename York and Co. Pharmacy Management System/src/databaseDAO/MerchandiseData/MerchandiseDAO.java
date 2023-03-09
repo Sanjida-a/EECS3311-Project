@@ -1,4 +1,4 @@
-package databaseDAO;
+package databaseDAO.MerchandiseData;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,13 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import middleLayer.MERCHANDISE_FORM;
-import middleLayer.MERCHANDISE_TYPE;
-import middleLayer.Merchandise;
-import middleLayer.Owner;
-import middleLayer.Patient;
-import middleLayer.Pharmacist;
-import middleLayer.User;
+import databaseDAO.superDAO;
+import middleLayer.MerchandiseInventory.*;
+
 
 
 public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {

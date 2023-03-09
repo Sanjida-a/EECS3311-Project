@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import java.awt.*;
 import java.awt.event.*;
 import middleLayer.*;
+import middleLayer.Users.AuthenticateUser;
+
 import javax.swing.SwingConstants;
 
 public class DisplayLogin {

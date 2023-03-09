@@ -1,4 +1,4 @@
-package databaseDAO;
+package databaseDAO.OrderData;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,10 +11,12 @@ import java.sql.Statement;
  */
 import java.util.ArrayList;
 
-import middleLayer.Merchandise;
-import middleLayer.Order;
-import middleLayer.Patient;
-import middleLayer.Prescription;
+
+import databaseDAO.MerchandiseData.MerchandiseStub;
+import databaseDAO.UserData.UserStub;
+import middleLayer.MerchandiseInventory.Merchandise;
+import middleLayer.Orders.*;
+import middleLayer.Users.Patient;
 
 public class OrderStub implements OrderRoot {
 	public ArrayList<Order> orderList; 

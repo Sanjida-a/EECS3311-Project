@@ -1,11 +1,13 @@
-package middleLayer;
+package middleLayer.Users;
 
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
-import databaseDAO.UserDAO;
-import databaseDAO.UserRoot;
+import databaseDAO.UserData.UserDAO;
+import databaseDAO.UserData.UserRoot;
+
+
 
 public class ListOfPatients {
 	

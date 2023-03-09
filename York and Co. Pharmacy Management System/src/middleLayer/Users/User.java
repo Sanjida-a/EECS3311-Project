@@ -1,7 +1,8 @@
-package middleLayer;
+package middleLayer.Users;
 
 import java.util.ArrayList;
 
+import middleLayer.MerchandiseInventory.*;
 import presentation.USER;
 
 public abstract class User {

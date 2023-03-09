@@ -1,9 +1,8 @@
-package databaseDAO;
+package databaseDAO.UserData;
 
 import java.util.ArrayList;
 
-import middleLayer.Patient;
-import middleLayer.User;
+import middleLayer.Users.*;
 
 public interface UserRoot {
 	public ArrayList<User> getListOfUsernamesAndPasswords() throws Exception;

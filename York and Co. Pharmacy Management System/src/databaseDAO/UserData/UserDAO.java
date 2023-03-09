@@ -1,13 +1,10 @@
-package databaseDAO;
+package databaseDAO.UserData;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-import middleLayer.Merchandise;
-import middleLayer.Owner;
-import middleLayer.Patient;
-import middleLayer.Pharmacist;
-import middleLayer.User;
+import databaseDAO.superDAO;
+import middleLayer.Users.*;
 
 public class UserDAO extends superDAO implements UserRoot {
 	

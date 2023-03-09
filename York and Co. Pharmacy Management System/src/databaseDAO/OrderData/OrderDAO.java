@@ -1,18 +1,15 @@
-package databaseDAO;
+package databaseDAO.OrderData;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import middleLayer.Order;
 
-import middleLayer.MERCHANDISE_FORM;
-import middleLayer.MERCHANDISE_TYPE;
-import middleLayer.Merchandise;
-import middleLayer.Owner;
-import middleLayer.Patient;
-import middleLayer.Pharmacist;
-import middleLayer.Prescription;
-import middleLayer.User;
+import databaseDAO.superDAO;
+
+
+import middleLayer.MerchandiseInventory.*;
+import middleLayer.Orders.*;
+import middleLayer.Users.*;
 
 public class OrderDAO extends superDAO implements OrderRoot{
 	

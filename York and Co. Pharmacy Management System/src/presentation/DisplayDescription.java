@@ -3,7 +3,7 @@ package presentation;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import middleLayer.Merchandise;
+import middleLayer.MerchandiseInventory.*;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 

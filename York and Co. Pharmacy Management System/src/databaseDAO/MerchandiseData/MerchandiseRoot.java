@@ -1,8 +1,8 @@
-package databaseDAO;
+package databaseDAO.MerchandiseData;
 
 import java.util.ArrayList;
 
-import middleLayer.Merchandise;
+import middleLayer.MerchandiseInventory.*;
 
 public interface MerchandiseRoot {
 	public ArrayList<Merchandise> getListOfMerchandise() ;

@@ -18,12 +18,7 @@ import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 
-
-
-import middleLayer.ListOfPatients;
-import middleLayer.Pharmacist;
-import middleLayer.Owner;
-import middleLayer.Patient;
+import middleLayer.Users.*;
 
 
 import java.awt.Color;

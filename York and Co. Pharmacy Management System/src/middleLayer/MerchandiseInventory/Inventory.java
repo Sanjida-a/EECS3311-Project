@@ -1,4 +1,4 @@
-package middleLayer;
+package middleLayer.MerchandiseInventory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import databaseDAO.*;
+import databaseDAO.MerchandiseData.MerchandiseDAO;
+import databaseDAO.MerchandiseData.MerchandiseRoot;
 
 public class Inventory{
     private static Inventory singletonInstance = null;

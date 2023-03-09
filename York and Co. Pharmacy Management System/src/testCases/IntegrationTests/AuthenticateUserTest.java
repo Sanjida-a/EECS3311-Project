@@ -5,7 +5,7 @@ package testCases.IntegrationTests;
 import org.junit.jupiter.api.Test;
 
 import databaseDAO.superDAO;
-import middleLayer.AuthenticateUser;
+import middleLayer.Users.AuthenticateUser;
 import presentation.USER;
 import org.junit.jupiter.api.Assertions;
 

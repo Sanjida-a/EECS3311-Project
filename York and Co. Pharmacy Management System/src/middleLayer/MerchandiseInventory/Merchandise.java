@@ -1,4 +1,4 @@
-package middleLayer;
+package middleLayer.MerchandiseInventory;
 
 public class Merchandise{
 //	static int medicationIDClassVar = 6; //Cant use static variable because does not work correctly with database.

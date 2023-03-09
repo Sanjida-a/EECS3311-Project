@@ -5,16 +5,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.MerchandiseStub;
-import middleLayer.Inventory;
-import middleLayer.MERCHANDISE_TYPE;
-import middleLayer.Merchandise;
-import middleLayer.Owner;
+import databaseDAO.superDAO;
+import databaseDAO.MerchandiseData.MerchandiseStub;
+import middleLayer.MerchandiseInventory.*;
+import middleLayer.Users.*;
 import presentation.USER;
 //done
 class OwnerUnitTest {
+	
+	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
 
 	@Test
 	void testOwner() {

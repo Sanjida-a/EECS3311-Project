@@ -1,15 +1,14 @@
-package databaseDAO;
+package databaseDAO.OrderData;
 
 
 import java.sql.SQLException;
 
 import java.util.ArrayList;
 
+import middleLayer.Orders.Order;
+import middleLayer.Orders.Prescription;
 
-import middleLayer.Merchandise;
-import middleLayer.Order;
-import middleLayer.Patient;
-import middleLayer.Prescription;
+
 
 public interface OrderRoot {
 	public void addToOrderTable(Order o) throws Exception;	

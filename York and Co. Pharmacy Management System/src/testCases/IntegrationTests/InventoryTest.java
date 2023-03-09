@@ -1,10 +1,13 @@
 package testCases.IntegrationTests;
 
-import databaseDAO.MerchandiseDAO;
+
 import databaseDAO.superDAO;
+import databaseDAO.MerchandiseData.MerchandiseDAO;
 
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
+import middleLayer.MerchandiseInventory.*;
+
 import org.junit.platform.commons.annotation.Testable;
 
 import java.util.ArrayList;
@@ -176,13 +179,26 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
-        ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(originalList.get(0).getQuantity()-1, newList.get(0).getQuantity());
+      
+        
+        if (originalList.get(0).getQuantity() >= 1) {
+        	val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
+        	ArrayList<Merchandise> newList = val.getMerchandise();
+            assertEquals(originalList.get(0).getQuantity()-1, newList.get(0).getQuantity());
+            
+            //back to normal
+            val.increaseQuantity(originalList.get(0).getMedicationID(), 1);
+        }
+        else {
+        	val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
+        	ArrayList<Merchandise> newList = val.getMerchandise();
+            assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
+        }
+        
 //        assertEquals(true, val.increaseQuantity(2,10))
         
         // back to normal
-        val.increaseQuantity(originalList.get(0).getMedicationID(), 1);
+       
     }
 
 

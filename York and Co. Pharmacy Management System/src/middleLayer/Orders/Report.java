@@ -1,7 +1,8 @@
-package middleLayer;
+package middleLayer.Orders;
 
 import java.util.ArrayList;
-import databaseDAO.OrderRoot;
+
+import databaseDAO.OrderData.OrderRoot;
 
 
 public class Report {

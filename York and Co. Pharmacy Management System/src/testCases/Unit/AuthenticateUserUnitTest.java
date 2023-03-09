@@ -2,22 +2,34 @@ package testCases.Unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.UserStub;
 import databaseDAO.superDAO;
-import middleLayer.AuthenticateUser;
+import databaseDAO.UserData.UserStub;
+import middleLayer.Users.AuthenticateUser;
 import presentation.USER;
-import middleLayer.Pharmacist;
+
 //done
 class AuthenticateUserUnitTest {
+	
+	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
 
 	@Test
 	void testCheckUserValid() throws Exception {
 		//fail("Not yet implemented");
 		//this dependency cannot be removed unless the design in some classes changes
 		//tester should enter his/her own SQL database root password
-		superDAO.setPassword("Motp1104#");
+//		superDAO.setPassword("hello123");
 		AuthenticateUser auth = AuthenticateUser.getInstance();
 		UserStub stub = new UserStub();
 		//to make the instance of Pharmacist in the list work with the stub database

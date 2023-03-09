@@ -15,9 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
-import middleLayer.Inventory;
-import middleLayer.Pharmacist;
-import middleLayer.Merchandise;
+import middleLayer.MerchandiseInventory.*;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;

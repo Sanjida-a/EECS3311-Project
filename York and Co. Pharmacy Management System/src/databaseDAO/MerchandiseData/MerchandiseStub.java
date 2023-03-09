@@ -1,10 +1,8 @@
-package databaseDAO;
+package databaseDAO.MerchandiseData;
 
 import java.util.ArrayList;
 
-import middleLayer.MERCHANDISE_FORM;
-import middleLayer.MERCHANDISE_TYPE;
-import middleLayer.Merchandise;
+import middleLayer.MerchandiseInventory.*;
 /*
  * Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC, String description
  * 

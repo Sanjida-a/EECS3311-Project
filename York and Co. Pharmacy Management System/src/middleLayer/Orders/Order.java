@@ -1,7 +1,9 @@
-package middleLayer;
+package middleLayer.Orders;
 
-import databaseDAO.MerchandiseDAO;
-import databaseDAO.OrderDAO;
+import middleLayer.MerchandiseInventory.Inventory;
+import middleLayer.MerchandiseInventory.Merchandise;
+import middleLayer.Users.ListOfPatients;
+import middleLayer.Users.Patient;
 
 public class Order { //ALL ORDER: both OTC and Prescription
 	private Inventory merList = Inventory.getInstance();
@@ -38,7 +40,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		}
 		
 		this.totalPriceOfOrder = mFound.getPrice()*quantityBought;
-		this.isPrescription = !mFound.isOTC;
+		this.isPrescription = !mFound.getisOTC();
 	}
 
 	// constructor for reading from database

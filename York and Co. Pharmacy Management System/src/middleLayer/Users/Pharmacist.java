@@ -1,10 +1,10 @@
-package middleLayer;
+package middleLayer.Users;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import databaseDAO.UserDAO;
-import databaseDAO.UserRoot;
+import databaseDAO.UserData.UserDAO;
+import databaseDAO.UserData.UserRoot;
 import presentation.DisplayLogin;
 
 public class Pharmacist extends User {

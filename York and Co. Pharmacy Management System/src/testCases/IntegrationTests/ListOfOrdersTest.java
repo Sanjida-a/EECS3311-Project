@@ -1,6 +1,9 @@
 package testCases.IntegrationTests;
 
 import middleLayer.*;
+import middleLayer.MerchandiseInventory.*;
+import middleLayer.Orders.*;
+
 import org.junit.jupiter.api.Test;
 
 import databaseDAO.superDAO;

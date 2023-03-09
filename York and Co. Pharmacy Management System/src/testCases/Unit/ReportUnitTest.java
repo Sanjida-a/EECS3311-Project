@@ -2,13 +2,28 @@ package testCases.Unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import middleLayer.Order;
-import middleLayer.Report;
-import databaseDAO.OrderStub;
+import middleLayer.Orders.*;
+import databaseDAO.superDAO;
+import databaseDAO.OrderData.OrderStub;
 
 class ReportUnitTest {
+	
+	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
+	
 	//done
 	@Test
 	void testCalculateRevenue() {
@@ -42,9 +57,9 @@ class ReportUnitTest {
 		Report report = new Report();
 		OrderStub stub = new OrderStub();
 		report.setOrderDAO(stub);
-		String expected = new String();
+		ArrayList<String> expected = new ArrayList<String>();
 		for(Order o : stub.orderList) {
-			expected += o.toString();
+			expected.add(o.toString());
 		}
 		assertEquals(expected, report.seeSummaryOfSales() );
 	}

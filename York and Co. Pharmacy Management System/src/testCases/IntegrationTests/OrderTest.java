@@ -2,8 +2,6 @@ package testCases.IntegrationTests;
 
 import org.junit.jupiter.api.Test;
 
-import middleLayer.Merchandise;
-
 /*to be tested:
  * Order(int orderNum,int medicationID, int patientID, int quantityBought, double priceAtPurchase )
  * addOrderToPatient(int _patientID, int _medicationId, int _qty , int _numOfRefills) throws Exception 

@@ -10,12 +10,8 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import middleLayer.AuthenticateUser;
-import middleLayer.Inventory;
-import middleLayer.ListOfOrders;
-import middleLayer.Merchandise;
-import middleLayer.Order;
-import middleLayer.Prescription;
+import middleLayer.MerchandiseInventory.*;
+import middleLayer.Orders.*;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

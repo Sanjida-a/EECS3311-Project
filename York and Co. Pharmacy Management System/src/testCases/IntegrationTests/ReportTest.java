@@ -1,6 +1,8 @@
 package testCases.IntegrationTests;
 import databaseDAO.superDAO;
 import middleLayer.*;
+import middleLayer.Orders.*;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

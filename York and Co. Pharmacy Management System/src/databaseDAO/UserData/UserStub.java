@@ -1,14 +1,8 @@
-package databaseDAO;
+package databaseDAO.UserData;
 
 import java.util.ArrayList;
 
-import middleLayer.MERCHANDISE_FORM;
-import middleLayer.MERCHANDISE_TYPE;
-import middleLayer.Merchandise;
-import middleLayer.Owner;
-import middleLayer.Patient;
-import middleLayer.Pharmacist;
-import middleLayer.User;
+import middleLayer.Users.*;
 
 public class UserStub implements UserRoot {
 	public ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();

@@ -1,11 +1,11 @@
-package middleLayer;
+package middleLayer.Orders;
 
 import java.util.ArrayList;
 
-import databaseDAO.MerchandiseDAO;
-import databaseDAO.OrderDAO;
-import databaseDAO.OrderRoot;
-import middleLayer.Order;
+import databaseDAO.OrderData.OrderDAO;
+import databaseDAO.OrderData.OrderRoot;
+import middleLayer.MerchandiseInventory.Inventory;
+import middleLayer.MerchandiseInventory.Merchandise;
 
 public class ListOfOrders {
 	private Inventory merList = Inventory.getInstance();
@@ -87,7 +87,7 @@ public class ListOfOrders {
 //		getMer.setQuantity(newQuant);
 //		_merDao.updateQuantPurchase(medicationID, quantityBought);
 		
-		merList.decreaseQuantity(getMer.medicationID, o.getQuantityBought());
+		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
 //		_merDao.updateMedicationInDatabase(medicationID, foundMedication);
 		this.updateOrderListFromDatabase();
 	}
@@ -120,7 +120,7 @@ public class ListOfOrders {
 		
 		_orderDAO.addRefillToOrderTable(o);
 //		_merDao.updateQuantPurchase(medicationID, quantityBought);
-		merList.decreaseQuantity(getMer.medicationID, o.getQuantityBought());
+		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
 		this.updateOrderListFromDatabase();
 	}
 	
