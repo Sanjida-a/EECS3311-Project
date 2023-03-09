@@ -130,7 +130,7 @@ public class InventoryUnitTest {
         val.set_merDAO(mStub);
         assertTrue(val.increaseQuantity(1,10));
         assertFalse(val.increaseQuantity(5, 10));
-        assertEquals(val.getMerchandise().get(0).toString(), new Merchandise(1, "pill1", 20, 5.99, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true).toString() );
+        assertEquals(val.getMerchandise().get(0).toString(), new Merchandise(1, "pill1", 20, 2.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true).toString() );
         
     }
 
@@ -201,7 +201,7 @@ public class InventoryUnitTest {
         Inventory val = Inventory.getInstance();
         MerchandiseStub mStub = new MerchandiseStub();
         val.set_merDAO(mStub);
-        Merchandise m = new Merchandise(1, "pill1", 10, 5.99, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
+        Merchandise m = new Merchandise(1, "pill1", 10, 2.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
         assertEquals(m.toString(), val.searchMerchandiseWithID(1).toString());
         assertTrue(null == val.searchMerchandiseWithID(6));
     }

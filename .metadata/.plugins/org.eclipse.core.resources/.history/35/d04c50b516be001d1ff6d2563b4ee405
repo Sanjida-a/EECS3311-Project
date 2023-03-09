@@ -1,0 +1,35 @@
+package testCases.Unit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import middleLayer.Report;
+import databaseDAO.OrderStub;
+
+class ReportUnitTest {
+
+	@Test
+	void testCalculateRevenue() {
+		//fail("Not yet implemented");
+		Report report = new Report();
+		report.setOrderDAO(new OrderStub());
+		try {
+			assertEquals(75.0, report.calculateRevenue(), 0.001);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	void testCalculateProfit() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSeeSummaryOfSales() {
+		fail("Not yet implemented");
+	}
+
+}
