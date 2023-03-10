@@ -93,28 +93,50 @@
 *Implemented modifyPatientDetails method and connected to front end and database
 *Fixed other methods like modifyMedicationDetails to fix minor bugs
 
-21. 2023/03/04 20:00 - 21:30 contributor: Aiza Bajwa
+21. 2023/03/04 21:00-23:00 Contributor: Alvin Ta
+*created test classes for each class applicable through unit tests
+
+22. 2023/03/04 20:00 - 21:30 contributor: Aiza Bajwa
 *Created and uploaded documentation for Iteration 2 (updated plan; changes in iteration; planned vs actual time)
 
-22. 2023/03/05 21:30 - 2023/03/06 02:00 contributor: Minh Tran
+23. 2023/03/05 21:30 - 2023/03/06 02:00 contributor: Minh Tran
 *Implement Revenue, getProfit
 *Fix DeleteMed
 *Fix Database
 *Fix add orders
 
-23. 2023/03/05 21:00 - 00:00 contributor: Aiza Bajwa, Geon Kim
+24. 2023/03/05 21:00 - 00:00 contributor: Aiza Bajwa, Geon Kim
 *Virtual call
 *Implementation of Stubs and applied dependency injection principle
 
-24. 2023/03/05 13:00 - 16:00 contributor: Sanjida Afreen
+25. 2023/03/05 19:00-21:30 Contributor: Alvin Ta
+*Completed and pushed AuthenticateUserTest
+*Completed and pushed InventoryTest
+
+
+26. 2023/03/05 13:00 - 16:00 contributor: Sanjida Afreen
 *Added UML Diagram
 
-25. 2023/03/07 21:30 - 2023/03/08 02:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
+27. 2023/03/06 10:30-13:00 Contributor Alvin Ta
+*Completed ListOfOrdersTest
+*Completed ListOfPatientsTest
+
+28. 2023/03/06 00:00-12:30 Contributor: Aiza Bajwa, Alvin Ta, Geon Kim
+*Virtual call about testing, spliting between Unit tests and integration tests
+
+29. 2023/03/07 21:30 - 2023/03/08 02:00 contributor: Aiza Bajwa, Minh Tran, Geon Kim
 *Fixed and reorganized all order classes
 
-26. 2023/03/07 21:00 - 23:00 contributor: Sanjida Afreen
+30. 2023/03/07 21:00 - 23:00 contributor: Sanjida Afreen
 *Added system architecture and updated wiki
 
-27.  2023/03/08 20:00 - 23:50 contributor: Sanjida Afreen
+31. 2023/03/07 - 2023/03/09 Contributor: Alvin
+*Modified integration tests to have more database interaction
+
+32.  2023/03/08 20:00 - 23:50 contributor: Sanjida Afreen
 *Updated README, system architecture and UML Diagram
 
+33. 2023/03/09 18:00 - 19:30 Contributor: All
+*Went through demo and checked if everything worked
+*edited DisplayAddOrder class
+*Finalized details, and edited file structure
