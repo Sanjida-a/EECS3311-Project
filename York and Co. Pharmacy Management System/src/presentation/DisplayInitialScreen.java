@@ -513,7 +513,23 @@ public class DisplayInitialScreen{
         	
         });
         panelVisibleToAdminSub1.add(btnModifyItem);
+        if(userType == USER.OWNER || userType == USER.DEVELOPER) {
+        	JButton btnSeeReport = new JButton("See Report");
+        	btnSeeReport.setFont(new Font("굴림", Font.BOLD, 18));
+	        btnSeeReport.setBounds(0, 210, 170, 60);
+	        btnSeeReport.addActionListener(new ActionListener() {
+	
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                // TODO Auto-generated method stub
+	                DisplayReport screen = new DisplayReport() ;
+	                screen.displayReport(frame);
+	
+	            }
 
+        });
+        	panelVisibleToAdminSub1.add(btnSeeReport);
+        }
 	}
 	
 	private static void createExtraContents(JPanel totalGUI) {
