@@ -1,7 +1,7 @@
 # EECS3311-Group8-PharmacyManagementSystem
 Iteration 2:
 
-Links to the UML Class Diagram and System Architecture are included in the Wiki: https://github.com/jewbe22/EECS3311-project-group8/wiki
+Please access the Wiki for all important details. Links to the UML Class Diagram and System Architecture are also included in the Wiki: https://github.com/jewbe22/EECS3311-project-group8/wiki
 
 Other documentation such as the UpdatedPlan.txt, Peer Evaluation form and log.txt can be found in the "Iteration2 - Documentation" folder.
 
