@@ -19,3 +19,5 @@ Bugs/Limitations for Iteration2
 -Patient Phone#: Please enter a number that is less than 2147483647
 
 Any number greater than these numbers will produce an error message of 'invalid output'. This will be fixed in iteration 3.
+
+-For Add order, allow quantity bought to happen at same time as adding prescription. But need to confirm quantity bought <= number of prescribed refills.
