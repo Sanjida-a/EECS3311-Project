@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
     
     @Test
     void searchMedicineByName() {
@@ -38,8 +38,7 @@ class UserTest {
         		j++;
         	}
         }
-//        assertEquals("[ID: 1, Name: ADVIL, Quantity: 19, Price: 10.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n, ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n]",
-//                o.searchMedicineByName("ADVIL", USER.OWNER).toString());
+
     }
     @Test
     void searchMedicineByNameNotFound() {

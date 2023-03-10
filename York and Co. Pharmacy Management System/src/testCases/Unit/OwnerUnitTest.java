@@ -13,14 +13,14 @@ import databaseDAO.MerchandiseData.MerchandiseStub;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Users.*;
 import presentation.USER;
-//done
+
 class OwnerUnitTest {
 	
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -29,7 +29,7 @@ class OwnerUnitTest {
 
 	@Test
 	void testOwner() {
-		//fail("Not yet implemented");
+	
 		Owner subject1 = new Owner(0,0);
 		assertEquals(subject1.username, 0);
 		assertEquals(subject1.password, 0);
@@ -37,14 +37,14 @@ class OwnerUnitTest {
 
 	@Test
 	void testGetOwnerUser() {
-		//fail("Not yet implemented");
+		
 		Owner subject1 = new Owner(0,0);
 		assertEquals(subject1.getOwnerUser(), subject1);
 	}
 
 	@Test
 	void testSetOwnerUser() {
-		//fail("Not yet implemented");
+		
 		Owner subject1 = new Owner(0,0);
 		Owner subject2 = new Owner(1,1);
 		subject1.setOwnerUser(subject2);
@@ -55,7 +55,7 @@ class OwnerUnitTest {
 	
 	@Test
 	void testSearchPatientByName() {
-		//fail("Not yet implemented");
+		
 		Owner subject1 = new Owner(0,0);
 		Inventory inv = Inventory.getInstance();
 		inv.set_merDAO(new MerchandiseStub());
@@ -70,7 +70,7 @@ class OwnerUnitTest {
 
 	@Test
 	void testSearchMedicineByName() {
-		//fail("Not yet implemented");
+		
 		Owner subject1 = new Owner(0,0);
 		Inventory inv = Inventory.getInstance();
 		inv.set_merDAO(new MerchandiseStub());
@@ -90,7 +90,7 @@ class OwnerUnitTest {
 
 	@Test
 	void testSearchMedicineByType() {
-		//fail("Not yet implemented");
+		
 		Owner subject1 = new Owner(0,0);
 		Inventory inv = Inventory.getInstance();
 		inv.set_merDAO(new MerchandiseStub());

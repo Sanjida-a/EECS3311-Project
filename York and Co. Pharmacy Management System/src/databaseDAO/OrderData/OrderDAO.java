@@ -12,18 +12,9 @@ import middleLayer.Orders.*;
 import middleLayer.Users.*;
 
 public class OrderDAO extends superDAO implements OrderRoot{
-	
-//	Connection con;
-//	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
-//	private String user = "root";
-//
-//	private String password = "hello123"; //make sure to change password based on your password for MySQL
-
 
 	private ArrayList<Order> orderList = new ArrayList<Order>();
 
-//	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
-	
 	public OrderDAO() throws Exception {
 		try {
 			con = DriverManager.getConnection(url, user, password);			
@@ -33,13 +24,14 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}
 	}
 	
+	//reads all rows of orders from database and puts it into arrayList
 	public ArrayList<Order> getListOfAllOrders() throws Exception {
 		try {
 			orderList = new ArrayList<Order>(); //need to empty current list first so new list overrides
 			
 			con = DriverManager.getConnection(url, user, password);
 			
-			String queryGetAllRows = "SELECT * FROM Orders;";
+			String queryGetAllRows = "SELECT * FROM Orders;";   // to get all rows from Orders table
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(queryGetAllRows);
 			int orderNum, medicationID, patientID, quantityBought;
@@ -58,7 +50,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 				
 				order = new Order(orderNum, medicationID, patientID, quantityBought, priceAtPurchase, isPrescription);
 				
-				orderList.add(order);
+				orderList.add(order);  // to create Order object and put in a list
 			}
 			
 			con.close();
@@ -69,28 +61,14 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		
 		return orderList;
 	}
-	//int _patientID, int _medicationId, int _qty,  int _refill
+	
+	//add new order row to database table (invoked whenever a new order has been added)
 	public void addToOrderTable(Order o) throws Exception {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
-//			Patient getPat = patResult (o.getPatientID());		
-//			if(getPat == null) {
-//				throw new Exception("Non-existent patient");
-//			}
-//			Merchandise getMer = merResult(o.getMedicationID());		
-//			if(getMer == null) {
-//				throw new Exception("Non-existent medication");
-//			}
-//			if (getMer.getQuantity() <= 0 || getMer.getisValid() == false || getMer.getQuantity() < o.getQuantityBought()) {
-//				throw new Exception("Check inventory!");
-//			}
-			
-//			double totalPriceOfOrder = getMer.getPrice();			
-//			totalPriceOfOrder = totalPriceOfOrder * o.getQuantityBought();
-//			boolean _isPres = !getMer.getisOTC();
 			
 			String preparedStatement = " insert into Orders ( medicationID , patientID , quantityBought , priceAtPurchase, isPrescription )"
-					+ " values ( ?, ?, ?, ?, ?)";
+					+ " values ( ?, ?, ?, ?, ?)";                
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
 			stmt.setInt(1, o.getMedicationID());
 			stmt.setInt(2, o.getPatientID());
@@ -106,6 +84,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}		
 	}
 	
+	//add new prescription row to database table (invoked whenever a new prescription has been added)
 	public void addToPrescriptionTable (Prescription p) throws Exception{
 		try {
 			con = DriverManager.getConnection(url, user, password);		
@@ -125,31 +104,10 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		
 	}
 	
+	//add prescription refill row to database table (invoked whenever a refill has been done with "give refill" button)
 	public void addRefillToOrderTable(Order o) throws Exception{
 		try {		
 			con = DriverManager.getConnection(url, user, password);	
-//			if (!checkPatMed(_patientID, _medicationId)) {
-//				throw new Exception ("No record found!");
-//			}
-//			Patient getPat = patResult ( _patientID);	
-//			if(getPat == null) {
-//				throw new Exception("Non-existent patient!");
-//			}
-//			Merchandise getMer = merResult(_medicationId);
-//			if(getMer == null) {
-//				throw new Exception("Non-existent medication!");
-//			}
-//			
-//			if (getMer.getQuantity() <= 0 || getMer.getisValid() == false || getMer.getQuantity() < o.getQuantityBought()) {
-//				throw new Exception("Check inventory!");
-//			}
-			// check number of refills left
-//			int refillLeft = numOfRefill(_patientID,_medicationId ) ;
-//			if ( _qty > refillLeft) {
-//				throw new Exception( refillLeft +  "refills left!");
-//			}
-			
-//			double price = getMer.getPrice();
 			
 			String preparedStatement = " insert into Orders ( medicationID , patientID , quantityBought , priceAtPurchase, isPrescription )"
 					+ " values ( ?, ?, ?, ?, ?)";
@@ -169,6 +127,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}
 	}
 	
+	//checking how many refills left for prescriptions
 	public int numOfRefill (int _patientID, int _medicationId) throws SQLException {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
@@ -177,18 +136,18 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			ResultSet numberOfOrder = statement.executeQuery(queryOrderStatement);														
 			int numOfOrder = 0;
 			if(numberOfOrder.next()) {
-				numOfOrder= numberOfOrder.getInt("totalBought");
+				numOfOrder= numberOfOrder.getInt("totalBought");     // to get total number of orders for a given patient and a given medication
 			}
-			numberOfOrder.close();
+			numberOfOrder.close();   
 						
 			String queryPresStatement = "SELECT SUM(numOfRefills) AS totalRefills  FROM Prescriptions WHERE medicationID= " + _medicationId +" AND" + " patientID=" + _patientID;					
 			ResultSet numberOfRefill = statement.executeQuery(queryPresStatement);								
 			int numOfRefill = 0;
 			if(numberOfRefill.next()) {
-				numOfRefill= numberOfRefill.getInt("totalRefills");
+				numOfRefill= numberOfRefill.getInt("totalRefills");     // to get total refills from prescriptions for a given patient and a given medication
 			}
 			numberOfRefill.close();
-			int refillLeft = numOfRefill - numOfOrder;
+			int refillLeft = numOfRefill - numOfOrder;     // to get total number of refills left for a given patient and a given medication
 			return refillLeft;
 		
 		}
@@ -198,56 +157,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			}
 	}
 	
-//	public Merchandise merResult (int _medicationId) throws SQLException{
-//		try {		
-//			con = DriverManager.getConnection(url, user, password);
-//			Statement statement = con.createStatement();
-//			String queryMedStatement = "SELECT * FROM Medications where medicationID = " + _medicationId; 
-//			ResultSet medResult = statement.executeQuery(queryMedStatement);	
-//			if(!medResult.next()) {
-//				return null;
-//			}			
-//				int medicationID = medResult.getInt("medicationID");
-//			    String name = medResult.getString("medName");
-//			    int quantity = medResult.getInt("quantity");
-//			    double price = medResult.getDouble("price");
-//			    MERCHANDISE_TYPE type = MERCHANDISE_TYPE.valueOf(medResult.getString("medType"));
-//			    MERCHANDISE_FORM form = MERCHANDISE_FORM.valueOf(medResult.getString("medForm"));
-//			    boolean isOTC = medResult.getBoolean("isOTC");
-//			    String description = medResult.getString("medDescription");
-//			    boolean isValid = medResult.getBoolean("isValid");
-//			
-//			return new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);		
-//		}
-//		catch (SQLException e1) {
-//			e1.printStackTrace();
-//			throw e1;
-//		}
-//	}
-	
-//	public Patient patResult (int _patientID) throws SQLException{
-//		try {		
-//			con = DriverManager.getConnection(url, user, password);
-//			Statement statement = con.createStatement();
-//			String queryPatientStatement = "SELECT * FROM Patient where healthCardNumber = " + _patientID; 
-//			ResultSet patientResult = statement.executeQuery(queryPatientStatement);		
-//			if(!patientResult.next()) {
-//				return null;
-//			}	
-//			String firstName = patientResult.getString("firstName");
-//			String lastName = patientResult.getString("lastName");
-//			String address = patientResult.getString("Address");
-//			int phoneNum =patientResult.getInt("phoneNumber");
-//			int healthCardNum =patientResult.getInt("healthCardNumber");
-//			int dateOfBirth =patientResult.getInt("dateOfBirth");			
-//			return new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);		
-//		}
-//		catch (SQLException e1) {
-//			e1.printStackTrace();
-//			throw e1;
-//		}
-//	}
-	
+	//to check whether a record exists in prescription table before giving a refill
 	public Boolean checkIfExistsInPrescriptionTable(int _patientID, int _medicationId)  throws SQLException{
 		try {		
 			con = DriverManager.getConnection(url, user, password);
@@ -265,27 +175,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			throw e1;
 		}
 	}
-
-	
-	//	private Boolean checkOTC (int _medicationId) throws Exception{
-//		try {		
-//			con = DriverManager.getConnection(url, user, password);
-//			Statement statement = con.createStatement();		
-//			Merchandise med = merResult(_medicationId);
-//			boolean isOTC  = true;
-//			if (med == null) {
-//				throw new Exception ("Non-existent medication!");
-//			}
-//			if (!med.getisOTC()) {
-//				isOTC = false;
-//			}
-//			return isOTC;
-//		}
-//		catch (SQLException e1) {
-//			e1.printStackTrace();
-//			throw e1;
-//		}		
-//	}
 
 
 }

@@ -49,11 +49,7 @@ public class DisplayLogin {
 		lblPassword.setFont(new Font("굴림", Font.BOLD, 20));
 		lblPassword.setBounds(100, 150, 125, 35);
 		totalGUI.add(lblPassword);
-		
-		// textField = new JTextField();
-		// textField.setBounds(225, 100, 225, 35);
-		// totalGUI.add(textField);
-		// textField.setColumns(10);
+
 		userNameField = new JTextField();
 		userNameField.setBounds(225, 100, 225, 35);
 		totalGUI.add(userNameField);
@@ -84,7 +80,7 @@ public class DisplayLogin {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 				frame.dispose();
 				superFrame.setEnabled(true);
 				superFrame.toFront();
@@ -115,14 +111,7 @@ public class DisplayLogin {
 						superFrame.dispose();	
 						DisplayInitialScreen.displayInitialScreen(userType);
 		        		frame.dispose();
-						//superFrame.dispose();
-						//DisplayInitialScreen screen = new DisplayInitialScreen();
-						//DisplayInitialScreen.displayInitialScreen(userType);
-						//DisplayInitialScreen.setUserType(userType);
 						
-						
-						//DisplayInitialScreen screen = new DisplayInitialScreen();
-						//screen.displayInitialScreen(userType);
 						
 					}
 					else {
@@ -172,9 +161,6 @@ public class DisplayLogin {
 	public int getPassword() {
 		return password;
 	}
-	//public static void main(String[] args) {
-	//	DisplayLogin screen = new DisplayLogin();
-	//	screen.displayLogin(new JFrame());
-	//}
+
 }
 

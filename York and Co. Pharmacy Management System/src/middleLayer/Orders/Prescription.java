@@ -6,24 +6,16 @@ public class Prescription { // prescription forms by doctor
 	int prescriptionNum;
 	int medicationID;
 	int patientID;
-	int originalNumOfRefills;
+	int originalNumOfRefills;    // numbers of refills prescribed by doctor
 	
-//	ArrayList<Order> ordersForPrescription = new ArrayList<Order>();
-	
-//	public Prescription(int medicationID, int patientID, int numRefills, Order o) {
-//		this.medicationID = medicationID;
-//		this.patientID = patientID;
-//		this.numRefills = numRefills;
-//		
-//		ordersForPrescription.add(o);
-//	}
-	
+	// constructor for front end
 	public Prescription(int medicationID, int patientID, int originalNumOfRefills) {
 		this.medicationID = medicationID;
 		this.patientID = patientID;
 		this.originalNumOfRefills = originalNumOfRefills;
 	}
 	
+	// constructor for reading from database
 	public Prescription(int prescriptionNum, int medicationID, int patientID, int originalNumOfRefills) {
 		this.prescriptionNum = prescriptionNum;
 		this.medicationID = medicationID;

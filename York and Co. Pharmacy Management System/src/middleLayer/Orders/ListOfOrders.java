@@ -11,7 +11,6 @@ public class ListOfOrders {
 	private Inventory merList = Inventory.getInstance();
 	private static ListOfOrders ListOfOrdersInstance = null;
 	private ArrayList<Order> allOrdersList;
-	//private ArrayList<User> allUsersList = new ArrayList<User>();
 	
 	private OrderRoot _orderDAO; // Dependency Injection Principle
 	
@@ -56,18 +55,6 @@ public class ListOfOrders {
 		return allOrdersList;
 	}
 	
-//	public void addOrderToPatient(int _patientID, int _medicationId, int _qty , int _numOfRefills) throws Exception {
-//		// add to correct patient once we implement patient list 
-//		// first search patient list w same patientId
-//		// then add this order to that patient's instance var of orders
-//		 medicationID = _medicationId;
-//		 patientID = _patientID;
-//		 quantityBought = _qty;		
-//		 numOfRefills = _numOfRefills;	 
-//		 _orderDao = new OrderDAO();
-//		 _merDao = new MerchandiseDAO();
-//	}
-	
 	public void addOrderToDatabase(Order o, Prescription p) throws Exception {
 		
 		Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
@@ -78,28 +65,13 @@ public class ListOfOrders {
 		_orderDAO.addToOrderTable(o);
 		
 		if (o.getIsPrescription() == true) {
-//			Prescription p = new Prescription(o.getMedicationID(), o.getPatientID(), )
 			_orderDAO.addToPrescriptionTable(p);
 		}
 		
-//		Merchandise foundMedication = merList.searchMerchandiseWithID(medicationID); // can't be null bc successfully returns from saveToOrder()
-//		int newQuant = getMer.getQuantity() - o.getQuantityBought();
-//		getMer.setQuantity(newQuant);
-//		_merDao.updateQuantPurchase(medicationID, quantityBought);
-		
 		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
-//		_merDao.updateMedicationInDatabase(medicationID, foundMedication);
 		this.updateOrderListFromDatabase();
 	}
-	
-//	public void refillOrderPatient(int _patientID, int _medicationId, int _qty) throws Exception {
-//		 medicationID = _medicationId;
-//		 patientID = _patientID;
-//		 quantityBought = _qty;				 
-//		 _orderDao = new OrderDAO();
-//		 _merDao = new MerchandiseDAO();
-//	} 
-	
+
 	public void addRefillToDatabase(Order o) throws Exception {
 		
 		Boolean prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
@@ -119,65 +91,8 @@ public class ListOfOrders {
 		}
 		
 		_orderDAO.addRefillToOrderTable(o);
-//		_merDao.updateQuantPurchase(medicationID, quantityBought);
 		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
 		this.updateOrderListFromDatabase();
 	}
-	
-//	public Boolean checkEnoughQuantity(Merchandise m, int quantityWantToBuy) {
-//		int quantityInInventory = m.quantity;
-//		
-//		if (quantityWantToBuy > quantityInInventory) {
-//			return false;
-//		}
-//		
-//		return true;
-//		
-//	}
-
-
-//	public double calculateRevenue() { //calls calculateSellingPrice() to calculate total revenue
-//		ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
-//		double total = 0.00;
-//		for(int i = 0; i <copyofList.size(); i++){
-//			double sellingPrice = copyofList.get(i).calculateSellingPrice();
-//			total += copyofList.get(i).quantityBought * sellingPrice ;
-//		}
-//		return total;
-		
-//	}
-
-	// public int calculateProfit(){
-	// 	ArrayList<Order> copyofList2 = new ArrayList<Order>(allOrdersList);
-	// 	int cost = 0;
-	// 	for(int i = 0; i <copyofList2.size(); i++){
-	// 		cost += copyofList2.get(i).quantityBought * copyofList2.get(i).priceAtPurchase;
-	// 	}
-	// }
-
-	// public int calculateRevenuePerMedicine() {
-	// 	ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
-	// 	int total = 0;
-	// 	for(int i = 0; i <copyofList.size(); i++){
-	// 		if(copyofList.get(i).medicationID != copyofList.get(i+1).medicationID){
-	// 			total += copyofList.get(i).quantityBought * copyofList.get(i).priceAtPurchase;
-	// 		}
-	// 	}
-	// 	return total;
-	// }
-
-	// public String seeSummaryOfSales() {
-	// 	ArrayList<Order> copyofList = new ArrayList<Order>(allOrdersList);
-	// 	String output = "";
-	// 	// int revenuePerMedication;
-	// 	for (int i = 0; i < copyofList.size(); i ++){
-	// 		output += "OrderNum: " + copyofList.get(i).orderNum+", ";
-    //         output += "MedicationID: " + copyofList.get(i).medicationID+", ";
-    //         output += "Total: " + (copyofList.get(i).quantityBought * copyofList.get(i).priceAtPurchase) + " \n";
-	// 	return output;
-	// }
-	// }
-
-
 
 }

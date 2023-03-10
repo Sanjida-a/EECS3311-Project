@@ -49,9 +49,6 @@ import javax.swing.JTextArea;
 import java.awt.Rectangle;
 
 
-
-
-
 public class DisplayInitialScreen{
 	private static JTextField inputFieldName;
 	private static JTextField inputFieldType;
@@ -113,12 +110,9 @@ public class DisplayInitialScreen{
 		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
 			createPanelVisibleToAdmin(totalGUI);
 		}
-		/*else if(user == USER.PATIENT){
-			createPanalVisibleToPatient(totalGUI);
-		}*/
 		else if(user == USER.DEVELOPER) {
 			createPanelVisibleToAdmin(totalGUI); //for test purpose
-			//createPanalVisibleToPatient(totalGUI);//for test purpose
+
 		}
 
         createExtraContents(totalGUI);
@@ -258,10 +252,7 @@ public class DisplayInitialScreen{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				DisplayPatientManage.displayPatientManage(frame);
-				//refreshList(inv.getInstance(), currentList);
-
 			}
         	
         });
@@ -287,15 +278,9 @@ public class DisplayInitialScreen{
 					if(rdbtnOTC.isSelected()) {
 						_isOTC = true;
 					}
-
-					
-
-					
-					Boolean medicationAdded = false;
-					
+					Boolean medicationAdded = false;					
 					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
 					medicationAdded = inv.addToInventory(newMerchandise);
-					//String temp = "";
 					if (medicationAdded == true) {
 						operationResult = "Add successful. See updated inventory";
 					}
@@ -313,7 +298,6 @@ public class DisplayInitialScreen{
 
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("name, Qty, price, type, and form are required", frame);
 					JOptionPane.showMessageDialog(frame,"name, Qty, price, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
@@ -333,25 +317,13 @@ public class DisplayInitialScreen{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
-					//String _inputFieldName = inputFieldName.getText().toUpperCase();
-					//if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-					//MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-					//MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-					//Boolean _isOTC = false;
-					//if(rdbtnOTC.isSelected()) {
-					//	_isOTC = true;
-					//}
 				
 					Boolean medicationRemoved = false;
-				
-
 					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
 					System.out.println("med ID initialized");
 					medicationRemoved = inv.delete(_inputFieldID);
 					System.out.println("med deleted");
-
-				
-					
+							
 					if (medicationRemoved == false) {
 						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
 					}
@@ -364,7 +336,6 @@ public class DisplayInitialScreen{
 
 				}
 				catch (Exception ex) {	//display error popup
-					//DisplayErrorPopup.displayErrorPopup("name, type, and form are required", frame);
 					JOptionPane.showMessageDialog(frame,"ID required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
@@ -379,22 +350,11 @@ public class DisplayInitialScreen{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
-//					String _inputFieldName = inputFieldName.getText().toUpperCase();
-//					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-//					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-//					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-//					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-//					Boolean _isOTC = false;
-//					if(rdbtnOTC.isSelected()) {
-//						_isOTC = true;
-//					}
 					
 					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					
 					Boolean medicationIncreased = false;
-			
-					//medicationIncreased = inv.increaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 					medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
 				
 					if (medicationIncreased == false) {
@@ -409,7 +369,6 @@ public class DisplayInitialScreen{
 					lblOperationResult.setText(operationResult);
 				}
 				catch(Exception ex) {
-					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
 					JOptionPane.showMessageDialog(frame,"ID and Quantity are required","Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			
@@ -424,22 +383,12 @@ public class DisplayInitialScreen{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
-//					String _inputFieldName = inputFieldName.getText().toUpperCase();
-//					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-//					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-//					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-//					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
-//					Boolean _isOTC = false;
-//					if(rdbtnOTC.isSelected()) {
-//						_isOTC = true;
-//					}
 				
 					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					
 					boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
 				
-//					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldName, _inputFieldQty, _inputFieldType, _inputFieldForm, _isOTC);
 					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
 					
 					if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
@@ -489,7 +438,6 @@ public class DisplayInitialScreen{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				DisplayAddOrder.displayAddOrder(frame);
 
 			}
@@ -504,11 +452,8 @@ public class DisplayInitialScreen{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				//invoke method for modify item detail
 				DisplayModifyMerchandise.displayModifyMerchandise(frame, outputList, currentList);
-		//		System.out.println("modify finished");
-				//displayMercList(outputList, currentList);
 			}
         	
         });
@@ -521,7 +466,6 @@ public class DisplayInitialScreen{
 	
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                // TODO Auto-generated method stub
 	                DisplayReport screen = new DisplayReport() ;
 	                screen.displayReport(frame);
 	
@@ -539,7 +483,6 @@ public class DisplayInitialScreen{
         btnExit.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		System.exit(0);
-        		//userType = USER.DEVELOPER;
 
         	}
         });
@@ -578,7 +521,6 @@ public class DisplayInitialScreen{
         btnSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				try {
 					String _inputKeyword = inputKeyword.getText().toUpperCase();
 					String searchBy = (String)comboBox.getSelectedItem();
@@ -595,30 +537,6 @@ public class DisplayInitialScreen{
 					else if(searchBy.compareTo("Type") == 0) {
 						methodResult = owner1.searchMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword), userType);
 					}
-					
-//					if(userType == USER.OWNER || userType == USER.PHARMACIST) {
-//						
-//
-//						
-//						else {	//left empty intentionally for further expansion of feature in the future
-//						
-//						}
-//					
-//					}
-//					else {
-//						Patient patient1 = new Patient(1,1);
-//					
-//						if(searchBy.compareTo("Name") == 0) {
-//							methodResult = patient1.searchMedicineByName(_inputKeyword, inv.getOnlyOTCMerchandise());
-//						}
-//						else if(searchBy.compareTo("Type") == 0) {
-//							methodResult = patient1.searchMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword), inv.getOnlyOTCMerchandise());
-//						}
-//						else {
-//						
-//						}
-//					
-//					}
 					
 					if(methodResult.isEmpty()) {
 						operationResult = _inputKeyword + " is not in the inventory";
@@ -675,12 +593,10 @@ public class DisplayInitialScreen{
         btnColumnName.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnName.setHorizontalTextPosition(SwingConstants.LEFT);
         btnColumnName.setBounds(75, 0, 290, 20);
-        //sort(btnColumnName);
         btnColumnName.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				displayMercList(outputList, inv.displayAlphabetically(currentList));
 			}
         	
@@ -691,12 +607,10 @@ public class DisplayInitialScreen{
         btnColumnQty.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnQty.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnQty.setBounds(364, 0, 80, 20);
-        //sort(btnColumnQty);
         btnColumnQty.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				displayMercList(outputList, inv.displayByQuantity(currentList));
 			}
         	
@@ -707,12 +621,10 @@ public class DisplayInitialScreen{
         btnColumnPrice.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnPrice.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnPrice.setBounds(443, 0, 100, 20);
-       // sort(btnColumnPrice);
         btnColumnPrice.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				displayMercList(outputList,inv.displayByPrice(currentList));
 			}
         	
@@ -723,14 +635,12 @@ public class DisplayInitialScreen{
         btnColumnType.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnType.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnType.setBounds(542, 0, 150, 20);
-        //sort(btnColumnType);
         panelColumn.add(btnColumnType);
         
         JButton btnColumnForm = new JButton("Form");
         btnColumnForm.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnForm.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnForm.setBounds(691, 0, 150, 20);
-        //sort(btnColumnForm);
         panelColumn.add(btnColumnForm);
         
         JButton btnColumnOTC = new JButton("isOTC");
@@ -743,7 +653,6 @@ public class DisplayInitialScreen{
         btnColumnID.setFont(new Font("굴림", Font.BOLD, 12));
         btnColumnID.setHorizontalAlignment(SwingConstants.LEFT);
         btnColumnID.setBounds(0, 0, 75, 20);
-        //sort(btnColumnID);
         panelColumn.add(btnColumnID);
         
         ButtonGroup groupColumn = new ButtonGroup();
@@ -786,22 +695,12 @@ public class DisplayInitialScreen{
 	}*/
 	
 	protected static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
-		//currentList = merchandises;
 		merchandises = refreshList(inv.getInstance(),   merchandises);
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		list.removeAll();
-		//if(userType == USER.GUEST || userType == USER.PATIENT) {
 			for(Merchandise m : merchandises) {
 				model.addElement(m);
 			}
-		//}
-		//else {
-		//	for(Merchandise m : merchandises) {
-
-			//	model.addElement(m);
-			
-			//}
-		//}
 		list.setModel(model);
 	}
 	
@@ -824,7 +723,7 @@ public class DisplayInitialScreen{
 	                  else {
 	                	  isOTC = "Rx";
 	                  }
-	                  //label.setText(String.format("%s %s %s %s %s %s %s", merc.getMedicationID(), merc.getName(), merc.getQuantity(), merc.getPrice(), merc.getType(), merc.getForm(), merc.getisOTC()));
+	                  
 	                  label.setText(formatString(String.valueOf(merc.getMedicationID()), 9) +
 	                		  formatString(merc.getName(), 33) + 
 	                		  formatString(String.valueOf(merc.getQuantity()), 9) +
@@ -922,11 +821,4 @@ public class DisplayInitialScreen{
 		currentList = newList;
 	}
 
-	
-
-	
-	//public static void main(String[] args) {	//for test purpose
-		
-		//DisplayInitialScreen.displayInitialScreen(USER.DEVELOPER);
-	//}
 }

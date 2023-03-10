@@ -14,8 +14,7 @@ public class Inventory{
     private static Inventory singletonInstance = null;
 
     ArrayList<Merchandise> list = new ArrayList<Merchandise>();
- 
-	//private MerchandiseDAO _merDAO;
+
     private MerchandiseRoot _merDAO; // Dependency Injection Principle
 	
 	private Inventory() {  //constructor of all singleton classes should be private
@@ -25,7 +24,6 @@ public class Inventory{
 			list = _merDAO.getListOfMerchandise();
 		} 
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

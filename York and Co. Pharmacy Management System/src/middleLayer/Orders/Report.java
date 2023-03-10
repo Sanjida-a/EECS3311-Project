@@ -15,25 +15,28 @@ public class Report {
 		allOrders = listOfOrders.getListofAllOrders();
 	}
 	
+	//Calculate revenue for sales report
 	public double calculateRevenue () throws Exception {
 		double revenue = 0.0;		
 		
 		allOrders = listOfOrders.getListofAllOrders();
 		
 		for ( Order e : allOrders) {
-			revenue = revenue + e.getTotalPriceOfOrder();
+			revenue = revenue + e.getTotalPriceOfOrder(); // sum of all orders' prices
 		}
 		return revenue;
 		
 	}
 	
+	//Calculate profit for sales report
 	public double calculateProfit () throws Exception {
 		double revenue = calculateRevenue();
-		double profit = revenue * 0.3;		
+		double profit = revenue * 0.3;		 // profit is 30% of selling price
 		return profit;
 		
 	}
 	
+	//To show sales summary in sales report
 	 public ArrayList<String> seeSummaryOfSales() {
 		
 		allOrders = listOfOrders.getListofAllOrders();

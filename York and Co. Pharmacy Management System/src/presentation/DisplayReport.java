@@ -51,7 +51,6 @@ public class DisplayReport {
 		this.superFrame.setEnabled(false);
 
 		this.frame.setBounds(new Rectangle(0, 0, 900, 600));
-		//this.frame.setPreferredSize(new Dimension(1200, 800));
 		this.frame.getContentPane().setLayout(null);
 
 
@@ -90,8 +89,7 @@ public class DisplayReport {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//System.exit(0);
+				
 				superFrame.setEnabled(true);
 				superFrame.toFront();
 				frame.dispose();
@@ -106,7 +104,7 @@ public class DisplayReport {
 			profit = report.calculateProfit();
 			summary = report.seeSummaryOfSales();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		this.textFieldProfit.setText(String.format("%.2f", profit));
@@ -119,16 +117,4 @@ public class DisplayReport {
 		this.frame.setVisible(true);
 	}
 
-
-//    public static void main(String[] args) {
-//    	try {
-//			superDAO.setPassword("hello123");
-////			System.out.println("password : " + superDAO.password);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//    	DisplayReport screen = new DisplayReport();
-//    	screen.displayReport(new JFrame());
-//    }
 }

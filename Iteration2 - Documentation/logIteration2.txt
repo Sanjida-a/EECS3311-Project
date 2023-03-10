@@ -140,3 +140,8 @@
 *Went through demo and checked if everything worked
 *edited DisplayAddOrder class
 *Finalized details, and edited file structure
+
+
+34. 2023/03/09 21:00 - 22:00 Contributor: Minh Tran
+*Deleted comments
+*Ran final test

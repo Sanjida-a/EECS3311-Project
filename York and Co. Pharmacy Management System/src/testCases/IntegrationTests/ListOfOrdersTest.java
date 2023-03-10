@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ListOfOrdersTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
 	
     @Test
     void updateOrderListFromDatabase() {
@@ -50,7 +50,7 @@ class ListOfOrdersTest {
              ArrayList<Order> newList = val.getListofAllOrders();
              assertEquals(originalList.size()+1, newList.size());
         }
-//        assertEquals(originalList.get(newList.size()-2), newList.get(newList.size()-2));
+
        
     }
     
@@ -65,16 +65,7 @@ class ListOfOrdersTest {
         ArrayList<Order> originalList = val.getListofAllOrders();
         
         assertThrows(Exception.class, () -> new Order(100, 1111122222, 1)); // medID doesn't exist
-//        Order O = ;
-//        Prescription p = new Prescription(100, 1111122222, 2);
-        
-      
-//        val.addOrderToDatabase(O,p);
-//        ArrayList<Order> newList = val.getListofAllOrders();
-//        
-//        for (int i = 0; i < newList.size(); i++) {
-//        	 assertEquals(originalList.get(i).toString(), newList.get(i).toString());
-//        }
+
        
     }
     
@@ -85,20 +76,10 @@ class ListOfOrdersTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//        ListOfOrders val = ListOfOrders.getInstance();
-//        ArrayList<Order> originalList = val.getListofAllOrders();
+
         
         assertThrows(Exception.class, () -> new Order(1, 7777, 1)); // patientID/healthcard doesn't exist
-//        Order O = ;
-//        Prescription p = new Prescription(100, 1111122222, 2);
-        
-      
-//        val.addOrderToDatabase(O,p);
-//        ArrayList<Order> newList = val.getListofAllOrders();
-//        
-//        for (int i = 0; i < newList.size(); i++) {
-//        	 assertEquals(originalList.get(i).toString(), newList.get(i).toString());
-//        }
+
        
     }
     
@@ -109,20 +90,10 @@ class ListOfOrdersTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//        ListOfOrders val = ListOfOrders.getInstance();
-//        ArrayList<Order> originalList = val.getListofAllOrders();
+
         
         assertThrows(Exception.class, () -> new Order(1, 1111122222, -5)); // negative quantity
-//        Order O = ;
-//        Prescription p = new Prescription(100, 1111122222, 2);
-        
-      
-//        val.addOrderToDatabase(O,p);
-//        ArrayList<Order> newList = val.getListofAllOrders();
-//        
-//        for (int i = 0; i < newList.size(); i++) {
-//        	 assertEquals(originalList.get(i).toString(), newList.get(i).toString());
-//        }
+
        
     }
 
@@ -138,21 +109,24 @@ class ListOfOrdersTest {
         
         Inventory inv = Inventory.getInstance();
         ArrayList<Merchandise> medList = inv.getMerchandise();
-//        ArrayList<Order> originalList = val.getListofAllOrders();
+
         
-        int MedIDForOTC = -1;
+        int indexForOTC = -1;
         for (int i = 0; i < originalList.size(); i++) {
         	if (medList.get(i).getisOTC() == true) {
-        		MedIDForOTC = i;
+        		indexForOTC = i;
         		break;
         	}
         }
-        Order O = new Order(medList.get(MedIDForOTC).getMedicationID(), 1111122222, 1);
+        
+        if (indexForOTC != -1) {
+        Order O = new Order(medList.get(indexForOTC).getMedicationID(), 1111122222, 1);
         
        
-        //prescription doesn't exist becuase medication is OTC
+        //prescription doesn't exist because medication is OTC
         assertThrows(Exception.class,  () -> val.addRefillToDatabase(O));
         ArrayList<Order> newList = val.getListofAllOrders();
+        }
     }
 
 

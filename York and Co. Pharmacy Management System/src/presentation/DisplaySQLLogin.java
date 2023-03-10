@@ -72,7 +72,6 @@ public class DisplaySQLLogin implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		try {
 			if(e.getActionCommand().equals("Exit")) {
 				System.exit(0);
@@ -80,11 +79,9 @@ public class DisplaySQLLogin implements ActionListener {
 			else {
 				//invoke method for password validation
 				String _passwordField = new String(passwordField.getPassword());
-//						password = Integer.parseInt(new String(inputPassword.getPassword()));
 				if (_passwordField.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 				
-				
-//				superDAO superDBObject = new superDAO(_passwordField);
+
 				superDAO.setPassword(_passwordField);
 				frame.dispose();
 				//executed after validation succeed
@@ -96,7 +93,7 @@ public class DisplaySQLLogin implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 		DisplaySQLLogin screen = new DisplaySQLLogin();
 		screen.displaySQLLogin();
 	}

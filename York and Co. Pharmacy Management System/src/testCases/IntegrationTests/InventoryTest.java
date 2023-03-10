@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
     private MerchandiseDAO _merDAO;
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
 
     @Test
     void getInstance() {
@@ -35,7 +35,7 @@ class InventoryTest {
         Inventory val = Inventory.getInstance();
 
         ArrayList<Merchandise> onlyOTC = val.getOnlyOTCMerchandise();
-       // val.decreaseQuantity(1,1);
+    
         int i = 0;
         for (i = 0; i < onlyOTC.size(); i++) {
             assertEquals(onlyOTC.get(i).getisOTC(), true);
@@ -65,13 +65,7 @@ class InventoryTest {
         for (int i = 0; i < listOfMedicine.size(); i++) {
             assertEquals(namesOnly.get(i), sortedAlphaList.get(i).getName());
         }
-//        assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-//                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
-//                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
-//                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
-//                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
-//                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-//                "]",val.displayAlphabetically(val.getMerchandise()).toString());
+
     }
 
     @Test
@@ -96,14 +90,7 @@ class InventoryTest {
         for (int i = 0; i < listOfMedicine.size(); i++) {
             assertEquals(quantitiesOnly.get(i), sortedQuantityList.get(i).getQuantity());
         }
-//        Inventory val = Inventory.getInstance();
-//        assertEquals("[ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
-//                ", ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-//                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
-//                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-//                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
-//                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
-//                "]",val.displayByQuantity(val.getMerchandise()).toString());
+
     }
 
     @Test
@@ -130,15 +117,7 @@ class InventoryTest {
             assertEquals(pricesOnly.get(i), sortedPriceList.get(i).getPrice());
         }
 
-//        Inventory val = Inventory.getInstance();
-//        assertEquals("[ID: 1, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-//              //  ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
-//                ", ID: 3, Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true, Description: null\n" +
-//                ", ID: 4, Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true, Description: null\n" +
-//                ", ID: 5, Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false, Description: null\n" +
-//                ", ID: 6, Name: PILL2, Quantity: 10, Price: 5.0, Type: FEVER, Form: TABLET, isOTC: false, Description: null\n" +
-//                ", ID: 2, Name: TYLENOL, Quantity: 5, Price: 8.0, Type: FEVER, Form: TABLET, isOTC: true, Description: null\n" +
-//                "]",val.displayByPrice(val.getMerchandise()).toString());
+
     }
 
     @Test
@@ -195,7 +174,7 @@ class InventoryTest {
             assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
         }
         
-//        assertEquals(true, val.increaseQuantity(2,10))
+
         
         // back to normal
        
@@ -214,24 +193,9 @@ class InventoryTest {
         val.decreaseQuantity(originalList.get(0).getMedicationID(),originalList.get(0).getQuantity()+1);
         ArrayList<Merchandise> newList = val.getMerchandise();
         assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
-//        assertEquals(true, val.increaseQuantity(2,10))
+
     }
-//    @Test
-//    void addTo(){
-//        try {
-//            superDAO.setPassword(pass);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        Inventory val = Inventory.getInstance();
-//        ArrayList<Merchandise> originalList = val.getMerchandise();
-//        System.out.println(originalList.size());
-//        Merchandise m = new Merchandise(originalList.size()+1, "Buckleys",  5,  3.00, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, null, true);
-//        val.addToInventory(m);
-//        System.out.println(originalList.size());
-//        ArrayList<Merchandise> newList = val.getMerchandise();
-//        assertEquals(originalList.size(), newList.size());
-//    }
+
     @Test
     void delete(){
     	try {
@@ -257,10 +221,7 @@ class InventoryTest {
 		}
        	_merDAO.updateMedicationInDatabase(deletedM.getMedicationID(), deletedM);
 
-//        Inventory val = Inventory.getInstance();
-//        Merchandise m = new Merchandise(7, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
-//        assertEquals(true, val.addToInventory(m));
-//        assertEquals(true, val.delete(7));
+
     }
 
     @Test
@@ -388,15 +349,7 @@ class InventoryTest {
         
         String originalName = originalList.get(0).getName();
         val.modifyMedicationName(originalList.get(0).getMedicationID(), "Buckleys");
-//        ArrayList<Merchandise> newList = val.getMerchandise();
-//        if (originalList.get(0).getName().equals("Buckleys")) {
-//            assertEquals(false, val.modifyMedicationName(1, "Buckleys"));
-//        }
-//        else {
-//             assertEquals(true, val.modifyMedicationName(1, "Buckleys"));
-//        }
 
-//        assertEquals("Buckleys", newList.get(0).getName());
         // back to normal
        	val.modifyMedicationName(originalList.get(0).getMedicationID(), originalName);
         

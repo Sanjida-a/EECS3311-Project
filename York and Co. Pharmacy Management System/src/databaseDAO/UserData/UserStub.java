@@ -21,26 +21,22 @@ public class UserStub implements UserRoot {
 	}
 	@Override
 	public ArrayList<User> getListOfUsernamesAndPasswords(){
-		// TODO Auto-generated method stub
 		return allUsernamesAndPasswordsList;
 	}
 
 	@Override
 	public ArrayList<Patient> getListOfAllPatients() {
-		// TODO Auto-generated method stub
 		return patientList;
 	}
 
 	@Override
 	public void addPatientToDatabase(Patient newPatient) throws Exception {
-		// TODO Auto-generated method stub
 		allUsernamesAndPasswordsList.add(newPatient);
 		patientList.add(newPatient);
 	}
 
 	@Override
 	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject) {
-		// TODO Auto-generated method stub
 		
 		for (Patient p : patientList) {
 			if (p.getHealthCardNum() == IDOfModifiedPatient) {

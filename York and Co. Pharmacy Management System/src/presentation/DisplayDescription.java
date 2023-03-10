@@ -47,7 +47,6 @@ public class DisplayDescription {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				frame.dispose();
 				superFrame.setEnabled(true);
 				superFrame.toFront();
@@ -57,12 +56,5 @@ public class DisplayDescription {
 		});
 		panel.add(btnClose);
 	}
-
-	//public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		//DisplayDescription.displayDescription(new JFrame(), new Merchandise());
-
-	//}
 
 }

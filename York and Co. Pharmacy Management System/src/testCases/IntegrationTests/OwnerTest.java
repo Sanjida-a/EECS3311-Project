@@ -12,16 +12,10 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
-/* to be tested:
- * public Owner(int username, int password)	- sets its fields with parameters
- * public Owner getOwnerUser()				- returns the reference of itself
- * public void setOwnerUser(Owner ownerUser)
- * public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch)
- * 
- */
+
 
 class OwnerTest {
-	static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+	static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void getOwnerUserTest() {
 		try {
@@ -72,7 +66,7 @@ class OwnerTest {
     }
 
     @Test
-    void searchFNameFalse(){ //false
+    void searchFNameFalse(){ 
 		try {
 			superDAO.setPassword(pass);
 		} catch (Exception e) {
@@ -94,7 +88,7 @@ class OwnerTest {
 	}
 
 	@Test
-	void searchLNameFalse(){ //false
+	void searchLNameFalse(){ 
 		try {
 			superDAO.setPassword(pass);
 		} catch (Exception e) {
@@ -103,23 +97,7 @@ class OwnerTest {
 		Owner o = new Owner(0, 0);
 		assertEquals("[]", o.searchPatientByName("Smith", "LastName").toString());
 	}
-//    @Test
-//    void searchOTCMedicineByName() {
-//        Owner val = new Owner(1111111111, 11111111);
-//        assertEquals("[Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false\n" +
-//                "]", val.searchOTCMedicineByName ("PILL1").toString());
-//    }
-//
-//
-//    @Test
-//    void searchOTCMedicineByType() {
-//        Owner val = new Owner(1111111111, 11111111);
-//        assertEquals("[Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true\n" +
-//                ", Name: ADVIL, Quantity: 10, Price: 5.0, Type: COLD, Form: TABLET, isOTC: true\n" +
-//                ", Name: TYLENOL, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: true\n" +
-//                ", Name: PILL1, Quantity: 10, Price: 5.0, Type: COLD, Form: LIQUID, isOTC: false\n" +
-//                "]", val.searchOTCMedicineByType (MERCHANDISE_TYPE.COLD).toString());
-//    }
+
     
     @Test
     void searchPatientByNameTestValidInput1()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data

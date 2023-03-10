@@ -8,22 +8,13 @@ import java.util.ArrayList;
 
 import middleLayer.Users.*;
 
-/*to be tested:
- * ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch)
- * void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth)
- * 
- */
+
 
 class PharmacistTest {
     private Patient patient1;
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
 
-//    @Test
-//    void addPatient() throws Exception {
-//        Pharmacist p = new Pharmacist(1234567890, 12345678);
-//        p.addPatient("John", "Doe", "12 Dreamville rd", 1357924680, 217896421, 20021010);
-//        assertEquals("[First name: John, Last name: Doe, Address: 12 Dreamville rd, Phone Number: 1357924680, Health Card: 217896421, Date of birth: 20021010\n]", p.searchPatientByName("John", "FirstName").toString());
-//    }
+
 
     @Test
     void searchPatientByName() {
@@ -37,7 +28,7 @@ class PharmacistTest {
     }
 
     @Test
-    //NOT WORKING
+
     void addPatient() {
         try {
             superDAO.setPassword(pass);

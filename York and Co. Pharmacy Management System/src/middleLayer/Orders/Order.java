@@ -8,8 +8,6 @@ import middleLayer.Users.Patient;
 public class Order { //ALL ORDER: both OTC and Prescription
 	private Inventory merList = Inventory.getInstance();
 	private ListOfPatients patList = ListOfPatients.getInstance();
-//	private OrderDAO _orderDao;
-	//private MerchandiseDAO _merDao;
 	
 	int orderNum;
 	int medicationID;
@@ -25,7 +23,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		this.patientID = patientID;
 		
 		if (quantityBought < 0) {
-			throw new Exception("Quantity Bought Must Be Non-Negative!");
+			throw new Exception("Quantity Bought Must Be Non-Negative!");    
 		}
 		this.quantityBought = quantityBought;
 		
@@ -62,22 +60,6 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		this.isPrescription = o.isPrescription;
  	}
 
-//	public OrderDAO get_orderDao() {
-//		return _orderDao;
-//	}
-//
-//	public void set_orderDao(OrderDAO _orderDao) {
-//		this._orderDao = _orderDao;
-//	}
-
-//	public MerchandiseDAO get_merDao() {
-//		return _merDao;
-//	}
-//
-//	public void set_merDao(MerchandiseDAO _merDao) {
-//		this._merDao = _merDao;
-//	}
-
 	public int getPatientID() {
 		return patientID;
 	}
@@ -109,20 +91,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	public void setTotalPriceOfOrder(double totalPriceOfOrder) {
 		this.totalPriceOfOrder = totalPriceOfOrder;
 	}
-//	public double calculateSellingPrice(){ // calculates selling price including HST and assigns it to priceAtPurchase
-//		Inventory inv = Inventory.getInstance();
-//		Merchandise m = inv.searchMerchandiseWithID(medicationID); //locate merchandise
-//		priceAtPurchase = m.price * 1.13;
-//		return priceAtPurchase;
-//	}
 
-//	public int calculateRevenue() {
-//		return 0;
-//	}
-//	public String seeSummaryOfSales() {
-//		return "";
-//	}
-//
 	public int getQuantityBought() {
 		return quantityBought;
 	}

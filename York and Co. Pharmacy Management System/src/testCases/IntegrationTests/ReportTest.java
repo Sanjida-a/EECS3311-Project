@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 class ReportTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void calculateRevenue() throws Exception {
         try {
@@ -72,6 +72,6 @@ class ReportTest {
 		for ( int i = 0; i < allOrders.size(); i++) {
 			assertEquals(allOrders.get(i).toString(), summary.get(i));
 		}
-//        assertEquals("Order number: 1 Medication ID: 1 Quantity bought: 1 Total price: 5.000000\n", r.seeSummaryOfSales());
+
     }
 }

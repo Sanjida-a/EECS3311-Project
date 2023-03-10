@@ -8,11 +8,6 @@ import middleLayer.Users.*;
 
 public class UserDAO extends superDAO implements UserRoot {
 	
-//	Connection con;
-//	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
-//	private String user = "root";
-//	private String password = "hello123"; //make sure to change password based on your password for MySQL
-	
 	private ArrayList<User> allUsernamesAndPasswordsList = new ArrayList<User>();
 	private ArrayList<Patient> patientList = new ArrayList<Patient>();
 	
@@ -53,17 +48,14 @@ public class UserDAO extends superDAO implements UserRoot {
 				}
 				else { // case where user is a Patient
 					user = new Patient(username, password);
-				}
-				
+				}				
 				allUsernamesAndPasswordsList.add(user);
-			}
-			
+			}			
 			con.close();
 		}
 		catch (Exception e) {
 			throw e;
-		}
-		
+		}		
 		return allUsernamesAndPasswordsList;
 	}
 	
@@ -94,14 +86,12 @@ public class UserDAO extends superDAO implements UserRoot {
 				
 				
 				patientList.add(patient);
-			}
-			
+			}			
 			con.close();
 		}
 		catch (Exception e) {
 			throw e;
-		}
-		
+		}		
 		return patientList;
 	}
 	
@@ -128,7 +118,7 @@ public class UserDAO extends superDAO implements UserRoot {
 	}
 	
 	// whenever a specific/individual patient from the list of patients is updated (ex. firstname/lastname/phoneNo/address changed), this method makes sure that that row of patient in the database is updated accordingly
-	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject) {
+	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject){
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
@@ -148,7 +138,6 @@ public class UserDAO extends superDAO implements UserRoot {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-//			throw e;
 		}
 	}
 }

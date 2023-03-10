@@ -6,11 +6,6 @@ public class pharmacyAppMain {
 	
 	// main method to initiate our program
 	public static void main(String[] args) {
-		
-		//DisplayLogin logIn = new DisplayLogin();
-		//logIn.displayLogin();
-//		DisplayInitialScreen screen = new DisplayInitialScreen();
-		//DisplayInitialScreen.displayInitialScreen(USER.GUEST);
 		DisplaySQLLogin screen = new DisplaySQLLogin();
 		screen.displaySQLLogin();
 	}

@@ -76,16 +76,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		textFieldName.setBounds(145, 45, 505, 35);
 		panel.add(textFieldName);
 		textFieldName.setColumns(10);
-		
-		/*textFieldType = new JTextField();
-		textFieldType.setBounds(145, 162, 168, 35);
-		panel.add(textFieldType);
-		textFieldType.setColumns(10);
-		
-		textFieldForm = new JTextField();
-		textFieldForm.setBounds(470, 116, 180, 35);
-		panel.add(textFieldForm);
-		textFieldForm.setColumns(10);*/
+
 		
 		textFieldPrice = new JTextField();
 		textFieldPrice.setBounds(500, 91, 150, 35);
@@ -103,11 +94,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 	}
 	
 	public static void createButtons(JPanel panel) {
-		/*JButton btnOk = new JButton("Ok");
-		btnOk.setFont(new Font("굴림", Font.BOLD, 20));
-		btnOk.setBounds(460, 248, 190, 35);
-		btnOk.addActionListener(new DisplayModifyMerchandise());
-		panel.add(btnOk);*/
+
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.setFont(new Font("굴림", Font.BOLD, 20));
@@ -138,7 +125,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub				
+					
 		String actionCommand = e.getActionCommand();
 		
 		String errorMessage = "";
@@ -149,8 +136,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 				frame.dispose();
 				superFrame.setEnabled(true);
 				superFrame.toFront();
-				//DisplayInitialScreen.refreshList(list);
-				//System.out.println("refreshed");
+				
 				list = DisplayInitialScreen.refreshList(inv.getInstance(), list);
 				DisplayInitialScreen.displayMercList(output, list);
 			}
@@ -174,12 +160,10 @@ public class DisplayModifyMerchandise implements ActionListener{
 					}
 					try {
 						result = inv.modifyMedicationName(_textFieldMercID, _textFieldName);
-						//DisplayInitialScreen.refreshList(list);
-						//DisplayInitialScreen.displayMercList(output, list);
+	
 					}
 					catch (Exception e1) {
 						// popup
-						//System.out.println("Already exists");
 						errorMessage = "Already exists";
 						JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
@@ -193,8 +177,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 					throw new Exception(); // ensures a first name, last name and address have been entered				
 				}*/
 					result = inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-					//DisplayInitialScreen.refreshList(list);
-					//DisplayInitialScreen.displayMercList(output, list);
+					
 				}
 				else if(actionCommand.equals("Change Description")) {
 					String _textAreaDescription = textAreaDescription.getText();
@@ -205,8 +188,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 					}
 					try {
 						result = inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
-						//DisplayInitialScreen.refreshList(list);
-						//DisplayInitialScreen.displayMercList(output, list);
+						
 						
 					}
 					catch(Exception ex) {
@@ -217,7 +199,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 				if (result == false) {
 					// popup
 					errorMessage = "MedicationID Does Not Exist in Inventory";
-					//System.out.println(errorMessage);
+					
 					JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 			}

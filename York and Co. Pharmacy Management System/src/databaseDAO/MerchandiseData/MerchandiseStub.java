@@ -22,13 +22,11 @@ public class MerchandiseStub implements MerchandiseRoot {
 	}
 	@Override
 	public ArrayList<Merchandise> getListOfMerchandise() {
-		// TODO Auto-generated method stub
 		return allInventoryStub;
 	}
 
 	@Override
 	public void updateMedicationInDatabase(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
-		// TODO Auto-generated method stub
 		for(Merchandise m : allInventoryStub) {
 			if(m.getMedicationID() == medIDOfModifiedMedication) {
 				m = actualMedicationObject;
@@ -40,7 +38,6 @@ public class MerchandiseStub implements MerchandiseRoot {
 
 	@Override
 	public void deleteMedicationInDatabase(int medIDOfDeletedMedication) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i < allInventoryStub.size(); i ++) {
 			if(allInventoryStub.get(i).getMedicationID() == medIDOfDeletedMedication) {
 				allInventoryStub.get(i).setIsValid(false);
@@ -51,13 +48,11 @@ public class MerchandiseStub implements MerchandiseRoot {
 
 	@Override
 	public void addMedicationToDatabase(Merchandise newMedication) {
-		// TODO Auto-generated method stub
 		allInventoryStub.add(newMedication);
 
 	}
 	@Override
 	public void updateQuantPurchase(int merID, int quantBought) {
-		// TODO Auto-generated method stub
 		for(int i = 0; i < allInventoryStub.size(); i ++) {
 			if(allInventoryStub.get(i).getMedicationID() == merID) {
 				int newQuant = allInventoryStub.get(i).getQuantity() - quantBought;

@@ -15,16 +15,11 @@ import middleLayer.MerchandiseInventory.*;
 
 public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 	
-//	private Connection con;
-//	private String url = "jdbc:mysql://localhost:3306/3311Team8Project";
-//	private String user = "root";
-//	private String password; //make sure to change password based on your password for MySQL
 
 	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
 	
 	public MerchandiseDAO() throws Exception {
 		try {
-//			password = userPass;
 			con = DriverManager.getConnection(url, user, password);
 			con.close();
 		} catch (Exception e) {
@@ -74,7 +69,6 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-//			throw e;
 		}
 		
 		return allInventory;
@@ -105,7 +99,6 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-//			throw e;
 		}
 	}
 	
@@ -114,8 +107,9 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-//			String deleteMedicationQuery = "DELETE FROM Medications WHERE medicationID = ?"; // we are not explicitly deleting the row since it would cause errors in other database tables...
-			String deleteMedicationQuery = "UPDATE Medications SET isValid = 0 WHERE medicationID = ?"; //... instead we are modifying the value of isValid for that medication
+			 // we are not explicitly deleting the row since it would cause errors in other database tables...
+			//... instead we are modifying the value of isValid for that medication
+			String deleteMedicationQuery = "UPDATE Medications SET isValid = 0 WHERE medicationID = ?"; 
 			PreparedStatement statement = con.prepareStatement(deleteMedicationQuery);
 
 			statement.setInt(1, medIDOfDeletedMedication);
@@ -126,7 +120,6 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-//				throw e;
 		}
 	}
 	
@@ -153,7 +146,6 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-//			throw e;
 		}
 	}
 		
@@ -179,7 +171,6 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-//			throw e;
 		}
 	}
 		

@@ -18,16 +18,16 @@ class PharmacistUnitTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 		
 	}
-	//done
+
 	@Test
 	void testAddPatient() {
-		//fail("Not yet implemented");
+		
 		Pharmacist subject1 = new Pharmacist(0, 0);
 		UserStub stub = new UserStub();
 		subject1.set_userDAO(stub);
@@ -36,7 +36,7 @@ class PharmacistUnitTest {
 		try {
 			subject1.addPatient("test", "name", "address", 1111144444, 1111144444, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		expected.add(new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222));
@@ -54,7 +54,7 @@ class PharmacistUnitTest {
 		 * is exactly identical to the one of the same method in Owner class
 		 * no need to test twice 
 		 */
-		//fail("Not yet implemented");
+		
 	}
 
 }

@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import databaseDAO.superDAO;
 import databaseDAO.UserData.UserStub;
 import middleLayer.Users.*;
-//done
+
 class ListOfPatientsUnitTest {
 	
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -26,7 +26,7 @@ class ListOfPatientsUnitTest {
 
 	@Test
 	void testUpdatePatientListFromDatabase() {
-		//fail("Not yet implemented");
+
 		ListOfPatients patients = ListOfPatients.getInstance();
 		UserStub stub = new UserStub();
 		patients.set_userDAO(stub);
@@ -36,7 +36,7 @@ class ListOfPatientsUnitTest {
 
 	@Test
 	void testSearchPatientWithID() {
-		//fail("Not yet implemented");
+	
 		ListOfPatients patients = ListOfPatients.getInstance();
 		UserStub stub = new UserStub();
 		patients.set_userDAO(stub);
@@ -51,7 +51,7 @@ class ListOfPatientsUnitTest {
 
 	@Test
 	void testModifyPatientDetails1() {
-		//fail("Not yet implemented");
+	
 		ListOfPatients patients = ListOfPatients.getInstance();
 		UserStub stub = new UserStub();
 		patients.set_userDAO(stub);
@@ -103,7 +103,7 @@ class ListOfPatientsUnitTest {
 			assertEquals(result, "5324 yonge St");
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
