@@ -12,8 +12,10 @@ To see the files that contain java code, please first click on the "York and Co.
 -------------------------------------------------------------------------------------------
 Bugs/Limitations for Iteration2
 
--Patient Healthcard# : Please enter a number < 2147483647
--Patient Date of Birth: Please enter a number < 2147483647
--Patient Phone#: Please enter a number < 2147483647
+-Patient Healthcard# : Please enter a number that is less than 2147483647
 
-Any number greater than these numbers will produce an error message of 'invalid output'
+-Patient Date of Birth: Please enter a number that is less than 2147483647
+
+-Patient Phone#: Please enter a number that is less than 2147483647
+
+Any number greater than these numbers will produce an error message of 'invalid output'. This will be fixed in iteration 3.
