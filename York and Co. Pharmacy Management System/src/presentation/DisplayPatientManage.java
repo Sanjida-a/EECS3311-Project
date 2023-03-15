@@ -1,7 +1,10 @@
 package presentation;
 
 import javax.swing.JFrame;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -17,7 +20,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
+import databaseDAO.superDAO;
 import middleLayer.Users.*;
 
 
@@ -28,6 +37,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
+import java.awt.Component;
 
 
 public class DisplayPatientManage {
@@ -44,11 +54,22 @@ public class DisplayPatientManage {
 	//private static JTextField textFieldAccount;
 	//private static JTextField textFieldPassword;\
 	private static JLabel lblNotice;
-	private static JTextArea textAreaOutput;
-	private static ListOfPatients listOfPatientsInstance = ListOfPatients.getInstance();	
+	//private static JTextArea textAreaOutput;
+	private static ListOfPatients listOfPatientsInstance;
+	private static final String[] columns= {				
+			String.format("%-20s ", "Name"),
+			String.format("%-20s ", "Address"),
+			String.format("%-10s ", "Phone Number"),
+			String.format("%-10s ", "Healthcard"),
+			String.format("%-10s\n", "DoB")};
+	private static String[][] patients = {{"", "","","",""}};
+	private static JTable table;
+	private static JScrollPane scrollPane;
+
 
 	
 	public static void displayPatientManage(JFrame previous) {
+		listOfPatientsInstance = ListOfPatients.getInstance();
 		superFrame = previous;
 		superFrame.setEnabled(false);
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -81,23 +102,24 @@ public class DisplayPatientManage {
 	}
 	
 	private static void patientsDisplay() {
+		
 		JPanel panelPatientList = new JPanel();
 		panelPatientList.setBounds(12, 10, 780, 525);
 		frame.getContentPane().add(panelPatientList);
 		panelPatientList.setLayout(null);
 		
 		textFieldSearchKeyword = new JTextField();
-		textFieldSearchKeyword.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textFieldSearchKeyword.setBounds(0, 0, 396, 35);
+		textFieldSearchKeyword.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelPatientList.add(textFieldSearchKeyword);
 		textFieldSearchKeyword.setColumns(10);
 		
-		patientListField(panelPatientList);
+		
 
 		
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setFont(new Font("굴림", Font.BOLD, 18));
 		btnSearch.setBounds(508, 0, 130, 35);
+		btnSearch.setFont(new Font("굴림", Font.BOLD, 18));
 		btnSearch.addActionListener(new ActionListener() {
 
 			@Override
@@ -118,7 +140,7 @@ public class DisplayPatientManage {
 					
 					//Daniel can you please add the drop down and use the drop down to send as parameter instead of the hardcoded string
 					searchResult = o1.searchPatientByName(_textFieldSearchKeyword, (String)comboBox.getSelectedItem());
-					displayList(textAreaOutput, searchResult);
+					displayList(table, searchResult);
 
 					
 				}
@@ -137,22 +159,22 @@ public class DisplayPatientManage {
 		panelPatientList.add(btnSearch);
 		
 		comboBox = new JComboBox<String>();
-		comboBox.setFont(new Font("굴림", Font.BOLD, 12));
 		comboBox.setBounds(397, 0, 110, 35);
+		comboBox.setFont(new Font("굴림", Font.BOLD, 12));
 		comboBox.setBorder(new LineBorder(new Color(0, 0, 0)));
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"FirstName", "LastName", "FullName"}));
 		panelPatientList.add(comboBox);
 		
 		JButton btnRefresh = new JButton("Refresh");
-		btnRefresh.setFont(new Font("굴림", Font.BOLD, 18));
 		btnRefresh.setBounds(650, 0, 130, 35);
+		btnRefresh.setFont(new Font("굴림", Font.BOLD, 18));
 		btnRefresh.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
-				lblNotice.setText("Patient is added successfully");
+				displayList(table, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+			//	lblNotice.setText("Patient is added successfully");
 			}
 			
 		});
@@ -165,11 +187,10 @@ public class DisplayPatientManage {
 		lblNotice.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNotice.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
 		lblNotice.setForeground(new Color(255, 0, 0));
-
 		
 
-		
-
+		patientListField(panelPatientList);
+		displayList(table, listOfPatientsInstance.getAllPatientsList());
 		
 	}
 	
@@ -243,25 +264,6 @@ public class DisplayPatientManage {
 		panelInputFields.add(textFieldDOB);
 		textFieldDOB.setColumns(10);
 		
-		/*JLabel lblAccount = new JLabel("Account");
-		lblAccount.setFont(new Font("굴림", Font.BOLD, 15));
-		lblAccount.setBounds(0, 390, 110, 35);
-		panelInputFields.add(lblAccount);*/
-		
-		/*textFieldAccount = new JTextField();
-		textFieldAccount.setBounds(110, 390, 260, 35);
-		panelInputFields.add(textFieldAccount);
-		textFieldAccount.setColumns(10);*/
-		
-		/*JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("굴림", Font.BOLD, 15));
-		lblPassword.setBounds(0, 435, 110, 35);
-		panelInputFields.add(lblPassword);*/
-		
-		/*textFieldPassword = new JTextField();
-		textFieldPassword.setBounds(110, 435, 260, 35);
-		panelInputFields.add(textFieldPassword);
-		textFieldPassword.setColumns(10);*/
 		
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("굴림", Font.BOLD, 17));
@@ -289,7 +291,7 @@ public class DisplayPatientManage {
 					
 					Pharmacist p1 = new Pharmacist(1,1);
 					p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
-					displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+					displayList(table, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
 					lblNotice.setText("Patient is added successfully");
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
@@ -329,7 +331,7 @@ public class DisplayPatientManage {
 						JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					
-					displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList() );
+					displayList(table, listOfPatientsInstance.getAllPatientsList() );
 					lblNotice.setText("Patient is modified successfully");
 					
 				}
@@ -353,38 +355,60 @@ public class DisplayPatientManage {
 
 	}
 	private static void patientListField(JPanel panel) {
-		textAreaOutput = new JTextArea();
-		textAreaOutput.setFont(new Font("MS Gothic", Font.PLAIN, 15));
-		textAreaOutput.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		textAreaOutput.setBounds(0, 100, 780, 415);
-		displayList(textAreaOutput, listOfPatientsInstance.getAllPatientsList() );
-		panel.add(textAreaOutput);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 100, 780, 425);
+		panel.add(scrollPane);
+		table = new JTable();
+		
+		/*table = new JTable(patients, columns){
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		      public Component prepareRenderer(TableCellRenderer renderer, int row,
+		          int col) {
+		        Component comp = super.prepareRenderer(renderer, row, col);
+		        ((JLabel) comp).setHorizontalAlignment(JLabel.LEFT);
+		        return comp;
+		      }
+		    };*/
+		table.setFont(new Font("Monospaced", Font.PLAIN, 14));
+
+		//scrollPane.setViewportView(table);
+		
 	}
 	
-	private static void displayList(JTextArea output, ArrayList<Patient> pList){	//if this method is invoked at the end of every  button click operation,													
+	private static void displayList(JTable output, ArrayList<Patient> pList){	//if this method is invoked at the end of every  button click operation,													
 
 		output.removeAll();
-		String result = new String();
-		try {
+		
+		patients = new String[pList.size()][columns.length]; 
+		for(int i = 0; i < pList.size(); i++) {
 			
-			for(Patient p : pList) {
-				
-				result += String.format("| %-20s ", p.getFirstName() + " " + p.getLastName());
-				result += String.format("| %-20s ", p.getAddress());
-				result += String.format("| %-10s ", p.getPhoneNum());
-				result += String.format("| %-10s ", p.getHealthCardNum());
-				result += String.format("| %-10s\n", p.getDateOfBirth());
+			patients[i][0] = String.format("%-20s", pList.get(i).getFirstName() + " " + pList.get(i).getLastName());
+			patients[i][1] = String.format("%-20s", pList.get(i).getAddress());
+			patients[i][2] = String.format("%-10s", pList.get(i).getPhoneNum());
+			patients[i][3] = String.format("%-10s", pList.get(i).getHealthCardNum());
+			patients[i][4] = String.format("%-10s", pList.get(i).getDateOfBirth());
 
-			}
+		}
+		//System.out.println("patients: " + patients[0][0] + " " + patients[0][1] + " " + patients[0][2]);
+		//table = new JTable(patients, columns);
+		table = new JTable(patients, columns);
+		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.LEFT);
+		table.setEnabled(false);
+		scrollPane.setViewportView(table);
+		
+	}
+	
+	
+	public static void main(String[] args) {	//for test purpose
+		try {
+			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		output.setText(result);
-	}
-	
-	
-	/*public static void main(String[] args) {	//for test purpose
 		DisplayPatientManage.displayPatientManage(new JFrame());
-	}*/
+	}
 }
