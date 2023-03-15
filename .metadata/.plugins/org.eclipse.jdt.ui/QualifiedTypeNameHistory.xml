@@ -42,4 +42,8 @@
     <fullyQualifiedTypeName name="middleLayer.Pharmacist"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="middleLayer.Patient"/>
+    <fullyQualifiedTypeName name="javax.swing.JTable"/>
+    <fullyQualifiedTypeName name="javax.swing.table.TableColumn"/>
+    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
+    <fullyQualifiedTypeName name="javax.swing.table.TableColumnModel"/>
 </qualifiedTypeNameHistroy>

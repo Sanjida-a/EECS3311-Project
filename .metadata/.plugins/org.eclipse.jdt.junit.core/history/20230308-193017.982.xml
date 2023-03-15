@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ListOfPatientsUnitTest" project="York and Co. Pharmacy Management System" tests="4" started="4" failures="0" errors="0" ignored="0">
-  <testsuite name="testCases.Unit.ListOfPatientsUnitTest" time="0.638" displayname="ListOfPatientsUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]">
-    <testcase name="testModifyPatientDetails1" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.542" displayname="testModifyPatientDetails1()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testModifyPatientDetails1()]"/>
-    <testcase name="testModifyPatientDetails2" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.061" displayname="testModifyPatientDetails2()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testModifyPatientDetails2()]"/>
-    <testcase name="testSearchPatientWithID" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.016" displayname="testSearchPatientWithID()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testSearchPatientWithID()]"/>
-    <testcase name="testUpdatePatientListFromDatabase" classname="testCases.Unit.ListOfPatientsUnitTest" time="0.016" displayname="testUpdatePatientListFromDatabase()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfPatientsUnitTest]/[method:testUpdatePatientListFromDatabase()]"/>
-  </testsuite>
-</testrun>
