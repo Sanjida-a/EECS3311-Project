@@ -1,5 +1,0 @@
-package databaseDAO;
-
-public interface UserRoot {
-
-}

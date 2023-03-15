@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ListOfOrdersUnitTest" project="York and Co. Pharmacy Management System" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="testCases.Unit.ListOfOrdersUnitTest" time="0.525" displayname="ListOfOrdersUnitTest" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfOrdersUnitTest]">
-    <testcase name="testUpdateOrderListFromDatabase" classname="testCases.Unit.ListOfOrdersUnitTest" time="0.525" displayname="testUpdateOrderListFromDatabase()" uniqueid="[engine:junit-jupiter]/[class:testCases.Unit.ListOfOrdersUnitTest]/[method:testUpdateOrderListFromDatabase()]"/>
-  </testsuite>
-</testrun>
