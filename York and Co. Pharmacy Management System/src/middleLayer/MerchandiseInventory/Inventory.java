@@ -151,7 +151,12 @@ public class Inventory{
     }
 
     // increase quantity of medication already existing in inventory (if exists)
-    public boolean increaseQuantity(int medicationID, int increasedQuantity){
+    public boolean increaseQuantity(int medicationID, int increasedQuantity) throws Exception{
+    	
+    	if (increasedQuantity < 0) {
+			throw new Exception("Quantity to increase by must be a non-negative number!");
+		}
+    	
     	boolean medicationIncreased = false;
     	
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
@@ -172,7 +177,12 @@ public class Inventory{
     }
 
     // decrease quantity of medication already existing in inventory, if possible (if medication exists)
-    public boolean[] decreaseQuantity(int medicationID, int decreasedQuantity){
+    public boolean[] decreaseQuantity(int medicationID, int decreasedQuantity) throws Exception{
+    	
+    	if (decreasedQuantity < 0) {
+			throw new Exception("Quantity to decrease by must be a non-negative number!");
+		}
+    	
     	boolean medicationDecreased = false;
     	boolean enoughQuantityToDecrease = true;
     	boolean itemLowInStock = false;
@@ -234,8 +244,14 @@ public class Inventory{
     }
     
     // add a new medication to inventory (if it already doesn't exist)
-    public boolean addToInventory(Merchandise m){
+    public boolean addToInventory(Merchandise m) throws Exception{
     	
+    	if (m.getPrice() < 0) {
+			throw new Exception("Price must be a non-negative number!");
+		}
+    	if (m.getQuantity() < 0) {
+			throw new Exception("Quantity must be a non-negative number!");
+		}
     	boolean medicationAlreadyExists = false;
     	boolean medicationAdded = false;
         for (int i = 0; i < list.size(); i ++){
@@ -307,7 +323,12 @@ public class Inventory{
     }
     
     // modifies the price of the medication
-    public boolean modifyMedicationPrice(int medicationID, double newPrice) {
+    public boolean modifyMedicationPrice(int medicationID, double newPrice) throws Exception {
+    	
+    	if (newPrice < 0) {
+			throw new Exception("Price must be a non-negative number!");
+		}
+    	
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
     	
     	if (specificMedication == null) { // if no medication with such ID exists, then can't update

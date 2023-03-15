@@ -18,7 +18,7 @@ class PharmacistUnitTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

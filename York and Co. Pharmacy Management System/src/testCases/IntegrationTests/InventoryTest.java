@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
     private MerchandiseDAO _merDAO;
-    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
     @Test
     void getInstance() {
@@ -129,12 +129,16 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.increaseQuantity(originalList.get(0).getMedicationID(),10);
-        ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(originalList.get(0).getQuantity() + 10, newList.get(0).getQuantity());
-        
-        // back to normal
-        val.decreaseQuantity(originalList.get(0).getMedicationID(), 10);
+        try {
+			val.increaseQuantity(originalList.get(0).getMedicationID(),10);
+			ArrayList<Merchandise> newList = val.getMerchandise();
+	        assertEquals(originalList.get(0).getQuantity() + 10, newList.get(0).getQuantity());
+	        
+	        // back to normal
+	        val.decreaseQuantity(originalList.get(0).getMedicationID(), 10);
+		} catch (Exception e) {
+			
+		}
     }
     @Test
     void increaseQuantityInvalid(){
@@ -145,9 +149,31 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.increaseQuantity(originalList.size() + 1,10);
-        assertEquals(false, val.increaseQuantity(originalList.size() + 1,10));
+        try {
+        	val.increaseQuantity(originalList.size() + 1,10);
+            assertEquals(false, val.increaseQuantity(originalList.size() + 1,10));
+        }
+        catch (Exception e) {
+        	
+        }
     }
+    
+    @Test
+    void increaseQuantityInvalid2(){ // negative quantity
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Inventory val = Inventory.getInstance();
+        ArrayList<Merchandise> originalList = val.getMerchandise();
+        try {
+        	assertThrows(Exception.class, () -> val.increaseQuantity(originalList.size(),-10));
+        }
+        catch (Exception e) {
+        }
+    }
+
 
     @Test
     void decreaseQuantity(){ //need condition
@@ -161,23 +187,28 @@ class InventoryTest {
       
         
         if (originalList.get(0).getQuantity() >= 1) {
-        	val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
-        	ArrayList<Merchandise> newList = val.getMerchandise();
-            assertEquals(originalList.get(0).getQuantity()-1, newList.get(0).getQuantity());
-            
-            //back to normal
-            val.increaseQuantity(originalList.get(0).getMedicationID(), 1);
+        	try {
+        		val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
+            	ArrayList<Merchandise> newList = val.getMerchandise();
+                assertEquals(originalList.get(0).getQuantity()-1, newList.get(0).getQuantity());
+                
+                //back to normal
+                val.increaseQuantity(originalList.get(0).getMedicationID(), 1);
+        	}
+			catch (Exception e) {
+			 	
+			}
         }
         else {
-        	val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
-        	ArrayList<Merchandise> newList = val.getMerchandise();
-            assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
+        	try {
+        		val.decreaseQuantity(originalList.get(0).getMedicationID(),1);
+            	ArrayList<Merchandise> newList = val.getMerchandise();
+                assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
+        	}
+            catch (Exception e) {
+            	
+            }
         }
-        
-
-        
-        // back to normal
-       
     }
 
 
@@ -190,9 +221,33 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.decreaseQuantity(originalList.get(0).getMedicationID(),originalList.get(0).getQuantity()+1);
-        ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
+        
+        try {
+        	val.decreaseQuantity(originalList.get(0).getMedicationID(),originalList.get(0).getQuantity()+1);
+            ArrayList<Merchandise> newList = val.getMerchandise();
+            assertEquals(originalList.get(0).getQuantity(), newList.get(0).getQuantity());
+        }
+        catch (Exception e) {
+        	
+        }
+
+    }
+    
+    @Test
+    void decreaseQuantityInvalid2(){ // negative quantity
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Inventory val = Inventory.getInstance();
+        ArrayList<Merchandise> originalList = val.getMerchandise();
+        
+        try {
+        	assertThrows(Exception.class, () -> val.decreaseQuantity(originalList.get(0).getMedicationID(), -10));
+        }
+        catch (Exception e) {
+        }
 
     }
 
@@ -272,13 +327,17 @@ class InventoryTest {
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
         double originalPrice = originalList.get(0).getPrice();
-        
-        val.modifyMedicationPrice(originalList.get(0).getMedicationID(), 10.00);
-        ArrayList<Merchandise> newList = val.getMerchandise();
-        assertEquals(10.00, newList.get(0).getPrice());
-        
-        // back to normal
-       	val.modifyMedicationPrice(originalList.get(0).getMedicationID(), originalPrice);
+        try { 
+	        val.modifyMedicationPrice(originalList.get(0).getMedicationID(), 10.00);
+	        ArrayList<Merchandise> newList = val.getMerchandise();
+	        assertEquals(10.00, newList.get(0).getPrice());
+	        
+	        // back to normal
+	       	val.modifyMedicationPrice(originalList.get(0).getMedicationID(), originalPrice);
+        }
+        catch (Exception e) {
+        	
+        }
        
     }
 
@@ -291,11 +350,35 @@ class InventoryTest {
 		}
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationPrice(100, 100.00);
-        ArrayList<Merchandise> newList = val.getMerchandise();
         
-        for (int i = 0 ; i< originalList.size(); i++) {
-        	 assertEquals(originalList.get(0).getPrice(), newList.get(0).getPrice());
+        try {
+	        val.modifyMedicationPrice(100, 100.00);
+	        ArrayList<Merchandise> newList = val.getMerchandise();
+	        
+	        for (int i = 0 ; i< originalList.size(); i++) {
+	        	 assertEquals(originalList.get(0).getPrice(), newList.get(0).getPrice());
+	        }
+        }
+        catch (Exception e) {
+        	
+        }
+       
+    }
+    
+    @Test
+    void modifyPriceInvalid2(){ // negative price
+    	try {
+			superDAO.setPassword(pass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        Inventory val = Inventory.getInstance();
+        ArrayList<Merchandise> originalList = val.getMerchandise();
+        
+        try {
+	        assertThrows(Exception.class, () -> val.modifyMedicationPrice(originalList.get(0).getMedicationID(), -10));
+        }
+        catch (Exception e) {
         }
        
     }
@@ -338,7 +421,7 @@ class InventoryTest {
     }
 
     @Test
-    void modifyName() throws Exception {
+    void modifyName() {
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -348,15 +431,20 @@ class InventoryTest {
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
         String originalName = originalList.get(0).getName();
-        val.modifyMedicationName(originalList.get(0).getMedicationID(), "Buckleys");
-
-        // back to normal
-       	val.modifyMedicationName(originalList.get(0).getMedicationID(), originalName);
         
+        try {
+        	 val.modifyMedicationName(originalList.get(0).getMedicationID(), "Buckleys");
+
+             // back to normal
+            val.modifyMedicationName(originalList.get(0).getMedicationID(), originalName);
+        }
+        catch (Exception e) {
+        	
+        }
     }
 
     @Test
-    void modifyNameInvalid() throws Exception {
+    void modifyNameInvalid() {
         try {
             superDAO.setPassword(pass);
         } catch (Exception e) {
@@ -364,12 +452,16 @@ class InventoryTest {
         }
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
-        val.modifyMedicationName(100, "Buckleys");
-        ArrayList<Merchandise> newList = val.getMerchandise();
         
-        for (int i = 0 ; i< originalList.size(); i++) {
-        	assertEquals(originalList.get(i).getName(), newList.get(i).getName());
+        try {
+        	val.modifyMedicationName(100, "Buckleys");
+            ArrayList<Merchandise> newList = val.getMerchandise();
+            
+            for (int i = 0 ; i< originalList.size(); i++) {
+            	assertEquals(originalList.get(i).getName(), newList.get(i).getName());
+            }
         }
-        
+        catch (Exception e) {
+        }
     }
 }

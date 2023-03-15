@@ -63,7 +63,7 @@ public class OrderStub implements OrderRoot {
 	}
 	
 	@Override
-	public int numOfRefill(int _patientID, int _medicationId)  {
+	public int numOfRefill(long _patientID, int _medicationId)  {
 		int sumQuantityBought = 0;
 		for (Order o: orderList) {
 			if ((o.getMedicationID() == _medicationId) && (o.getPatientID() == _patientID)) {
@@ -84,7 +84,7 @@ public class OrderStub implements OrderRoot {
 	}
 	
 	@Override
-	public Boolean checkIfExistsInPrescriptionTable(int _patientID, int _medicationId) throws SQLException {		
+	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId) throws SQLException {		
 		Boolean existsInPrescriptionList = false;
 		for (Prescription p: prescriptionList) {
 			if ((p.getMedicationID() == _medicationId) && (p.getPatientID() == _patientID)) {

@@ -8,7 +8,7 @@ public class Owner extends User {
 	private ListOfPatients listOfPatientsByOwner = ListOfPatients.getInstance();
 	
 	// having only this constructor avoids having an owner without a username and password
-	public Owner(int username, int password) {
+	public Owner(long username, int password) {
 		this.username = username;
 		this.password = password;
 	}

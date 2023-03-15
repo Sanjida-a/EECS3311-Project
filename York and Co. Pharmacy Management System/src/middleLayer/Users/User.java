@@ -7,10 +7,10 @@ import presentation.USER;
 
 public abstract class User {
 	
-	public int username;
+	public long username;
 	public int password;
 	
-	public void setUsername(int username) {
+	public void setUsername(long username) {
 		this.username = username;
 	}
 	
@@ -18,7 +18,7 @@ public abstract class User {
 		this.password = password;
 	}
 	
-	public int getUsername() {
+	public long getUsername() {
 		return this.username;
 	}
 	

@@ -34,7 +34,8 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			String queryGetAllRows = "SELECT * FROM Orders;";   // to get all rows from Orders table
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(queryGetAllRows);
-			int orderNum, medicationID, patientID, quantityBought;
+			int orderNum, medicationID, quantityBought;
+			long patientID;
 			double priceAtPurchase;
 			boolean isPrescription;
 			
@@ -43,7 +44,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			while (result.next()) { 
 				orderNum =  result.getInt("orderNum");
 				medicationID =  result.getInt("medicationID");
-				patientID =  result.getInt("patientID");
+				patientID =  result.getLong("patientID");
 				quantityBought =  result.getInt("quantityBought");
 				priceAtPurchase =  result.getDouble("priceAtPurchase");
 				isPrescription =  result.getBoolean("isPrescription");
@@ -71,7 +72,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 					+ " values ( ?, ?, ?, ?, ?)";                
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
 			stmt.setInt(1, o.getMedicationID());
-			stmt.setInt(2, o.getPatientID());
+			stmt.setLong(2, o.getPatientID());
 			stmt.setInt(3, o.getQuantityBought());
 			stmt.setDouble(4, o.getTotalPriceOfOrder()); 
 			stmt.setBoolean(5, o.getIsPrescription());			
@@ -92,7 +93,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 					+ " values ( ?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
 			stmt.setInt(1, p.getMedicationID());
-			stmt.setInt(2, p.getPatientID());
+			stmt.setLong(2, p.getPatientID());
 			stmt.setInt(3, p.getOriginalNumOfRefills());
 				stmt.execute(); // execute the preparedstatement
 				con.close();		
@@ -113,7 +114,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 					+ " values ( ?, ?, ?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(preparedStatement);
 			stmt.setInt(1, o.getMedicationID());
-			stmt.setInt(2, o.getPatientID());
+			stmt.setLong(2, o.getPatientID());
 			stmt.setInt(3, o.getQuantityBought());
 			stmt.setDouble(4, o.getTotalPriceOfOrder()); 
 			boolean _isPres = o.getIsPrescription();
@@ -128,7 +129,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 	}
 	
 	//checking how many refills left for prescriptions
-	public int numOfRefill (int _patientID, int _medicationId) throws SQLException {
+	public int numOfRefill (long _patientID, int _medicationId) throws SQLException {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
@@ -158,7 +159,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 	}
 	
 	//to check whether a record exists in prescription table before giving a refill
-	public Boolean checkIfExistsInPrescriptionTable(int _patientID, int _medicationId)  throws SQLException{
+	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();

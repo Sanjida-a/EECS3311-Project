@@ -29,7 +29,7 @@ public class AuthenticateUser {
 	}
 	
 	// using the list of usernames and passwords retrieved from database, check to see if a login attempt was successful or not
-	public USER checkUserValid(int username, int password) {
+	public USER checkUserValid(long username, int password) {
 		ArrayList<User> _users;
 		try {
 			_users = _userDAO.getListOfUsernamesAndPasswords(); // always makes sure variable is updated before checking

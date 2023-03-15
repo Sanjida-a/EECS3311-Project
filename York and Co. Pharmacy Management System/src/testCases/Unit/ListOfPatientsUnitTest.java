@@ -17,7 +17,7 @@ class ListOfPatientsUnitTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -94,7 +94,7 @@ class ListOfPatientsUnitTest {
 			
 			phoneNum.setText("1112223333");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
-			result = Integer.toString( patients.getAllPatientsList().get(0).getPhoneNum());
+			result = Long.toString( patients.getAllPatientsList().get(0).getPhoneNum());
 			assertEquals(result, "1112223333");
 			
 			address.setText("5324 yonge St");

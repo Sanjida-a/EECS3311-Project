@@ -176,7 +176,12 @@ public class DisplayModifyMerchandise implements ActionListener{
 				/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
 					throw new Exception(); // ensures a first name, last name and address have been entered				
 				}*/
+					try {
 					result = inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
+					}
+					catch (Exception e2) {
+						JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
 					
 				}
 				else if(actionCommand.equals("Change Description")) {

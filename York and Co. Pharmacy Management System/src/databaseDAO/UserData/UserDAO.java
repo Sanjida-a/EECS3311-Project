@@ -31,12 +31,13 @@ public class UserDAO extends superDAO implements UserRoot {
 			String queryGetAllRows = "SELECT * FROM AllUsernamesAndPasswords;";
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(queryGetAllRows);
-			int username, password;
+			long username;
+			int password;
 			String userType;
 			User user;
 			
 			while (result.next()) { 
-				username =  result.getInt("usernameID");
+				username =  result.getLong("usernameID");
 				password = result.getInt("passwordID") ;
 				userType = result.getString("userType") ;
 				
@@ -69,8 +70,9 @@ public class UserDAO extends superDAO implements UserRoot {
 			String queryGetAllRows = "SELECT * FROM Patient;";
 			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(queryGetAllRows);
-			int phoneNumber, healthCardNumber, dateOfBirth;
+			int dateOfBirth;
 			String firstName, lastName, address;
+			long phoneNumber, healthCardNumber;
 			
 			Patient patient;
 			
@@ -78,8 +80,8 @@ public class UserDAO extends superDAO implements UserRoot {
 				firstName =  result.getString("firstName");
 				lastName =  result.getString("lastName");
 				address =  result.getString("Address");
-				phoneNumber =  result.getInt("phoneNumber");
-				healthCardNumber =  result.getInt("healthCardNumber");
+				phoneNumber =  result.getLong("phoneNumber");
+				healthCardNumber =  result.getLong("healthCardNumber");
 				dateOfBirth =  result.getInt("dateOfBirth");
 				
 				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
@@ -118,7 +120,7 @@ public class UserDAO extends superDAO implements UserRoot {
 	}
 	
 	// whenever a specific/individual patient from the list of patients is updated (ex. firstname/lastname/phoneNo/address changed), this method makes sure that that row of patient in the database is updated accordingly
-	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject){
+	public void updatePatientInDatabase(long IDOfModifiedPatient, Patient actualPatientObject){
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
@@ -128,9 +130,9 @@ public class UserDAO extends superDAO implements UserRoot {
 			statement.setString(1, actualPatientObject.getFirstName());
 			statement.setString(2, actualPatientObject.getLastName());
 			statement.setString(3, actualPatientObject.getAddress());
-			statement.setInt(4, actualPatientObject.getPhoneNum());
+			statement.setLong(4, actualPatientObject.getPhoneNum());
 			statement.setInt(5, actualPatientObject.getDateOfBirth());
-			statement.setInt(6, actualPatientObject.getHealthCardNum());
+			statement.setLong(6, actualPatientObject.getHealthCardNum());
 			
 			statement.executeUpdate();
 		

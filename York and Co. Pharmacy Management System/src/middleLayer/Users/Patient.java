@@ -11,13 +11,13 @@ public class Patient extends User {
 	private String firstName;
 	private String lastName;
 	private String address;
-	private int phoneNum;
-	private int healthCardNum;
+	private long phoneNum;
+	private long healthCardNum;
 	private int dateOfBirth;
 	private ArrayList<Order> ordersMade; 
 //	private Inventory merList = Inventory.getInstance(); 
 	
-	public Patient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) {
+	public Patient(String firstName, String lastName, String address, long phoneNum, long healthCardNum, int dateOfBirth) {
 //		IDClassVar++;
 		
 //		this.ID = IDClassVar;
@@ -31,7 +31,7 @@ public class Patient extends User {
 		this.password = dateOfBirth;
 	}
 
-	public Patient(int healthCardNum, int dateOfBirth) {
+	public Patient(long healthCardNum, int dateOfBirth) {
 		this.healthCardNum = healthCardNum;
 		this.dateOfBirth = dateOfBirth;
 		this.username = healthCardNum;
@@ -40,7 +40,7 @@ public class Patient extends User {
 	
 	// below methods are all getters/setters for class variables (except no setters for username/password/healthCardNumber/dateOfBirth...
 	// ...because assuming a health card number and date of birth don't change for a client in a lifetime)
-	public int getID() {             // to return healthCardNum as ID
+	public long getID() {             // to return healthCardNum as ID
 		return healthCardNum;
 	}
 	
@@ -68,15 +68,15 @@ public class Patient extends User {
 		this.address = address;
 	}
 
-	public int getPhoneNum() {
+	public long getPhoneNum() {
 		return phoneNum;
 	}
 
-	public void setPhoneNum(int phoneNum) {
+	public void setPhoneNum(long phoneNum) {
 		this.phoneNum = phoneNum;
 	}
 
-	public int getHealthCardNum() {
+	public long getHealthCardNum() {
 		return healthCardNum;
 	}
 

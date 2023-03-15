@@ -11,7 +11,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	
 	int orderNum;
 	int medicationID;
-	int patientID;
+	long patientID;
 	int quantityBought;
 	double totalPriceOfOrder;
 	boolean isPrescription;
@@ -42,10 +42,10 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	}
 
 	// constructor for reading from database
-	public Order(int orderNum,int medicationID, int patientID, int quantityBought, double totalPriceOfOrder, boolean isPrescription){
+	public Order(int orderNum,int medicationID, long patientID2, int quantityBought, double totalPriceOfOrder, boolean isPrescription){
 		this.orderNum = orderNum;
 		this.medicationID = medicationID;
-		this.patientID = patientID;
+		this.patientID = patientID2;
 		this.quantityBought = quantityBought;
 		this.totalPriceOfOrder = totalPriceOfOrder;
 		this.isPrescription = isPrescription;
@@ -60,11 +60,11 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		this.isPrescription = o.isPrescription;
  	}
 
-	public int getPatientID() {
+	public long getPatientID() {
 		return patientID;
 	}
 
-	public void setPatientID(int patientID) {
+	public void setPatientID(long patientID) {
 		this.patientID = patientID;
 	}
 

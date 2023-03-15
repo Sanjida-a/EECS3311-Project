@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 class ReportTest {
 
-    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
     @Test
     void calculateRevenue() throws Exception {
         try {
