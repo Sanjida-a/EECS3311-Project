@@ -280,21 +280,28 @@ public class DisplayInitialScreen{
 					}
 					Boolean medicationAdded = false;					
 					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
-					medicationAdded = inv.addToInventory(newMerchandise);
-					if (medicationAdded == true) {
-						operationResult = "Add successful. See updated inventory";
+					
+					try {
+						medicationAdded = inv.addToInventory(newMerchandise);
+						if (medicationAdded == true) {
+							operationResult = "Add successful. See updated inventory";
+						}
+						else {
+							operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
+						}
+						currentList = inv.getMerchandise();
+						displayMercList(outputList, currentList);
+						lblOperationResult.setText(operationResult);
+						inputFieldName.setText("");
+						inputFieldQty.setText("");
+						inputFieldPrice.setText("");
+						inputFieldType.setText("");
+						inputFieldForm.setText("");
 					}
-					else {
-						operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
+					catch (Exception e2){
+						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
-					currentList = inv.getMerchandise();
-					displayMercList(outputList, currentList);
-					lblOperationResult.setText(operationResult);
-					inputFieldName.setText("");
-					inputFieldQty.setText("");
-					inputFieldPrice.setText("");
-					inputFieldType.setText("");
-					inputFieldForm.setText("");
+					
 
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
@@ -320,9 +327,9 @@ public class DisplayInitialScreen{
 				
 					Boolean medicationRemoved = false;
 					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
-					System.out.println("med ID initialized");
+//					System.out.println("med ID initialized");
 					medicationRemoved = inv.delete(_inputFieldID);
-					System.out.println("med deleted");
+//					System.out.println("med deleted");
 							
 					if (medicationRemoved == false) {
 						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
@@ -355,18 +362,24 @@ public class DisplayInitialScreen{
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					
 					Boolean medicationIncreased = false;
-					medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
+					
+					try {
+						medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
+						if (medicationIncreased == false) {
+							operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
+						}
+						else {
+							operationResult = "Increase successful. See updated inventory";
+						}
+	
+						currentList = inv.getMerchandise();
+						displayMercList(outputList, currentList);
+						lblOperationResult.setText(operationResult);
+					}
+					catch (Exception e2) {
+						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
 				
-					if (medicationIncreased == false) {
-						operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
-					}
-					else {
-						operationResult = "Increase successful. See updated inventory";
-					}
-
-					currentList = inv.getMerchandise();
-					displayMercList(outputList, currentList);
-					lblOperationResult.setText(operationResult);
 				}
 				catch(Exception ex) {
 					JOptionPane.showMessageDialog(frame,"ID and Quantity are required","Invalid input", JOptionPane.WARNING_MESSAGE);
@@ -388,30 +401,36 @@ public class DisplayInitialScreen{
 					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
 					
 					boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
-				
-					medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
 					
-					if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-						//entry to decrease its quantity is found in the list and the current_quantity >= quantity_to_decrease 
-						operationResult = "Decrease successful. See inventory";
+					try {
+						medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
+						
+						if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+							//entry to decrease its quantity is found in the list and the current_quantity >= quantity_to_decrease 
+							operationResult = "Decrease successful. See inventory";
+						}
+						else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
+							//entry to decrease its quantity is not found in the list
+							operationResult = "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory";
+						}
+						else {
+							//entry is found but current_quantity < quantity_to_decrease
+							operationResult = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See inventory";
+						}
+					
+						if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
+							//notify popup for medication low in stock
+							//DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
+							JOptionPane.showMessageDialog(frame,"Medication with ID: " + _inputFieldID + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
+						}
+						lblOperationResult.setText(operationResult);
+						currentList = inv.getMerchandise();
+						displayMercList(outputList, currentList);
 					}
-					else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-						//entry to decrease its quantity is not found in the list
-						operationResult = "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory";
+					catch (Exception e2) {
+						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
-					else {
-						//entry is found but current_quantity < quantity_to_decrease
-						operationResult = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See inventory";
-					}
-				
-					if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
-						//notify popup for medication low in stock
-						//DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
-						JOptionPane.showMessageDialog(frame,"Medication with ID: " + _inputFieldID + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
-					}
-					lblOperationResult.setText(operationResult);
-					currentList = inv.getMerchandise();
-					displayMercList(outputList, currentList);
+					
 				}
 				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
 					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);

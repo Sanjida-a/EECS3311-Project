@@ -285,20 +285,28 @@ public class DisplayPatientManage {
 						throw new Exception(); // ensures a first name, last name and address have been entered
 					}
 					
-					int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText());
-					int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText());
+//					int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText()); // changed to Long
+//					int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText()); // changed to Long
 					int _textFieldDOB = Integer.parseInt(textFieldDOB.getText());
+					long _textFieldHCNumber = Long.parseLong(textFieldHCNumber.getText());
+					long _textFieldPhoneNumber = Long.parseLong(textFieldPhoneNumber.getText());
 					
 					Pharmacist p1 = new Pharmacist(1,1);
-					p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
-					displayList(table, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
-					lblNotice.setText("Patient is added successfully");
+					try {
+						p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
+						displayList(table, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+						lblNotice.setText("Patient is added successfully");
+					}
+					catch(SQLException exception) { //catch any exceptions and show popup error
+						//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+						JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (Exception e2) {
+						JOptionPane.showMessageDialog(frame,e2.getMessage(), "SQL Error", JOptionPane.WARNING_MESSAGE);
+					}
+					
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
-				}
-				catch(SQLException exception) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
 					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
@@ -321,24 +329,30 @@ public class DisplayPatientManage {
 				// TODO Auto-generated method stub
 				//invoke method for modify
 				try {
-					int _textFieldPatientID = Integer.parseInt(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
+//					int _textFieldPatientID = Integer.parseInt(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
+					long _textFieldPatientID = Long.parseLong(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
 					Boolean result;
-					result = listOfPatientsInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
-					
-					if (result == false) {
-						// popup that says patient doesn't exist
-						//System.out.println("patient doesn't exist. try again");
-						JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					try {
+						result = listOfPatientsInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
+						
+						if (result == false) {
+							// popup that says patient doesn't exist
+							//System.out.println("patient doesn't exist. try again");
+							JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
+						}
+						
+						displayList(table, listOfPatientsInstance.getAllPatientsList() );
+						lblNotice.setText("Patient is modified successfully");
 					}
-					
-					displayList(table, listOfPatientsInstance.getAllPatientsList() );
-					lblNotice.setText("Patient is modified successfully");
-					
+					catch (Exception e2) {
+						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+										
 				}
 				catch (Exception e1) {
 					// add popup saying need at least 2 things: HCNum and one of fName, lName, PhoneNum, Add
 					//System.out.println("not enough param");
-					JOptionPane.showMessageDialog(frame,"Healthcard# and one of fName, lName, PhoneNum are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame,"Healthcard# required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}

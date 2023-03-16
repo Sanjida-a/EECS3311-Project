@@ -36,7 +36,7 @@ public class UserStub implements UserRoot {
 	}
 
 	@Override
-	public void updatePatientInDatabase(int IDOfModifiedPatient, Patient actualPatientObject) {
+	public void updatePatientInDatabase(long IDOfModifiedPatient, Patient actualPatientObject) {
 		
 		for (Patient p : patientList) {
 			if (p.getHealthCardNum() == IDOfModifiedPatient) {

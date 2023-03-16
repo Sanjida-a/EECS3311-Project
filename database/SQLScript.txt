@@ -3,19 +3,19 @@ CREATE SCHEMA 3311Team8Project;
 USE 3311Team8Project;
 
 CREATE TABLE AllUsernamesAndPasswords (
-usernameID Integer NOT NULL,
+usernameID BIGINT NOT NULL,
 passwordID Integer NOT NULL,
 userType VARCHAR(20) NOT NULL,
 PRIMARY KEY (usernameID)
 );
 
 CREATE TABLE Patient (
-ID Integer NOT NULL,
+ID BIGINT NOT NULL,
 firstName VARCHAR(200) NOT NULL,
 lastName VARCHAR(200) NOT NULL,
 Address VARCHAR(200),
-phoneNumber Integer,
-healthCardNumber Integer NOT NULL,
+phoneNumber BIGINT,
+healthCardNumber BIGINT NOT NULL,
 dateOfBirth Integer NOT NULL, 
 /* adding list of orders patient made? would need another table because multivalued attribute */
 PRIMARY KEY (ID)
@@ -24,7 +24,7 @@ PRIMARY KEY (ID)
 CREATE TABLE Orders (
 orderNum Integer NOT NULL,
 medicationID Integer NOT NULL,
-patientID Integer NOT NULL,
+patientID BIGINT NOT NULL,
 quantityBought Integer NOT NULL,
 priceAtPurchase Double NOT NULL,
 PRIMARY KEY (orderNUM),
@@ -34,7 +34,7 @@ FOREIGN KEY (patientID) REFERENCES Patient(ID)
 CREATE TABLE Prescriptions (
 prescriptionNum Integer NOT NULL,
 medicationID Integer NOT NULL,
-patientID Integer NOT NULL,
+patientID BIGINT NOT NULL,
 numOfRefillsRemaning Integer NOT NULL, /* this will be modified every time an order about that prescription is made */
 PRIMARY KEY (prescriptionNum)
 );
@@ -126,7 +126,7 @@ INSERT INTO Medications(medicationID, medName, quantity, price, medType, medForm
 (5, "PILL1",  10,  5.00,'COLD' , 'LIQUID', false),
 (6, "PILL2",  10,  5.00, 'FEVER' , 'TABLET', false);
 
-SELECT * FROM Medications;
+SELECT * FROM Patient;
 Select * from Prescriptions;
 
 

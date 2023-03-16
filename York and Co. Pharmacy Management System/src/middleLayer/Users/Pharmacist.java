@@ -14,7 +14,7 @@ public class Pharmacist extends User {
 	private ListOfPatients listOfPatientsByPhar = ListOfPatients.getInstance();
 	
 	// having only this constructor avoids having an owner without a username and password
-	public Pharmacist(int username, int password) {
+	public Pharmacist(long username, int password) {
 		try {
 			_userDAO = new UserDAO();
 			this.username = username;
@@ -36,9 +36,19 @@ public class Pharmacist extends User {
 		this.password = pharmacistUser.password;
 	}
 	
-	public void addPatient(String firstName, String lastName, String address, int phoneNum, int healthCardNum, int dateOfBirth) throws Exception {
+	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
 		
-		Patient newPatient = new Patient(firstName, lastName, address, phoneNum, healthCardNum, dateOfBirth);
+		if (_textFieldPhoneNumber < 0) {
+			throw new Exception("Phone Number has to be a non-negative number");
+		}
+		if (_textFieldHCNumber < 0) {
+			throw new Exception("Health Card Number has to be a non-negative number");
+		}
+		if (dateOfBirth < 0) {
+			throw new Exception("Date Of Birth has to be a non-negative number");
+		}
+		
+		Patient newPatient = new Patient(firstName, lastName, address, _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
 		try {
 			_userDAO.addPatientToDatabase(newPatient);
 		} catch (SQLException e) {

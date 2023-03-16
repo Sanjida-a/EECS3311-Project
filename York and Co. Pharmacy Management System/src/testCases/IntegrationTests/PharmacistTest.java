@@ -12,7 +12,7 @@ import middleLayer.Users.*;
 
 class PharmacistTest {
     private Patient patient1;
-    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
 
 
 
@@ -38,7 +38,7 @@ class PharmacistTest {
         ListOfPatients val = ListOfPatients.getInstance();
         ArrayList<Patient> listOfPat = val.getAllPatientsList();
         
-        int newHealthCardNum = 1111144444;
+        long newHealthCardNum = 1111144444;
         for (int i = 0; i < listOfPat.size(); i++) {
         	if (listOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
         		newHealthCardNum = -1; // patient already exists
@@ -76,6 +76,39 @@ class PharmacistTest {
         }
        
     }
+    // below tests not running
+//    void addPatientInvalid() {
+//        try {
+//            superDAO.setPassword(pass);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//       
+//        //long newHealthCardNum = -555;
+//      
+//       // Pharmacist p = new Pharmacist(0,0);
+////        assertThrows(Exception.class, () -> p.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010));
+//       
+//    }
+//    
+//    void addPatientInvalid2() { // negative health card num
+//    	System.out.println("HERE");
+//    	try {
+//            superDAO.setPassword(pass);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        ListOfPatients val = ListOfPatients.getInstance();
+//        ArrayList<Patient> listOfPat = val.getAllPatientsList();
+//        
+//        Pharmacist subject1 = new Pharmacist(0, 0);
+////        long newHealthCardNum = -1234567890;
+//        
+////        patient1 = new Patient();
+//        
+//        assertThrows(Exception.class, () -> subject1.addPatient("New", "Test", "123 Fake Street", 416, -1234567890, 11222012));
+////        assertThrows(Exception.class, () -> comparator1.add(patient1));
+//    }
     
     @Test
     void searchPatientByNameTestValidInput1()  {	

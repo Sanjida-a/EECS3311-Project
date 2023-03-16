@@ -59,7 +59,7 @@ public class ListOfPatients {
 	}
 	
 	// search for a patient in the patient list with certain healthcardNum/ID 
-	public Patient searchPatientWithID(int patientHealthCard){
+	public Patient searchPatientWithID(long patientHealthCard){
 	    	Patient foundPWithID = null;
 	    	updatePatientListFromDatabase();
 	    	for (int i = 0; i < allPatientsList.size(); i ++){
@@ -75,7 +75,7 @@ public class ListOfPatients {
 	
 	// modifies the details of the medication
 	// OCP Followed (all in 1 method instead of 4 methods)
-	public boolean modifyPatientDetails(int patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
+	public boolean modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
 		
 		String[] inputsAsStrings = new String[4];
 		
@@ -92,7 +92,7 @@ public class ListOfPatients {
 		
 		// if all textboxes left empty, nothing to modify --> exception for popup in front end
 		if (inputsAsStrings[0].isEmpty() && inputsAsStrings[1].isEmpty() && inputsAsStrings[2].isEmpty() && inputsAsStrings[3].isEmpty()) { 
-			throw new Exception();
+			throw new Exception("One of fName, lName, PhoneNum is required");
 		}
 		
 		// 4 if's below make sure to update the patients accordingly based on whether anything was typed in for any of the textboxes
@@ -105,7 +105,10 @@ public class ListOfPatients {
 		}
 		
 		if (!(inputsAsStrings[2].isEmpty())) {
-			specificPatient.setPhoneNum(Integer.parseInt(inputsAsStrings[2]));
+			if (Long.parseLong(inputsAsStrings[2]) < 0) {
+				throw new Exception("Phone Number has to be a non-negative number");
+			}
+			specificPatient.setPhoneNum(Long.parseLong(inputsAsStrings[2]));
 		}
 		
 		if (!(inputsAsStrings[3].isEmpty())) {
