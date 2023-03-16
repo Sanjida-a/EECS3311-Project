@@ -67,7 +67,7 @@ class PharmacistTest {
         }
         else {
         	try {
-        		assertThrows(Exception.class, () -> subject1.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012));
+        		assertThrows(Exception.class, () -> subject1.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012));
         	}
         	catch (Exception e) {
         		e.printStackTrace();

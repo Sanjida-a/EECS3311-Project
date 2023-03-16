@@ -12,7 +12,7 @@ public class UserStub implements UserRoot {
 
 		User owner = new Owner(1111111111, 11111111);
 		User pharm = new Pharmacist(1234567890,12345678);
-		User pat = new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222);
+		User pat = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
 
 		allUsernamesAndPasswordsList.add(owner);
 		allUsernamesAndPasswordsList.add(pharm);

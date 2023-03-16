@@ -85,12 +85,12 @@ class ListOfPatientsUnitTest {
 			fname.setText("Smith");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getFirstName();
-			assertEquals(result, "Smith");
+			assertEquals(result, "SMITH");
 			
 			lname.setText("John");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getLastName();
-			assertEquals(result, "John");
+			assertEquals(result, "JOHN");
 			
 			phoneNum.setText("1112223333");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
@@ -100,7 +100,7 @@ class ListOfPatientsUnitTest {
 			address.setText("5324 yonge St");
 			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getAddress();
-			assertEquals(result, "5324 yonge St");
+			assertEquals(result, "5324 YONGE ST");
 			
 		} catch (Exception e) {
 			
