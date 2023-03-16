@@ -46,4 +46,8 @@
     <fullyQualifiedTypeName name="javax.swing.table.TableColumn"/>
     <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
     <fullyQualifiedTypeName name="javax.swing.table.TableColumnModel"/>
+    <fullyQualifiedTypeName name="databaseDAO.superDAO"/>
+    <fullyQualifiedTypeName name="javax.swing.table.TableCellRenderer"/>
+    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableColumnModel"/>
+    <fullyQualifiedTypeName name="javax.swing.table.DefaultTableCellRenderer"/>
 </qualifiedTypeNameHistroy>
