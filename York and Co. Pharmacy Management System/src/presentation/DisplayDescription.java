@@ -38,6 +38,7 @@ public class DisplayDescription {
 		textArea.setFont(new Font("Arial", Font.PLAIN, 18));
 		textArea.setBounds(0, 0, 586, 293);
 		textArea.setText(merc.getDescription());
+		textArea.setEditable(false);;
 		panel.add(textArea);
 		
 		JButton btnClose = new JButton("Close");

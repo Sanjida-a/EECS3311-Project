@@ -16,7 +16,9 @@ class AuthenticateUserUnitTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			//AuthenticateUser.set_userDAO(new UserStub());
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -29,7 +31,8 @@ class AuthenticateUserUnitTest {
 		AuthenticateUser auth = AuthenticateUser.getInstance();
 		UserStub stub = new UserStub();
 		
-		auth.set_userDAO(stub);
+		//auth.set_userDAO(stub);
+		//System.out.println(auth.);
 		
 		USER result;
 		//input account info for OWNER

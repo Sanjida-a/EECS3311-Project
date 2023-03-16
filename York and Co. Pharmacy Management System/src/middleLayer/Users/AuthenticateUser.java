@@ -13,7 +13,9 @@ public class AuthenticateUser {
 	
 	private AuthenticateUser() { //constructor of all singleton classes should be private
 		try {
-			_userDAO = new UserDAO();
+
+				_userDAO = new UserDAO();
+			
 		} catch (Exception e) {
 	
 			e.printStackTrace();

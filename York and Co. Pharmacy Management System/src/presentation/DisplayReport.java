@@ -58,6 +58,7 @@ public class DisplayReport {
 		JTextArea textAreaSummary = new JTextArea();
 		textAreaSummary.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textAreaSummary.setBounds(12, 10, 568, 443);
+		textAreaSummary.setEditable(false);
 		this.frame.getContentPane().add(textAreaSummary);
 		
 		JLabel lblRevenue = new JLabel("Revenue");
