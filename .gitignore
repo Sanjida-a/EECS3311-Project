@@ -152,3 +152,39 @@
 .metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml
 .metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties
 .metadata/version.ini
+*.snap
+*.index
+*.tree
+*.resources
+*.xml
+.metadata/.log
+.metadata/.plugins/org.eclipse.core.resources/.history/83/a04cf778fabd001d1ff6d2563b4ee405
+.metadata/.plugins/org.eclipse.core.resources/.history/c4/9033bbe0f7bd001d1ff6d2563b4ee405
+.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/.markers.snap
+.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/.syncinfo.snap
+.metadata/.plugins/org.eclipse.core.resources/.projects/York and Co. Pharmacy Management System/.indexes/e4/1a/history.index
+.metadata/.plugins/org.eclipse.core.resources/.projects/York and Co. Pharmacy Management System/.indexes/e4/2f/a4/history.index
+.metadata/.plugins/org.eclipse.core.resources/.projects/York and Co. Pharmacy Management System/.markers
+.metadata/.plugins/org.eclipse.core.resources/.projects/York and Co. Pharmacy Management System/.markers.snap
+.metadata/.plugins/org.eclipse.core.resources/.projects/York and Co. Pharmacy Management System/.syncinfo.snap
+.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap
+.metadata/.plugins/org.eclipse.core.resources/.root/3.tree
+.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
+.metadata/.plugins/org.eclipse.core.resources/3.snap
+.metadata/.plugins/org.eclipse.debug.ui/launchConfigurationHistory.xml
+.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
+.metadata/.plugins/org.eclipse.jdt.core/344792301.index
+.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/1.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/10.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/2.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/3.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/5.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/7.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/8.png
+.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/9.png
+.metadata/.plugins/org.eclipse.jdt.ui/QualifiedTypeNameHistory.xml
+.metadata/.plugins/org.eclipse.pde.core/.cache/clean-cache.properties
+.metadata/version.ini
