@@ -16,7 +16,7 @@ class AuthenticateUserUnitTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 			//AuthenticateUser.set_userDAO(new UserStub());
 		
 		} catch (Exception e) {

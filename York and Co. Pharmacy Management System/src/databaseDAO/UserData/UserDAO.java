@@ -77,9 +77,9 @@ public class UserDAO extends superDAO implements UserRoot {
 			Patient patient;
 			
 			while (result.next()) { 
-				firstName =  result.getString("firstName");
-				lastName =  result.getString("lastName");
-				address =  result.getString("Address");
+				firstName =  result.getString("firstName").toUpperCase();
+				lastName =  result.getString("lastName").toUpperCase();
+				address =  result.getString("Address").toUpperCase();
 				phoneNumber =  result.getLong("phoneNumber");
 				healthCardNumber =  result.getLong("healthCardNumber");
 				dateOfBirth =  result.getInt("dateOfBirth");

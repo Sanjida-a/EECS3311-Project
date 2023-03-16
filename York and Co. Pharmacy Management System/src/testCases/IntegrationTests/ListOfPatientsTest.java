@@ -38,7 +38,7 @@ public class ListOfPatientsTest {
         try {
         	val.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
             ArrayList<Patient> newList = val.getAllPatientsList();
-            assertEquals("jo", newList.get(0).getFirstName());
+            assertEquals("JO", newList.get(0).getFirstName());
             
             //back to normal
             fname.setText("Smith");

@@ -24,7 +24,7 @@ class PharmacistTest {
             e.printStackTrace();
         }
         Pharmacist p = new Pharmacist(1234567890, 12345678);
-        assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", p.searchPatientByName("Smith", "FirstName").toString());
+        assertEquals("[First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", p.searchPatientByName("Smith", "FirstName").toString());
     }
 
     @Test
@@ -116,7 +116,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("SMITH", "FirstName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
@@ -130,7 +130,7 @@ class PharmacistTest {
     	Pharmacist subject1 = new Pharmacist(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("JOHN", "LastName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
@@ -144,7 +144,7 @@ class PharmacistTest {
     	Pharmacist subject1 = new Pharmacist(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("SMITH JOHN", "FullName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
@@ -158,7 +158,7 @@ class PharmacistTest {
     	Pharmacist subject1 = new Pharmacist(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertNotEquals(comparator1.toString(), result.toString());
     }
 
@@ -172,7 +172,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
         ArrayList<Patient> comparator1 = new ArrayList<Patient>();
         ArrayList<Patient> result = subject1.searchPatientByName("SMITH Man", "FirstName");
-        comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
         assertEquals(comparator1.toString(), result.toString());
     }
 
@@ -187,7 +187,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
         ArrayList<Patient> comparator1 = new ArrayList<Patient>();
         ArrayList<Patient> result = subject1.searchPatientByName("SMITH ", "FirstName");
-        comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
@@ -200,7 +200,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
         ArrayList<Patient> comparator1 = new ArrayList<Patient>();
         ArrayList<Patient> result = subject1.searchPatientByName(" SMITH", "FirstName");
-        comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
@@ -213,7 +213,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
         ArrayList<Patient> comparator1 = new ArrayList<Patient>();
         ArrayList<Patient> result = subject1.searchPatientByName(" JOHN", "LastName");
-        comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
@@ -226,7 +226,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
         ArrayList<Patient> comparator1 = new ArrayList<Patient>();
         ArrayList<Patient> result = subject1.searchPatientByName("JOHN ", "LastName");
-        comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
         assertEquals(comparator1.toString(), result.toString());
     }
 
@@ -240,7 +240,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
         ArrayList<Patient> comparator1 = new ArrayList<Patient>();
         ArrayList<Patient> result = subject1.searchPatientByName("SMITH, JOHN", "LastName");
-        comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
         assertEquals(comparator1.toString(), result.toString());
     }
     @Test
@@ -253,7 +253,7 @@ class PharmacistTest {
         Pharmacist subject1 = new Pharmacist(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
     	assertNotEquals(comparator1.toString(), result.toString());
     }
 
