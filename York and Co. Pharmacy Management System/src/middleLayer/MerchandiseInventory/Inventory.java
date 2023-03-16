@@ -191,6 +191,8 @@ public class Inventory{
     	
     	if (specificMedication == null || decreasedQuantity < 0) { // if medID does not exist in inventory, can't do anything
     		// no change because want initial boolean values as above
+    		boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
+    		return booleanArray;
     	}
     	
     	else { // otherwise it exists, then can potentially decrease
