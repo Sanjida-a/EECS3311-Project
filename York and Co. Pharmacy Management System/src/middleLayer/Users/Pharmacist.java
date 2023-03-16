@@ -48,7 +48,7 @@ public class Pharmacist extends User {
 			throw new Exception("Date Of Birth has to be a non-negative number");
 		}
 		
-		Patient newPatient = new Patient(firstName, lastName, address, _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
+		Patient newPatient = new Patient(firstName.toUpperCase(), lastName.toUpperCase(), address.toUpperCase(), _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
 		try {
 			_userDAO.addPatientToDatabase(newPatient);
 		} catch (SQLException e) {
