@@ -100,11 +100,17 @@ public class DisplayAddOrder implements ActionListener {
         btnAdjustRefill.addActionListener(new DisplayAddOrder());
         panel.add(btnAdjustRefill);
 
-        JButton btnAddOrder = new JButton("Add order/prescription");
-        btnAddOrder.setFont(new Font("굴림", Font.BOLD, 18));
-        btnAddOrder.setBounds(0, 262, 318, 35);
-        btnAddOrder.addActionListener(new DisplayAddOrder());
-        panel.add(btnAddOrder);
+        JButton btnAddOTCOrder = new JButton("Add OTC order");
+        btnAddOTCOrder.setFont(new Font("굴림", Font.BOLD, 18));
+        btnAddOTCOrder.setBounds(0, 262, 318, 35);
+        btnAddOTCOrder.addActionListener(new DisplayAddOrder());
+        panel.add(btnAddOTCOrder);
+
+		JButton btnAddPresOrder = new JButton("Add prescription order");
+        btnAddPresOrder.setFont(new Font("굴림", Font.BOLD, 18));
+        btnAddPresOrder.setBounds(0, 216, 318, 35);
+        btnAddPresOrder.addActionListener(new DisplayAddOrder());
+        panel.add(btnAddPresOrder);
 	}
 	
 	public static void createInputFields(JPanel panel) {
@@ -154,18 +160,38 @@ public class DisplayAddOrder implements ActionListener {
 				Order newOrder = new Order(medID, patientID, qty);
 				
 				if(e.getActionCommand().equals("Give refill for a prescription")) { // refill of an existing prescription
+					if(textFieldRefill.getText().isBlank()){
+						refills = 0;
+					}
+					else{
+						refills = Integer.parseInt(textFieldRefill.getText());
+					}
 					//call method for giving a patient refill order
 					listOfOrders.addRefillToDatabase(newOrder);
 					lbNotice.setText("Refill is given successfully");
 				
 				}
-				else if(e.getActionCommand().equals("Add order/prescription")) { // for OTC order and new prescription
+				else if(e.getActionCommand().equals("Add OTC order")) { // for OTC order and new prescription
+					if(textFieldRefill.getText().isBlank()){
+						refills = 0;
+					}
+					else{
+						refills = Integer.parseInt(textFieldRefill.getText());
+					}
+					//call method for adding new order to a patient
+					Prescription potentialPrescription = new Prescription(medID, patientID, refills);
+					
+					listOfOrders.addOrderToDatabase(newOrder, potentialPrescription);
+					lbNotice.setText("Add OTC successfull");
+
+				}
+				else if(e.getActionCommand().equals("Add prescription order")) { // for OTC order and new prescription
 					refills = Integer.parseInt(textFieldRefill.getText());
 					//call method for adding new order to a patient
 					Prescription potentialPrescription = new Prescription(medID, patientID, refills);
 					
 					listOfOrders.addOrderToDatabase(newOrder, potentialPrescription);
-					lbNotice.setText("Add order/prescription successfull");
+					lbNotice.setText("Add prescription successfull");
 
 				}
 			}

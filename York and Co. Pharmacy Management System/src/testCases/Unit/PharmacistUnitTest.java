@@ -39,8 +39,8 @@ class PharmacistUnitTest {
 			
 			e.printStackTrace();
 		}
-		expected.add(new Patient("Smith", "John", "5324 yonge St", 1112223333, 1111122222, 11111222));
-		expected.add(new Patient("test", "name", "address", 1111144444, 1111144444, 11111444));
+		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+		expected.add(new Patient("TEST", "NAME", "ADDRESS", 1111144444, 1111144444, 11111444));
 
 		result = stub.getListOfAllPatients();
 		assertEquals(expected, result);

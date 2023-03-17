@@ -62,7 +62,7 @@ class OwnerTest {
 			e.printStackTrace();
 		}
         Owner o = new Owner(0, 0);
-       assertEquals("First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n", o.searchPatientByName("Smith", "FirstName").get(0).toString());
+       assertEquals("First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n", o.searchPatientByName("Smith", "FirstName").get(0).toString());
     }
 
     @Test
@@ -84,7 +84,7 @@ class OwnerTest {
 			e.printStackTrace();
 		}
 		Owner o = new Owner(0, 0);
-		assertEquals("[First name: Smith, Last name: John, Address: 5324 Yonge St, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("John", "LastName").toString());
+		assertEquals("[First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("John", "LastName").toString());
 	}
 
 	@Test
@@ -109,7 +109,7 @@ class OwnerTest {
 		Owner subject1 = new Owner(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("SMITH", "FirstName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
@@ -123,7 +123,7 @@ class OwnerTest {
     	Owner subject1 = new Owner(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("JOHN", "LastName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
@@ -137,7 +137,7 @@ class OwnerTest {
     	Owner subject1 = new Owner(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("SMITH JOHN", "FullName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
@@ -151,7 +151,7 @@ class OwnerTest {
     	Owner subject1 = new Owner(0, 0);
     	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
     	ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));	
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertNotEquals(comparator1.toString(), result.toString());
     }
     

@@ -79,10 +79,10 @@ public class ListOfPatients {
 		
 		String[] inputsAsStrings = new String[4];
 		
-		inputsAsStrings[0] = fName.getText();
-		inputsAsStrings[1] = lName.getText();
+		inputsAsStrings[0] = fName.getText().toUpperCase();
+		inputsAsStrings[1] = lName.getText().toUpperCase();
 		inputsAsStrings[2] = phoneNum.getText();
-		inputsAsStrings[3] = address.getText();
+		inputsAsStrings[3] = address.getText().toUpperCase();
 		
 		Patient specificPatient = this.searchPatientWithID(patientHealthCard); // checks if patient with that healthcardNum exists in system
 		
