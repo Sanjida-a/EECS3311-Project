@@ -26,7 +26,7 @@ class PharmacistUnitTest {
 	}
 
 	@Test
-	void testAddPatient() {
+	void testAddPatient1() {
 		
 		Pharmacist subject1 = new Pharmacist(0, 0);
 		UserStub stub = new UserStub();
@@ -43,10 +43,23 @@ class PharmacistUnitTest {
 		expected.add(new Patient("TEST", "NAME", "ADDRESS", 1111144444, 1111144444, 11111444));
 
 		result = stub.getListOfAllPatients();
-		assertEquals(expected, result);
+		assertEquals(expected.get(0), result.get(0));
+		assertEquals(expected.get(1), result.get(1));
 
 		
 	}	
+	
+	@Test 
+	void testAddPatient2() {
+		Pharmacist subject1 = new Pharmacist(0, 0);
+		UserStub stub = new UserStub();
+		subject1.set_userDAO(stub);
+	
+		assertThrows(Exception.class, () -> subject1.addPatient("test", "name", "address", -1111144444, 1111144444, 11111444));
+		assertThrows(Exception.class, () -> subject1.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444));
+		assertThrows(Exception.class, () -> subject1.addPatient("test", "name", "address", 1111144444, 1111144444, -11111444));
+		
+	}
 
 	@Test
 	void testSearchPatientByName() {
