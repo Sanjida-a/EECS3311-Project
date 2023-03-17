@@ -135,7 +135,7 @@ public class InventoryUnitTest {
     }
 
     @Test
-    void increaseQuantityTest(){
+    void increaseQuantityTest1(){
         Inventory val = Inventory.getInstance();
         MerchandiseStub mStub = new MerchandiseStub();
         val.set_merDAO(mStub);
@@ -150,6 +150,7 @@ public class InventoryUnitTest {
         }
         
     }
+
 
     @Test
     void decreaseQuantityTest1(){ //need condition
@@ -217,7 +218,7 @@ public class InventoryUnitTest {
     }
 
     @Test
-    void addToInventoryTest(){
+    void addToInventoryTest1(){
         Inventory val = Inventory.getInstance();
         MerchandiseStub mStub = new MerchandiseStub();
         val.set_merDAO(mStub);
@@ -227,6 +228,21 @@ public class InventoryUnitTest {
 	        assertEquals(false, val.addToInventory(m));
         }
         catch (Exception e) {
+        	
+        }
+    }
+    
+    @Test
+    void addToInventoryTest2() {
+    	Inventory val = Inventory.getInstance();
+        MerchandiseStub mStub = new MerchandiseStub();
+        val.set_merDAO(mStub);
+        Merchandise m1 = new Merchandise(5, "ASPIRIN", -10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+        Merchandise m2 = new Merchandise(6, "CEPACOL", 10, -15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+        try {
+        	assertThrows(Exception.class, () -> val.addToInventory(m1));
+        	assertThrows(Exception.class, () -> val.addToInventory(m2));
+        }catch(Exception ex) {
         	
         }
     }

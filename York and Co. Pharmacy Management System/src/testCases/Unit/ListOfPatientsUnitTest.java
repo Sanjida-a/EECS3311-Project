@@ -83,22 +83,22 @@ class ListOfPatientsUnitTest {
 		fname.setText("fname");
 		try {
 			fname.setText("Smith");
-			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
+			patients.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getFirstName();
 			assertEquals(result, "SMITH");
 			
 			lname.setText("John");
-			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
+			patients.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getLastName();
 			assertEquals(result, "JOHN");
 			
 			phoneNum.setText("1112223333");
-			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
+			patients.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 			result = Long.toString( patients.getAllPatientsList().get(0).getPhoneNum());
 			assertEquals(result, "1112223333");
 			
 			address.setText("5324 yonge St");
-			patients.modifyPatientDetails(0, fname, lname, phoneNum, address);
+			patients.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 			result = patients.getAllPatientsList().get(0).getAddress();
 			assertEquals(result, "5324 YONGE ST");
 			
@@ -106,5 +106,17 @@ class ListOfPatientsUnitTest {
 			
 			e.printStackTrace();
 		}
+	}
+	@Test
+	void testModifyPatientDetails3() {
+		ListOfPatients patients = ListOfPatients.getInstance();
+		UserStub stub = new UserStub();
+		patients.set_userDAO(stub);
+		JTextField fname = new JTextField();
+		JTextField lname = new JTextField();
+		JTextField phoneNum = new JTextField();
+		JTextField address = new JTextField();
+		phoneNum.setText("-1112223333");
+		assertThrows(Exception.class, () -> patients.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
 	}
 }

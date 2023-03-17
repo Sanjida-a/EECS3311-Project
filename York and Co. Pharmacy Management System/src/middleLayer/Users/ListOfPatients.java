@@ -83,7 +83,7 @@ public class ListOfPatients {
 		inputsAsStrings[1] = lName.getText().toUpperCase();
 		inputsAsStrings[2] = phoneNum.getText();
 		inputsAsStrings[3] = address.getText().toUpperCase();
-		
+
 		Patient specificPatient = this.searchPatientWithID(patientHealthCard); // checks if patient with that healthcardNum exists in system
 		
 		if (specificPatient == null) { // if such patient doesn't exist, can't modify details
@@ -103,7 +103,6 @@ public class ListOfPatients {
 		if (!(inputsAsStrings[1].isEmpty())) {
 			specificPatient.setLastName(inputsAsStrings[1]);
 		}
-		
 		if (!(inputsAsStrings[2].isEmpty())) {
 			if (Long.parseLong(inputsAsStrings[2]) < 0) {
 				throw new Exception("Phone Number has to be a non-negative number");
