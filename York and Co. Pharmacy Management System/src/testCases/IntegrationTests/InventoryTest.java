@@ -4,6 +4,7 @@ package testCases.IntegrationTests;
 import databaseDAO.superDAO;
 import databaseDAO.MerchandiseData.MerchandiseDAO;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import middleLayer.MerchandiseInventory.*;
@@ -18,7 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
     private MerchandiseDAO _merDAO;
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    
+    //beforeAll is just used to established a connection with the database before all tests
+  	@BeforeAll
+  	public static void before() {
+  		try {
+  			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+  		} catch (Exception e) {
+  			e.printStackTrace();
+  		} 
+  		
+  	}
 
     @Test
     void getInstance() {
@@ -26,12 +37,7 @@ class InventoryTest {
 
     @Test
     void getOnlyOTCMerchandiseTest(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+       
         Inventory val = Inventory.getInstance();
 
         ArrayList<Merchandise> onlyOTC = val.getOnlyOTCMerchandise();
@@ -44,12 +50,7 @@ class InventoryTest {
 
     @Test
     void alphabetically(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+       
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> listOfMedicine = val.getMerchandise();
 
@@ -70,11 +71,7 @@ class InventoryTest {
 
     @Test
     void byQuantity(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> listOfMedicine = val.getMerchandise();
 
@@ -95,12 +92,7 @@ class InventoryTest {
 
     @Test
     void byPrice(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+       
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> listOfMedicine = val.getMerchandise();
 
@@ -122,11 +114,7 @@ class InventoryTest {
 
     @Test
     void increaseQuantity(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         try {
@@ -142,11 +130,7 @@ class InventoryTest {
     }
     @Test
     void increaseQuantityInvalid(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         try {
@@ -160,11 +144,7 @@ class InventoryTest {
     
     @Test
     void increaseQuantityInvalid2(){ // negative quantity
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         try {
@@ -177,11 +157,7 @@ class InventoryTest {
 
     @Test
     void decreaseQuantity(){ //need condition
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
       
@@ -214,11 +190,7 @@ class InventoryTest {
 
     @Test
     void decreaseQuantityInvalid(){ // by 7
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -235,11 +207,7 @@ class InventoryTest {
     
     @Test
     void decreaseQuantityInvalid2(){ // negative quantity
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -253,11 +221,7 @@ class InventoryTest {
 
     @Test
     void delete(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -281,11 +245,7 @@ class InventoryTest {
 
     @Test
     void deleteInvalid(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         val.delete(100);
@@ -294,11 +254,7 @@ class InventoryTest {
     }
     @Test
     void searchByID(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         ArrayList<Merchandise> newList = val.getMerchandise();
@@ -307,22 +263,14 @@ class InventoryTest {
 
     @Test
     void searchByIDInvalid(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         assertEquals(null, val.searchMerchandiseWithID(originalList.size() + 1));
     }
     @Test
     void modifyPrice(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -343,11 +291,7 @@ class InventoryTest {
 
     @Test
     void modifyPriceInvalid(){
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -367,11 +311,7 @@ class InventoryTest {
     
     @Test
     void modifyPriceInvalid2(){ // negative price
-    	try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    	
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -385,11 +325,7 @@ class InventoryTest {
 
     @Test
     void modifyDescription(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -404,11 +340,7 @@ class InventoryTest {
 
     @Test
     void modifyDescriptionInvalid(){
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         val.modifyMedicationDescription(100, "howdy");
@@ -422,11 +354,7 @@ class InventoryTest {
 
     @Test
     void modifyName() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         
@@ -445,11 +373,7 @@ class InventoryTest {
 
     @Test
     void modifyNameInvalid() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       
         Inventory val = Inventory.getInstance();
         ArrayList<Merchandise> originalList = val.getMerchandise();
         

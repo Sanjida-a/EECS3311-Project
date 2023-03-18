@@ -1,6 +1,8 @@
 package testCases.IntegrationTests;
 
 import databaseDAO.superDAO;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import middleLayer.Users.*;
@@ -14,17 +16,21 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ListOfPatientsTest {
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
-
-
+	
+	//beforeAll is just used to established a connection with the database before all tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
 
     @Test
     void modifyPatientInfo() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       
         ListOfPatients val = ListOfPatients.getInstance();
         JTextField fname = new JTextField();
         fname.setText("jo");
@@ -52,11 +58,7 @@ public class ListOfPatientsTest {
     
     @Test
     void modifyPatientInfoInvalid() { // negative phoneNum
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       
         ListOfPatients val = ListOfPatients.getInstance();
         JTextField fname = new JTextField();
         fname.setText("");

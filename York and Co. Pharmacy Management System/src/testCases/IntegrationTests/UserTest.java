@@ -5,6 +5,7 @@ import databaseDAO.superDAO;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Users.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import presentation.USER;
 
@@ -14,15 +15,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+	//beforeAll is just used to established a connection with the database before all tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
     
     @Test
     void searchMedicineByName() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         
         Inventory inv = Inventory.getInstance();
         
@@ -42,22 +47,14 @@ class UserTest {
     }
     @Test
     void searchMedicineByNameNotFound() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
         assertEquals("[]", o.searchMedicineByName("CompletelyRandomNoName", USER.OWNER).toString());
     }
     
     @Test
     void searchMedicineByType() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
         Inventory inv = Inventory.getInstance();
         ArrayList<Merchandise> listToSearchFrom = inv.getMerchandise();
@@ -72,11 +69,7 @@ class UserTest {
 
     @Test
     void searchMedicineByTypeNotFound() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
         assertEquals("[]", o.searchMedicineByName("fever", USER.OWNER).toString());
     }

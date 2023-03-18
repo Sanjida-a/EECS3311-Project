@@ -164,7 +164,7 @@ UPDATE Medications SET isValid = 1 WHERE medicationID = 6;
 INSERT INTO Orders
 VALUES (1, 1, 1111122222, 1, 5, 0); /* for integration tests */
 
-----MINH CHANGED---
+/*----MINH CHANGED---*/
 Select * from Orders;
 
 ALTER TABLE Prescriptions 
