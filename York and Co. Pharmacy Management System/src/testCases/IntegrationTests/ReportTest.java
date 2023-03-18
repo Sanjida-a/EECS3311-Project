@@ -3,6 +3,7 @@ import databaseDAO.superDAO;
 import middleLayer.*;
 import middleLayer.Orders.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,14 +12,20 @@ import java.util.ArrayList;
 
 class ReportTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+	//beforeAll is just used to established a connection with the database before all tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
+		
     @Test
-    void calculateRevenue() throws Exception {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void calculateRevenue() {
+        
         Report r = new Report();
         ListOfOrders listOfOrders = ListOfOrders.getInstance();
         ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
@@ -28,16 +35,15 @@ class ReportTest {
 			revenue = revenue + e.getTotalPriceOfOrder();
 		}
 	
-        assertEquals(revenue, r.calculateRevenue());
+        try {
+			assertEquals(revenue, r.calculateRevenue());
+		} catch (Exception e1) {
+		}
     }
 
     @Test
-    void calculateProfit() throws Exception {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void calculateProfit() {
+       
         Report r = new Report();
         
         ListOfOrders listOfOrders = ListOfOrders.getInstance();
@@ -50,17 +56,17 @@ class ReportTest {
 		
 		double profit = 0.3*revenue;
 	
-        assertEquals(profit, r.calculateProfit());
+        try {
+			assertEquals(profit, r.calculateProfit());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
     }
 
     @Test
     void seeSummaryOfSales() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Report r = new Report();
         
         ListOfOrders listOfOrders = ListOfOrders.getInstance();

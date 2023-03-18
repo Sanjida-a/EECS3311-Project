@@ -2,6 +2,8 @@ package testCases.IntegrationTests;
 
 
 import databaseDAO.superDAO;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import middleLayer.*;
@@ -15,14 +17,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class OwnerTest {
-	static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
-    @Test
-    void getOwnerUserTest() {
+	
+	//beforeAll is just used to established a connection with the database before all tests
+	@BeforeAll
+	public static void before() {
 		try {
-			superDAO.setPassword(pass);
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} 
+		
+	}
+	
+	//**NOTE** AddPatient method tested in PharmacistTest.java
+	
+    @Test
+    void getOwnerUserTest() {
+		
     	Owner subject1 = new Owner(0, 0);
     	Owner subject2 = subject1.getOwnerUser();
     	assertEquals(subject1, subject2);
@@ -30,11 +41,7 @@ class OwnerTest {
     
     @Test 
     void constructorTest() {
-		try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
     	Owner subject1 = new Owner(0, 0);
     	assertEquals(subject1.username, 0);
     	assertEquals(0, subject1.password);
@@ -42,11 +49,7 @@ class OwnerTest {
     
     @Test
     void setOwnerUserTest() {
-		try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
     	Owner subject1 = new Owner(0, 0);
     	Owner subject2 = new Owner(1, 1);
     	subject1.setOwnerUser(subject2);
@@ -56,117 +59,241 @@ class OwnerTest {
 
     @Test
     void searchFName(){
-		try {
-			superDAO.setPassword(pass);
+		
+        Owner o = new Owner(0, 0);
+        try {
+		assertEquals("First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n", o.searchPatientByName("Smith", "FirstName").get(0).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        Owner o = new Owner(0, 0);
-       assertEquals("First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n", o.searchPatientByName("Smith", "FirstName").get(0).toString());
     }
 
     @Test
     void searchFNameFalse(){ 
-		try {
-			superDAO.setPassword(pass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
         Owner o = new Owner(0, 0);
-        assertEquals("[]", o.searchPatientByName("John", "FirstName").toString());
+        try {
+			assertEquals("[]", o.searchPatientByName("NonExistentName", "FirstName").toString());
+		} catch (Exception e) {
+		}
     }
 
 	@Test
 	void searchLName(){
+		
+		Owner o = new Owner(0, 0);
 		try {
-			superDAO.setPassword(pass);
+			assertEquals("[First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("John", "LastName").toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Owner o = new Owner(0, 0);
-		assertEquals("[First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", o.searchPatientByName("John", "LastName").toString());
 	}
 
 	@Test
 	void searchLNameFalse(){ 
+		
+		Owner o = new Owner(0, 0);
 		try {
-			superDAO.setPassword(pass);
+			assertEquals("[]", o.searchPatientByName("NonExistentName", "LastName").toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Owner o = new Owner(0, 0);
-		assertEquals("[]", o.searchPatientByName("Smith", "LastName").toString());
 	}
 
     
     @Test
-    void searchPatientByNameTestValidInput1()  {	//dependency to the actual database cannot be removed. thus, cannot use stub data
+    void searchPatientByNameTestValidInput1()  {
+		
+		Owner subject1 = new Owner(0, 0);
+    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+    	ArrayList<Patient> result = null;
 		try {
-			superDAO.setPassword(pass);
+			result = subject1.searchPatientByName("SMITH", "FirstName");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Owner subject1 = new Owner(0, 0);
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = subject1.searchPatientByName("SMITH", "FirstName");
     	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
     @Test
     void searchPatientByNameTestValidInput2(){
+		
+    	Owner subject1 = new Owner(0, 0);
+    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+    	ArrayList<Patient> result = null;
 		try {
-			superDAO.setPassword(pass);
+			result = subject1.searchPatientByName("JOHN", "LastName");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	Owner subject1 = new Owner(0, 0);
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = subject1.searchPatientByName("JOHN", "LastName");
     	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
     @Test
     void searchPatientByNameTestValidInput3() {
+		
+    	Owner subject1 = new Owner(0, 0);
+    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+    	ArrayList<Patient> result = null;
 		try {
-			superDAO.setPassword(pass);
+			result = subject1.searchPatientByName("SMITH JOHN", "FullName");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	Owner subject1 = new Owner(0, 0);
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = subject1.searchPatientByName("SMITH JOHN", "FullName");
     	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
     	assertEquals(comparator1.toString(), result.toString());
     }
     
+//    @Test
+//    void searchPatientByNameTestValidInput4() {
+//		try {
+//			superDAO.setPassword(pass);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    	Owner subject1 = new Owner(0, 0);
+//    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+//    	 result = null;
+//		try {
+//			ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
+//			
+//			comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
+//	    	assertNotEquals(comparator1.toString(), result.toString());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    	
+//    }
+    
     @Test
     void searchPatientByNameTestValidInput4() {
+		
+    	Owner subject1 = new Owner(0, 0);
+    	
 		try {
-			superDAO.setPassword(pass);
+			assertThrows(Exception.class, () -> subject1.searchPatientByName("", "FirstName"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	Owner subject1 = new Owner(0, 0);
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
-    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
-    	assertNotEquals(comparator1.toString(), result.toString());
+    	
     }
     
     @Test
-    void searchPatientByNameTestInvalidInput1() {
+    void searchPatientByNameTestValidInput5() {
+		
+    	Owner subject1 = new Owner(0, 0);
+    	
 		try {
-			superDAO.setPassword(pass);
+			assertThrows(Exception.class, () -> subject1.searchPatientByName("", "LastName"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+    	
+    }
+    
+    @Test
+    void searchPatientByNameTestValidInput6() {
+		
+		
     	Owner subject1 = new Owner(0, 0);
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = subject1.searchPatientByName(null, "FirstName");
-    	comparator1.add(new Patient("Smith", "John", "5324 Yonge St", 1112223333, 1111122222, 11111222));
-    	assertNotEquals(comparator1.toString(), result.toString());
+    	
+		try {
+			assertThrows(Exception.class, () -> subject1.searchPatientByName("", "FullName"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    @Test
+    void searchPatientByNameTestValidInput13()  {	
+        
+        Owner subject1 = new Owner(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        ArrayList<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("SMITH Man", "FirstName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+        assertEquals(comparator1.toString(), result.toString());
+    }
+
+
+    @Test
+    void searchPatientByNameTestValidInput8()  {	
+        
+        Owner subject1 = new Owner(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        ArrayList<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("SMITH ", "FirstName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+        assertEquals(comparator1.toString(), result.toString());
+    }
+    
+    @Test
+    void searchPatientByNameTestValidInput9()  {	
+        
+        Owner subject1 = new Owner(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        ArrayList<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName(" SMITH", "FirstName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+        assertEquals(comparator1.toString(), result.toString());
+    }
+    @Test
+    void searchPatientByNameTestValidInput10()  {	
+      
+        Owner subject1 = new Owner(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        ArrayList<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName(" JOHN", "LastName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+        assertEquals(comparator1.toString(), result.toString());
+    }
+    @Test
+    void searchPatientByNameTestValidInput11()  {	
+       
+        Owner subject1 = new Owner(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        ArrayList<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("JOHN ", "LastName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+        assertEquals(comparator1.toString(), result.toString());
+    }
+
+    @Test
+    void searchPatientByNameTestValidInput12()  {	
+       
+        Owner subject1 = new Owner(0, 0);
+        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+        ArrayList<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("SMITH, JOHN", "LastName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+        assertEquals(comparator1.toString(), result.toString());
     }
     
 

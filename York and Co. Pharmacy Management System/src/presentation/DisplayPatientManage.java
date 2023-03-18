@@ -130,9 +130,11 @@ public class DisplayPatientManage {
 					//addPatient is bound to success
 					lblNotice.setText("");
 					String _textFieldSearchKeyword = textFieldSearchKeyword.getText().toUpperCase();
-					if (_textFieldSearchKeyword.isEmpty()) {
-						throw new Exception(); // ensures something is entered 
-					}
+					
+					// moved below to searchPatientByName method
+//					if (_textFieldSearchKeyword.isEmpty()) {
+//						throw new Exception(); // ensures something is entered 
+//					}
 					
 					Owner o1 = new Owner(1,1);
 					
