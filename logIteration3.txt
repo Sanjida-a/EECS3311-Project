@@ -1,5 +1,5 @@
 1. 2023/03/14 - 2023/03/15  21:00 - 00:00 contributor: Aiza Bajwa
-*Fixed Iteration2 Bug (which is also Issue #60, #70 and partially #71)
+*Fixed Iteration2 Bug (which is also Issue #60, #69, #70 and partially #71)
 *Fixed bug of allowing negative numbers as input for integer values (ex. quantity, price, health card number, phone number, date of birth) so that now it throws an exception.
 *Fixed bug of healthcard number and phone number being integers and not being able to hold large enough values. Turned these to longs and fixed all associated methods/reading from database/reading from user from int to long.
 
