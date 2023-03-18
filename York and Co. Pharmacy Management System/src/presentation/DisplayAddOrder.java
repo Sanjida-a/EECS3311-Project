@@ -160,18 +160,26 @@ public class DisplayAddOrder implements ActionListener {
 				Order newOrder = new Order(medID, patientID, qty);
 				
 				if(e.getActionCommand().equals("Give refill for a prescription")) { // refill of an existing prescription
+//					qty = Integer.parseInt(textFieldQty.getText()) ;					
+//					Order newOrder = new Order(medID, patientID, qty);
+					String refillMess = "Number of refills needed!";
 					if(textFieldRefill.getText().isBlank()){
-						refills = 0;
+						refills = 0;						
 					}
 					else{
-						refills = Integer.parseInt(textFieldRefill.getText());
+//						refills = Integer.parseInt(textFieldRefill.getText());
+						String errorMess = "Only enter quantity bought for refill order!";
+						throw new Exception(errorMess);
 					}
+					
 					//call method for giving a patient refill order
 					listOfOrders.addRefillToDatabase(newOrder);
 					lbNotice.setText("Refill is given successfully");
 				
 				}
 				else if(e.getActionCommand().equals("Add OTC order")) { // for OTC order and new prescription
+//					qty = Integer.parseInt(textFieldQty.getText()) ;					
+//					Order newOrder = new Order(medID, patientID, qty);
 					if(textFieldRefill.getText().isBlank()){
 						refills = 0;
 					}
@@ -179,18 +187,31 @@ public class DisplayAddOrder implements ActionListener {
 						refills = Integer.parseInt(textFieldRefill.getText());
 					}
 					//call method for adding new order to a patient
-					Prescription potentialPrescription = new Prescription(medID, patientID, refills);
+				//	Prescription potentialPrescription = new Prescription(medID, patientID, refills);
 					
-					listOfOrders.addOrderToDatabase(newOrder, potentialPrescription);
+					listOfOrders.addOrderToDatabase(newOrder);
 					lbNotice.setText("Add OTC successfull");
 
 				}
 				else if(e.getActionCommand().equals("Add prescription order")) { // for OTC order and new prescription
-					refills = Integer.parseInt(textFieldRefill.getText());
+					if(textFieldRefill.getText().isBlank()){
+						refills = 0;
+//						String errorRefill = "Please enter refill numbers!";
+//						throw new Exception(errorRefill);
+					}
+					else{
+						refills = Integer.parseInt(textFieldRefill.getText());
+					}
+					if ((refills == 0 && qty == 0) || (qty > refills)){
+						String errPres = "Check quantity and refills!";
+						throw new Exception (errPres);
+					}
+
 					//call method for adding new order to a patient
-					Prescription potentialPrescription = new Prescription(medID, patientID, refills);
+					Prescription newPres = new Prescription(medID, patientID, refills);
 					
-					listOfOrders.addOrderToDatabase(newOrder, potentialPrescription);
+					listOfOrders.addPresOrderToDb( newPres);
+					listOfOrders.addPresQuantToDb(newOrder);
 					lbNotice.setText("Add prescription successfull");
 
 				}

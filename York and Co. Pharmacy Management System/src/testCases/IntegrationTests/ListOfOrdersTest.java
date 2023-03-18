@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ListOfOrdersTest {
 
-    static String pass = "hello123";  // TA please change this according to your mySQL password in order for the tests to work
+    static String pass = "hello@123456";  // TA please change this according to your mySQL password in order for the tests to work
 	
     @Test
     void updateOrderListFromDatabase() {
@@ -46,7 +46,8 @@ class ListOfOrdersTest {
         if (MedIDWithQuantityMoreThan1 != -1) {
         	 Order O = new Order(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 1);
              Prescription p = new Prescription(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 2);
-             val.addOrderToDatabase(O,p);
+//             val.addOrderToDatabase(O,p);
+             val.addOrderToDatabase(O);
              ArrayList<Order> newList = val.getListofAllOrders();
              assertEquals(originalList.size()+1, newList.size());
         }

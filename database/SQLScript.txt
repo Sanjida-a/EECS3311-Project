@@ -104,9 +104,9 @@ RENAME COLUMN numOfRefillsRemaning TO numOfRefills;
 ALTER TABLE Orders
 ADD FOREIGN KEY (medicationID) REFERENCES Medications(medicationID); 
 
-ALTER TABLE Prescriptions 
+/*ALTER TABLE Prescriptions 
 Add FOREIGN KEY (medicationID) REFERENCES Orders(medicationID),
-ADD CONSTRAINT `fk_prescription_patientId` FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber);
+ADD CONSTRAINT `fk_prescription_patientId` FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber);*/
 
 ALTER TABLE Orders 
 ADD isPrescription boolean;
@@ -163,3 +163,9 @@ UPDATE Medications SET isValid = 1 WHERE medicationID = 6;
 
 INSERT INTO Orders
 VALUES (1, 1, 1111122222, 1, 5, 0); /* for integration tests */
+
+----MINH CHANGED---
+Select * from Orders;
+
+ALTER TABLE Prescriptions 
+ADD CONSTRAINT `fk_prescription_patientId` FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber);

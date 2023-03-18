@@ -40,7 +40,8 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		this.totalPriceOfOrder = mFound.getPrice()*quantityBought;
 		this.isPrescription = !mFound.getisOTC();
 	}
-
+	
+	
 	// constructor for reading from database
 	public Order(int orderNum,int medicationID, long patientID2, int quantityBought, double totalPriceOfOrder, boolean isPrescription){
 		this.orderNum = orderNum;
