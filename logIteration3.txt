@@ -1,4 +1,23 @@
-1. 2023/03/17 00:00 - 02:30 contributor: Minh Tran
+1. 2023/03/14 - 2023/03/15  21:00 - 00:00 contributor: Aiza Bajwa
+*Fixed Iteration2 Bug (which is also Issue #60, #69, #70 and partially #71)
+*Fixed bug of allowing negative numbers as input for integer values (ex. quantity, price, health card number, phone number, date of birth) so that now it throws an exception.
+*Fixed bug of healthcard number and phone number being integers and not being able to hold large enough values. Turned these to longs and fixed all associated methods/reading from database/reading from user from int to long.
+
+2. 2023/03/15  ? contributor: Geon Kim
+
+3. 2023/03/16  ? contributor: Geon Kim
+
+4. 2023/03/16  17:00 - 19:00 contributor: Aiza Bajwa
+*Fixed Issue #63: Strange capitalization on Patient Management table
+*Also modified tests accordingly to match change
+
+5. 2023/03/16  ? contributor: Geon Kim
+
+6. 2023/03/17 00:00 - 02:30 contributor: Minh Tran
 *Fixed Iteration2 Bug #72: can have a negative number of refills remaining on a prescription
 *Fix add order functions
 
+7. 2023/03/17  21:00 - 23:30 contributor: Aiza Bajwa
+*Added abstract class Admin.java, moved methods that are shared between owner and pharmacist to this class
+*Changed Itr2 detailed story a bit by also allowing Owner to add a patient
+*Added more tests, modified existing tests
