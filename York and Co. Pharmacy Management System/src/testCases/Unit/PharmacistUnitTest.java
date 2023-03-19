@@ -25,41 +25,7 @@ class PharmacistUnitTest {
 		
 	}
 
-	@Test
-	void testAddPatient1() {
-		
-		Pharmacist subject1 = new Pharmacist(0, 0);
-		UserStub stub = new UserStub();
-		subject1.set_userDAO(stub);
-		ArrayList<Patient> expected = new ArrayList<Patient>();
-		ArrayList<Patient> result = new ArrayList<Patient>();
-		try {
-			subject1.addPatient("test", "name", "address", 1111144444, 1111144444, 11111444);
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-		expected.add(new Patient("TEST", "NAME", "ADDRESS", 1111144444, 1111144444, 11111444));
-
-		result = stub.getListOfAllPatients();
-		assertEquals(expected.get(0), result.get(0));
-		assertEquals(expected.get(1), result.get(1));
-
-		
-	}	
 	
-	@Test 
-	void testAddPatient2() {
-		Pharmacist subject1 = new Pharmacist(0, 0);
-		UserStub stub = new UserStub();
-		subject1.set_userDAO(stub);
-	
-		assertThrows(Exception.class, () -> subject1.addPatient("test", "name", "address", -1111144444, 1111144444, 11111444));
-		assertThrows(Exception.class, () -> subject1.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444));
-		assertThrows(Exception.class, () -> subject1.addPatient("test", "name", "address", 1111144444, 1111144444, -11111444));
-		
-	}
 
 	@Test
 	void testSearchPatientByName() {

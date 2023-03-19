@@ -2,12 +2,12 @@ package middleLayer.Orders;
 
 import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.MerchandiseInventory.Merchandise;
-import middleLayer.Users.ListOfPatients;
+import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Patient;
 
 public class Order { //ALL ORDER: both OTC and Prescription
 	private Inventory merList = Inventory.getInstance();
-	private ListOfPatients patList = ListOfPatients.getInstance();
+	private ListOfUsers userList = ListOfUsers.getInstance();
 	
 	int orderNum;
 	int medicationID;
@@ -32,7 +32,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 			throw new Exception("Medication doesn't exist!");
 		}
 		
-		Patient pFound = patList.searchPatientWithID(patientID);
+		Patient pFound = userList.searchPatientWithID(patientID);
 		if (pFound == null) {
 			throw new Exception("Patient doesn't exist!");
 		}

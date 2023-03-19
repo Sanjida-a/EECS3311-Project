@@ -21,3 +21,13 @@
 *Added abstract class Admin.java, moved methods that are shared between owner and pharmacist to this class
 *Changed Itr2 detailed story a bit by also allowing Owner to add a patient
 *Added more tests, modified existing tests
+
+8. 2023/03/18  20:00 - 21:00 contributor: Aiza Bajwa
+*Fixed Issue #71
+*Also modified owner/pharmacist credentials to be unique from patient. Changed owner/pharmacist login credentials to 4 digits long so that owner/pharmacist usernames are not 'taken'/'unavailable' to use for patient health card numbers. (Fixed a bug which prevented patient to have healthcard ID as 1111111111 since owner already took this username)
+
+9. 2023/03/18  21:00 - 23:30 contributor: Aiza Bajwa, Geon Kim
+*Virtual Call
+*Deleted Admin.java, renamed ListOfPatients.java to ListOfUsers.java, moved methods around, modified/moved test cases --> did all this to make code more organized and make more sense since ListOfUsers.java should control and have access to adding patients and searching patients
+*Fixed Issue #71 one more time because small bug
+
