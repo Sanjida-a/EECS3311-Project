@@ -32,6 +32,16 @@ public class ListOfUsers {
 			e.printStackTrace();
 		}
 	}
+	private ListOfUsers(UserRoot dao) {
+		try {
+			_userDAO = dao;
+			allPatientsList = _userDAO.getListOfAllPatients();
+			allCredentialsList = _userDAO.getListOfUsernamesAndPasswords();
+		} catch (Exception e) {
+	
+			e.printStackTrace();
+		}
+	}
 	
 	// all singleton classes must implement this method
 	public static ListOfUsers getInstance(){
@@ -40,6 +50,13 @@ public class ListOfUsers {
         }
         return ListOfUsersInstance;
     }
+	
+	public static ListOfUsers getInstance(UserRoot dao) {
+        if (ListOfUsersInstance == null) {
+        	ListOfUsersInstance = new ListOfUsers(dao);
+        }
+        return ListOfUsersInstance;
+	}
 	
 	public void set_userDAO(UserRoot dao) {
 		this._userDAO = dao;
