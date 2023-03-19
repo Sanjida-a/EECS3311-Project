@@ -15,11 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AuthenticateUserTest {
 	
+	private static AuthenticateUser authenticateUserInstance;
+	
 	//beforeAll is just used to established a connection with the database before all tests
 	@BeforeAll
 	public static void before() {
 		try {
 			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			authenticateUserInstance = AuthenticateUser.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -30,28 +33,24 @@ class AuthenticateUserTest {
     void getInstance() {
 
     }
+    
     @Test
-    void checkUserValidTest() { //for incorrect entry
-        AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(null, val.checkUserValid(1, 1)); // no such owner or pharmacist or patient can exist (bc 4 digit OR 10 digit)
+    void checkUserInValidTest() { //for incorrect entry
+        assertEquals(null, authenticateUserInstance.checkUserValid(1, 1)); // no such owner or pharmacist or patient can exist (bc 4 digit OR 10 digit)
     }
 
     @Test
     void checkUserValidOwnerLogin() {
-        AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(USER.OWNER, val.checkUserValid(1111, 1111));
+        assertEquals(USER.OWNER, authenticateUserInstance.checkUserValid(1111, 1111));
     }
 
     @Test
     void checkUserValidPharamcistLogin() {
-        AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(USER.PHARMACIST, val.checkUserValid(1234, 1234));
+        assertEquals(USER.PHARMACIST, authenticateUserInstance.checkUserValid(1234, 1234));
     }
 
     @Test
     void checkUserValidPatientLogin() {
-    	
-        AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(USER.PATIENT, val.checkUserValid(1111122222, 11111222));
+        assertEquals(USER.PATIENT, authenticateUserInstance.checkUserValid(1111122222, 11111222));
     }
 }
