@@ -27,11 +27,25 @@ public class Inventory{
 			e.printStackTrace();
 		}
 	}
+	
+	private Inventory(MerchandiseRoot dao) {
+		this._merDAO = dao;
+		this.list = this._merDAO.getListOfMerchandise();
+		
+	}
 
 	// singleton classes must have this method
     public static Inventory getInstance(){
         if (singletonInstance == null)
             singletonInstance = new Inventory();
+        return singletonInstance;
+    }
+    
+    public static Inventory getInstance(MerchandiseRoot dao) {
+        if (singletonInstance == null) {
+        	
+            singletonInstance = new Inventory(dao);
+        }
         return singletonInstance;
     }
 
@@ -192,10 +206,13 @@ public class Inventory{
     	if (specificMedication == null || decreasedQuantity < 0) { // if medID does not exist in inventory, can't do anything
     		// no change because want initial boolean values as above
     		boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
+    		//System.out.println("medication not found");
     		return booleanArray;
     	}
     	
+    	
     	else { // otherwise it exists, then can potentially decrease
+    		//System.out.println("medication found: " + specificMedication);
 	        int potentialNewQuantity = specificMedication.quantity - decreasedQuantity; // check to see new quantity if decreased
 			if (potentialNewQuantity < 0) {
 	    		enoughQuantityToDecrease = false; // decrease will not occur if new quantity results in being less than 0

@@ -116,7 +116,7 @@ public class Merchandise{
     // outputs merchandise object by specifying all instance variables
     @Override
     public String toString(){
-        return "ID: " + medicationID + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + ", Description: " + description + "\n";
+        return "ID: " + medicationID + ", Name: " + name + ", Quantity: " + quantity + ", Price: " + price + ", Type: " + type + ", Form: " + form + ", isOTC: " + isOTC + ", Description: " + description + ", isValid: " + isValid + "\n";
     }
 
 	public boolean isValid() {
@@ -125,6 +125,22 @@ public class Merchandise{
 
 	public void setIsValid(boolean isValid) {
 		this.isValid = isValid;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		Merchandise comparator = (Merchandise)obj;
+		if(this.medicationID != comparator.medicationID|| 
+			!this.name.equals(comparator.getName()) || 
+			this.quantity != comparator.quantity || 
+			Double.compare(this.price, comparator.price) != 0 || 
+			this.type != comparator.type || 
+			this.form != comparator.form ||
+			this.isOTC != comparator.isOTC || 
+			!this.description.equals(comparator.description) ||
+			this.isValid != comparator.isValid) {
+			return false;
+		}
+		return true;
 	}
 
 }

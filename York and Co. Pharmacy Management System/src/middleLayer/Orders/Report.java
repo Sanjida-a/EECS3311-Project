@@ -2,7 +2,9 @@ package middleLayer.Orders;
 
 import java.util.ArrayList;
 
+import databaseDAO.MerchandiseData.MerchandiseRoot;
 import databaseDAO.OrderData.OrderRoot;
+import databaseDAO.UserData.UserRoot;
 
 
 public class Report {
@@ -12,6 +14,11 @@ public class Report {
 	
 	public Report() {
 		listOfOrders = ListOfOrders.getInstance();
+		allOrders = listOfOrders.getListofAllOrders();
+	}
+	
+	public Report(OrderRoot orderDAO, MerchandiseRoot merDAO, UserRoot userDAO) {
+		listOfOrders = ListOfOrders.getInstance(orderDAO, merDAO, userDAO);
 		allOrders = listOfOrders.getListofAllOrders();
 	}
 	
@@ -48,8 +55,8 @@ public class Report {
 	 	return output;
 	 }
 	 
-	 public void setOrderDAO(OrderRoot dao) {
-		 this.listOfOrders.setOrderDAO(dao);
+	 public void setOrderDAO(OrderRoot orderDAO, MerchandiseRoot mercDAO, UserRoot userDAO) {
+		 this.listOfOrders.setOrderDAO(orderDAO, mercDAO, userDAO);
 		 this.allOrders = this.listOfOrders.getListofAllOrders();
 	 }
 	

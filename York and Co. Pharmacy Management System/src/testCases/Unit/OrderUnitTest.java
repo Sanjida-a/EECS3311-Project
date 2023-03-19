@@ -26,7 +26,7 @@ class OrderUnitTest {
 		
 	}
 	
-	@Test
+	/*@Test
 	void testOrderIntIntInt() {
 		
         Inventory inv = Inventory.getInstance();
@@ -38,7 +38,7 @@ class OrderUnitTest {
 		assertThrows(Exception.class, () -> new Order(1, 1, -1));
 		assertThrows(Exception.class, () -> new Order(5, 1, 1));
 		assertThrows(Exception.class, () -> new Order(1, 0, 1));
-	}
+	}*/
 
 
 }

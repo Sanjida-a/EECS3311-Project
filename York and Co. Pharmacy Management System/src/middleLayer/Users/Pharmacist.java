@@ -40,6 +40,15 @@ public class Pharmacist extends User {
 		this.password = pharmacistUser.password;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		Pharmacist comparator = (Pharmacist)obj;
+		if(this.username != comparator.username ||
+			this.password != comparator.password) {
+			return false;
+		}
+		return true;
+	}
 	// method below moved to Admin class so that both Owner and Pharmacist can add a patient; and to avoid duplication
 //	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
 //		

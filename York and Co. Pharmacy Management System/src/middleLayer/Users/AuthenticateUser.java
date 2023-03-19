@@ -14,12 +14,7 @@ public class AuthenticateUser {
 	
 	private AuthenticateUser() { //constructor of all singleton classes should be private
 		listOfUsersInstance = ListOfUsers.getInstance();
-//		try {
-//				_userDAO = new UserDAO();	
-//		} catch (Exception e) {
-//	
-//			e.printStackTrace();
-//		}
+
 	}
 	
 	// singleton classes must have this method
@@ -33,20 +28,13 @@ public class AuthenticateUser {
 	// using the list of usernames and passwords retrieved from database, check to see if a login attempt was successful or not
 	public USER checkUserValid(long username, int password) {
 		ArrayList<User> _users;
-		try {
-//			_users = _userDAO.getListOfUsernamesAndPasswords(); // always makes sure variable is updated before checking
-			_users = listOfUsersInstance.getAllCredentialsList();
+		_users = listOfUsersInstance.getAllCredentialsList();
 
-			for (int i = 0; i < _users.size(); i++) {
-				if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
-					return USER.getValue(_users.get(i).getClass().getSimpleName());
-				}
+		for (int i = 0; i < _users.size(); i++) {
+			if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
+				return USER.getValue(_users.get(i).getClass().getSimpleName());
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-
 		return null;
 	}
 	

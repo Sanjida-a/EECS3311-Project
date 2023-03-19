@@ -21,10 +21,10 @@ import middleLayer.Users.Patient;
 public class OrderStub implements OrderRoot {
 	public ArrayList<Order> orderList; 
 	public ArrayList<Prescription> prescriptionList;
-    MerchandiseStub _merStub = new MerchandiseStub();
-    UserStub _userStub = new UserStub();
-	ArrayList<Patient> patients ;
-    ArrayList<Merchandise> medications;    
+    public MerchandiseStub _merStub = new MerchandiseStub();
+    public UserStub _userStub = new UserStub();
+	public ArrayList<Patient> patients ;
+    public ArrayList<Merchandise> medications;    
 
 	public OrderStub() {
 		medications = _merStub.getListOfMerchandise();
@@ -51,6 +51,11 @@ public class OrderStub implements OrderRoot {
 	}
 	@Override
 	public void addToOrderTable(Order o) throws Exception {
+		for(Order order : orderList) {
+			if(order.equals(o)) {
+				throw new SQLException();
+			}
+		}
 		orderList.add(o);
 	}
 	@Override

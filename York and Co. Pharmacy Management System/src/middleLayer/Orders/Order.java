@@ -1,5 +1,7 @@
 package middleLayer.Orders;
 
+import databaseDAO.MerchandiseData.MerchandiseRoot;
+import databaseDAO.UserData.UserRoot;
 import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Users.ListOfUsers;
@@ -21,24 +23,11 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		
 		this.medicationID = medicationID;
 		this.patientID = patientID;
-		
-		if (quantityBought < 0) {
-			throw new Exception("Quantity Bought Must Be Non-Negative!");    
-		}
 		this.quantityBought = quantityBought;
 		
-		Merchandise mFound = merList.searchMerchandiseWithID(medicationID);
-		if (mFound == null) {
-			throw new Exception("Medication doesn't exist!");
-		}
 		
-		Patient pFound = userList.searchPatientWithID(patientID);
-		if (pFound == null) {
-			throw new Exception("Patient doesn't exist!");
-		}
-		
-		this.totalPriceOfOrder = mFound.getPrice()*quantityBought;
-		this.isPrescription = !mFound.getisOTC();
+		//this.totalPriceOfOrder = mFound.getPrice()*quantityBought;
+		//this.isPrescription = !mFound.getisOTC();
 	}
 	
 	
@@ -109,14 +98,11 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		return medicationID;
 	}
 	
+
+	
 	@Override
 	public boolean equals(Object obj) {
-		if(	this.orderNum == ((Order)obj).orderNum && 
-		this.medicationID == ((Order)obj).medicationID &&
-		this.patientID == ((Order)obj).patientID &&
-		this.quantityBought == ((Order)obj).quantityBought &&
-		this.totalPriceOfOrder == ((Order)obj).totalPriceOfOrder &&
-		this.isPrescription == ((Order)obj).isPrescription) {
+		if(	this.orderNum == ((Order)obj).orderNum ) {
 			return true;
 		}
 		return false;

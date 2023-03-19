@@ -62,6 +62,7 @@ public class ListOfUsers {
 		this._userDAO = dao;
 		try {
 			allPatientsList = this._userDAO.getListOfAllPatients();
+			allCredentialsList = this._userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
