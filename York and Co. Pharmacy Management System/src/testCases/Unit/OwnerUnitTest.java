@@ -9,18 +9,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import databaseDAO.superDAO;
+import databaseDAO.MerchandiseData.MerchandiseRoot;
 import databaseDAO.MerchandiseData.MerchandiseStub;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Users.*;
 import presentation.USER;
 
 class OwnerUnitTest {
-	
+
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
 	@BeforeAll
 	public static void before() {
 		try {
 			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -53,14 +55,7 @@ class OwnerUnitTest {
 	}
 
 	
-	@Test
-	void testSearchPatientByName() {
-		
-		Owner subject1 = new Owner(0,0);
-		Inventory inv = Inventory.getInstance();
-		inv.set_merDAO(new MerchandiseStub());
-		
-	}
+
 	
 	/* the methods below are derived from the superclass, User, but tested here
 	 * since User is abstract class and the method behavee the same 
