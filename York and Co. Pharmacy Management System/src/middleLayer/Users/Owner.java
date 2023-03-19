@@ -23,7 +23,15 @@ public class Owner extends User {
 		this.username = ownerUser.username;
 		this.password = ownerUser.password;
 	}
-	
+	@Override
+	public boolean equals(Object obj) {
+		Owner comparator = (Owner)obj;
+		if(this.username != comparator.username ||
+			this.password != comparator.password) {
+			return false;
+		}
+		return true;
+	}
 	// two below methods have the implementation of the below two methods to decrease repeated code
 	// implementation of inherited abstract method from User superclass
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
