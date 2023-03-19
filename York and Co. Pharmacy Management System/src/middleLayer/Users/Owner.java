@@ -2,16 +2,16 @@ package middleLayer.Users;
 
 import java.util.ArrayList;
 
-public class Owner extends Admin {
+public class Owner extends User {
 	
 //	private Inventory merListByOwner = Inventory.getInstance(); 
 //	private ListOfPatients listOfPatientsByOwner = ListOfPatients.getInstance(); // moved to ADMIN
 	
 	// having only this constructor avoids having an owner without a username and password
 	public Owner(long username, int password) {
-		super(username, password);
-//		this.username = username;
-//		this.password = password;
+//		super(username, password);
+		this.username = username;
+		this.password = password;
 	}
 	
 	// Minh moved 2 methods here from ListOfUsers.java class

@@ -8,18 +8,18 @@ import presentation.USER;
 
 public class AuthenticateUser {
 	
-	private UserRoot _userDAO;
+//	private UserRoot _userDAO;
+	private ListOfUsers listOfUsersInstance;
 	private static AuthenticateUser instance = null;
 	
 	private AuthenticateUser() { //constructor of all singleton classes should be private
-		try {
-
-				_userDAO = new UserDAO();
-			
-		} catch (Exception e) {
-	
-			e.printStackTrace();
-		}
+		listOfUsersInstance = ListOfUsers.getInstance();
+//		try {
+//				_userDAO = new UserDAO();	
+//		} catch (Exception e) {
+//	
+//			e.printStackTrace();
+//		}
 	}
 	
 	// singleton classes must have this method
@@ -34,7 +34,8 @@ public class AuthenticateUser {
 	public USER checkUserValid(long username, int password) {
 		ArrayList<User> _users;
 		try {
-			_users = _userDAO.getListOfUsernamesAndPasswords(); // always makes sure variable is updated before checking
+//			_users = _userDAO.getListOfUsernamesAndPasswords(); // always makes sure variable is updated before checking
+			_users = listOfUsersInstance.getAllCredentialsList();
 
 			for (int i = 0; i < _users.size(); i++) {
 				if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
@@ -47,10 +48,6 @@ public class AuthenticateUser {
 		}
 
 		return null;
-	}
-	
-	public void set_userDAO(UserRoot dao) {
-		this._userDAO = dao;
 	}
 	
 }

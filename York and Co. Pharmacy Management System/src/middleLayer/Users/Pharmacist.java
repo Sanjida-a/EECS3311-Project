@@ -7,7 +7,7 @@ import databaseDAO.UserData.UserDAO;
 import databaseDAO.UserData.UserRoot;
 import presentation.DisplayLogin;
 
-public class Pharmacist extends Admin {
+public class Pharmacist extends User {
 	
 //	private UserRoot _userDAO;
 //	private Inventory merListByPhar = Inventory.getInstance();
@@ -16,7 +16,9 @@ public class Pharmacist extends Admin {
 	// having only this constructor avoids having an owner without a username and password
 	// MOVED TO ADMIN
 	public Pharmacist(long username, int password) {
-		super(username, password);
+//		super(username, password);
+		this.username = username;
+		this.password = password;
 //		try {
 //			_userDAO = new UserDAO();
 //			this.username = username;

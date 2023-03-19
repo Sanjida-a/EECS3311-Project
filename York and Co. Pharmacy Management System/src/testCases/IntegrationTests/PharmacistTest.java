@@ -28,75 +28,7 @@ class PharmacistTest {
 
   	//**NOTE** searchPatientByName method tested in OwnerTest.java
   	
-    @Test
-    void addPatient() {
-       
-        ListOfPatients val = ListOfPatients.getInstance();
-        ArrayList<Patient> listOfPat = val.getAllPatientsList();
-        
-        long newHealthCardNum = 1111144444;
-        for (int i = 0; i < listOfPat.size(); i++) {
-        	if (listOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
-        		newHealthCardNum = -1; // patient already exists
-        		break;
-        	}
-        }
-        
-        Pharmacist subject1 = new Pharmacist(0, 0);
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        
-        if (newHealthCardNum != -1) {
-        	patient1 = new Patient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012);
-             
-            
-             comparator1.add(patient1);
-             try {
-     			subject1.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
-     		} catch (Exception e) {
-     			e.printStackTrace();
-     		}
-
-             
-             ArrayList<Patient> result = null;
-			try {
-				result = subject1.searchPatientByName("MAN", "LastName");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-             assertEquals(comparator1.toString(), result.toString());
-        }
-        else {
-        	try {
-        		assertThrows(Exception.class, () -> subject1.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012));
-        	}
-        	catch (Exception e) {
-        		e.printStackTrace();
-        	}
-        	
-        }
-       
-    }
-   
-    @Test
-    void addPatientInvalid() { // negative health card num
-       
-        long newHealthCardNum = -555;
-      
-        Pharmacist p = new Pharmacist(0,0);
-        assertThrows(Exception.class, () -> p.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010));
-       
-    }
     
-    @Test
-    void addPatientInvalid2() { // negative phone number
-    	
-        ListOfPatients val = ListOfPatients.getInstance();
-        ArrayList<Patient> listOfPat = val.getAllPatientsList();
-        
-        Pharmacist subject1 = new Pharmacist(0, 0);
-        assertThrows(Exception.class, () -> subject1.addPatient("New", "Test", "123 Fake Street", -416, 123789, 11222012));
-    }
     
 //    test was failing
 //    @Test

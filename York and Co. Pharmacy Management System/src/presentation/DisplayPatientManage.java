@@ -55,7 +55,7 @@ public class DisplayPatientManage {
 	//private static JTextField textFieldPassword;\
 	private static JLabel lblNotice;
 	//private static JTextArea textAreaOutput;
-	private static ListOfPatients listOfPatientsInstance;
+	private static ListOfUsers listOfUsersInstance;
 	private static final String[] columns= {				
 			String.format("%-20s ", "Name"),
 			String.format("%-20s ", "Address"),
@@ -69,7 +69,7 @@ public class DisplayPatientManage {
 
 	
 	public static void displayPatientManage(JFrame previous) {
-		listOfPatientsInstance = ListOfPatients.getInstance();
+		listOfUsersInstance = ListOfUsers.getInstance();
 		superFrame = previous;
 		superFrame.setEnabled(false);
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -136,12 +136,12 @@ public class DisplayPatientManage {
 //						throw new Exception(); // ensures something is entered 
 //					}
 					
-					Owner o1 = new Owner(1,1);
+//					Owner o1 = new Owner(1,1);
 					
 					ArrayList<Patient> searchResult;
 					
 					//Daniel can you please add the drop down and use the drop down to send as parameter instead of the hardcoded string
-					searchResult = o1.searchPatientByName(_textFieldSearchKeyword, (String)comboBox.getSelectedItem());
+					searchResult = listOfUsersInstance.searchPatientByName(_textFieldSearchKeyword, (String)comboBox.getSelectedItem());
 					displayList(table, searchResult);
 
 					
@@ -175,7 +175,7 @@ public class DisplayPatientManage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				displayList(table, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+				displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
 			//	lblNotice.setText("Patient is added successfully");
 			}
 			
@@ -192,7 +192,7 @@ public class DisplayPatientManage {
 		
 
 		patientListField(panelPatientList);
-		displayList(table, listOfPatientsInstance.getAllPatientsList());
+		displayList(table, listOfUsersInstance.getAllPatientsList());
 		
 	}
 	
@@ -293,10 +293,10 @@ public class DisplayPatientManage {
 					long _textFieldHCNumber = Long.parseLong(textFieldHCNumber.getText());
 					long _textFieldPhoneNumber = Long.parseLong(textFieldPhoneNumber.getText());
 					
-					Pharmacist p1 = new Pharmacist(1,1);
+//					Pharmacist p1 = new Pharmacist(1,1);
 					try {
-						p1.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
-						displayList(table, listOfPatientsInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+						listOfUsersInstance.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
+						displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
 						lblNotice.setText("Patient is added successfully");
 					}
 					catch(SQLException exception) { //catch any exceptions and show popup error
@@ -335,7 +335,7 @@ public class DisplayPatientManage {
 					long _textFieldPatientID = Long.parseLong(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
 					Boolean result;
 					try {
-						result = listOfPatientsInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
+						result = listOfUsersInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
 						
 						if (result == false) {
 							// popup that says patient doesn't exist
@@ -343,7 +343,7 @@ public class DisplayPatientManage {
 							JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
 						}
 						
-						displayList(table, listOfPatientsInstance.getAllPatientsList() );
+						displayList(table, listOfUsersInstance.getAllPatientsList() );
 						lblNotice.setText("Patient is modified successfully");
 					}
 					catch (Exception e2) {
