@@ -304,7 +304,7 @@ public class DisplayPatientManage {
 						JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
 					}
 					catch (Exception e2) {
-						JOptionPane.showMessageDialog(frame,e2.getMessage(), "SQL Error", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Incorrect Input", JOptionPane.WARNING_MESSAGE);
 					}
 					
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?

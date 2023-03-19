@@ -22,15 +22,17 @@ public abstract class Admin extends User {
 	}
 	
 	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
-			
-		if (_textFieldPhoneNumber < 0) {
-			throw new Exception("Phone Number has to be a non-negative number");
-		}
-		if (_textFieldHCNumber < 0) {
-			throw new Exception("Health Card Number has to be a non-negative number");
-		}
+		
 		if (dateOfBirth < 0) {
 			throw new Exception("Date Of Birth has to be a non-negative number");
+		}
+		
+		if (!((1000000000 <= _textFieldHCNumber) && (_textFieldHCNumber <= 9999999999L))) {
+			throw new Exception("Health Card Number must be a positive, 10 digit number");
+		}
+		
+		if (!((1000000000 <= _textFieldPhoneNumber) && (_textFieldPhoneNumber <= 9999999999L))) {
+			throw new Exception("Phone Number must be a positive, 10 digit number");
 		}
 		
 		Patient newPatient = new Patient(firstName.toUpperCase(), lastName.toUpperCase(), address.toUpperCase(), _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
