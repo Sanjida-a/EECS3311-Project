@@ -3,17 +3,17 @@
 *Fixed bug of allowing negative numbers as input for integer values (ex. quantity, price, health card number, phone number, date of birth) so that now it throws an exception.
 *Fixed bug of healthcard number and phone number being integers and not being able to hold large enough values. Turned these to longs and fixed all associated methods/reading from database/reading from user from int to long.
 
-2. 2023/03/15  18:00 contributor: Geon Kim
+2. 2023/03/15  18:00 - 19:00 contributor: Geon Kim
 * fixed issue #61, #62, and #64
 
-3. 2023/03/16  21:00 contributor: Geon Kim
+3. 2023/03/16  21:00 - 21:30 contributor: Geon Kim
 * More unit tests implemented
 
 4. 2023/03/16  17:00 - 19:00 contributor: Aiza Bajwa
 *Fixed Issue #63: Strange capitalization on Patient Management table
 *Also modified tests accordingly to match change
 
-5. 2023/03/16  23:00 contributor: Geon Kim
+5. 2023/03/16  23:00 - 23:30 contributor: Geon Kim
 * more unit test implemented
 
 6. 2023/03/17 00:00 - 02:30 contributor: Minh Tran
@@ -38,5 +38,5 @@
 *Added more integration tests for correct number of digits of health card number and phone number
 *Fixed existing integration tests
 
-11. 2023/3/19 20:00 contributor: Geon Kim
+11. 2023/3/19 20:00 - 20:10 contributor: Geon Kim
 * dependency issue for unit test partially fixed along with changes to the relevant classes.
