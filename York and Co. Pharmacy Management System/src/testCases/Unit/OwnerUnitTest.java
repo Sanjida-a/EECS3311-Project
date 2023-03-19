@@ -4,6 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -54,16 +55,69 @@ class OwnerUnitTest {
 
 	
 	@Test
-	void testSearchPatientByName() {
+	void testSearchPatientByName1() {
 		
 		Owner subject1 = new Owner(0,0);
 		Inventory inv = Inventory.getInstance();
 		inv.set_merDAO(new MerchandiseStub());
+    	List<Patient> comparator1 = new ArrayList<Patient>();
+    	List<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("SMITH", "FirstName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
+    	assertEquals(comparator1.toString(), result.toString());
 		
 	}
 	
-	/* the methods below are derived from the superclass, User, but tested here
-	 * since User is abstract class and the method behavee the same 
+	@Test
+	void testSearchPatientByName2() {
+		Owner subject1 = new Owner(0,0);
+		Inventory inv = Inventory.getInstance();
+		inv.set_merDAO(new MerchandiseStub());
+		
+    	List<Patient> comparator1 = new ArrayList<Patient>();
+    	List<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("JOHN", "LastName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
+    	assertEquals(comparator1.toString(), result.toString());
+	}
+	
+	@Test
+	void testSearchPatientByName3() {
+		Owner subject1 = new Owner(0,0);
+		Inventory inv = Inventory.getInstance();
+		inv.set_merDAO(new MerchandiseStub());
+		List<Patient> comparator1 = new ArrayList<Patient>();
+    	List<Patient> result = null;
+		try {
+			result = subject1.searchPatientByName("SMITH JOHN", "FullName");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
+    	assertEquals(comparator1.toString(), result.toString());
+	}
+	
+	@Test
+	void testSearchPatientByName4() {
+		Owner subject1 = new Owner(0,0);
+		Inventory inv = Inventory.getInstance();
+		inv.set_merDAO(new MerchandiseStub());
+		assertThrows(Exception.class, () -> subject1.searchPatientByName("", "FirstName"));
+		assertThrows(Exception.class, () -> subject1.searchPatientByName("", "LastName"));
+		assertThrows(Exception.class, () -> subject1.searchPatientByName("", "FulllName"));
+		
+	}
+	
+	/* the methods below are derived from User, but tested here
+	 * since User is abstract class and the method behave the same 
 	 * throughout the subclasses
 	 */
 
