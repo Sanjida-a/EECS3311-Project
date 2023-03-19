@@ -36,11 +36,11 @@ class AuthenticateUserUnitTest {
 		
 		USER result;
 		//input account info for OWNER
-		result = auth.checkUserValid(1111111111, 11111111);
+		result = auth.checkUserValid(1111, 1111);
 		assertEquals( USER.OWNER, result );
 		
 		//input account info for PHARMACIST
-		result = auth.checkUserValid(1234567890, 12345678);
+		result = auth.checkUserValid(1234, 1234);
 		assertEquals(USER.PHARMACIST, result );
 		
 		//input account info for PATIENT

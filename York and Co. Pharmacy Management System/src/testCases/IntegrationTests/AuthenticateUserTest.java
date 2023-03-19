@@ -39,13 +39,13 @@ class AuthenticateUserTest {
     @Test
     void checkUserValidOwnerLogin() {
         AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(USER.OWNER, val.checkUserValid(1111111111, 11111111));
+        assertEquals(USER.OWNER, val.checkUserValid(1111, 1111));
     }
 
     @Test
     void checkUserValidPharamcistLogin() {
         AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(USER.PHARMACIST, val.checkUserValid(1234567890, 12345678));
+        assertEquals(USER.PHARMACIST, val.checkUserValid(1234, 1234));
     }
 
     @Test
