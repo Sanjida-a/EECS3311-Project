@@ -110,10 +110,35 @@ public class ListOfUsers {
 
     	return foundPWithID; //if patient with such ID not found, return null
 	}
-
 	
-	// modifies the details of the medication
-	// OCP Followed (all in 1 method instead of 4 methods)
+	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
+		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
+		
+		if (dateOfBirth < 0) {
+			throw new Exception("Date Of Birth has to be a non-negative number");
+		}
+		
+		if (!((1000000000 <= _textFieldHCNumber) && (_textFieldHCNumber <= 9999999999L))) {
+			throw new Exception("Health Card Number must be a positive, 10 digit number");
+		}
+		
+		if (!((1000000000 <= _textFieldPhoneNumber) && (_textFieldPhoneNumber <= 9999999999L))) {
+			throw new Exception("Phone Number must be a positive, 10 digit number");
+		}
+		
+		Patient newPatient = new Patient(firstName.toUpperCase(), lastName.toUpperCase(), address.toUpperCase(), _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
+		try {
+			_userDAO.addPatientToDatabase(newPatient);
+		} catch (SQLException e) {
+			throw e;
+		}
+		
+		// update instance variable from database
+		updatePatientListFromDatabase();
+	}
+	
+	// modifies the details of the patient
+		// OCP Followed (all in 1 method instead of 4 methods)
 	public boolean modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
 		
@@ -163,39 +188,13 @@ public class ListOfUsers {
     	return true;
     }
 	
-	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
-		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
-		
-		if (dateOfBirth < 0) {
-			throw new Exception("Date Of Birth has to be a non-negative number");
-		}
-		
-		if (!((1000000000 <= _textFieldHCNumber) && (_textFieldHCNumber <= 9999999999L))) {
-			throw new Exception("Health Card Number must be a positive, 10 digit number");
-		}
-		
-		if (!((1000000000 <= _textFieldPhoneNumber) && (_textFieldPhoneNumber <= 9999999999L))) {
-			throw new Exception("Phone Number must be a positive, 10 digit number");
-		}
-		
-		Patient newPatient = new Patient(firstName.toUpperCase(), lastName.toUpperCase(), address.toUpperCase(), _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
-		try {
-			_userDAO.addPatientToDatabase(newPatient);
-		} catch (SQLException e) {
-			throw e;
-		}
-		
-		// update instance variable from database
-		updatePatientListFromDatabase();
-	}
-	
 	// OCP followed to allow search by any type of name (first, last, or both) in 1 method
 	// searches and returns list of patients in system that have same entered name
 	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
 		
 		if (patientName.isEmpty()) {
-			throw new Exception(); // ensures something is entered 
+			throw new Exception("input field is empty"); // ensures something is entered 
 		}
 		
 		ArrayList<Patient> searchResult = new ArrayList <Patient> ();
@@ -253,14 +252,26 @@ public class ListOfUsers {
 		}
 		else { //typeOfSearch contains full name (first + last name)
 			int indexOfSpace = patientName.indexOf(' ');
-			String firstName = patientName.substring(0, indexOfSpace); //added trim to remove white spaces
-			String lastName = patientName.substring(indexOfSpace + 1); //added trim to remove white spaces
-			for (Patient p : allPatientsList) {
-				if (p.getFirstName().equalsIgnoreCase(firstName) && p.getLastName().equalsIgnoreCase(lastName)) {
+			
+			if (indexOfSpace == -1) {
+				throw new Exception("Please enter both a first and last name to search by Full Name");
+			}
+			else {
+				String firstName = patientName.substring(0, indexOfSpace); //added trim to remove white spaces
+				String lastName = patientName.substring(indexOfSpace + 1); //added trim to remove white spaces
+				
+				if (lastName.isBlank()) {
+					throw new Exception("Please enter both a first and last name");
+				}
+				
+				for (Patient p : allPatientsList) {
+					if (p.getFirstName().equalsIgnoreCase(firstName) && p.getLastName().equalsIgnoreCase(lastName)) {
 
-					searchResult.add(p);
+						searchResult.add(p);
+					}
 				}
 			}
+			
 		}
 		
 		return searchResult;

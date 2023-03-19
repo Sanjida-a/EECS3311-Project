@@ -150,9 +150,9 @@ public class DisplayPatientManage {
 					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
 					JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
 				}
-				catch(Exception exception) { //catch any exceptions and show popup error
+				catch(Exception e2) { //catch any exceptions and show popup error
 					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					JOptionPane.showMessageDialog(frame,"input field is empty", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
