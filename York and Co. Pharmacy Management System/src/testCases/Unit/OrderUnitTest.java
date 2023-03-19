@@ -31,10 +31,10 @@ class OrderUnitTest {
 		
         Inventory inv = Inventory.getInstance();
         MerchandiseStub mStub = new MerchandiseStub();
-		ListOfPatients patients = ListOfPatients.getInstance();
+        ListOfUsers listOfUsers = ListOfUsers.getInstance();
 		UserStub uStub = new UserStub();
 		inv.set_merDAO(mStub);
-		patients.set_userDAO(uStub);
+		listOfUsers.set_userDAO(uStub);
 		assertThrows(Exception.class, () -> new Order(1, 1, -1));
 		assertThrows(Exception.class, () -> new Order(5, 1, 1));
 		assertThrows(Exception.class, () -> new Order(1, 0, 1));

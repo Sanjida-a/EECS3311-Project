@@ -33,7 +33,7 @@ class AuthenticateUserTest {
     @Test
     void checkUserValidTest() { //for incorrect entry
         AuthenticateUser val = AuthenticateUser.getInstance();
-        assertEquals(null, val.checkUserValid(2344445, 2344445));
+        assertEquals(null, val.checkUserValid(1, 1)); // no such owner or pharmacist or patient can exist (bc 4 digit OR 10 digit)
     }
 
     @Test
