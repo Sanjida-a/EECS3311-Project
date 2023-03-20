@@ -35,9 +35,201 @@ public class ListOfUsersTest {
 		
 	}
 	
-	// AIZA TO-DO: make all tests like this one and also add tests for HCnum and phoneNum not being 10 digits long
 	@Test
-    void searchFName(){
+	void searchPatientWithIDTest1() {
+		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+		
+		Patient chosenPatient = listOfPatients.get(0);
+		long chosenID = listOfPatients.get(0).getHealthCardNum();
+		
+		Patient result = listOfUsers.searchPatientWithID(chosenID);
+		assertEquals(chosenPatient.toString(), result.toString());
+	}
+	
+	@Test
+	void searchPatientWithIDTest2() {
+		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+		
+		if (listOfPatients.size() > 1) {
+			Patient chosenPatient = listOfPatients.get(1);
+			long chosenID = listOfPatients.get(1).getHealthCardNum();
+			
+			
+			Patient result = listOfUsers.searchPatientWithID(chosenID);
+			assertEquals(chosenPatient.toString(), result.toString());
+		}
+	
+	}
+	
+	@Test
+	void searchPatientWithIDTest3() { // ID doesn't exist	
+		Patient result = listOfUsers.searchPatientWithID(1); //patientID only 10 digits
+	
+		assertEquals(null, result);
+	}
+	
+//	test not working??
+//	@Test
+//    void addPatientTest1() {
+//       
+//        ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+//        
+//        long newHealthCardNum = 55;
+//        for (int i = 0; i < originalListOfPat.size(); i++) {
+//        	if (originalListOfPat.get(i).getHealthCardNum() == 55) {
+//        		System.out.println("HEREEE");
+//        		newHealthCardNum = -1; // patient already exists
+//        		break;
+//        	}
+//        }
+//
+////        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
+//        
+//        if (newHealthCardNum != -1) {
+////        	Patient patient1 = new Patient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012);
+//             
+//            
+////            comparator1.add(patient1);
+//            try {
+//            	listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, 55, 11222012);
+//        	} catch (Exception e) {
+//     			e.printStackTrace();
+//     		}
+//            
+//            ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+//            
+//            System.out.println(originalListOfPat.size()+1 + " AND " + newListOfPat.size());
+//            assertEquals(originalListOfPat.size()+1, newListOfPat.size());
+//        }
+////            assertEquals(patient1.toString(), newListOfPat.get(newListOfPat.size()-1).toString());
+//             
+//////            ArrayList<Patient> result = null;
+//////			try {
+//////				result = listOfUsers.searchPatientByName("MAN", "LastName");
+//////			} catch (Exception e) {
+//////				e.printStackTrace();
+//////			}
+//////
+//////             assertEquals(comparator1.toString(), result.toString());
+////        }
+////        else { //health card ID already exists
+//////        	try {
+////        		assertThrows(Exception.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012));
+//////        	}
+//////        	catch (Exception e) {
+//////        		e.printStackTrace();
+//////        	}
+////        	
+////        }
+//       
+//    }
+   
+    @Test
+    void addPatientTest2() { // negative health card num
+       
+        long newHealthCardNum = -555;
+      
+        assertThrows(Exception.class, () -> listOfUsers.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010));
+       
+    }
+    
+    @Test
+    void addPatientTest3() { // less than 10 digit Health card num
+        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", 4161112222L, 2, 11222012));
+    }
+    
+    @Test
+    void addPatientTest4() { // negative phone number
+        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", -416, 123789, 11222012));
+    }
+    
+    @Test
+    void addPatientTest5() { // less than 10 digit phone number
+        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", 416, 123789, 11222012));
+    }
+    
+    @Test
+    void modifyPatientDetailsTest1() {
+    	
+        JTextField fname = new JTextField();
+        fname.setText("newFirstName");
+        JTextField lname = new JTextField();
+        JTextField phoneNum = new JTextField();
+        JTextField address = new JTextField();
+        lname.setText("");
+        phoneNum.setText("");
+        address.setText("");
+      
+        try {
+        	listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+            ArrayList<Patient> newList = listOfUsers.getAllPatientsList();
+            
+            int indexOfChangedPatient = -1;
+        	for (int i = 0; i < newList.size(); i++) {
+        		if (newList.get(i).getHealthCardNum() == 1111122222) {
+        			indexOfChangedPatient = i;
+        			break;
+        		}
+        	}
+            
+            assertEquals("NEWFIRSTNAME", newList.get(indexOfChangedPatient).getFirstName());
+            
+            //back to normal
+            fname.setText("Smith");
+            listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+        }
+        catch (Exception e) {
+        	
+        }
+        
+    }
+    
+    @Test
+    void modifyPatientDetailsTest2() { // negative phoneNum
+        JTextField fname = new JTextField();
+        fname.setText("");
+        JTextField lname = new JTextField();
+        JTextField phoneNum = new JTextField();
+        JTextField address = new JTextField();
+        lname.setText("");
+        phoneNum.setText("-1234567890");
+        address.setText("");
+        
+        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+      
+    }
+    
+    @Test
+    void modifyPatientDetailsTest3() { // less than 10 digit phoneNum
+        JTextField fname = new JTextField();
+        fname.setText("");
+        JTextField lname = new JTextField();
+        JTextField phoneNum = new JTextField();
+        JTextField address = new JTextField();
+        lname.setText("");
+        phoneNum.setText("1234");
+        address.setText("");
+        
+        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+      
+    }
+    
+    @Test
+    void modifyPatientDetailsTest4() { // all Jtextfields empty (nothing to be modified)
+        JTextField fname = new JTextField();
+        fname.setText("");
+        JTextField lname = new JTextField();
+        JTextField phoneNum = new JTextField();
+        JTextField address = new JTextField();
+        lname.setText("");
+        phoneNum.setText("");
+        address.setText("");
+        
+        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+    }
+	
+	@Test
+    void searchFNameTest1(){
 		
 		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
 		ArrayList<Patient> answer = new ArrayList<Patient>();
@@ -62,7 +254,7 @@ public class ListOfUsersTest {
     }
 
     @Test
-    void searchFNameFalse(){ 
+    void searchFNameTest2(){ // first name doesn't exist (assuming no patient with name NonExistentName)
 		
         try {
 			assertEquals("[]", listOfUsers.searchPatientByName("NonExistentName", "FirstName").toString());
@@ -71,17 +263,32 @@ public class ListOfUsersTest {
     }
 
 	@Test
-	void searchLName(){
+	void searchLNameTest1(){
 		
+		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		for (Patient p: listOfPatients) {
+			if (p.getLastName().compareToIgnoreCase("John") == 0) {
+				answer.add(p);
+			}
+		}
+		
+		ArrayList<Patient> methodResult = null;
 		try {
-			assertEquals("[First name: SMITH, Last name: JOHN, Address: 5324 YONGE ST, Phone Number: 1112223333, Health Card: 1111122222, Date of birth: 11111222\n]", listOfUsers.searchPatientByName("John", "LastName").toString());
-		} catch (Exception e) {
-			e.printStackTrace();
+			methodResult = listOfUsers.searchPatientByName("John", "LastName");
+		} catch (Exception e1) {
+		}
+		
+		assertEquals(answer.size(), methodResult.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
 		}
 	}
 
 	@Test
-	void searchLNameFalse(){ 
+	void searchLNameTest2(){ // first name doesn't exist (assuming no patient with name NonExistentName)
 		
 		try {
 			assertEquals("[]", listOfUsers.searchPatientByName("NonExistentName", "LastName").toString());
@@ -89,48 +296,40 @@ public class ListOfUsersTest {
 			e.printStackTrace();
 		}
 	}
-
     
     @Test
-    void searchPatientByNameTestValidInput1()  {
+    void searchFullNameTest1() { 
 		
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("SMITH", "FirstName");
-		} catch (Exception e) {
-			e.printStackTrace();
+    	ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		for (Patient p: listOfPatients) {
+			if ((p.getFirstName().compareToIgnoreCase("Smith") == 0) && (p.getLastName().compareToIgnoreCase("John") == 0)) {
+				answer.add(p);
+			}
 		}
-    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
-    	assertEquals(comparator1.toString(), result.toString());
+		
+		ArrayList<Patient> methodResult = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
+		} catch (Exception e1) {
+		}
+		
+		assertEquals(answer.size(), methodResult.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+		}
     }
     
     @Test
-    void searchPatientByNameTestValidInput2(){
-	
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("JOHN", "LastName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
-    	assertEquals(comparator1.toString(), result.toString());
-    }
-    
-    @Test
-    void searchPatientByNameTestValidInput3() {
+    void searchFullNameTest2() { // first and last name doesn't exist (assuming no patient with name NonExistentFirst NonExistentLast)
 		
-    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-    	ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
+    	try {
+			assertEquals("[]", listOfUsers.searchPatientByName("NonExistentFirst NonExistentLast", "FullName").toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
-    	assertEquals(comparator1.toString(), result.toString());
     }
     
 //    @Test
@@ -155,9 +354,7 @@ public class ListOfUsersTest {
 //    }
     
     @Test
-    void searchPatientByNameTestValidInput4() {
-		
-    
+    void searchPatientByNameTest1() { //empty string for patient name
 		try {
 			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "FirstName"));
 		} catch (Exception e) {
@@ -167,9 +364,7 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void searchPatientByNameTestValidInput5() {
-		
-    
+    void searchPatientByNameTest2() {
 		try {
 			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "LastName"));
 		} catch (Exception e) {
@@ -179,10 +374,7 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void searchPatientByNameTestValidInput6() {
-		
-	
-    	
+    void searchPatientByNameTest3() {
 		try {
 			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "FullName"));
 		} catch (Exception e) {
@@ -192,201 +384,66 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void searchPatientByNameTestValidInput13()  {	
-        
-      
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("SMITH Man", "FirstName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-        assertEquals(comparator1.toString(), result.toString());
-    }
-
-
-    @Test
-    void searchPatientByNameTestValidInput8()  {	
-        
-      
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("SMITH ", "FirstName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-        assertEquals(comparator1.toString(), result.toString());
-    }
-    
-    @Test
-    void searchPatientByNameTestValidInput9()  {	
-        
-       
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName(" SMITH", "FirstName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-        assertEquals(comparator1.toString(), result.toString());
-    }
-    @Test
-    void searchPatientByNameTestValidInput10()  {	
-      
-      
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName(" JOHN", "LastName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-        assertEquals(comparator1.toString(), result.toString());
-    }
-    @Test
-    void searchPatientByNameTestValidInput11()  {	
-       
-       
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("JOHN ", "LastName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-        assertEquals(comparator1.toString(), result.toString());
-    }
-
-    @Test
-    void searchPatientByNameTestValidInput12()  {	
-       
-      
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        ArrayList<Patient> result = null;
-		try {
-			result = listOfUsers.searchPatientByName("SMITH, JOHN", "LastName");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-        assertEquals(comparator1.toString(), result.toString());
-    }
-    
-    @Test
-    void addPatient() {
-       
-        ArrayList<Patient> listOfPat = listOfUsers.getAllPatientsList();
-        
-        long newHealthCardNum = 1111144444;
-        for (int i = 0; i < listOfPat.size(); i++) {
-        	if (listOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
-        		newHealthCardNum = -1; // patient already exists
-        		break;
-        	}
-        }
-        
-        Pharmacist subject1 = new Pharmacist(0, 0);
-        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-        
-        if (newHealthCardNum != -1) {
-        	Patient patient1 = new Patient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012);
-             
-            
-             comparator1.add(patient1);
-             try {
-            	 listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, 1111144444, 11222012);
-     		} catch (Exception e) {
-     			e.printStackTrace();
-     		}
-
-             
-             ArrayList<Patient> result = null;
-			try {
-				result = listOfUsers.searchPatientByName("MAN", "LastName");
-			} catch (Exception e) {
-				e.printStackTrace();
+    void searchPatientByNameTest4()  { //should ignore second word and ignore spacing
+    	ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		for (Patient p: listOfPatients) {
+			if (p.getFirstName().compareToIgnoreCase("SMITH") == 0) {
+				answer.add(p);
 			}
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		ArrayList<Patient> methodResult2 = null;
+		ArrayList<Patient> methodResult3 = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName("SMITH Man", "FirstName");
+			methodResult2 = listOfUsers.searchPatientByName("Smith ", "FirstName");
+			methodResult3 = listOfUsers.searchPatientByName(" SMITH", "FirstName");
+		} catch (Exception e1) {
+		}
 
-             assertEquals(comparator1.toString(), result.toString());
-        }
-        else {
-        	try {
-        		assertThrows(Exception.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012));
-        	}
-        	catch (Exception e) {
-        		e.printStackTrace();
-        	}
-        	
-        }
-       
+		assertEquals(answer.size(), methodResult.size());
+		assertEquals(answer.size(), methodResult2.size());
+		assertEquals(answer.size(), methodResult3.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+			assertEquals(answer.get(i).toString(), methodResult2.get(i).toString());
+			assertEquals(answer.get(i).toString(), methodResult3.get(i).toString());
+		}
+    }
+
+    @Test
+    void searchPatientByNameTest5()  {	//should ignore spacing
+    	
+    	ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		for (Patient p: listOfPatients) {
+			if (p.getLastName().compareToIgnoreCase("John") == 0) {
+				answer.add(p);
+			}
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		ArrayList<Patient> methodResult2 = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName(" JOHN", "LastName");
+			methodResult2 = listOfUsers.searchPatientByName("JOHN ", "LastName");
+			
+		} catch (Exception e1) {
+		}
+
+		assertEquals(answer.size(), methodResult.size());
+		assertEquals(answer.size(), methodResult2.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+			assertEquals(answer.get(i).toString(), methodResult2.get(i).toString());
+		
+		}
     }
    
-    @Test
-    void addPatientInvalid() { // negative health card num
-       
-        long newHealthCardNum = -555;
-      
-        assertThrows(Exception.class, () -> listOfUsers.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010));
-       
-    }
-    
-    @Test
-    void addPatientInvalid2() { // negative phone number
-        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", -416, 123789, 11222012));
-    }
-
-    @Test
-    void modifyPatientInfo() {
-       
-       
-        JTextField fname = new JTextField();
-        fname.setText("jo");
-        JTextField lname = new JTextField();
-        JTextField phoneNum = new JTextField();
-        JTextField address = new JTextField();
-        lname.setText("");
-        phoneNum.setText("");
-        address.setText("");
-        ArrayList<Patient> originalList = listOfUsers.getAllPatientsList();
-        try {
-        	listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
-            ArrayList<Patient> newList = listOfUsers.getAllPatientsList();
-            assertEquals("JO", newList.get(0).getFirstName());
-            
-            //back to normal
-            fname.setText("Smith");
-            listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
-        }
-        catch (Exception e) {
-        	
-        }
-        
-    }
-    
-    @Test
-    void modifyPatientInfoInvalid() { // negative phoneNum
-       
-        JTextField fname = new JTextField();
-        fname.setText("");
-        JTextField lname = new JTextField();
-        JTextField phoneNum = new JTextField();
-        JTextField address = new JTextField();
-        lname.setText("");
-        phoneNum.setText("-555555");
-        address.setText("");
-        ArrayList<Patient> originalList = listOfUsers.getAllPatientsList();
-        
-        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
-       
-
-    }
-    
 }

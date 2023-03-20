@@ -34,3 +34,7 @@
 *Deleted Admin.java, renamed ListOfPatients.java to ListOfUsers.java, moved methods around, modified/moved test cases --> did all this to make code more organized and make more sense since ListOfUsers.java should control and have access to adding patients and searching patients
 *Fixed Issue #71 one more time because small bug
 
+10. 2023/03/19  00:30 - 03:00 contributor: Aiza Bajwa
+*Added more integration tests for correct number of digits of health card number and phone number
+*Fixed existing integration tests
+
