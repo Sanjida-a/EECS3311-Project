@@ -16,7 +16,7 @@ class ReportTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("ALVINTA12");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -80,4 +80,12 @@ class ReportTest {
 		}
 
     }
+
+	@Test
+	void seeTotalTest(){
+		Report r = new Report();
+		ListOfOrders listOfOrders = ListOfOrders.getInstance();
+		ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+		assertEquals(70.0, r.seeTotalMoneySpent(1111122222));
+	}
 }

@@ -42,6 +42,17 @@ public class Report {
 		return profit;
 		
 	}
+
+	public double seeTotalMoneySpent(long patientHealthCard){
+		int totalMoneySpent = 0;
+		allOrders = listOfOrders.getListofAllOrders();
+		for (int i = 0; i < allOrders.size(); i++){
+			if (allOrders.get(i).getPatientID() == patientHealthCard){
+				totalMoneySpent += allOrders.get(i).getTotalPriceOfOrder() * allOrders.get(i).getQuantityBought();
+			}
+		}
+		return totalMoneySpent;
+	}
 	
 	//To show sales summary in sales report
 	 public ArrayList<String> seeSummaryOfSales() {
