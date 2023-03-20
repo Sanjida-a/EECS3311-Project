@@ -889,7 +889,7 @@ public class DisplayInitialScreen{
 		currentList = newList;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
@@ -897,5 +897,5 @@ public class DisplayInitialScreen{
 			e.printStackTrace();
 		}
 		DisplayInitialScreen.displayInitialScreen(USER.PATIENT);
-	}
+	}*/
 }
