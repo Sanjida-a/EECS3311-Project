@@ -193,6 +193,8 @@ public class ListOfOrders {
 		_orderDAO.addRefillToOrderTable(o);
 		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
 		this.updateOrderListFromDatabase();
+
 	}
+	
 
 }
