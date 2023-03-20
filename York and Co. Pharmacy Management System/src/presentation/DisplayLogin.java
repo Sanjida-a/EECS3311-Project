@@ -109,7 +109,9 @@ public class DisplayLogin {
 					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password); //returns null when validation fails
 					if (userType != null) {
 						superFrame.dispose();	
+						DisplayInitialScreen.setUserLoggedIn(AuthenticateUser.getInstance().getUserLoggedIn());
 						DisplayInitialScreen.displayInitialScreen(userType);
+						
 		        		frame.dispose();
 						
 						

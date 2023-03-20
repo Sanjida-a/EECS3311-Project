@@ -11,7 +11,7 @@ public class AuthenticateUser {
 //	private UserRoot _userDAO;
 	private ListOfUsers listOfUsersInstance;
 	private static AuthenticateUser instance = null;
-	
+	private long userLoggedIn;
 	private AuthenticateUser() { //constructor of all singleton classes should be private
 		listOfUsersInstance = ListOfUsers.getInstance();
 
@@ -32,10 +32,15 @@ public class AuthenticateUser {
 
 		for (int i = 0; i < _users.size(); i++) {
 			if ((_users.get(i).getUsername() == username) && (_users.get(i).getPassword() == password)) {
+				this.userLoggedIn = _users.get(i).username;
 				return USER.getValue(_users.get(i).getClass().getSimpleName());
 			}
 		}
 		return null;
+	}
+	
+	public long getUserLoggedIn() {
+		return this.userLoggedIn;
 	}
 	
 }
