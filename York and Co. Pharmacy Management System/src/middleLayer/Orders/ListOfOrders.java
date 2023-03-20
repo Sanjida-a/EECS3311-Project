@@ -2,12 +2,14 @@ package middleLayer.Orders;
 
 import java.util.ArrayList;
 
+import databaseDAO.superDAO;
 import databaseDAO.MerchandiseData.MerchandiseRoot;
 import databaseDAO.OrderData.OrderDAO;
 import databaseDAO.OrderData.OrderRoot;
 import databaseDAO.UserData.UserRoot;
 import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.MerchandiseInventory.Merchandise;
+import middleLayer.Users.AuthenticateUser;
 import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Patient;
 
@@ -194,5 +196,43 @@ public class ListOfOrders {
 		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
 		this.updateOrderListFromDatabase();
 	}
-
+	
+	// aiza added below method for Itr3 detailed story
+	public ArrayList<Order> specificPatientOrderHistory(long healthCardID) throws Exception {
+		
+		Patient pFound = userList.searchPatientWithID(healthCardID);
+		
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
+		
+		this.updateOrderListFromDatabase();	
+		
+		ArrayList<Order> specificPatientOrderList = new ArrayList<Order>();
+		
+		for (Order o : allOrdersList) {
+			if (o.getPatientID() == healthCardID) {
+				specificPatientOrderList.add(o);
+			}
+		}
+		
+		return specificPatientOrderList;
+		
+		// if need to return more info like medication name, not too hard because we have access to merList instance variable 
+		// how would return as arrayList though?
+		// use searchAllValidAndInvalidMerchandiseWithID
+	}
+	
+	public double specificPatientMoneySpent(long healthCardID) throws Exception {
+		
+		ArrayList<Order> ordersOfPatient = this.specificPatientOrderHistory(healthCardID);
+		
+		double totalMoneySpentByPatient = 0;
+		for (Order o : ordersOfPatient) {
+			totalMoneySpentByPatient += o.getTotalPriceOfOrder();
+		}
+		
+		return totalMoneySpentByPatient;
+	}
+	
 }
