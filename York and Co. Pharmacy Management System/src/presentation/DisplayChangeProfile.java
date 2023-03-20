@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 
-import middleLayer.Patient;
+import middleLayer.Users.Patient;
 
 import javax.swing.JButton;
 
@@ -115,7 +115,7 @@ public class DisplayChangeProfile implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+
 		if(e.getActionCommand().equals("Confirm")) {
 			//invoke modify detail method
 		}
@@ -124,8 +124,4 @@ public class DisplayChangeProfile implements ActionListener {
 		frame.dispose();
 	}
 
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		DisplayChangeProfile.displayChangeProfile(new JFrame(), 0, new Patient(0, 0));	
-//	}
 }

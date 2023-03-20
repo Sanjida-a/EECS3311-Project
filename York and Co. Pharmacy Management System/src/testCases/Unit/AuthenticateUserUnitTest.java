@@ -2,36 +2,50 @@ package testCases.Unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.UserStub;
 import databaseDAO.superDAO;
-import middleLayer.AuthenticateUser;
+import databaseDAO.UserData.UserStub;
+import middleLayer.Users.AuthenticateUser;
+import middleLayer.Users.ListOfUsers;
 import presentation.USER;
-import middleLayer.Pharmacist;
-//done
+
 class AuthenticateUserUnitTest {
+	
+	private static ListOfUsers listOfUsers;
+	
+	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	@BeforeAll
+	public static void before() {
+		try {
+			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			//AuthenticateUser.set_userDAO(new UserStub());
+			listOfUsers = ListOfUsers.getInstance(new UserStub());
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
 
 	@Test
 	void testCheckUserValid() throws Exception {
-		//fail("Not yet implemented");
-		//this dependency cannot be removed unless the design in some classes changes
-		//tester should enter his/her own SQL database root password
-		superDAO.setPassword("Motp1104#");
+
 		AuthenticateUser auth = AuthenticateUser.getInstance();
-		UserStub stub = new UserStub();
-		//to make the instance of Pharmacist in the list work with the stub database
-		//((Pharmacist)stub.allUsernamesAndPasswordsList.get(1)).set_userDAO(stub);
-		
-		auth.set_userDAO(stub);
+		//UserStub stub = new UserStub();
+		//listOfUsers.set_userDAO(stub);
+//		auth.set_userDAO(stub);
+		//System.out.println(auth.);
 		
 		USER result;
 		//input account info for OWNER
-		result = auth.checkUserValid(1111111111, 11111111);
+		result = auth.checkUserValid(1111, 1111);
 		assertEquals( USER.OWNER, result );
 		
 		//input account info for PHARMACIST
-		result = auth.checkUserValid(1234567890, 12345678);
+		result = auth.checkUserValid(1234, 1234);
 		assertEquals(USER.PHARMACIST, result );
 		
 		//input account info for PATIENT

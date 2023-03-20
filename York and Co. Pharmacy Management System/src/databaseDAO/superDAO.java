@@ -1,26 +1,16 @@
 package databaseDAO;
 
-//import static databaseDAO.superDAO.con;
-//import static databaseDAO.superDAO.password;
-//import static databaseDAO.superDAO.url;
-//import static databaseDAO.superDAO.user;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class superDAO {
 	
-	static Connection con;
-	static String url = "jdbc:mysql://localhost:3306/3311Team8Project";
-	static String user = "root";
-	static String password; //make sure to change password based on your password for MySQL
-//	
-//	public superDAO() {
-//		
-//	}
-//	public superDAO(String userPass) {
-//		password = userPass;
-//	}
+	protected static Connection con;
+	protected static String url = "jdbc:mysql://localhost:3306/3311Team8Project";
+	protected static String user = "root";
+	protected static String password; //make sure to change password based on your password for MySQL
+
 	
 	public static void setPassword(String userPass) throws Exception {
 		try {

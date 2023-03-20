@@ -1,68 +1,83 @@
 package testCases.IntegrationTests;
 import databaseDAO.superDAO;
 import middleLayer.*;
-import org.junit.jupiter.api.Test;
+import middleLayer.Orders.*;
 
-import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 class ReportTest {
 
-    static String pass = "ALVINTA12";  // TA please change this according to your mySQL password in order for the tests to work
+	//beforeAll is just used to established a connection with the database before all tests
+	@BeforeAll
+	public static void before() {
+		try {
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
+		
     @Test
-    void calculateRevenue() throws Exception {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void calculateRevenue() {
+        
         Report r = new Report();
-        ListOfOrders l = ListOfOrders.getInstance();
-        ArrayList<Order> allOrders = l.getListofAllOrders();
-        double val = 0.0;
-        for (int i = 0; i < allOrders.size(); i++){
-            val += allOrders.get(i).getTotalPriceOfOrder();
-        }
-    assertEquals(val, r.calculateRevenue());
+        ListOfOrders listOfOrders = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+		
+        double revenue = 0;
+		for ( Order e : allOrders) {
+			revenue = revenue + e.getTotalPriceOfOrder();
+		}
+	
+        try {
+			assertEquals(revenue, r.calculateRevenue());
+		} catch (Exception e1) {
+		}
     }
 
     @Test
-    void calculateProfit() throws Exception {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    void calculateProfit() {
+       
         Report r = new Report();
-        ListOfOrders l = ListOfOrders.getInstance();
-        ArrayList<Order> allOrders = l.getListofAllOrders();
-        double val = 0.0;
-        for (int i = 0; i < allOrders.size(); i++){
-            val += allOrders.get(i).getTotalPriceOfOrder();
-        }
-        assertEquals(val * 0.3, r.calculateProfit());
+        
+        ListOfOrders listOfOrders = ListOfOrders.getInstance();
+        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+		
+        double revenue = 0;
+		for ( Order e : allOrders) {
+			revenue = revenue + e.getTotalPriceOfOrder();
+		}
+		
+		double profit = 0.3*revenue;
+	
+        try {
+			assertEquals(profit, r.calculateProfit());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
     }
 
     @Test
     void seeSummaryOfSales() {
-        try {
-            superDAO.setPassword(pass);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         Report r = new Report();
-        ListOfOrders l = ListOfOrders.getInstance();
-        ArrayList<Order> allOrders = l.getListofAllOrders();
-        ArrayList<String> allOrdersString = new ArrayList<>();
+        
+        ListOfOrders listOfOrders = ListOfOrders.getInstance();
+        
+        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
+        
+        ArrayList<String> summary = r.seeSummaryOfSales();
+		
+		for ( int i = 0; i < allOrders.size(); i++) {
+			assertEquals(allOrders.get(i).toString(), summary.get(i));
+		}
 
-       // System.out.println(allOrders.get(0).toString());
-
-        String c ="";
-       for (int i = 0; i < allOrders.size(); i++){
-           c += allOrders.get(i).toString();
-       }
-        assertEquals(c, r.seeSummaryOfSales());
     }
 }

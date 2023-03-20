@@ -3,7 +3,7 @@ package presentation;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import middleLayer.Merchandise;
+import middleLayer.MerchandiseInventory.*;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
@@ -38,6 +38,7 @@ public class DisplayDescription {
 		textArea.setFont(new Font("Arial", Font.PLAIN, 18));
 		textArea.setBounds(0, 0, 586, 293);
 		textArea.setText(merc.getDescription());
+		textArea.setEditable(false);;
 		panel.add(textArea);
 		
 		JButton btnClose = new JButton("Close");
@@ -47,7 +48,6 @@ public class DisplayDescription {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				frame.dispose();
 				superFrame.setEnabled(true);
 				superFrame.toFront();
@@ -57,12 +57,5 @@ public class DisplayDescription {
 		});
 		panel.add(btnClose);
 	}
-
-	//public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		//DisplayDescription.displayDescription(new JFrame(), new Merchandise());
-
-	//}
 
 }

@@ -2,49 +2,68 @@ package testCases.Unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import middleLayer.Order;
-import middleLayer.Report;
-import databaseDAO.OrderStub;
+import middleLayer.Orders.*;
+import databaseDAO.superDAO;
+import databaseDAO.MerchandiseData.MerchandiseStub;
+import databaseDAO.OrderData.OrderStub;
+import databaseDAO.UserData.UserStub;
 
 class ReportUnitTest {
+	private static Report report;
+	private static OrderStub orderStub;
+	private static MerchandiseStub merStub;
+	private static UserStub userStub;
+	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	@BeforeAll
+	public static void before() {
+		
+
+		orderStub = new OrderStub();
+		merStub = new MerchandiseStub();
+		userStub = new UserStub();
+		report = new Report(orderStub, merStub, userStub);
+			
+
+		
+	}
+	
 	//done
 	@Test
 	void testCalculateRevenue() {
-		//fail("Not yet implemented");
-		Report report = new Report();
-		report.setOrderDAO(new OrderStub());
+		
+
 		try {
 			assertEquals(70.0, report.calculateRevenue(), 0.001);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 
 	@Test
 	void testCalculateProfit() {
-		//fail("Not yet implemented");
-		Report report = new Report();
-		report.setOrderDAO(new OrderStub());
+		
+
 		try {
 			assertEquals(21.0, report.calculateProfit(), 0.01);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 	}
 
 	@Test
 	void testSeeSummaryOfSales() {
-		//fail("Not yet implemented");
-		Report report = new Report();
-		OrderStub stub = new OrderStub();
-		report.setOrderDAO(stub);
-		String expected = new String();
-		for(Order o : stub.orderList) {
-			expected += o.toString();
+	
+
+		ArrayList<String> expected = new ArrayList<String>();
+		for(Order o : orderStub.orderList) {
+			expected.add(o.toString());
 		}
 		assertEquals(expected, report.seeSummaryOfSales() );
 	}
