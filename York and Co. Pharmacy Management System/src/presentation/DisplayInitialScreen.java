@@ -78,6 +78,8 @@ public class DisplayInitialScreen{
 	
 	private static ArrayList<Merchandise> currentList;
 	
+	private static long usernameLoggedIn;
+	
 
 	
 	public static void displayInitialScreen(USER user) {
@@ -803,6 +805,10 @@ public class DisplayInitialScreen{
 			}
 		}
 		return result;
+	}
+	
+	public static void setUserLoggedIn(long username) {
+		usernameLoggedIn = username;
 	}
 	
 	public String getName() {
