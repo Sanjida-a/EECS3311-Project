@@ -30,6 +30,7 @@ import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.border.LineBorder;
 
+import databaseDAO.superDAO;
 import middleLayer.Users.*;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Orders.*;
@@ -58,8 +59,9 @@ public class DisplayInitialScreen{
 	private static JTextField inputKeyword;
 	private static JFrame frame;
 	private static JList<Merchandise> outputList;
-	private static Inventory inv = Inventory.getInstance();
+	private static Inventory inv;
 	private static JLabel lblOperationResult;
+	private static JTextArea textAreaPurchaseHistory;
 	
 	private static String name;
 	private static int username;
@@ -79,10 +81,12 @@ public class DisplayInitialScreen{
 	private static ArrayList<Merchandise> currentList;
 	
 	private static long usernameLoggedIn;
+	private static JTextField textField;
 	
 
 	
 	public static void displayInitialScreen(USER user) {
+		inv = Inventory.getInstance();
 		userType = user;
 		if(userType == USER.PATIENT || userType == USER.GUEST) {
 			currentList = inv.getOnlyOTCMerchandise();
@@ -115,6 +119,9 @@ public class DisplayInitialScreen{
 		else if(user == USER.DEVELOPER) {
 			createPanelVisibleToAdmin(totalGUI); //for test purpose
 
+		}
+		if(user == USER.PATIENT) {
+			createPanalVisibleToPatient(totalGUI);
 		}
 
         createExtraContents(totalGUI);
@@ -149,6 +156,8 @@ public class DisplayInitialScreen{
         btnRefresh.setBounds(1001, 40, 120, 35);
         totalGUI.add(btnRefresh);
         btnRefresh.setFont(new Font("굴림", Font.BOLD, 20));
+        
+
         
 
         btnRefresh.addActionListener(new ActionListener() {
@@ -696,27 +705,61 @@ public class DisplayInitialScreen{
 
 	}
 	
-	/*private static void createPanalVisibleToPatient(JPanel totalGUI) {
+	private static void createPanalVisibleToPatient(JPanel totalGUI) {
 		JPanel panelVisibleToPatient = new JPanel();
         panelVisibleToPatient.setBounds(1183, 98, 170, 366);
         totalGUI.add(panelVisibleToPatient);
         panelVisibleToPatient.setLayout(null);
         
-        JButton btnNewButton_1 = new JButton("<html>Change<br>Profile</html>");
-        btnNewButton_1.addActionListener(new ActionListener() {
+        JButton btnPurchaseHistory = new JButton("<html>Purchase<br>History</html>");
+        btnPurchaseHistory.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnPurchaseHistory.setActionCommand("PurchaseHistory");
+        btnPurchaseHistory.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		
+        		//method for purchase history is called here
         	}
         });
-        btnNewButton_1.setFont(new Font("굴림", Font.BOLD, 17));
-        btnNewButton_1.setBounds(0, 0, 170, 60);
-        panelVisibleToPatient.add(btnNewButton_1);
+        btnPurchaseHistory.setFont(new Font("굴림", Font.BOLD, 17));
+        btnPurchaseHistory.setBounds(0, 0, 170, 60);
+        panelVisibleToPatient.add(btnPurchaseHistory);
         
         totalGUI.add(panelVisibleToPatient);
-	}*/
+        
+        JButton btnPrescription = new JButton("<html>See prescription<br>Refills</html>");
+        btnPrescription.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnPrescription.setFont(new Font("굴림", Font.BOLD, 17));
+        btnPrescription.setActionCommand("Prescription");
+        btnPrescription.setBounds(0, 80, 170, 60);
+        btnPrescription.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//method to see prescription refills is called here
+			}
+        });
+        panelVisibleToPatient.add(btnPrescription);
+        
+        JPanel panelOutputAreaForPatient = new JPanel();
+        panelOutputAreaForPatient.setBounds(45, 527, 1308, 263);
+        totalGUI.add(panelOutputAreaForPatient);
+        panelOutputAreaForPatient.setLayout(null);
+        
+        textAreaPurchaseHistory = new JTextArea();
+        textAreaPurchaseHistory.setBounds(0, 0, 944, 263);
+        textAreaPurchaseHistory.setEditable(false);
+        panelOutputAreaForPatient.add(textAreaPurchaseHistory);
+        
+        JLabel lblTotalSpent = new JLabel("Total Spent");
+        lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 18));
+        lblTotalSpent.setBounds(958, 5, 160, 35);
+        panelOutputAreaForPatient.add(lblTotalSpent);
+        
+        textField = new JTextField();
+        textField.setBounds(956, 49, 160, 35);
+        panelOutputAreaForPatient.add(textField);
+        textField.setColumns(10);
+	}
 	
 	protected static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
-		merchandises = refreshList(inv.getInstance(),   merchandises);
+		merchandises = refreshList(Inventory.getInstance(),   merchandises);
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		list.removeAll();
 			for(Merchandise m : merchandises) {
@@ -845,5 +888,14 @@ public class DisplayInitialScreen{
 	public static void setCurrentList(ArrayList<Merchandise> newList) {
 		currentList = newList;
 	}
-
+	
+	public static void main(String[] args) {
+		try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DisplayInitialScreen.displayInitialScreen(USER.PATIENT);
+	}
 }
