@@ -16,13 +16,16 @@ import middleLayer.Users.*;
 import presentation.USER;
 
 class OwnerUnitTest {
-
+	private static Inventory inv;
+	private static MerchandiseStub stub;
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
-
+			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			stub = new MerchandiseStub();
+			inv = Inventory.getInstance(stub);
+			inv.set_merDAO(stub);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -67,8 +70,8 @@ class OwnerUnitTest {
 	void testSearchMedicineByName() {
 		
 		Owner subject1 = new Owner(0,0);
-		Inventory inv = Inventory.getInstance();
-		inv.set_merDAO(new MerchandiseStub());
+		//Inventory inv = Inventory.getInstance();
+		//inv.set_merDAO(new MerchandiseStub());
 		ArrayList<Merchandise> result = new ArrayList<Merchandise>();
 		ArrayList<Merchandise> expected = new ArrayList<Merchandise>();
 		result = subject1.searchMedicineByName("pill3", USER.OWNER);
@@ -87,8 +90,8 @@ class OwnerUnitTest {
 	void testSearchMedicineByType() {
 		
 		Owner subject1 = new Owner(0,0);
-		Inventory inv = Inventory.getInstance();
-		inv.set_merDAO(new MerchandiseStub());
+		//Inventory inv = Inventory.getInstance();
+		//inv.set_merDAO(new MerchandiseStub());
 		ArrayList<Merchandise> result = new ArrayList<Merchandise>();
 		ArrayList<Merchandise> expected = new ArrayList<Merchandise>();
 		MERCHANDISE_TYPE type = MERCHANDISE_TYPE.COLD;
