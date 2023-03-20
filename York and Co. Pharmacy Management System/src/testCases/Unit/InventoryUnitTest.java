@@ -59,9 +59,10 @@ public class InventoryUnitTest {
 		ArrayList<Merchandise> comparator1 = new ArrayList<Merchandise>();
 		comparator1.add(mStub.getListOfMerchandise().get(0));
 		comparator1.add(mStub.getListOfMerchandise().get(1));
-		for(int i = 0; i < subject1.size(); i ++) {
+		/*for(int i = 0; i < subject1.size(); i ++) {
 			assertEquals(subject1.get(i), comparator1.get(i));
-		}
+		}*/
+		assertEquals(subject1, comparator1);
     }
 
     @Test
@@ -228,13 +229,13 @@ public class InventoryUnitTest {
       //  Inventory val = Inventory.getInstance();
      //   MerchandiseStub mStub = new MerchandiseStub();
      //   val.set_merDAO(mStub);
-        Merchandise m = new Merchandise(5, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+        Merchandise m = new Merchandise(6, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         try {
 	        assertEquals(true, val.addToInventory(m));
 	        assertEquals(false, val.addToInventory(m));
         }
         catch (Exception e) {
-        	
+        	fail();
         }
     }
     
@@ -243,8 +244,8 @@ public class InventoryUnitTest {
     //	Inventory val = Inventory.getInstance();
      //   MerchandiseStub mStub = new MerchandiseStub();
     //    val.set_merDAO(mStub);
-        Merchandise m1 = new Merchandise(5, "ASPIRIN", -10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
-        Merchandise m2 = new Merchandise(6, "CEPACOL", 10, -15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+        Merchandise m1 = new Merchandise(6, "ASPIRIN", -10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
+        Merchandise m2 = new Merchandise(7, "CEPACOL", 10, -15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
        
         assertThrows(Exception.class, () -> val.addToInventory(m1));
         assertThrows(Exception.class, () -> val.addToInventory(m2));
