@@ -49,6 +49,24 @@ class InventoryTest {
             assertEquals(onlyOTC.get(i).getisOTC(), true);
         }
     }
+    
+    @Test
+    void getMerchandiseTest() { //should only hold all valid medicine
+    	ArrayList<Merchandise> allValidOnly = inventoryInstance.getMerchandise();
+        
+        int i = 0;
+        for (i = 0; i < allValidOnly.size(); i++) {
+            assertEquals(allValidOnly.get(i).getisValid(), true);
+        }
+    }
+    
+    @Test
+    void getValidAndInvalidMerchandiseTest() {
+    	ArrayList<Merchandise> allValidOnly = inventoryInstance.getMerchandise();
+    	ArrayList<Merchandise> allValidAndInvalid = inventoryInstance.getValidAndInvalidMerchandise();
+        
+    	assertEquals(allValidAndInvalid.size()>= allValidOnly.size(), true);
+    }
 
     @Test
     void alphabetically(){
