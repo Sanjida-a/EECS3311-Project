@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 
 import databaseDAO.UserData.UserDAO;
 import databaseDAO.UserData.UserRoot;
+import middleLayer.Orders.Order;
 
 
 
@@ -106,6 +107,7 @@ public class ListOfUsers {
     	for (int i = 0; i < allPatientsList.size(); i ++){
     		if (allPatientsList.get(i).getHealthCardNum() == patientHealthCard){
     			foundPWithID = allPatientsList.get(i);
+    			break;
     		}
     	}
 
@@ -276,6 +278,34 @@ public class ListOfUsers {
 		}
 		
 		return searchResult;
+	}
+	
+	//aiza added below for Itr3 detailed story
+	public ArrayList<String> specificPatientDetails(long healthCardID) throws Exception {
+		Patient pFound = this.searchPatientWithID(healthCardID);
+		
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
+		
+		ArrayList<String> details = new ArrayList<String>();
+		details.add(pFound.getFirstName());
+		details.add(pFound.getLastName());
+		details.add(pFound.getAddress());
+		details.add(Long.toString(pFound.getPhoneNum()));
+		details.add(Long.toString(pFound.getHealthCardNum()));
+		details.add(Integer.toString(pFound.getDateOfBirth()));
+		
+//		if want more formatted arraylist, can uncomment below
+//		details.add("First Name: " + pFound.getFirstName());
+//		details.add("Last Name: " + pFound.getLastName());
+//		details.add("Address Name: " + pFound.getAddress());
+//		details.add("Phone Number: " + Long.toString(pFound.getPhoneNum()));
+//		details.add("Health Card/Username: " + Long.toString(pFound.getHealthCardNum()));
+//		details.add("DateOfBirth/Password: " + Integer.toString(pFound.getDateOfBirth()));
+		
+		return details;
+
 	}
 
 //	public void setAllPatientUsersList(ArrayList<Patient> allPatientUsersList) {

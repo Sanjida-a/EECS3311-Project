@@ -26,7 +26,7 @@ public class ListOfUsersTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 
 			listOfUsers = ListOfUsers.getInstance();
 		} catch (Exception e) {
@@ -68,61 +68,37 @@ public class ListOfUsersTest {
 		assertEquals(null, result);
 	}
 	
-//	test not working??
-//	@Test
-//    void addPatientTest1() {
-//       
-//        ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
-//        
-//        long newHealthCardNum = 55;
-//        for (int i = 0; i < originalListOfPat.size(); i++) {
-//        	if (originalListOfPat.get(i).getHealthCardNum() == 55) {
-//        		System.out.println("HEREEE");
-//        		newHealthCardNum = -1; // patient already exists
-//        		break;
-//        	}
-//        }
-//
-////        ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-//        
-//        if (newHealthCardNum != -1) {
-////        	Patient patient1 = new Patient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012);
-//             
-//            
-////            comparator1.add(patient1);
-//            try {
-//            	listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, 55, 11222012);
-//        	} catch (Exception e) {
-//     			e.printStackTrace();
-//     		}
-//            
-//            ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
-//            
-//            System.out.println(originalListOfPat.size()+1 + " AND " + newListOfPat.size());
-//            assertEquals(originalListOfPat.size()+1, newListOfPat.size());
-//        }
-////            assertEquals(patient1.toString(), newListOfPat.get(newListOfPat.size()-1).toString());
-//             
-//////            ArrayList<Patient> result = null;
-//////			try {
-//////				result = listOfUsers.searchPatientByName("MAN", "LastName");
-//////			} catch (Exception e) {
-//////				e.printStackTrace();
-//////			}
-//////
-//////             assertEquals(comparator1.toString(), result.toString());
-////        }
-////        else { //health card ID already exists
-//////        	try {
-////        		assertThrows(Exception.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 1111144444, 11222012));
-//////        	}
-//////        	catch (Exception e) {
-//////        		e.printStackTrace();
-//////        	}
-////        	
-////        }
-//       
-//    }
+	@Test
+    void addPatientTest1() {
+       
+        ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+        
+        long newHealthCardNum = 9999999999L;
+        for (int i = 0; i < originalListOfPat.size(); i++) {
+        	if (originalListOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
+        		newHealthCardNum = -1; // patient already exists
+        		break;
+        	}
+        }
+        
+        if (newHealthCardNum != -1) {
+            try {
+            	listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, newHealthCardNum, 11222012);
+        	} catch (Exception e) {
+     			e.printStackTrace();
+     		}
+            
+            ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+            
+            assertEquals(originalListOfPat.size()+1, newListOfPat.size());
+        }
+
+        else { //health card ID already exist
+    		assertThrows(Exception.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9999999999L, 11222012));
+        	
+        }
+       
+    }
    
     @Test
     void addPatientTest2() { // negative health card num
@@ -443,6 +419,21 @@ public class ListOfUsersTest {
 			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
 			assertEquals(answer.get(i).toString(), methodResult2.get(i).toString());
 		
+		}
+    }
+    
+    @Test
+    void specificPatientDetailsTest1() {
+    	
+    	long specificHealthCard = 1111122222;
+    	Patient p = listOfUsers.searchPatientWithID(1111122222);
+    	
+    	try {
+			ArrayList<String> result = listOfUsers.specificPatientDetails(specificHealthCard);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
     }
    

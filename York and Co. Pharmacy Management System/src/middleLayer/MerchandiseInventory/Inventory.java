@@ -13,7 +13,7 @@ import databaseDAO.MerchandiseData.MerchandiseRoot;
 public class Inventory{
     private static Inventory singletonInstance = null;
 
-    ArrayList<Merchandise> list = new ArrayList<Merchandise>();
+    ArrayList<Merchandise> list = new ArrayList<Merchandise>(); //only valid medication
 
     private MerchandiseRoot _merDAO; // Dependency Injection Principle
 	
@@ -54,10 +54,28 @@ public class Inventory{
 		list =_merDAO.getListOfMerchandise();
 	}
 
-	// can also be called "displayAllMedication" (can be another name for it)
+	// can also be called "displayAllMedication" (can be another name for it) --> only VALID medication
     public ArrayList<Merchandise> getMerchandise(){
     	list =_merDAO.getListOfMerchandise();
     	return list;
+    }
+    
+    public ArrayList<Merchandise> getValidAndInvalidMerchandise() { //NOTE: method used in special few cases where invalid med are needed to be seen
+    	return _merDAO.getListOfValidAndInvalidMerchandise();
+    }
+    
+    // finds from ALL VALID and INVALID list and returns a medication with medID == medicationID
+    public Merchandise searchAllValidAndInvalidMerchandiseWithID(int medicationID){ //NOTE: method used in special few cases where invalid med are needed to be seen
+    	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
+    	
+    	ArrayList<Merchandise> allValidAndInvalid = this.getValidAndInvalidMerchandise();
+    	for (int i = 0; i < allValidAndInvalid.size(); i ++){
+    		if (allValidAndInvalid.get(i).medicationID == medicationID){
+    			foundMWithID = allValidAndInvalid.get(i);
+    		}
+    	}
+    	
+    	return foundMWithID;
     }
     
     // can also be called "displayOnlyOTCMedication" for guest/home/main screen where only OTC medication information should be displayed for easy access...
@@ -293,7 +311,7 @@ public class Inventory{
         return medicationAdded;
     }
     
-    // finds and returns a medication with medID == medicationID
+    // finds from VALID list and returns a medication with medID == medicationID
     public Merchandise searchMerchandiseWithID(int medicationID){
     	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
     	this.updateFromDatabase();
@@ -305,7 +323,6 @@ public class Inventory{
     	
     	return foundMWithID;
     }
-    
     
     // OCP NOT followed for below 3 modification methods because as a group, we have decided that there are no other modifications to the medication that can be added in the future
     // modifies the name of the medication but first makes sure the same medication doesn't already exist in the system

@@ -8,8 +8,8 @@ import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Patient;
 
 public class Order { //ALL ORDER: both OTC and Prescription
-	//private Inventory merList = Inventory.getInstance();
-	//private ListOfUsers userList = ListOfUsers.getInstance();
+//	private Inventory merList = Inventory.getInstance();
+//	private ListOfUsers userList = ListOfUsers.getInstance();
 	
 	int orderNum;
 	int medicationID;

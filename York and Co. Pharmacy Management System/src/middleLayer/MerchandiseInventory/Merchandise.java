@@ -15,7 +15,7 @@ public class Merchandise{
     public Merchandise(String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC){
         this.name = name;
         this.quantity = quantity;
-        this.price = price;
+        this.price = (Math.floor(price*100))/100;
         this.type = type;
         this.form = form;
         this.isOTC = isOTC;
@@ -28,7 +28,7 @@ public class Merchandise{
     	this.medicationID = medicationID;
         this.name = name;
         this.quantity = quantity;
-        this.price = price;
+        this.price = (Math.floor(price*100))/100;
         this.type = type;
         this.form = form;
         this.isOTC = isOTC;

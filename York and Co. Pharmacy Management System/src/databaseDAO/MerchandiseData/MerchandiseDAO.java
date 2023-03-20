@@ -15,8 +15,7 @@ import middleLayer.MerchandiseInventory.*;
 
 public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 	
-
-	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>();
+	private ArrayList<Merchandise> allInventory = new ArrayList<Merchandise>(); // only valid medication
 	
 	public MerchandiseDAO() throws Exception {
 		try {
@@ -27,7 +26,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		}
 	}
 	
-	//reads all rows of medication from database and puts it into arrayList
+	//reads all rows of (VALID) medication from database and puts it into arrayList
 	public ArrayList<Merchandise> getListOfMerchandise() { 
 		try {
 			allInventory = new ArrayList<Merchandise>(); //need to empty current list first so it gets overriden
@@ -172,6 +171,53 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//reads all rows of both VALID and Invalid medication from database and puts it into arrayList
+	public ArrayList<Merchandise> getListOfValidAndInvalidMerchandise() { 
+		ArrayList<Merchandise> allValidAndInvalidInventory = new ArrayList<Merchandise>();
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			
+			String queryGetAllRows = "SELECT * FROM Medications;";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int medicationID;
+		    String name;
+		    int quantity;
+		    double price;
+		    MERCHANDISE_TYPE type;
+		    MERCHANDISE_FORM form;
+		    boolean isOTC;
+		    String description;
+		    boolean isValid;
+		    
+		    Merchandise m;
+			
+			while (result.next()) { 
+				
+				medicationID =  result.getInt("medicationID");
+				name = result.getString("medName") ;
+				quantity =  result.getInt("quantity");
+				price =  result.getDouble("price");
+				type = MERCHANDISE_TYPE.valueOf(result.getString("medType").toUpperCase());
+				form = MERCHANDISE_FORM.valueOf(result.getString("medForm").toUpperCase());
+				isOTC = result.getBoolean("isOTC");
+				description = result.getString("medDescription") ;
+				isValid = result.getBoolean("isValid");
+				
+				m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);
+				allValidAndInvalidInventory.add(m);
+			}
+			
+			con.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return allValidAndInvalidInventory;
+	
 	}
 		
 	

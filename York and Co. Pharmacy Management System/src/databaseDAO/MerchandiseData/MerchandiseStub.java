@@ -20,8 +20,15 @@ public class MerchandiseStub implements MerchandiseRoot {
 		allInventoryStub.add(merc3);
 		allInventoryStub.add(merc4);
 	}
+	
+	// Daniel, you need to change this method to only return when isValid == true (just how the merchandiseDAO reads from the sql table); the getListtOfValidandInvalidMerchandise should return both invalid and valid so returns the entire list correctly on line 32
 	@Override
 	public ArrayList<Merchandise> getListOfMerchandise() {
+		return allInventoryStub;
+	}
+	
+	@Override
+	public ArrayList<Merchandise> getListOfValidAndInvalidMerchandise() {
 		return allInventoryStub;
 	}
 

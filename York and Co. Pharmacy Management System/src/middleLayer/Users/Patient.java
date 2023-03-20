@@ -14,7 +14,7 @@ public class Patient extends User {
 	private long phoneNum;
 	private long healthCardNum;
 	private int dateOfBirth;
-	private ArrayList<Order> ordersMade; 
+//	private ArrayList<Order> ordersMade;  //variable not necessary since have listofOrders class
 //	private Inventory merList = Inventory.getInstance(); 
 	
 	public Patient(String firstName, String lastName, String address, long phoneNum, long healthCardNum, int dateOfBirth) {
@@ -84,14 +84,14 @@ public class Patient extends User {
 		return dateOfBirth;
 	}
 	
-	public ArrayList<Order> getOrdersMade() {
-		return ordersMade;
-	}
-
-	public void setOrdersMade(ArrayList<Order> ordersMade) {
-		this.ordersMade = ordersMade;
-	}
-	
+//	public ArrayList<Order> getOrdersMade() {
+//		return ordersMade;
+//	}
+//
+//	public void setOrdersMade(ArrayList<Order> ordersMade) {
+//		this.ordersMade = ordersMade;
+//	}
+//	
 	// implementation of inherited abstract method from User superclass but notice that in this case only concerned with OTC medicine
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
 //		

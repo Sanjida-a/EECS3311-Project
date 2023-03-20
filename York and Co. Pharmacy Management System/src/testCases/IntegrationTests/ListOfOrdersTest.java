@@ -21,7 +21,7 @@ class ListOfOrdersTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -31,7 +31,6 @@ class ListOfOrdersTest {
     @Test
     void updateOrderListFromDatabase() {
     }
-
     
     @Test 
     void addOrderToDatabaseTest() {
@@ -117,5 +116,63 @@ class ListOfOrdersTest {
         }
        
     }
+    
+    //might need to update if return type of method changes
+    @Test
+    void specificPatientOrderHistoryTest1() { 
+    	ListOfOrders val = ListOfOrders.getInstance();
+    	long patientOfInterestID = 1111122222; //Smith John always exists and always has at least 1 order (from our Sql script)
+    	try {
+    		ArrayList<Order> allOrders = val.getListofAllOrders();
+    		ArrayList<Order> answer = new ArrayList<Order>();
+    		
+    		for (Order o : allOrders) {
+    			if (o.getPatientID() == patientOfInterestID) {
+    				answer.add(o);
+    			}
+    		}
+    		
+			ArrayList<Order> result = val.specificPatientOrderHistory(patientOfInterestID); 
+			
+			assertEquals(answer.size(), result.size());
+			assertEquals(answer, result); //don't need toString; automatically does .toString for each element of arraylist
+			
+    	} catch (Exception e) {
+		}
+    }
+    
+    @Test
+    void specificPatientOrderHistoryTest2() { //invalid patient id
+    	ListOfOrders val = ListOfOrders.getInstance();
+    	assertThrows(Exception.class, () -> val.specificPatientOrderHistory(1)); // patientID can't be of size 1
+    }
+    
+    @Test
+    void specificPatientMoneySpentTest1() {
+    	ListOfOrders val = ListOfOrders.getInstance();
+    	long patientOfInterestID = 1111122222; //Smith John always exists and always has at least 1 order (from our Sql script)
+    	try {
+    		ArrayList<Order> allPatientOrders = val.specificPatientOrderHistory(patientOfInterestID);
+    		
+    		double answer = 0;
+    		for (Order o : allPatientOrders) {
+    			answer += o.getTotalPriceOfOrder();
+    		}
+    		
+			double result = val.specificPatientMoneySpent(patientOfInterestID); 
+			
+			assertEquals(answer, result);
+			
+    	} catch (Exception e) {
+		}
+    }
+    
+    @Test
+    void specificPatientMoneySpentTest2() { //invalid patient id
+    	ListOfOrders val = ListOfOrders.getInstance();
+    	assertThrows(Exception.class, () -> val.specificPatientOrderHistory(1)); // patientID can't be of size 1
+    }
+
+    
 
 }
