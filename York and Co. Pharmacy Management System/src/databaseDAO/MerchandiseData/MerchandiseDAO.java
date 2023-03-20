@@ -220,8 +220,32 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 	
 	}
 		
-	
+	public void updateValidInDB(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			
+			String updateMedicationQuery = "UPDATE Medications SET isValid = ? WHERE medicationID = ?";
+			PreparedStatement statement = con.prepareStatement(updateMedicationQuery);
+
+//			statement.setString(1, actualMedicationObject.getName());
+//			statement.setInt(2, actualMedicationObject.getQuantity());
+//			statement.setDouble(3, actualMedicationObject.getPrice());
+//			statement.setString(4, actualMedicationObject.getType().toString());
+//			statement.setString(5, actualMedicationObject.getForm().toString());
+//			statement.setBoolean(6, actualMedicationObject.getisOTC());
+//			statement.setString(7, actualMedicationObject.getDescription());
+			statement.setBoolean(1, actualMedicationObject.getisValid());
+			statement.setInt(2, medIDOfModifiedMedication);
+			
+			statement.executeUpdate();
 		
+			con.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 		
 	
 

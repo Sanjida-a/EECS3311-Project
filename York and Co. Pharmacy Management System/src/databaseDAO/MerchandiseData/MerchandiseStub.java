@@ -68,4 +68,10 @@ public class MerchandiseStub implements MerchandiseRoot {
 		}
 	}
 
+	@Override
+	public void updateValidInDB(int medicationID, Merchandise m) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

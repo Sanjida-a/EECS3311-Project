@@ -314,4 +314,10 @@ public class InventoryUnitTest {
     	assertTrue(val.modifyMedicationDescription(1, "description"));
     	assertEquals(val.getMerchandise().get(0).getDescription(), "description");
     }
+    
+    // MINH WILL IMPLEMENT TOMORROW
+//    @Test
+//    void isMedAddedBefore(Merchandise m) { //medicationID doesn't exist
+//    
+//    }
 }

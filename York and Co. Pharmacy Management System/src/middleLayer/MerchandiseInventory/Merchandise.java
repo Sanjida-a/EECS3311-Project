@@ -142,5 +142,17 @@ public class Merchandise{
 		}
 		return true;
 	}
+	
+	public boolean isSameWithDel (Merchandise m) {
+		if(this.medicationID != m.medicationID|| 
+				!this.name.equals(m.getName()) || 
+				this.type != m.type || 
+				this.form != m.form ||
+				this.isOTC != m.isOTC || 
+				!this.description.equals(m.description) ) {
+				return false;
+			}
+			return true;
+	}
 
 }

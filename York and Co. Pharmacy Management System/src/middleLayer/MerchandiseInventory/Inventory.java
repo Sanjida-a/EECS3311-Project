@@ -291,13 +291,35 @@ public class Inventory{
 		}
     	boolean medicationAlreadyExists = false;
     	boolean medicationAdded = false;
-        for (int i = 0; i < list.size(); i ++){
+    	boolean medCanBeAdded = false;
+    	int oldMedId = -1;
+        for (int i = 0; i < list.size(); i ++){  // check in the list of valid medication
             if (list.get(i).name.equals(m.name) && list.get(i).type == m.type && list.get(i).form == m.form && list.get(i).isOTC == m.isOTC){
             	medicationAlreadyExists = true; // if same medication already exists, can't add it again bc duplicates
             }
         }
+        if (medicationAlreadyExists == false) {
+        	oldMedId = isMedAddedBefore(m);
+        	if (oldMedId != -1) {
+        	medCanBeAdded = true;
+        	_merDAO.updateMedicationInDatabase(oldMedId, m);
+        	medicationAdded = true;
+        	//once database is updated, also updated this class's list variable by reading from database
+        	list = _merDAO.getListOfMerchandise();
+        	}
+        }
         
-        if (medicationAlreadyExists == false) { // otherwise, can add
+        
+        
+//        if (medicationAlreadyExists == false) { // otherwise, can add
+//        if(medCanBeAdded == true ) { // MAYBE A SUB METHOD????
+//        	_merDAO.updateMedicationInDatabase(oldMedId, m);
+//        	medicationAdded = true;
+//        	//once database is updated, also updated this class's list variable by reading from database
+//        	list = _merDAO.getListOfMerchandise();
+//        }
+//        else if (medCanBeAdded == false && medicationAlreadyExists == false){
+        	if (medicationAlreadyExists == false && medCanBeAdded == false) {
         	list.add(m);
         	medicationAdded = true;
         	
@@ -310,6 +332,25 @@ public class Inventory{
       
         return medicationAdded;
     }
+
+	public int isMedAddedBefore (Merchandise m) {             // set previously deleted medication to valid
+//		boolean isAddedBefore = false;
+		int medID = -1;
+		ArrayList<Merchandise> invalidAndValidList = new ArrayList<Merchandise>();
+    	invalidAndValidList = _merDAO.getListOfValidAndInvalidMerchandise();
+    	for (int j = 0; j < invalidAndValidList.size(); j ++) {
+    		 if (invalidAndValidList.get(j).name.equals(m.name) && invalidAndValidList.get(j).type == m.type 
+    				 && invalidAndValidList.get(j).form == m.form && invalidAndValidList.get(j).isOTC == m.isOTC){
+             //	medicationAlreadyExists = true; // if same medication already exists, can't add it again bc duplicates
+    			 invalidAndValidList.get(j).setIsValid(true);
+    			 medID = invalidAndValidList.get(j).getMedicationID();
+    			 _merDAO.updateValidInDB(invalidAndValidList.get(j).getMedicationID(),invalidAndValidList.get(j));
+ //   			 isAddedBefore = true;
+    			 break;
+             }
+    	}
+    	return medID;
+	}
     
     // finds from VALID list and returns a medication with medID == medicationID
     public Merchandise searchMerchandiseWithID(int medicationID){
@@ -323,6 +364,7 @@ public class Inventory{
     	
     	return foundMWithID;
     }
+    
     
     // OCP NOT followed for below 3 modification methods because as a group, we have decided that there are no other modifications to the medication that can be added in the future
     // modifies the name of the medication but first makes sure the same medication doesn't already exist in the system

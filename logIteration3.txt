@@ -45,3 +45,9 @@
 *Started implementation of Itr3 Detailed Stories with Tests
 *Fixed bug of medication's price so that it can only have 2 digits after decimal.
 *Also added methods to MerchandiseDAO.java and Inventory.java to be able to read invalid rows (deleted medications) from the Medication table in mySQL. We need these in the future for special operations/cases.
+
+13. 2023/3/20 09:00 - 11:30 contributor: Minh Tran
+    2023/3/20 17:00 - 18:30 contributor: Minh Tran
+*Fixed bug #65
+*Fixed add order
+*Fixed add inventory

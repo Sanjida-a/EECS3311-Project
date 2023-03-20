@@ -26,7 +26,7 @@ class InventoryTest {
   	public static void before() {
   		try {
 
-  			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+  			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
   			inventoryInstance = Inventory.getInstance();
 
   		} catch (Exception e) {
@@ -404,4 +404,10 @@ class InventoryTest {
         catch (Exception e) {
         }
     }
+    
+
+//    @Test
+//    void isMedAddedBefore(Merchandise m) { //medicationID doesn't exist
+//    
+//    }
 }
