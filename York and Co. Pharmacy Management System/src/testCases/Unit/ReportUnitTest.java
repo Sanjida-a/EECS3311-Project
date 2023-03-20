@@ -22,12 +22,7 @@ class ReportUnitTest {
 	@BeforeAll
 	public static void before() {
 		
-		try {
-			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		orderStub = new OrderStub();
 		merStub = new MerchandiseStub();
 		userStub = new UserStub();

@@ -119,12 +119,12 @@ class ListOfOrdersUnitTest {
 		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
 	}
 	
-	@Test
+	/*@Test
 	void testAddPresOrderToDb1() {
 
 
 		
-	}
+	}*/
 
 
 }

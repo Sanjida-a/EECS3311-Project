@@ -27,6 +27,7 @@ public class InventoryUnitTest {
 			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
 			mStub = new MerchandiseStub();
 			val = Inventory.getInstance(mStub);
+			val.set_merDAO(mStub);
 
 		} catch (Exception e) {
 			e.printStackTrace();
