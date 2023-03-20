@@ -86,6 +86,12 @@ class ReportTest {
 		Report r = new Report();
 		ListOfOrders listOfOrders = ListOfOrders.getInstance();
 		ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
-		assertEquals(70.0, r.seeTotalMoneySpent(1111122222));
+		int val = 0;
+		for (int i = 0; i < allOrders.size(); i++){
+			if (allOrders.get(i).getPatientID() == 1111122222){
+				val += allOrders.get(i).getTotalPriceOfOrder() * allOrders.get(i).getQuantityBought();
+			}
+		}
+		assertEquals(val, r.seeTotalMoneySpent(1111122222));
 	}
 }

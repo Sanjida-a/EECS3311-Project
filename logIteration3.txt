@@ -45,3 +45,8 @@
 *Started implementation of Itr3 Detailed Stories with Tests
 *Fixed bug of medication's price so that it can only have 2 digits after decimal.
 *Also added methods to MerchandiseDAO.java and Inventory.java to be able to read invalid rows (deleted medications) from the Medication table in mySQL. We need these in the future for special operations/cases.
+
+13. 2023/3/19 23:00-24:00 contributor: Alvin
+*Implemented assigned detailed story to class
+*added a method to see total amount spent by a person in the pharmacy
+*added an integration test case
