@@ -117,7 +117,7 @@ public class DisplayLogin {
 						
 					}
 					else {
-						DisplayInitialScreen.setUserLoggedIn(AuthenticateUser.getInstance().getUserLoggedIn());
+						
 						DisplayLogin.authenticationFailed(totalGUI);
 					}
 				}
