@@ -729,13 +729,26 @@ public class DisplayInitialScreen{
         btnPrescription.setHorizontalTextPosition(SwingConstants.CENTER);
         btnPrescription.setFont(new Font("굴림", Font.BOLD, 17));
         btnPrescription.setActionCommand("Prescription");
-        btnPrescription.setBounds(0, 80, 170, 60);
+        btnPrescription.setBounds(0, 70, 170, 60);
         btnPrescription.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//method to see prescription refills is called here
 			}
         });
         panelVisibleToPatient.add(btnPrescription);
+        
+        JButton btnSeeProfile = new JButton("<html>See<br>profile</html>");
+        btnSeeProfile.setFont(new Font("굴림", Font.BOLD, 18));
+        btnSeeProfile.setActionCommand("SeeProfile");
+        btnSeeProfile.setBounds(0, 140, 170, 60);
+        btnSeeProfile.addActionListener(new ActionListener() 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// method to see patient profile is called here
+				
+			}
+        });
+        panelVisibleToPatient.add(btnSeeProfile);
         
         JPanel panelOutputAreaForPatient = new JPanel();
         panelOutputAreaForPatient.setBounds(45, 527, 1308, 263);
