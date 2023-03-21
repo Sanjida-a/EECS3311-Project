@@ -289,20 +289,13 @@ public class ListOfUsers {
 		}
 		
 		ArrayList<String> details = new ArrayList<String>();
-		details.add(pFound.getFirstName());
-		details.add(pFound.getLastName());
-		details.add(pFound.getAddress());
-		details.add(Long.toString(pFound.getPhoneNum()));
-		details.add(Long.toString(pFound.getHealthCardNum()));
-		details.add(Integer.toString(pFound.getDateOfBirth()));
-		
-//		if want more formatted arraylist, can uncomment below
-//		details.add("First Name: " + pFound.getFirstName());
-//		details.add("Last Name: " + pFound.getLastName());
-//		details.add("Address Name: " + pFound.getAddress());
-//		details.add("Phone Number: " + Long.toString(pFound.getPhoneNum()));
-//		details.add("Health Card/Username: " + Long.toString(pFound.getHealthCardNum()));
-//		details.add("DateOfBirth/Password: " + Integer.toString(pFound.getDateOfBirth()));
+		details.add("PATIENT DETAILS\n");
+		details.add("First Name: " + pFound.getFirstName());
+		details.add("Last Name: " + pFound.getLastName());
+		details.add("Address: " + pFound.getAddress());
+		details.add("Phone Number: " + Long.toString(pFound.getPhoneNum()));
+		details.add("Health Card Number: " + Long.toString(pFound.getHealthCardNum()));
+		details.add("Date Of Birth: " + Integer.toString(pFound.getDateOfBirth()));
 		
 		return details;
 

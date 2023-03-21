@@ -73,15 +73,13 @@ public class DisplayInitialScreen{
 	private static String searchKeyword;
 	private static USER userType;
 	
-	private static int userLoggedIn;
-	
 	private static String operationResult;
 	private static JTextField inputFieldID;
 	
 	private static ArrayList<Merchandise> currentList;
 	
 	private static long usernameLoggedIn;
-	private static JTextField textField;
+	private static JTextField textFieldTotalSpent;
 	
 
 	
@@ -717,6 +715,20 @@ public class DisplayInitialScreen{
         btnPurchaseHistory.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		//method for purchase history is called here
+        		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+        		try {
+        			textAreaPurchaseHistory.setText("");
+					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(usernameLoggedIn, userType);
+					
+					for(String s : resultPurchaseHistory) {
+						textAreaPurchaseHistory.append(s);
+					}
+					
+					double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(usernameLoggedIn);
+					textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
         	}
         });
         btnPurchaseHistory.setFont(new Font("굴림", Font.BOLD, 17));
@@ -752,10 +764,10 @@ public class DisplayInitialScreen{
         lblTotalSpent.setBounds(958, 5, 160, 35);
         panelOutputAreaForPatient.add(lblTotalSpent);
         
-        textField = new JTextField();
-        textField.setBounds(956, 49, 160, 35);
-        panelOutputAreaForPatient.add(textField);
-        textField.setColumns(10);
+        textFieldTotalSpent = new JTextField();
+        textFieldTotalSpent.setBounds(956, 49, 160, 35);
+        panelOutputAreaForPatient.add(textFieldTotalSpent);
+        textFieldTotalSpent.setColumns(10);
 	}
 	
 	protected static void displayMercList(JList<Merchandise> list, ArrayList<Merchandise> merchandises) {
@@ -882,9 +894,6 @@ public class DisplayInitialScreen{
 		return frame;
 	}
 	
-	public static void LoggedInAs(int ID) {
-		userLoggedIn = ID;
-	}
 	public static void setCurrentList(ArrayList<Merchandise> newList) {
 		currentList = newList;
 	}
