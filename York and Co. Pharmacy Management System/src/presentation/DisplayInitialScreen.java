@@ -753,12 +753,14 @@ public class DisplayInitialScreen{
         btnSeeProfile.setFont(new Font("굴림", Font.BOLD, 18));
         btnSeeProfile.setActionCommand("SeeProfile");
         btnSeeProfile.setBounds(0, 140, 170, 60);
-        btnSeeProfile.addActionListener(new ActionListener() 
+        btnSeeProfile.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// method to see patient profile is called here
-				
+				// TODO Auto-generated method stub
+				//method to see patient profile is called here
 			}
+        	
         });
         panelVisibleToPatient.add(btnSeeProfile);
         
