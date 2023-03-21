@@ -12,6 +12,7 @@ import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Users.AuthenticateUser;
 import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Patient;
+import presentation.USER;
 
 public class ListOfOrders {
 	private Inventory merList = null;
@@ -221,7 +222,7 @@ public class ListOfOrders {
 
 	}
 	
-	// aiza added below method for Itr3 detailed story
+	// aiza added for ease
 	public ArrayList<Order> specificPatientOrderHistory(long healthCardID) throws Exception {
 		
 		Patient pFound = userList.searchPatientWithID(healthCardID);
@@ -233,7 +234,7 @@ public class ListOfOrders {
 		this.updateOrderListFromDatabase();	
 		
 		ArrayList<Order> specificPatientOrderList = new ArrayList<Order>();
-		
+	
 		for (Order o : allOrdersList) {
 			if (o.getPatientID() == healthCardID) {
 				specificPatientOrderList.add(o);
@@ -242,9 +243,44 @@ public class ListOfOrders {
 		
 		return specificPatientOrderList;
 		
-		// if need to return more info like medication name, not too hard because we have access to merList instance variable 
-		// how would return as arrayList though?
-		// use searchAllValidAndInvalidMerchandiseWithID
+	}
+	
+	// aiza added below method for Itr3 detailed story, userType defines if Owner/Pharmacist OR patient itself is calling this method (follows OCP)
+	public ArrayList<String> outputOrderHistoryDetails(long healthCardID, USER userType) throws Exception {
+		
+		ArrayList<Order> ordersOfPatient = this.specificPatientOrderHistory(healthCardID);
+		
+		ArrayList<String> orderHistoryDetails = new ArrayList<String>();
+		
+		if (ordersOfPatient.isEmpty()) {
+			if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+				orderHistoryDetails.add("Patient with health card number " + healthCardID + " has not made any orders.");
+			}
+			else {
+				orderHistoryDetails.add("You have not made any orders.");
+			}
+			return orderHistoryDetails;
+		}
+		
+		int orderNum = 1;
+		Merchandise associatedMedication = null;
+		for (Order o : ordersOfPatient) {
+			String oneFullOrder = "";
+			oneFullOrder += "ORDER #" + orderNum + "\n";
+			oneFullOrder += "Medication ID: " + o.getMedicationID() + "  Quantity bought: " + o.getQuantityBought() + "  Total price: " + o.getTotalPriceOfOrder(); 
+			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(o.getMedicationID());
+			String OTCorRx = "Rx";
+			if (associatedMedication.getisOTC() == true) {
+				OTCorRx = "OTC";
+			}
+			oneFullOrder += "   MEDICATION DETAILS: Name: " + associatedMedication.getName() + "  Type: " + associatedMedication.getType() + "  Form: " + associatedMedication.getForm() + "  OTCorRx:" + OTCorRx + "\n";
+			
+			oneFullOrder += "\n";
+			orderHistoryDetails.add(oneFullOrder);
+			orderNum++;
+		}
+		
+		return orderHistoryDetails;
 	}
 	
 	public double specificPatientMoneySpent(long healthCardID) throws Exception {
