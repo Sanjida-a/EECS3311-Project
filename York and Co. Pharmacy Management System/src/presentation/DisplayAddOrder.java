@@ -66,7 +66,7 @@ public class DisplayAddOrder implements ActionListener {
 	}
 	
 	public static void createLabels(JPanel panel) {
-		JLabel lblPatientID = new JLabel("Patient ID");
+		JLabel lblPatientID = new JLabel("HealthCard#");
         lblPatientID.setFont(new Font("굴림", Font.BOLD, 18));
         lblPatientID.setBounds(0, 0, 150, 35);
         panel.add(lblPatientID);
