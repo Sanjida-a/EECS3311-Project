@@ -489,7 +489,7 @@ public class DisplayInitialScreen{
         if(userType == USER.OWNER || userType == USER.DEVELOPER) {
         	JButton btnSeeReport = new JButton("See Report");
         	btnSeeReport.setFont(new Font("굴림", Font.BOLD, 18));
-	        btnSeeReport.setBounds(0, 210, 170, 60);
+	        btnSeeReport.setBounds(0, 280, 170, 60);
 	        btnSeeReport.addActionListener(new ActionListener() {
 	
 	            @Override
@@ -499,9 +499,24 @@ public class DisplayInitialScreen{
 	
 	            }
 
-        });
+	        });
         	panelVisibleToAdminSub1.add(btnSeeReport);
-        }
+        	
+        	JButton btnSeeOrders = new JButton("<html>See<br>Orders</html>");
+        	btnSeeOrders.setActionCommand("SeeOrders");
+        	btnSeeOrders.setFont(new Font("굴림", Font.BOLD, 18));
+        	btnSeeOrders.setBounds(0, 210, 170, 60);
+        	btnSeeOrders.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					DisplaySeeOrders.displaySeeOrders(frame);
+				}
+        		
+        	});
+        	panelVisibleToAdminSub1.add(btnSeeOrders);
+       }
 	}
 	
 	private static void createExtraContents(JPanel totalGUI) {
