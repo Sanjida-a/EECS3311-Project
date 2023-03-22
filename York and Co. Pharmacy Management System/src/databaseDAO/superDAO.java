@@ -3,6 +3,7 @@ package databaseDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class superDAO {
 	
@@ -21,6 +22,17 @@ public class superDAO {
 			throw e;
 		}
 	
+	}
+	
+	public static Connection getCon() {
+		try {
+			con = DriverManager.getConnection(url, user, password);
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} 
+		return con;
 	}
 	
 }

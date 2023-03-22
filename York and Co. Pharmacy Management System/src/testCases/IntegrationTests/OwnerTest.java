@@ -19,15 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class OwnerTest {
 	
 	//beforeAll is just used to established a connection with the database before all tests
-	@BeforeAll
-	public static void before() {
-		try {
-			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
-	}
+//	@BeforeAll
+//	public static void before() {
+//		try {
+//			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
+//		
+//	}
 	
 	//**NOTE** AddPatient method tested in PharmacistTest.java
 	
