@@ -29,14 +29,14 @@ public class ListOfUsersTest {
 	private static ListOfUsers listOfUsers;
 
 //	private static superDAO _DAO = null;
-	private static Connection conToDB;
+	private static Connection con;
 	
 	//beforeAll is just used to established a connection with the database before all tests
 	@BeforeAll
 	public static void before() {
 		try {
 			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
-			conToDB = superDAO.getCon();
+			con = superDAO.getCon();
 			listOfUsers = ListOfUsers.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -241,13 +241,11 @@ public class ListOfUsersTest {
 	@Test
     public void searchFNameTest1NEWSQLTRY(){
 		
-		
-		
 		ArrayList<Patient> answer = new ArrayList<Patient>();
 		
 		try {
-			String queryGetAllRows = "SELECT * FROM Patient where firstName = 'Smith';";
-			Statement statement = conToDB.createStatement();
+			String queryGetAllRows = "SELECT * FROM Patient WHERE firstName = 'Smith';";
+			Statement statement = con.createStatement();
 			ResultSet result = statement.executeQuery(queryGetAllRows);
 			int dateOfBirth;
 			String firstName, lastName, address;
@@ -280,9 +278,10 @@ public class ListOfUsersTest {
 
 		assertEquals(answer.size(), methodResult.size());
 		
-		for (int i = 0; i < answer.size(); i++) {
-			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-		}
+//		for (int i = 0; i < answer.size(); i++) {
+//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+//		}
+		assertEquals(answer, methodResult); //QUESTION: do we need for loop above or no?
 		
     }
 	
@@ -319,6 +318,53 @@ public class ListOfUsersTest {
 			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
 		}
 	}
+	
+	@Test
+    public void searchLNameTest1NEWSQLTRY(){
+		
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		try {
+			String queryGetAllRows = "SELECT * FROM Patient WHERE lastName = 'John';";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int dateOfBirth;
+			String firstName, lastName, address;
+			long phoneNumber, healthCardNumber;
+			
+			Patient patient;
+			
+			while (result.next()) { 
+				firstName =  result.getString("firstName").toUpperCase();
+				lastName =  result.getString("lastName").toUpperCase();
+				address =  result.getString("Address").toUpperCase();
+				phoneNumber =  result.getLong("phoneNumber");
+				healthCardNumber =  result.getLong("healthCardNumber");
+				dateOfBirth =  result.getInt("dateOfBirth");
+				
+				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
+				
+				
+				answer.add(patient);
+			}
+
+		} catch (Exception e) {
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName("John", "LastName");
+		} catch (Exception e1) {
+		}
+
+		assertEquals(answer.size(), methodResult.size());
+		
+//		for (int i = 0; i < answer.size(); i++) {
+//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+//		}
+		assertEquals(answer, methodResult); //QUESTION: do we need for loop above or no?
+		
+    }
 
 	@Test
 	void searchLNameTest2(){ // first name doesn't exist (assuming no patient with name NonExistentName)
@@ -353,6 +399,53 @@ public class ListOfUsersTest {
 		for (int i = 0; i < answer.size(); i++) {
 			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
 		}
+    }
+    
+    @Test
+    public void searchFullNameTest1NEWSQLTRY(){
+		
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		try {
+			String queryGetAllRows = "SELECT * FROM Patient WHERE firstName = 'Smith' AND lastName = 'John';";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int dateOfBirth;
+			String firstName, lastName, address;
+			long phoneNumber, healthCardNumber;
+			
+			Patient patient;
+			
+			while (result.next()) { 
+				firstName =  result.getString("firstName").toUpperCase();
+				lastName =  result.getString("lastName").toUpperCase();
+				address =  result.getString("Address").toUpperCase();
+				phoneNumber =  result.getLong("phoneNumber");
+				healthCardNumber =  result.getLong("healthCardNumber");
+				dateOfBirth =  result.getInt("dateOfBirth");
+				
+				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
+				
+				
+				answer.add(patient);
+			}
+
+		} catch (Exception e) {
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
+		} catch (Exception e1) {
+		}
+		
+		assertEquals(answer.size(), methodResult.size());
+		
+//		for (int i = 0; i < answer.size(); i++) {
+//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+//		}
+		assertEquals(answer, methodResult); //QUESTION: do we need for loop above or no?
+		
     }
     
     @Test
@@ -447,6 +540,59 @@ public class ListOfUsersTest {
 			assertEquals(answer.get(i).toString(), methodResult3.get(i).toString());
 		}
     }
+    
+    @Test
+    void searchPatientByNameTest4NEWSQLTRY()  { //should ignore second word and ignore spacing
+    	
+    	ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		try {
+			String queryGetAllRows = "SELECT * FROM Patient WHERE firstName = 'Smith';";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int dateOfBirth;
+			String firstName, lastName, address;
+			long phoneNumber, healthCardNumber;
+			
+			Patient patient;
+			
+			while (result.next()) { 
+				firstName =  result.getString("firstName").toUpperCase();
+				lastName =  result.getString("lastName").toUpperCase();
+				address =  result.getString("Address").toUpperCase();
+				phoneNumber =  result.getLong("phoneNumber");
+				healthCardNumber =  result.getLong("healthCardNumber");
+				dateOfBirth =  result.getInt("dateOfBirth");
+				
+				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
+				
+				
+				answer.add(patient);
+			}
+
+		} catch (Exception e) {
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		ArrayList<Patient> methodResult2 = null;
+		ArrayList<Patient> methodResult3 = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName("SMITH Man", "FirstName");
+			methodResult2 = listOfUsers.searchPatientByName("Smith ", "FirstName");
+			methodResult3 = listOfUsers.searchPatientByName(" SMITH", "FirstName");
+		} catch (Exception e1) {
+		}
+
+		assertEquals(answer.size(), methodResult.size());
+		assertEquals(answer.size(), methodResult2.size());
+		assertEquals(answer.size(), methodResult3.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+			assertEquals(answer.get(i).toString(), methodResult2.get(i).toString());
+			assertEquals(answer.get(i).toString(), methodResult3.get(i).toString());
+		}
+    }
 
     @Test
     void searchPatientByNameTest5()  {	//should ignore spacing
@@ -458,6 +604,57 @@ public class ListOfUsersTest {
 			if (p.getLastName().compareToIgnoreCase("John") == 0) {
 				answer.add(p);
 			}
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		ArrayList<Patient> methodResult2 = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName(" JOHN", "LastName");
+			methodResult2 = listOfUsers.searchPatientByName("JOHN ", "LastName");
+			
+		} catch (Exception e1) {
+		}
+
+		assertEquals(answer.size(), methodResult.size());
+		assertEquals(answer.size(), methodResult2.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+			assertEquals(answer.get(i).toString(), methodResult2.get(i).toString());
+		
+		}
+    }
+    
+    @Test
+    void searchPatientByNameTest5NEWSQLTRY()  {	//should ignore spacing
+    	
+    	ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		try {
+			String queryGetAllRows = "SELECT * FROM Patient WHERE lastName = 'John';";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int dateOfBirth;
+			String firstName, lastName, address;
+			long phoneNumber, healthCardNumber;
+			
+			Patient patient;
+			
+			while (result.next()) { 
+				firstName =  result.getString("firstName").toUpperCase();
+				lastName =  result.getString("lastName").toUpperCase();
+				address =  result.getString("Address").toUpperCase();
+				phoneNumber =  result.getLong("phoneNumber");
+				healthCardNumber =  result.getLong("healthCardNumber");
+				dateOfBirth =  result.getInt("dateOfBirth");
+				
+				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
+				
+				
+				answer.add(patient);
+			}
+
+		} catch (Exception e) {
 		}
 		
 		ArrayList<Patient> methodResult = null;

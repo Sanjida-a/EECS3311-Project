@@ -54,3 +54,8 @@
 
 14. 2023/3/20 18:30-20:00 contributor: Aiza Bajwa
 *Connected "Purchase History" button for patient in front end to application/logic (seeing patient's purchase history and total money spent)
+
+15. 2023/3/21 21:00-01:40 2021/3/22  contributor: Aiza Bajwa
+*Connected "Patient Details" button for patient in front end to application/logic (seeing patient's personal information details)
+*added integration tests for Itr3 detailed stories I was responsible for
+*modified and fixed existing integration tests to make better

@@ -13,18 +13,18 @@ import middleLayer.Users.*;
 
 
 class PharmacistTest {
-    private Patient patient1;
+//    private Patient patient1;
     
     //beforeAll is just used to established a connection with the database before all tests
-  	@BeforeAll
-  	public static void before() {
-  		try {
-  			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
-  		} catch (Exception e) {
-  			e.printStackTrace();
-  		} 
-  		
-  	}
+//  	@BeforeAll
+//  	public static void before() {
+//  		try {
+//  			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+//  		} catch (Exception e) {
+//  			e.printStackTrace();
+//  		} 
+//  		
+//  	}
 
   	//**NOTE** searchPatientByName method tested in OwnerTest.java
   	

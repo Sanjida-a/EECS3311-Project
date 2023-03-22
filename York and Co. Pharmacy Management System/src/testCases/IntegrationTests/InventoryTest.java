@@ -23,10 +23,10 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
+	
     private MerchandiseDAO _merDAO;
     private static Inventory inventoryInstance;
-    
-    private static Connection conToDB;
+    private static Connection con;
     
     //beforeAll is just used to established a connection with the database before all tests
   	@BeforeAll
@@ -34,9 +34,8 @@ class InventoryTest {
   		try {
 
   			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+  			con = superDAO.getCon();
   			inventoryInstance = Inventory.getInstance();
-  			conToDB = superDAO.getCon();
-
   		} catch (Exception e) {
   			e.printStackTrace();
   		} 
@@ -292,7 +291,7 @@ class InventoryTest {
     	Merchandise m = null;
     	try {
     		String queryGetAllRows = "SELECT * FROM Medications WHERE medicationID = 1 AND isValid = 1;";
-    		Statement statement = conToDB.createStatement();
+    		Statement statement = con.createStatement();
     		ResultSet result = statement.executeQuery(queryGetAllRows);
     		int medicationID;
     	    String name;

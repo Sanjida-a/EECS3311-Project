@@ -152,28 +152,28 @@ public class ListOfOrders {
 //		}
 		
 		
-	Merchandise getMer = merList.searchMerchandiseWithID(p.getMedicationID());
-	if (getMer == null) {
-		throw new Exception("Medication doesn't exist!");
+		Merchandise getMer = merList.searchMerchandiseWithID(p.getMedicationID());
+		if (getMer == null) {
+			throw new Exception("Medication doesn't exist!");
+		}
+		if (getMer.getisOTC()) {
+			throw new Exception("Not an Rx!");
+		}
+		Patient pFound = userList.searchPatientWithID(p.patientID);
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
+	
+		
+		
+		_orderDAO.addToPrescriptionTable(p);
+		
+	//	if (o.getIsPrescription() == true) {
+	//		_orderDAO.addToPrescriptionTable(p);
+	//	}
+		
+		this.updateOrderListFromDatabase();
 	}
-	if (getMer.getisOTC()) {
-		throw new Exception("Not an Rx!");
-	}
-	Patient pFound = userList.searchPatientWithID(p.patientID);
-	if (pFound == null) {
-		throw new Exception("Patient doesn't exist!");
-	}
-
-	
-	
-	_orderDAO.addToPrescriptionTable(p);
-	
-//	if (o.getIsPrescription() == true) {
-//		_orderDAO.addToPrescriptionTable(p);
-//	}
-	
-	this.updateOrderListFromDatabase();
-}
 //	public void addPresQuantToDb(Order o) throws Exception {
 //		
 //	Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
@@ -222,7 +222,7 @@ public class ListOfOrders {
 
 	}
 	
-	// aiza added for ease
+	// aiza added for easy access
 	public ArrayList<Order> specificPatientOrderHistory(long healthCardID) throws Exception {
 		
 		Patient pFound = userList.searchPatientWithID(healthCardID);

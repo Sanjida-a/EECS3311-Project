@@ -295,7 +295,7 @@ public class ListOfUsers {
 			details.add("PATIENT with Healthcard Number " + healthCardID + " DETAILS\n");
 		}
 		else {
-			details.add("YOUR DETAILS");
+			details.add("YOUR DETAILS\n");
 		}
 		
 		details.add("First Name: " + pFound.getFirstName() + "\n");
