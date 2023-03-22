@@ -5,8 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -21,7 +20,7 @@ import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
+
 import java.awt.Dimension;
 
 import javax.swing.ListCellRenderer;
@@ -43,9 +42,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+
 import javax.swing.UIManager;
-import javax.swing.JSeparator;
+
 import javax.swing.JTextArea;
 import java.awt.Rectangle;
 
@@ -80,6 +79,7 @@ public class DisplayInitialScreen{
 	
 	private static long usernameLoggedIn;
 	private static JTextField textFieldTotalSpent;
+
 	
 
 	
@@ -114,10 +114,10 @@ public class DisplayInitialScreen{
 		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
 			createPanelVisibleToAdmin(totalGUI);
 		}
-		else if(user == USER.DEVELOPER) {
+		//else if(user == USER.DEVELOPER) {
 			createPanelVisibleToAdmin(totalGUI); //for test purpose
 
-		}
+		//}
 		if(user == USER.PATIENT) {
 			createPanalVisibleToPatient(totalGUI);
 		}
@@ -793,14 +793,18 @@ public class DisplayInitialScreen{
         panelVisibleToPatient.add(btnSeeProfile);
         
         JPanel panelOutputAreaForPatient = new JPanel();
-        panelOutputAreaForPatient.setBounds(45, 527, 1308, 263);
+        panelOutputAreaForPatient.setBounds(45, 527, 1308, 200);
         totalGUI.add(panelOutputAreaForPatient);
         panelOutputAreaForPatient.setLayout(null);
+        
         
         textAreaPatientInfo = new JTextArea();
         textAreaPatientInfo.setBounds(0, 0, 944, 263);
         textAreaPatientInfo.setEditable(false);
-        panelOutputAreaForPatient.add(textAreaPatientInfo);
+        //panelOutputAreaForPatient.add(textAreaPatientInfo);
+        JScrollPane scrollPanePatientInfo = new JScrollPane(textAreaPatientInfo);
+        scrollPanePatientInfo.setBounds(0,0, 944,200);
+        panelOutputAreaForPatient.add(scrollPanePatientInfo);
         
         JLabel lblTotalSpent = new JLabel("Total Spent");
         lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 18));

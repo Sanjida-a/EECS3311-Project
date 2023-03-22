@@ -9,9 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+
+import javax.swing.JScrollPane;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 
 public class DisplaySeeOrders implements ActionListener{
 	
@@ -20,6 +24,9 @@ public class DisplaySeeOrders implements ActionListener{
 	private static JTextField textFieldHCN;
 	private static JTextField textFieldTotalSpent;
 	private static JTextArea textAreaOutput;
+	private static JScrollPane scrollPaneOutput;
+
+
 
 	public static void displaySeeOrders(JFrame previous) {
 		superFrame = previous;
@@ -31,19 +38,15 @@ public class DisplaySeeOrders implements ActionListener{
 		frame.setVisible(true);
 		
 		frame.getContentPane().setLayout(null);
-		
+
 		createLabels();
 		createButtons();
 		createTextArea();
 		createTextFields();
-		
-
-		
-
-
+		frame.revalidate();
 	}
 	
-	public static void createLabels() {
+	private static void createLabels() {
 		JLabel lblTotalSpent = new JLabel("Total spent");
 		lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 15));
 		lblTotalSpent.setBounds(12, 457, 102, 35);
@@ -52,48 +55,66 @@ public class DisplaySeeOrders implements ActionListener{
 		JLabel lblHCN = new JLabel("HealthCard#");
 		lblHCN.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblHCN.setFont(new Font("굴림", Font.BOLD, 15));
-		lblHCN.setBounds(122, 19, 160, 35);
+		lblHCN.setBounds(12, 20, 160, 35);
 		frame.getContentPane().add(lblHCN);
+		frame.revalidate();
 	}
-	public static void createButtons() {
+	private static void createButtons() {
 		
 		JButton btnClose = new JButton("Close");
 		btnClose.setFont(new Font("굴림", Font.BOLD, 18));
 		btnClose.setBounds(459, 457, 165, 35);
+		btnClose.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnClose);
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setFont(new Font("굴림", Font.BOLD, 18));
 		btnSearch.setBounds(459, 19, 165, 35);
+		btnSearch.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnSearch);
+		frame.revalidate();
 	}
-	public static void createTextArea() {
+	private static void createTextArea() {
 		textAreaOutput = new JTextArea();
 		textAreaOutput.setFont(new Font("Monospaced", Font.PLAIN, 15));
-		textAreaOutput.setBounds(12, 64, 612, 383);
+		//textAreaOutput.setBounds(0, 0, 300, 200);
+		textAreaOutput.setEditable(false);
+
 		//invoke method to retrieve entire list of orders here and
 		//textAreaOutput.setText(result);
-		frame.getContentPane().add(textAreaOutput);
+		
+		scrollPaneOutput = new JScrollPane(textAreaOutput);
+		scrollPaneOutput.setBounds(12, 64, 612, 383);
+		frame.getContentPane().add(scrollPaneOutput);
+		frame.revalidate();
 	}
 	
-	public static void createTextFields() {
+	private static void createTextFields() {
 		textFieldHCN = new JTextField();
 		textFieldHCN.setFont(new Font("굴림", Font.PLAIN, 15));
-		textFieldHCN.setBounds(294, 19, 165, 35);
-		frame.getContentPane().add(textFieldHCN);
+		textFieldHCN.setBounds(184, 20, 263, 35);
+		textFieldHCN.setVisible(true);
+	
+		frame.add(textFieldHCN);
 		textFieldHCN.setColumns(10);
 		
 		textFieldTotalSpent = new JTextField();
 		textFieldTotalSpent.setFont(new Font("굴림", Font.PLAIN, 15));
-		textFieldTotalSpent.setBounds(122, 457, 165, 35);
-		frame.getContentPane().add(textFieldTotalSpent);
+		textFieldTotalSpent.setBounds(126, 457, 165, 35);
+		textFieldTotalSpent.setVisible(true);
+	
+		frame.add(textFieldTotalSpent);
 		textFieldTotalSpent.setColumns(10);
+		frame.repaint();
+		frame.revalidate();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String action = e.getActionCommand();
+
 		if(action.compareToIgnoreCase("Close") == 0) {
+
 			superFrame.setEnabled(true);
 			superFrame.toFront();
 			frame.dispose();
@@ -106,11 +127,11 @@ public class DisplaySeeOrders implements ActionListener{
 		}
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		displaySeeOrders(new JFrame());
-
-	}
+		DisplaySeeOrders.displaySeeOrders(new JFrame());
 
 
+	}*/
 }
+

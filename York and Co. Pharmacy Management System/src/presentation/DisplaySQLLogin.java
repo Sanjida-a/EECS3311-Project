@@ -92,11 +92,11 @@ public class DisplaySQLLogin implements ActionListener {
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 	
 		DisplaySQLLogin screen = new DisplaySQLLogin();
 		screen.displaySQLLogin();
-	}
+	}*/
 
 
 }

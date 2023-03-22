@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 
+import databaseDAO.superDAO;
+import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Patient;
 
 import javax.swing.JButton;
@@ -123,5 +125,14 @@ public class DisplayChangeProfile implements ActionListener {
 		superFrame.toFront();
 		frame.dispose();
 	}
+	/*public static void main(String[] args) {
+		try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DisplayChangeProfile.displayChangeProfile(new JFrame(), 1, ListOfUsers.getInstance().getAllPatientsList().get(0));
+	}*/
 
 }

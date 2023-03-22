@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -19,7 +19,7 @@ import middleLayer.Orders.*;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JSpinner;
+
 
 public class DisplayAddOrder implements ActionListener {
 	private static JFrame frame;
@@ -225,6 +225,10 @@ public class DisplayAddOrder implements ActionListener {
 			}
 		}
 	}	
+	
+	/*public static void main(String[] args) {
+		DisplayAddOrder.displayAddOrder(new JFrame());
+	}*/
 	
 
 }

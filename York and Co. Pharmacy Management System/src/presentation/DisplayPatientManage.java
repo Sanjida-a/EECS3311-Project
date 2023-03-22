@@ -6,25 +6,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JList;
+
 import javax.swing.JOptionPane;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+
 
 import databaseDAO.superDAO;
 import middleLayer.Users.*;
@@ -418,7 +414,7 @@ public class DisplayPatientManage {
 	}
 	
 	
-	public static void main(String[] args) {	//for test purpose
+	/*public static void main(String[] args) {	//for test purpose
 		try {
 			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
@@ -426,5 +422,5 @@ public class DisplayPatientManage {
 			e.printStackTrace();
 		}
 		DisplayPatientManage.displayPatientManage(new JFrame());
-	}
+	}*/
 }

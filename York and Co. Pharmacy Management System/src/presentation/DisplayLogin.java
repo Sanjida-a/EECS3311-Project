@@ -2,7 +2,7 @@ package presentation;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -10,7 +10,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.*;
 import java.awt.event.*;
-import middleLayer.*;
+
 import middleLayer.Users.AuthenticateUser;
 
 import javax.swing.SwingConstants;
