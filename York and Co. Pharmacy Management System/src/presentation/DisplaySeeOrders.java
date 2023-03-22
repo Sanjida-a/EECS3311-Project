@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+
 import javax.swing.JScrollPane;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -23,6 +25,7 @@ public class DisplaySeeOrders implements ActionListener{
 	private static JTextField textFieldTotalSpent;
 	private static JTextArea textAreaOutput;
 	private static JScrollPane scrollPaneOutput;
+
 
 
 	public static void displaySeeOrders(JFrame previous) {
@@ -40,7 +43,6 @@ public class DisplaySeeOrders implements ActionListener{
 		createButtons();
 		createTextArea();
 		createTextFields();
-
 		frame.revalidate();
 	}
 	
@@ -132,3 +134,4 @@ public class DisplaySeeOrders implements ActionListener{
 
 	}*/
 }
+
