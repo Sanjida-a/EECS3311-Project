@@ -21,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import databaseDAO.superDAO;
+
 public class DisplayModifyMerchandise implements ActionListener{
 	private static JFrame superFrame;
 	private static JFrame frame;
@@ -220,7 +222,13 @@ public class DisplayModifyMerchandise implements ActionListener{
 	
 	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		DisplayModifyMerchandise.displayModifyMerchandise(new JFrame(), new ArrayList<Merchandise>());
+		try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DisplayModifyMerchandise.displayModifyMerchandise(new JFrame(), output, new ArrayList<Merchandise>());
 
 	}*/
 }
