@@ -61,7 +61,7 @@ public class DisplayInitialScreen{
 	private static JList<Merchandise> outputList;
 	private static Inventory inv;
 	private static JLabel lblOperationResult;
-	private static JTextArea textAreaPurchaseHistory;
+	private static JTextArea textAreaPatientInfo;
 	
 	private static String name;
 	private static int username;
@@ -717,11 +717,11 @@ public class DisplayInitialScreen{
         		//method for purchase history is called here
         		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
         		try {
-        			textAreaPurchaseHistory.setText("");
+        			textAreaPatientInfo.setText("");
 					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(usernameLoggedIn, userType);
 					
 					for(String s : resultPurchaseHistory) {
-						textAreaPurchaseHistory.append(s);
+						textAreaPatientInfo.append(s);
 					}
 					
 					double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(usernameLoggedIn);
@@ -759,6 +759,19 @@ public class DisplayInitialScreen{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//method to see patient profile is called here
+				ListOfUsers listOfUsersInstance = ListOfUsers.getInstance();
+        		try {
+        			textAreaPatientInfo.setText("");
+        			textFieldTotalSpent.setText("");
+					ArrayList<String> resultProfile = listOfUsersInstance.specificPatientDetails(usernameLoggedIn, userType);
+					
+					for(String s : resultProfile) {
+						textAreaPatientInfo.append(s);
+					}
+					
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
 			}
         	
         });
@@ -769,10 +782,10 @@ public class DisplayInitialScreen{
         totalGUI.add(panelOutputAreaForPatient);
         panelOutputAreaForPatient.setLayout(null);
         
-        textAreaPurchaseHistory = new JTextArea();
-        textAreaPurchaseHistory.setBounds(0, 0, 944, 263);
-        textAreaPurchaseHistory.setEditable(false);
-        panelOutputAreaForPatient.add(textAreaPurchaseHistory);
+        textAreaPatientInfo = new JTextArea();
+        textAreaPatientInfo.setBounds(0, 0, 944, 263);
+        textAreaPatientInfo.setEditable(false);
+        panelOutputAreaForPatient.add(textAreaPatientInfo);
         
         JLabel lblTotalSpent = new JLabel("Total Spent");
         lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 18));

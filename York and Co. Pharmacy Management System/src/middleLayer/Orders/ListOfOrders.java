@@ -262,6 +262,13 @@ public class ListOfOrders {
 			return orderHistoryDetails;
 		}
 		
+		if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+			orderHistoryDetails.add("ORDER HISTORY OF PATIENT WITH HEALTH CARD NUMBER " + healthCardID + "\n\n");
+		}
+		else {
+			orderHistoryDetails.add("YOUR ORDERS:\n\n");
+		}
+		
 		int orderNum = 1;
 		Merchandise associatedMedication = null;
 		for (Order o : ordersOfPatient) {

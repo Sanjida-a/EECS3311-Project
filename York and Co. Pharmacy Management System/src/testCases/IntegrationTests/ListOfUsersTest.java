@@ -1,16 +1,23 @@
 package testCases.IntegrationTests;
 
 import databaseDAO.superDAO;
+import databaseDAO.UserData.UserDAO;
+import databaseDAO.UserData.UserRoot;
 import databaseDAO.UserData.UserStub;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import middleLayer.Users.*;
+import presentation.USER;
 
 import org.junit.platform.commons.annotation.Testable;
 
 import javax.swing.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,13 +28,15 @@ public class ListOfUsersTest {
 	
 	private static ListOfUsers listOfUsers;
 
+//	private static superDAO _DAO = null;
+	private static Connection conToDB;
 	
 	//beforeAll is just used to established a connection with the database before all tests
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
-
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			conToDB = superDAO.getCon();
 			listOfUsers = ListOfUsers.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -229,6 +238,54 @@ public class ListOfUsersTest {
 		}
     }
 
+	@Test
+    public void searchFNameTest1NEWSQLTRY(){
+		
+		
+		
+		ArrayList<Patient> answer = new ArrayList<Patient>();
+		
+		try {
+			String queryGetAllRows = "SELECT * FROM Patient where firstName = 'Smith';";
+			Statement statement = conToDB.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int dateOfBirth;
+			String firstName, lastName, address;
+			long phoneNumber, healthCardNumber;
+			
+			Patient patient;
+			
+			while (result.next()) { 
+				firstName =  result.getString("firstName").toUpperCase();
+				lastName =  result.getString("lastName").toUpperCase();
+				address =  result.getString("Address").toUpperCase();
+				phoneNumber =  result.getLong("phoneNumber");
+				healthCardNumber =  result.getLong("healthCardNumber");
+				dateOfBirth =  result.getInt("dateOfBirth");
+				
+				patient = new Patient(firstName, lastName, address, phoneNumber, healthCardNumber, dateOfBirth);
+				
+				
+				answer.add(patient);
+			}
+
+		} catch (Exception e) {
+		}
+		
+		ArrayList<Patient> methodResult = null;
+		try {
+			methodResult = listOfUsers.searchPatientByName("Smith", "FirstName");
+		} catch (Exception e1) {
+		}
+
+		assertEquals(answer.size(), methodResult.size());
+		
+		for (int i = 0; i < answer.size(); i++) {
+			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+		}
+		
+    }
+	
     @Test
     void searchFNameTest2(){ // first name doesn't exist (assuming no patient with name NonExistentName)
 		
@@ -429,7 +486,7 @@ public class ListOfUsersTest {
     	Patient p = listOfUsers.searchPatientWithID(1111122222);
     	
     	try {
-			ArrayList<String> result = listOfUsers.specificPatientDetails(specificHealthCard);
+			ArrayList<String> result = listOfUsers.specificPatientDetails(specificHealthCard, USER.OWNER);
 			
 			
 		} catch (Exception e) {

@@ -3,14 +3,19 @@ package testCases.IntegrationTests;
 
 import databaseDAO.superDAO;
 import databaseDAO.MerchandiseData.MerchandiseDAO;
+import databaseDAO.UserData.UserDAO;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import middleLayer.*;
 import middleLayer.MerchandiseInventory.*;
+import middleLayer.Users.ListOfUsers;
 
 import org.junit.platform.commons.annotation.Testable;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,13 +26,16 @@ class InventoryTest {
     private MerchandiseDAO _merDAO;
     private static Inventory inventoryInstance;
     
+    private static Connection conToDB;
+    
     //beforeAll is just used to established a connection with the database before all tests
   	@BeforeAll
   	public static void before() {
   		try {
 
-  			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
+  			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
   			inventoryInstance = Inventory.getInstance();
+  			conToDB = superDAO.getCon();
 
   		} catch (Exception e) {
   			e.printStackTrace();
@@ -267,16 +275,61 @@ class InventoryTest {
         assertEquals(originalList.size(), newList.size());
     }
     
+//    @Test
+//    void searchByID(){
+//    	
+//        ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
+//        
+//        if (originalList.size() > 0) { // if originalList is empty, no medication to search
+////        	ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+//            assertEquals(originalList.get(0).toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
+//        }
+//    }
+    
     @Test
-    void searchByID(){
+    void searchByIDWithSQLQuery(){
     	
-        ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-        
-        if (originalList.size() > 0) { // if originalList is empty, no medication to search
-//        	ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
-            assertEquals(originalList.get(0).toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
+    	Merchandise m = null;
+    	try {
+    		String queryGetAllRows = "SELECT * FROM Medications WHERE medicationID = 1 AND isValid = 1;";
+    		Statement statement = conToDB.createStatement();
+    		ResultSet result = statement.executeQuery(queryGetAllRows);
+    		int medicationID;
+    	    String name;
+    	    int quantity;
+    	    double price;
+    	    MERCHANDISE_TYPE type;
+    	    MERCHANDISE_FORM form;
+    	    boolean isOTC;
+    	    String description;
+    	    boolean isValid;
+
+    		while (result.next()) { 
+    			
+    			medicationID =  result.getInt("medicationID");
+    			name = result.getString("medName") ;
+    			quantity =  result.getInt("quantity");
+    			price =  result.getDouble("price");
+    			type = MERCHANDISE_TYPE.valueOf(result.getString("medType").toUpperCase());
+    			form = MERCHANDISE_FORM.valueOf(result.getString("medForm").toUpperCase());
+    			isOTC = result.getBoolean("isOTC");
+    			description = result.getString("medDescription") ;
+    			isValid = result.getBoolean("isValid");
+    			
+    			m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);
+    		}
+    		
+    	} catch (Exception e) {
+    	}
+    	
+        if (m != null) {
+            assertEquals(m.toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
+        }
+        else {
+        	assertEquals(null, inventoryInstance.searchMerchandiseWithID(1));
         }
     }
+
 
     @Test
     void searchByIDInvalid(){ //medicationID doesn't exist

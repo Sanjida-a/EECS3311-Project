@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import databaseDAO.UserData.UserDAO;
 import databaseDAO.UserData.UserRoot;
 import middleLayer.Orders.Order;
+import presentation.USER;
 
 
 
@@ -281,7 +282,7 @@ public class ListOfUsers {
 	}
 	
 	//aiza added below for Itr3 detailed story
-	public ArrayList<String> specificPatientDetails(long healthCardID) throws Exception {
+	public ArrayList<String> specificPatientDetails(long healthCardID, USER userType) throws Exception {
 		Patient pFound = this.searchPatientWithID(healthCardID);
 		
 		if (pFound == null) {
@@ -289,13 +290,20 @@ public class ListOfUsers {
 		}
 		
 		ArrayList<String> details = new ArrayList<String>();
-		details.add("PATIENT DETAILS\n");
-		details.add("First Name: " + pFound.getFirstName());
-		details.add("Last Name: " + pFound.getLastName());
-		details.add("Address: " + pFound.getAddress());
-		details.add("Phone Number: " + Long.toString(pFound.getPhoneNum()));
-		details.add("Health Card Number: " + Long.toString(pFound.getHealthCardNum()));
-		details.add("Date Of Birth: " + Integer.toString(pFound.getDateOfBirth()));
+		
+		if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+			details.add("PATIENT with Healthcard Number " + healthCardID + " DETAILS\n");
+		}
+		else {
+			details.add("YOUR DETAILS");
+		}
+		
+		details.add("First Name: " + pFound.getFirstName() + "\n");
+		details.add("Last Name: " + pFound.getLastName() + "\n");
+		details.add("Address: " + pFound.getAddress() + "\n");
+		details.add("Phone Number: " + Long.toString(pFound.getPhoneNum()) + "\n");
+		details.add("Health Card Number: " + Long.toString(pFound.getHealthCardNum()) + "\n");
+		details.add("Date Of Birth: " + Integer.toString(pFound.getDateOfBirth()) + "\n");
 		
 		return details;
 
