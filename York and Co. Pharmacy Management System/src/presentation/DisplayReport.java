@@ -1,26 +1,19 @@
 package presentation;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
+
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -57,9 +50,11 @@ public class DisplayReport {
 		
 		JTextArea textAreaSummary = new JTextArea();
 		textAreaSummary.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textAreaSummary.setBounds(12, 10, 568, 443);
+		//textAreaSummary.setBounds(12, 10, 568, 443);
 		textAreaSummary.setEditable(false);
-		this.frame.getContentPane().add(textAreaSummary);
+		JScrollPane scrollPaneSummary = new JScrollPane(textAreaSummary);
+		scrollPaneSummary.setBounds(12, 10, 568, 443);
+		this.frame.getContentPane().add(scrollPaneSummary);
 		
 		JLabel lblRevenue = new JLabel("Revenue");
 		lblRevenue.setFont(new Font("굴림", Font.BOLD, 18));
@@ -117,5 +112,16 @@ public class DisplayReport {
 		this.frame.setEnabled(true);
 		this.frame.setVisible(true);
 	}
+	
+	/*public static void main(String[] args) {
+		try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DisplayReport report = new DisplayReport();
+		report.displayReport(new JFrame());
+	}*/
 
 }
