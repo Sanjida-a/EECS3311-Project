@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import databaseDAO.superDAO;
+
 
 public class DisplaySeeOrders implements ActionListener{
 	
@@ -34,7 +36,7 @@ public class DisplaySeeOrders implements ActionListener{
 
 
 
-	public static void displaySeeOrders(JFrame previous) {
+	public static void displaySeeOrders(JFrame previous, USER userType) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
 		frame = new JFrame("Orders");
@@ -45,17 +47,20 @@ public class DisplaySeeOrders implements ActionListener{
 		
 		frame.getContentPane().setLayout(null);
 
-		createLabels();
+		createLabels(userType);
 		createButtons();
 		createTextArea();
-		createTextFields();
+		createTextFields(userType);
 		frame.revalidate();
 	}
 	
-	private static void createLabels() {
+	private static void createLabels(USER userType) {
 		JLabel lblTotalSpent = new JLabel("Total spent");
 		lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 15));
 		lblTotalSpent.setBounds(12, 457, 102, 35);
+		if(userType == USER.PHARMACIST) {
+			lblTotalSpent.setVisible(false);
+		}
 		frame.getContentPane().add(lblTotalSpent);
 		
 		JLabel lblHCN = new JLabel("HealthCard#");
@@ -95,7 +100,7 @@ public class DisplaySeeOrders implements ActionListener{
 		frame.revalidate();
 	}
 	
-	private static void createTextFields() {
+	private static void createTextFields(USER userType) {
 		textFieldHCN = new JTextField();
 		textFieldHCN.setFont(new Font("굴림", Font.PLAIN, 15));
 		textFieldHCN.setBounds(184, 20, 263, 35);
@@ -107,8 +112,10 @@ public class DisplaySeeOrders implements ActionListener{
 		textFieldTotalSpent = new JTextField();
 		textFieldTotalSpent.setFont(new Font("굴림", Font.PLAIN, 15));
 		textFieldTotalSpent.setBounds(126, 457, 165, 35);
-		textFieldTotalSpent.setVisible(true);
-	
+		
+		if(userType == USER.PHARMACIST) {
+			textFieldTotalSpent.setVisible(false);
+		}
 		frame.add(textFieldTotalSpent);
 		textFieldTotalSpent.setColumns(10);
 		frame.repaint();
@@ -157,11 +164,17 @@ public class DisplaySeeOrders implements ActionListener{
 	}
 	
 	
-	// public static void main(String[] args) {
+	/* public static void main(String[] args) {
 	// 	// TODO Auto-generated method stub
-	// 	DisplaySeeOrders.displaySeeOrders(new JFrame());
+		 try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	 	DisplaySeeOrders.displaySeeOrders(new JFrame(), USER.OWNER);
 
 
-	// }
+	}*/
 }
 
