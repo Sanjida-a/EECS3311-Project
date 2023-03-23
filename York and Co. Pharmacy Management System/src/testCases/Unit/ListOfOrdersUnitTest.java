@@ -119,20 +119,42 @@ class ListOfOrdersUnitTest {
 	
 	@Test
 	void testAddOrderToDatabase4() {
-		Order newOrder = new Order(5, 1, 1111122222, 5, 10.00, false);  
-
-		orderStub.medications.get(0).setIsValid(false);
-		//orders.setOrderDAO(orderStub);
-		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
+		Order newOrder = new Order(5, 1, 1111122229, 5, 10.00, false);  
+		String errorString = null;
+		try {
+			orders.addOrderToDatabase(newOrder);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Patient doesn't exist!", errorString);
 	}
 	
 	@Test
 	void testAddOrderToDatabase5() {
+		Order newOrder = new Order(5, 4, 1111122222, 5, 10.00, false);  
+		String errorString = null;
+		try {
+			orders.addOrderToDatabase(newOrder);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Not an OTC!", errorString);
+	}
+	
+	@Test
+	void testAddOrderToDatabase6() {
 		Order newOrder = new Order(5, 1, 1111122222, 5, 10.00, false);  
-
-		orderStub.medications.get(0).setQuantity(3);
-		//orders.setOrderDAO(orderStub);
-		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
+		String errorString = null;
+		merStub.allInventoryStub.get(0);
+		try {
+			orders.addOrderToDatabase(newOrder);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Check inventory!", errorString);
 	}
 	
 	@Test
