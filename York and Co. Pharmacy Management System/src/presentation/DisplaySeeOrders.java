@@ -152,7 +152,7 @@ public class DisplaySeeOrders implements ActionListener{
 			double val = 0;
 			try {
 				val = ListOfOrders.getInstance().specificPatientMoneySpent(patientID);
-				textAreaOutput.setText(ListOfOrders.getInstance().specificPatientOrderHistory(patientID).toString());
+				// textAreaOutput.setText(ListOfOrders.getInstance().specificPatientOrderHistory(patientID).toString());
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
