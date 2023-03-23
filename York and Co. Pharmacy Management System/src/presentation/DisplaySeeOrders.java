@@ -1,5 +1,7 @@
 package presentation;
 
+import middleLayer.Orders.ListOfOrders;
+
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import java.util.ArrayList;
@@ -145,9 +147,17 @@ public class DisplaySeeOrders implements ActionListener{
         	}
         
 			//invoke searchOrderByPatientID here
-			
-			//textFieldTotalSpent.setText(Total_Spent_result);
-			//textAreaOutput.setText(with_result);
+
+			int patientID = Integer.parseInt(textFieldHCN.getText());
+			double val = 0;
+			try {
+				val = ListOfOrders.getInstance().specificPatientMoneySpent(patientID);
+				textAreaOutput.setText(ListOfOrders.getInstance().specificPatientOrderHistory(patientID).toString());
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			textFieldTotalSpent.setText(Double.toString(val));
 		}
 	
 	
