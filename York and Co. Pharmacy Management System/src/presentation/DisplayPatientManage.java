@@ -14,13 +14,23 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import databaseDAO.superDAO;
 import middleLayer.Users.*;
@@ -34,6 +44,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
 import java.awt.Component;
+import javax.swing.SpringLayout;
 
 
 public class DisplayPatientManage {
@@ -61,6 +72,8 @@ public class DisplayPatientManage {
 	private static String[][] patients = {{"", "","","",""}};
 	private static JTable table;
 	private static JScrollPane scrollPane;
+	private static UtilDateModel model; 
+
 
 
 	
@@ -257,11 +270,53 @@ public class DisplayPatientManage {
 		lblDOB.setBounds(0, 136, 110, 35);
 		panelInputFields.add(lblDOB);
 		
-		textFieldDOB = new JTextField();
+		/*textFieldDOB = new JTextField();
+
 		textFieldDOB.setBounds(110, 136, 260, 35);
+		textFieldDOB.setText("yyyymmdd");
+		textFieldDOB.setFont(new Font("굴림", Font.ITALIC, 14));
+		textFieldDOB.setForeground(new Color(128, 128, 128));
+		textFieldDOB.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				if(textFieldDOB.getText().isBlank() || textFieldDOB.getText().compareTo("yyyymmdd") == 0) {
+					textFieldDOB.setText("");
+					textFieldDOB.setFont(new Font("굴림", Font.PLAIN, 14));
+					textFieldDOB.setForeground(new Color(0, 0, 0));
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				if(textFieldDOB.getText().isBlank()) {
+					textFieldDOB.setText("yyyymmdd");
+					textFieldDOB.setFont(new Font("굴림", Font.ITALIC, 14));
+					textFieldDOB.setForeground(new Color(128, 128, 128));
+				}
+			}
+			
+		});
 		panelInputFields.add(textFieldDOB);
-		textFieldDOB.setColumns(10);
-		
+		textFieldDOB.setColumns(10);*/
+		model = new UtilDateModel();
+		//LocalDateTime currentDate = LocalDateTime.now();
+		model.setValue(new Date());
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+
+
+		datePicker.getJFormattedTextField().setBackground(new Color(255, 255, 255));
+
+		datePicker.setLocation(110, 136);
+		datePicker.setSize(260, 35);
+		panelInputFields.add(datePicker);
 		
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setFont(new Font("굴림", Font.BOLD, 17));
@@ -286,6 +341,7 @@ public class DisplayPatientManage {
 //					int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText()); // changed to Long
 //					int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText()); // changed to Long
 					int _textFieldDOB = Integer.parseInt(textFieldDOB.getText());
+					
 					long _textFieldHCNumber = Long.parseLong(textFieldHCNumber.getText());
 					long _textFieldPhoneNumber = Long.parseLong(textFieldPhoneNumber.getText());
 					
@@ -413,8 +469,16 @@ public class DisplayPatientManage {
 		
 	}
 	
+	public static int convertDate(Date date) throws Exception {
+		Date currentDate = new Date();
+		if(date.after(currentDate)) {
+			throw new IllegalArgumentException("Invalid date is selected");
+		}
+		return 0;
+	}
 	
-	/*public static void main(String[] args) {	//for test purpose
+	
+	public static void main(String[] args) {	//for test purpose
 		try {
 			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
@@ -422,5 +486,5 @@ public class DisplayPatientManage {
 			e.printStackTrace();
 		}
 		DisplayPatientManage.displayPatientManage(new JFrame());
-	}*/
+	}
 }
