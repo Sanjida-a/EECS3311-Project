@@ -59,9 +59,9 @@ public class DisplaySeeOrders implements ActionListener{
 		frame.getContentPane().add(lblTotalSpent);
 		
 		JLabel lblHCN = new JLabel("HealthCard#");
-		lblHCN.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblHCN.setHorizontalAlignment(SwingConstants.LEFT);
 		lblHCN.setFont(new Font("굴림", Font.BOLD, 15));
-		lblHCN.setBounds(12, 20, 160, 35);
+		lblHCN.setBounds(20, 20, 160, 35);
 		frame.getContentPane().add(lblHCN);
 		frame.revalidate();
 	}
@@ -73,11 +73,18 @@ public class DisplaySeeOrders implements ActionListener{
 		btnClose.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnClose);
 		
-		JButton btnSearch = new JButton("Search");
+		JButton btnSearch = new JButton("Search All");
 		btnSearch.setFont(new Font("굴림", Font.BOLD, 18));
-		btnSearch.setBounds(459, 19, 165, 35);
+		btnSearch.setBounds(390, 19, 230, 35);
 		btnSearch.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnSearch);
+		frame.revalidate();
+
+		JButton btnSearch2 = new JButton("Search Prescription");
+		btnSearch2.setFont(new Font("굴림", Font.BOLD, 18));
+		btnSearch2.setBounds(390, 60, 230, 35);
+		btnSearch2.addActionListener(new DisplaySeeOrders());
+		frame.getContentPane().add(btnSearch2);
 		frame.revalidate();
 	}
 	private static void createTextArea() {
@@ -90,7 +97,7 @@ public class DisplaySeeOrders implements ActionListener{
 		//textAreaOutput.setText(result);
 		
 		scrollPaneOutput = new JScrollPane(textAreaOutput);
-		scrollPaneOutput.setBounds(12, 64, 612, 383);
+		scrollPaneOutput.setBounds(12, 100, 612, 350);
 		frame.getContentPane().add(scrollPaneOutput);
 		frame.revalidate();
 	}
@@ -98,7 +105,7 @@ public class DisplaySeeOrders implements ActionListener{
 	private static void createTextFields() {
 		textFieldHCN = new JTextField();
 		textFieldHCN.setFont(new Font("굴림", Font.PLAIN, 15));
-		textFieldHCN.setBounds(184, 20, 263, 35);
+		textFieldHCN.setBounds(120, 20, 263, 35);
 		textFieldHCN.setVisible(true);
 	
 		frame.add(textFieldHCN);
@@ -108,6 +115,7 @@ public class DisplaySeeOrders implements ActionListener{
 		textFieldTotalSpent.setFont(new Font("굴림", Font.PLAIN, 15));
 		textFieldTotalSpent.setBounds(126, 457, 165, 35);
 		textFieldTotalSpent.setVisible(true);
+		textFieldTotalSpent.setEditable(false);
 	
 		frame.add(textFieldTotalSpent);
 		textFieldTotalSpent.setColumns(10);
@@ -117,7 +125,6 @@ public class DisplaySeeOrders implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String action = e.getActionCommand();
 
 		if(action.compareToIgnoreCase("Close") == 0) {
@@ -126,42 +133,61 @@ public class DisplaySeeOrders implements ActionListener{
 			superFrame.toFront();
 			frame.dispose();
 		}
-		else if(action.compareTo("Search") == 0) {
-			
-			ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
-			textAreaOutput.setText("");
-			textFieldTotalSpent.setText("");
-			
-			try {
-				String _textFieldHCN = textFieldHCN.getText();
-				if (_textFieldHCN.isEmpty()) throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
-				
-				long healthCardID = Long.parseLong(_textFieldHCN);
-        		
-    			textAreaOutput.setText("");
-				ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
-				
-				for(String s : resultPurchaseHistory) {
-					textAreaOutput.append(s);
+		else if(action.compareTo("Search All") == 0) {
+        		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+        		try {
+					String _textFieldHCN = textFieldHCN.getText();
+					if (_textFieldHCN.isEmpty()) 
+						throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
+					long healthCardID = Long.parseLong(textFieldHCN.getText());
+        			textAreaOutput.setText("");
+					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
+					
+					for(String s : resultPurchaseHistory) {
+						textAreaOutput.append(s);
+					}
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
-				
-				double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(healthCardID);
-				textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
-			
-	        }
-			catch (Exception e1) {
-				JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-			}
+				int patientID = Integer.parseInt(textFieldHCN.getText());
+				double val = 0;
+				try {
+					val = ListOfOrders.getInstance().specificPatientMoneySpent(patientID);
 
-		}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				textFieldTotalSpent.setText(Double.toString(val));
+        	}
+        else if(action.compareTo("Search Prescription") == 0){
+			ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+        		try {
+					if (textFieldHCN.getText().isEmpty()) 
+						throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
+					long healthCardID = Long.parseLong(textFieldHCN.getText());
+					textAreaOutput.setText("");
+					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputPresRefill(healthCardID, USER.OWNER);
+					
+					for(String s : resultPurchaseHistory) {
+						textAreaOutput.append(s);
+					}
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				textFieldTotalSpent.setText("");
+        }
 	}
+			
+		
 	
 	
-	// public static void main(String[] args) {
-	// 	// TODO Auto-generated method stub
-	// 	DisplaySeeOrders.displaySeeOrders(new JFrame());
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DisplaySeeOrders.displaySeeOrders(new JFrame());
 
 
-	// }
+	}
 }
+
+
 
