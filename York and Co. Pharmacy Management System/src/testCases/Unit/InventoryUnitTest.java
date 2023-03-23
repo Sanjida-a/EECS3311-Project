@@ -47,6 +47,24 @@ public class InventoryUnitTest {
         assertTrue(subject1 == subject2);	//compares the address of subject1 and subject2
         									//should be same since Inventory is Singleton
     }
+	
+	@Test 
+	void searchAllValidAndInvalidMerchandiseWithIDTest1() {
+		Merchandise expected = new Merchandise(1, "pill1", 10, 2.00, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
+		
+		assertEquals(expected, val.searchAllValidAndInvalidMerchandiseWithID(1));
+	}
+	
+	@Test
+	void searchAllValidAndInvalidMerchandiseWithIDTest2() {
+		Merchandise expected = new Merchandise(5, "pill5", 6, 3.00, MERCHANDISE_TYPE.SINUS, MERCHANDISE_FORM.LIQUID, true, null, false);
+		assertEquals(expected, val.searchAllValidAndInvalidMerchandiseWithID(5));
+	}
+	
+	@Test
+	void searchAllValidAndInvalidMerchandiseWithIDTest3() {
+		assertEquals(null, val.searchAllValidAndInvalidMerchandiseWithID(99));
+	}
 
 
 

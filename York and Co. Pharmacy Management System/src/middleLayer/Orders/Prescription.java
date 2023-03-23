@@ -54,5 +54,17 @@ public class Prescription { // prescription forms by doctor
 	public void setOriginalNumOfRefills(int originalNumOfRefills) {
 		this.originalNumOfRefills = originalNumOfRefills;
 	}
+	
+	@Override 
+	public boolean equals(Object obj) {
+		Prescription pres = (Prescription) obj;
+		if(this.medicationID != pres.medicationID || 
+			this.originalNumOfRefills != pres.originalNumOfRefills ||
+			this.patientID != pres.patientID ||
+			this.prescriptionNum != pres.prescriptionNum) {
+			return false;
+		}
+		return true;
+	}
 
 }
