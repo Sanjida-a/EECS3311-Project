@@ -17,4 +17,5 @@ public interface OrderRoot {
 	public int numOfRefill (long _patientID, int _medicationId) throws SQLException;	
 	public Boolean checkIfExistsInPrescriptionTable (long _patientID, int _medicationId)  throws SQLException;
 	public ArrayList<Order> getListOfAllOrders() throws Exception;
+	public ArrayList<Prescription> getListOfAllPres() throws Exception;
 }

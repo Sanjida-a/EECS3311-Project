@@ -63,3 +63,6 @@
 16. 2023/3/22 22:00-22:45   contributor: Aiza Bajwa
 *throw exceptions for bad inputs (empty string and too short/long health card number) for seeOrders
 *refactoring: large class fix for inventory class
+
+17. 2023/3/23 00:00-02:15   contributor: Minh Tran
+*Worked on number of refills left detailed story.

@@ -762,6 +762,22 @@ public class DisplayInitialScreen{
         btnPrescription.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//method to see prescription refills is called here
+				ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+        		
+        		textAreaPatientInfo.setText("");
+    			textFieldTotalSpent.setText("");
+        		try {
+					ArrayList<String> resultPresRefills = listOfOrdersInstance.outputPresRefill(usernameLoggedIn, userType);
+					
+					for(String s : resultPresRefills) {
+						textAreaPatientInfo.append(s);
+					}
+					
+				//	double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(usernameLoggedIn);
+				//	textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
 			}
         });
         panelVisibleToPatient.add(btnPrescription);

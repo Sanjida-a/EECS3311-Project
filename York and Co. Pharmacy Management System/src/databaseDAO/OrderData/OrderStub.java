@@ -100,5 +100,10 @@ public class OrderStub implements OrderRoot {
 		
 		return existsInPrescriptionList;
 		
+	}
+
+	@Override
+	public ArrayList<Prescription> getListOfAllPres() throws Exception {
+		return prescriptionList;
 	}	
 }

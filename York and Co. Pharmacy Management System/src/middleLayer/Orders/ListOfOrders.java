@@ -19,6 +19,7 @@ public class ListOfOrders {
 	private static ListOfOrders ListOfOrdersInstance = null;
 	private ArrayList<Order> allOrdersList;
 	private ListOfUsers userList;
+	private ArrayList<Prescription> allPresList;
 	
 	private OrderRoot _orderDAO; // Dependency Injection Principle
 	
@@ -87,6 +88,15 @@ public class ListOfOrders {
 	public ArrayList<Order> getListofAllOrders() {
 		updateOrderListFromDatabase(); //updates from database first before returning
 		return allOrdersList;
+	}
+	
+	public ArrayList<Prescription> getListofAllPres() {
+		try {
+			allPresList = _orderDAO.getListOfAllPres(); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return allPresList;
 	}
 	
 //	public void addOrderToDatabase(Order o, Prescription p) throws Exception {
@@ -174,21 +184,7 @@ public class ListOfOrders {
 		
 		this.updateOrderListFromDatabase();
 	}
-//	public void addPresQuantToDb(Order o) throws Exception {
-//		
-//	Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
-//	
-//	if (getMer.getisOTC()) {
-//		throw new Exception("Not an Rx!");
-//	}
-//	_orderDAO.addToOrderTable(o);
-//	
-////	if (o.getIsPrescription() == true) {
-////		_orderDAO.addToPrescriptionTable(p);
-////	}
-//	
-//	this.updateOrderListFromDatabase();
-//}
+
 
 	public void addRefillToDatabase(Order o) throws Exception {
 		
@@ -295,6 +291,77 @@ public class ListOfOrders {
 		
 		return orderHistoryDetails;
 	}
+	
+	public ArrayList<Prescription> specificPatientPres(long healthCardID) throws Exception {
+		
+		if (!((1000000000 <= healthCardID) && (healthCardID <= 9999999999L))) {
+			throw new Exception("Please enter a valid, positive, 10-digit health card number");
+		}
+		
+		Patient pFound = userList.searchPatientWithID(healthCardID);
+		
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
+		
+	//	this.updateOrderListFromDatabase();	
+		getListofAllPres();
+		ArrayList<Prescription> specificPatientPres = new ArrayList<Prescription>();
+	
+		for (Prescription p : allPresList) {
+			if (p.getPatientID() == healthCardID) {
+				specificPatientPres.add(p);
+			}
+		}
+		
+		return specificPatientPres;
+		
+	}
+	
+	public ArrayList<String> outputPresRefill(long healthCardID, USER userType) throws Exception {
+		
+		ArrayList<Prescription> presOfPatient = specificPatientPres(healthCardID);
+		
+		ArrayList<String> refillsDetails = new ArrayList<String>();
+		
+		if (presOfPatient.isEmpty()) {
+			if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+				refillsDetails.add("Patient with health card number " + healthCardID + " has not made any prescription orders.");
+			}
+			else {
+				refillsDetails.add("You have not made any prescription orders.");
+			}
+			return refillsDetails;
+		}
+		
+		if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+			refillsDetails.add("PRESCRIPTION ORDER HISTORY OF PATIENT WITH HEALTH CARD NUMBER " + healthCardID + "\n\n");
+		}
+		else {
+			refillsDetails.add("YOUR PRESCRIPTION ORDERS:\n\n");
+		}
+		
+		int presNum = 1;
+		Merchandise associatedMedication = null;
+		for (Prescription p : presOfPatient) {
+			String oneFullOrder = "";
+			oneFullOrder += "ORDER #" + presNum + "\n";
+			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + _orderDAO.numOfRefill(healthCardID, p.getMedicationID()); 
+			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
+			
+			
+			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\n";
+			
+			oneFullOrder += "\n";
+			oneFullOrder += "----------------------------\n";
+			refillsDetails.add(oneFullOrder);
+			presNum++;
+		}
+		
+		return refillsDetails;
+	}
+	
+	
 	
 	public double specificPatientMoneySpent(long healthCardID) throws Exception {
 		
