@@ -114,10 +114,10 @@ public class DisplayInitialScreen{
 		if(user == USER.OWNER || user == USER.PHARMACIST) {	//to display contents allowed to OWNER/PHARMACIST only
 			createPanelVisibleToAdmin(totalGUI);
 		}
-		//else if(user == USER.DEVELOPER) {
+		else if(user == USER.DEVELOPER) {
 			createPanelVisibleToAdmin(totalGUI); //for test purpose
 
-		//}
+		}
 		if(user == USER.PATIENT) {
 			createPanalVisibleToPatient(totalGUI);
 		}
@@ -952,6 +952,6 @@ public class DisplayInitialScreen{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		DisplayInitialScreen.displayInitialScreen(USER.PATIENT);
+		DisplayInitialScreen.displayInitialScreen(USER.GUEST);
 	}*/
 }
