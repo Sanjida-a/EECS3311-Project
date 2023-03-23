@@ -5,18 +5,18 @@ import java.util.ArrayList;
 public class Prescription { // prescription forms by doctor
 	int prescriptionNum;
 	int medicationID;
-	int patientID;
+	long patientID;
 	int originalNumOfRefills;    // numbers of refills prescribed by doctor
 	
 	// constructor for front end
-	public Prescription(int medicationID, int patientID, int originalNumOfRefills) {
+	public Prescription(int medicationID, long patientID, int originalNumOfRefills) {
 		this.medicationID = medicationID;
 		this.patientID = patientID;
 		this.originalNumOfRefills = originalNumOfRefills;
 	}
 	
 	// constructor for reading from database
-	public Prescription(int prescriptionNum, int medicationID, int patientID, int originalNumOfRefills) {
+	public Prescription(int prescriptionNum, int medicationID, long patientID, int originalNumOfRefills) {
 		this.prescriptionNum = prescriptionNum;
 		this.medicationID = medicationID;
 		this.patientID = patientID;
@@ -39,7 +39,7 @@ public class Prescription { // prescription forms by doctor
 		this.medicationID = medicationID;
 	}
 
-	public int getPatientID() {
+	public long getPatientID() {
 		return patientID;
 	}
 

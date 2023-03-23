@@ -127,38 +127,34 @@ public class DisplaySeeOrders implements ActionListener{
 			frame.dispose();
 		}
 		else if(action.compareTo("Search") == 0) {
-
-			long healthCardID = Long.parseLong(textFieldHCN.getText());
-
-        		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
-        		try {
-        			textAreaOutput.setText("");
-					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
-					
-					for(String s : resultPurchaseHistory) {
-						textAreaOutput.append(s);
-					}
-					
-					double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(healthCardID);
-					textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-        	}
-        
-			//invoke searchOrderByPatientID here
-
-			int patientID = Integer.parseInt(textFieldHCN.getText());
-			double val = 0;
+			
+			ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+			textAreaOutput.setText("");
+			textFieldTotalSpent.setText("");
+			
 			try {
-				val = ListOfOrders.getInstance().specificPatientMoneySpent(patientID);
-				// textAreaOutput.setText(ListOfOrders.getInstance().specificPatientOrderHistory(patientID).toString());
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
+				String _textFieldHCN = textFieldHCN.getText();
+				if (_textFieldHCN.isEmpty()) throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
+				
+				long healthCardID = Long.parseLong(_textFieldHCN);
+        		
+    			textAreaOutput.setText("");
+				ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
+				
+				for(String s : resultPurchaseHistory) {
+					textAreaOutput.append(s);
+				}
+				
+				double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(healthCardID);
+				textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
+			
+	        }
+			catch (Exception e1) {
+				JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 			}
-			textFieldTotalSpent.setText(Double.toString(val));
+
 		}
+	}
 	
 	
 	// public static void main(String[] args) {

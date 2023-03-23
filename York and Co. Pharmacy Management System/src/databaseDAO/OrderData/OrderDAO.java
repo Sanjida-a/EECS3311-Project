@@ -14,6 +14,7 @@ import middleLayer.Users.*;
 public class OrderDAO extends superDAO implements OrderRoot{
 
 	private ArrayList<Order> orderList = new ArrayList<Order>();
+	private ArrayList<Prescription> presList = new ArrayList<Prescription>();
 
 	public OrderDAO() throws Exception {
 		try {
@@ -62,6 +63,42 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		
 		return orderList;
 	}
+	
+	//reads all rows of prescriptions from database and puts it into arrayList
+		public ArrayList<Prescription> getListOfAllPres() throws Exception {
+			try {
+				presList = new ArrayList<Prescription>(); //need to empty current list first so new list overrides
+				
+				con = DriverManager.getConnection(url, user, password);
+				
+				String queryGetAllRows = "SELECT * FROM Prescriptions;";   // to get all rows from Orders table
+				Statement statement = con.createStatement();
+				ResultSet result = statement.executeQuery(queryGetAllRows);
+				int prescriptionNum, medicationID, numOfRefills;
+				long patientID;
+				
+				Prescription pres;
+				
+				while (result.next()) { 
+					prescriptionNum =  result.getInt("prescriptionNum");
+					System.out.println(prescriptionNum);
+					medicationID =  result.getInt("medicationID");
+					patientID =  result.getLong("patientID");
+					numOfRefills =  result.getInt("numOfRefills");
+					
+					pres = new Prescription(prescriptionNum, medicationID, patientID, numOfRefills);
+					
+					presList.add(pres);  // to create Order object and put in a list
+				}
+				
+				con.close();
+			}
+			catch (Exception e) {
+				throw e; 
+			}
+			
+			return presList;
+		}
 	
 	//add new order row to database table (invoked whenever a new order has been added)
 	public void addToOrderTable(Order o) throws Exception {
