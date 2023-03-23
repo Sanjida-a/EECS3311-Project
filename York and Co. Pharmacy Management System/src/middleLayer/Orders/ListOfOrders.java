@@ -280,9 +280,11 @@ public class ListOfOrders {
 			if (associatedMedication.getisOTC() == true) {
 				OTCorRx = "OTC";
 			}
-			oneFullOrder += "\n\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\nOTCorRx:" + OTCorRx + "\n\n";
+			
+			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\nOTCorRx:" + OTCorRx + "\n";
 			
 			oneFullOrder += "\n";
+			oneFullOrder += "----------------------------\n";
 			orderHistoryDetails.add(oneFullOrder);
 			orderNum++;
 		}
