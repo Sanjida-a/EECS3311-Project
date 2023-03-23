@@ -274,13 +274,13 @@ public class ListOfOrders {
 		for (Order o : ordersOfPatient) {
 			String oneFullOrder = "";
 			oneFullOrder += "ORDER #" + orderNum + "\n";
-			oneFullOrder += "Medication ID: " + o.getMedicationID() + "  Quantity bought: " + o.getQuantityBought() + "  Total price: " + o.getTotalPriceOfOrder(); 
+			oneFullOrder += "Medication ID: " + o.getMedicationID() + "\nQuantity bought: " + o.getQuantityBought() + "\nTotal price: " + o.getTotalPriceOfOrder(); 
 			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(o.getMedicationID());
 			String OTCorRx = "Rx";
 			if (associatedMedication.getisOTC() == true) {
 				OTCorRx = "OTC";
 			}
-			oneFullOrder += "   MEDICATION DETAILS: Name: " + associatedMedication.getName() + "  Type: " + associatedMedication.getType() + "  Form: " + associatedMedication.getForm() + "  OTCorRx:" + OTCorRx + "\n";
+			oneFullOrder += "\n\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\nOTCorRx:" + OTCorRx + "\n\n";
 			
 			oneFullOrder += "\n";
 			orderHistoryDetails.add(oneFullOrder);
