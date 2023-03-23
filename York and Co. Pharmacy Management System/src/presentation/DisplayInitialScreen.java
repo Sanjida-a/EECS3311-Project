@@ -731,8 +731,10 @@ public class DisplayInitialScreen{
         	public void actionPerformed(ActionEvent e) {
         		//method for purchase history is called here
         		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+        		
+        		textAreaPatientInfo.setText("");
+    			textFieldTotalSpent.setText("");
         		try {
-        			textAreaPatientInfo.setText("");
 					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(usernameLoggedIn, userType);
 					
 					for(String s : resultPurchaseHistory) {

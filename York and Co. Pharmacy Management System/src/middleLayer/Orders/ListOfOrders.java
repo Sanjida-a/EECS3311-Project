@@ -225,6 +225,10 @@ public class ListOfOrders {
 	// aiza added for easy access
 	public ArrayList<Order> specificPatientOrderHistory(long healthCardID) throws Exception {
 		
+		if (!((1000000000 <= healthCardID) && (healthCardID <= 9999999999L))) {
+			throw new Exception("Please enter a valid, positive, 10-digit health card number");
+		}
+		
 		Patient pFound = userList.searchPatientWithID(healthCardID);
 		
 		if (pFound == null) {
@@ -281,7 +285,7 @@ public class ListOfOrders {
 				OTCorRx = "OTC";
 			}
 			
-			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\nOTCorRx:" + OTCorRx + "\n";
+			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\nOTCorRx: " + OTCorRx + "\n";
 			
 			oneFullOrder += "\n";
 			oneFullOrder += "----------------------------\n";
