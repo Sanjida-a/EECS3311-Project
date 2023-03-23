@@ -63,7 +63,7 @@ public class DisplayInitialScreen{
 	private static JTextArea textAreaPatientInfo;
 	
 	private static String name;
-	private static int username;
+
 	private static String type;
 	private static String form;
 	private static int qty;
@@ -486,6 +486,23 @@ public class DisplayInitialScreen{
         	
         });
         panelVisibleToAdminSub1.add(btnModifyItem);
+        
+    	JButton btnSeeOrders = new JButton("<html>See<br>Orders</html>");
+    	btnSeeOrders.setActionCommand("SeeOrders");
+    	btnSeeOrders.setFont(new Font("굴림", Font.BOLD, 18));
+    	btnSeeOrders.setBounds(0, 210, 170, 60);
+    	btnSeeOrders.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DisplaySeeOrders.displaySeeOrders(frame, userType);
+			}
+    		
+    	});
+    	panelVisibleToAdminSub1.add(btnSeeOrders);
+    	
+
         if(userType == USER.OWNER || userType == USER.DEVELOPER) {
         	JButton btnSeeReport = new JButton("See Report");
         	btnSeeReport.setFont(new Font("굴림", Font.BOLD, 18));
@@ -502,20 +519,7 @@ public class DisplayInitialScreen{
 	        });
         	panelVisibleToAdminSub1.add(btnSeeReport);
         	
-        	JButton btnSeeOrders = new JButton("<html>See<br>Orders</html>");
-        	btnSeeOrders.setActionCommand("SeeOrders");
-        	btnSeeOrders.setFont(new Font("굴림", Font.BOLD, 18));
-        	btnSeeOrders.setBounds(0, 210, 170, 60);
-        	btnSeeOrders.addActionListener(new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					DisplaySeeOrders.displaySeeOrders(frame);
-				}
-        		
-        	});
-        	panelVisibleToAdminSub1.add(btnSeeOrders);
        }
 	}
 	
@@ -934,8 +938,8 @@ public class DisplayInitialScreen{
 	public String getName() {
 		return new String(name);
 	}
-	public int getUsername() {
-		return username;
+	public static long getUsername() {
+		return usernameLoggedIn;
 	}
 	public String getType() {
 		return new String(type);
@@ -962,6 +966,7 @@ public class DisplayInitialScreen{
 	public static void setCurrentList(ArrayList<Merchandise> newList) {
 		currentList = newList;
 	}
+
 	
 	/*public static void main(String[] args) {
 		try {

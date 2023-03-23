@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import middleLayer.Orders.*;
@@ -19,8 +20,8 @@ class ListOfOrdersUnitTest {
 	public static MerchandiseStub merStub;
 	public static UserStub userStub;
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
-	@BeforeAll
-	public static void before() {
+	@BeforeEach
+	public void before() {
 		try {
 			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
 			orderStub = new OrderStub();
@@ -80,7 +81,8 @@ class ListOfOrdersUnitTest {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			fail();
+			System.out.println(e.getMessage());
+			fail(e.getMessage());
 		}
 		result = orders.getListofAllOrders();
 		assertEquals(expected, result);
@@ -89,19 +91,32 @@ class ListOfOrdersUnitTest {
 	@Test
 	void testAddOrderToDatabase2() {
 
-		Order newOrder = new Order(1, 1, 1111122222, 5, 10.00, true);  
+		Order newOrder = new Order(5, 1, 1111122222, -1, 10.00, true);  
+		String errorString = null;
 
-
-		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
+		try {
+			orders.addOrderToDatabase(newOrder);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		
+		assertEquals("Quantity Bought Must Be Positive!", errorString);
 	}
+	
 	@Test
 	void testAddOrderToDatabase3() {
-		Order newOrder = new Order(5, 1, 1111122222, 5, 10.00, false);  
-
-		orderStub.medications.get(0).setQuantity(0);
-		//orders.setOrderDAO(orderStub);
-		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
+		Order newOrder = new Order(5, 10, 1111122222, 5, 10.00, false);  
+		String errorString = null;
+		try {
+			orders.addOrderToDatabase(newOrder);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Medication doesn't exist!", errorString);
 	}
+	
 	@Test
 	void testAddOrderToDatabase4() {
 		Order newOrder = new Order(5, 1, 1111122222, 5, 10.00, false);  
@@ -110,6 +125,7 @@ class ListOfOrdersUnitTest {
 		//orders.setOrderDAO(orderStub);
 		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
 	}
+	
 	@Test
 	void testAddOrderToDatabase5() {
 		Order newOrder = new Order(5, 1, 1111122222, 5, 10.00, false);  
@@ -119,12 +135,172 @@ class ListOfOrdersUnitTest {
 		assertThrows(Exception.class, () -> orders.addOrderToDatabase(newOrder));
 	}
 	
-	/*@Test
+	@Test
 	void testAddPresOrderToDb1() {
-
-
+		Prescription pres = new Prescription(5, 3, 1111122222, 0);
+		String errorString = null;
+		try {
+			orders.addPresOrderToDb(pres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Refills must be positive", errorString);
 		
-	}*/
+	}
+	
+	@Test
+	void testAddPresOrderToDb2() {
+		Prescription pres = new Prescription(5, 10, 1111122222, 5);
+		String errorString = null;
+		try {
+			orders.addPresOrderToDb(pres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+			
+		}
+		assertEquals("Medication doesn't exist!", errorString);
+	}
+	
+	@Test
+	void testAddPresOrderToDb3() {
+		Prescription pres = new Prescription(5, 1, 1111122222, 5);
+		String errorString = null;
+		try {
+			orders.addPresOrderToDb(pres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+			
+		}
+		assertEquals("Not an Rx!", errorString);
+	}
+	
+	@Test
+	void testAddPresOrderToDb4() {
+		Prescription pres = new Prescription(5, 3, 1111155555, 5);
+		String errorString = null;
+		try {
+			orders.addPresOrderToDb(pres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+			
+		}
+		assertEquals("Patient doesn't exist!", errorString);
+	}
+	
+	@Test
+	void testAddPresOrderToDb5() {
+		Prescription pres = new Prescription(3, 3, 1111122222, 5);
+
+		try {
+			orders.addPresOrderToDb(pres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(pres, orderStub.prescriptionList.get(2));
+	}
+	
+	@Test
+	void testAddRefillToDatabase1() {
+		Order order = new Order(5, 3, 1111122222, 1, 20.00, true);
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(order, orderStub.orderList.get(4));
+	}
+	
+	@Test
+	void testAddRefillToDatabase2() {
+		Order order = new Order(5, 10, 1111122222, 1, 20.00, true);
+		String errorString = null;
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("No record found of prescription!", errorString);
+	}
+	
+	@Test
+	void testAddRefillToDatabase3() {
+		Order order = new Order(5, 3, 1111122225, 1, 20.00, true);
+		String errorString = null;
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("No record found of prescription!", errorString);
+	}
+	
+	@Test
+	void testAddRefillToDatabase4() {
+		Order order = new Order(5, 3, 1111122222, -1, 20.00, true);
+		String errorString = null;
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Quantity Bought Must Be Positive!", errorString);
+	}
+	
+	@Test
+	void testAddRefillToDatabase5() {
+		Order order = new Order(5, 3, 1111122222, 8, 20.00, true);
+		String errorString = null;
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("No refills left!", errorString);
+	}
+	
+	@Test
+	void testAddRefillToDatabase6() {
+		Order order = new Order(5, 3, 1111122222, 11, 20.00, true);
+		String errorString = null;
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Only have " + 10 +  " refills left!", errorString);
+	}
+	
+	@Test
+	void testAddRefillToDatabase7() {
+		Order order = new Order(5, 3, 1111122222, 11, 20.00, true);
+		String errorString = null;
+		try {
+			orders.addRefillToDatabase(order);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorString = e.getMessage();
+		}
+		assertEquals("Only have " + 10 +  " refills left!", errorString);
+	}
+	
+	
 
 
 }

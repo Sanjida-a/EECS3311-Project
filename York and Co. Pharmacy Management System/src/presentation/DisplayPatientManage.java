@@ -73,6 +73,7 @@ public class DisplayPatientManage {
 	private static JTable table;
 	private static JScrollPane scrollPane;
 	private static UtilDateModel model; 
+	private static JDatePickerImpl datePicker;
 
 
 
@@ -309,7 +310,7 @@ public class DisplayPatientManage {
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
 
 		datePicker.getJFormattedTextField().setBackground(new Color(255, 255, 255));
@@ -340,7 +341,7 @@ public class DisplayPatientManage {
 					
 //					int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText()); // changed to Long
 //					int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText()); // changed to Long
-					int _textFieldDOB = Integer.parseInt(textFieldDOB.getText());
+					int _textFieldDOB = convertDate(datePicker);
 					
 					long _textFieldHCNumber = Long.parseLong(textFieldHCNumber.getText());
 					long _textFieldPhoneNumber = Long.parseLong(textFieldPhoneNumber.getText());
@@ -361,6 +362,10 @@ public class DisplayPatientManage {
 					
 //					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
 					
+				}
+				catch(IllegalArgumentException argExc) { //catch any exceptions and show popup error
+					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					JOptionPane.showMessageDialog(frame,argExc.getMessage(),"Invalid input",  JOptionPane.WARNING_MESSAGE);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
 					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
@@ -428,21 +433,9 @@ public class DisplayPatientManage {
 		panel.add(scrollPane);
 		table = new JTable();
 		
-		/*table = new JTable(patients, columns){
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-		      public Component prepareRenderer(TableCellRenderer renderer, int row,
-		          int col) {
-		        Component comp = super.prepareRenderer(renderer, row, col);
-		        ((JLabel) comp).setHorizontalAlignment(JLabel.LEFT);
-		        return comp;
-		      }
-		    };*/
 		table.setFont(new Font("Monospaced", Font.PLAIN, 14));
 
-		//scrollPane.setViewportView(table);
+
 		
 	}
 	
@@ -460,8 +453,7 @@ public class DisplayPatientManage {
 			patients[i][4] = String.format("%-10s", pList.get(i).getDateOfBirth());
 
 		}
-		//System.out.println("patients: " + patients[0][0] + " " + patients[0][1] + " " + patients[0][2]);
-		//table = new JTable(patients, columns);
+
 		table = new JTable(patients, columns);
 		((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.LEFT);
 		table.setEnabled(false);
@@ -469,16 +461,21 @@ public class DisplayPatientManage {
 		
 	}
 	
-	public static int convertDate(Date date) throws Exception {
+	public static int convertDate(JDatePickerImpl datePicker) throws Exception {
 		Date currentDate = new Date();
-		if(date.after(currentDate)) {
+		Date selectedDate = ((Date) datePicker.getModel().getValue());
+		if(selectedDate.after(currentDate)) {
 			throw new IllegalArgumentException("Invalid date is selected");
 		}
-		return 0;
+		//Date date = ((Date) datePicker.getModel().getValue());
+		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
+		String stringDate = fm.format(selectedDate);
+
+		return Integer.parseInt(stringDate);
 	}
 	
 	
-	public static void main(String[] args) {	//for test purpose
+	/*public static void main(String[] args) {	//for test purpose
 		try {
 			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
@@ -486,5 +483,5 @@ public class DisplayPatientManage {
 			e.printStackTrace();
 		}
 		DisplayPatientManage.displayPatientManage(new JFrame());
-	}
+	}*/
 }
