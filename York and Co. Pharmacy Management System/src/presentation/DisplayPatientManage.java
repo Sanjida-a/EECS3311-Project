@@ -475,7 +475,7 @@ public class DisplayPatientManage {
 	}
 	
 	
-	public static void main(String[] args) {	//for test purpose
+	/*public static void main(String[] args) {	//for test purpose
 		try {
 			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
@@ -483,5 +483,5 @@ public class DisplayPatientManage {
 			e.printStackTrace();
 		}
 		DisplayPatientManage.displayPatientManage(new JFrame());
-	}
+	}*/
 }
