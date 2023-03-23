@@ -2,7 +2,11 @@ package presentation;
 
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
+
+import middleLayer.Orders.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -108,6 +112,7 @@ public class DisplaySeeOrders implements ActionListener{
 		frame.repaint();
 		frame.revalidate();
 	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -120,18 +125,37 @@ public class DisplaySeeOrders implements ActionListener{
 			frame.dispose();
 		}
 		else if(action.compareTo("Search") == 0) {
+
+			long healthCardID = Long.parseLong(textFieldHCN.getText());
+
+        		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+        		try {
+        			textAreaOutput.setText("");
+					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
+					
+					for(String s : resultPurchaseHistory) {
+						textAreaOutput.append(s);
+					}
+					
+					double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(healthCardID);
+					textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+        	}
+        
 			//invoke searchOrderByPatientID here
 			
 			//textFieldTotalSpent.setText(Total_Spent_result);
 			//textAreaOutput.setText(with_result);
 		}
-	}
 	
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		DisplaySeeOrders.displaySeeOrders(new JFrame());
+	
+	// public static void main(String[] args) {
+	// 	// TODO Auto-generated method stub
+	// 	DisplaySeeOrders.displaySeeOrders(new JFrame());
 
 
-	}*/
+	// }
 }
 
