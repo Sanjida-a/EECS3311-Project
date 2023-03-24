@@ -13,6 +13,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import databaseDAO.superDAO;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Orders.*;
 
@@ -32,7 +33,7 @@ public class DisplayAddOrder implements ActionListener {
 	private static ListOfOrders listOfOrders = ListOfOrders.getInstance();
 	private static JLabel lbNotice;
 
-	public static void displayAddOrder(JFrame previous) {
+	public static void displayAddOrder(JFrame previous, String command) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
 		frame = new JFrame("Add order");
@@ -41,20 +42,20 @@ public class DisplayAddOrder implements ActionListener {
 		frame.setSize(new Dimension(600,400));
 		frame.setPreferredSize(new Dimension(600, 400));
 		frame.getContentPane().setLayout(null);
-		DisplayAddOrder.createContentsPanel(superFrame);
+		DisplayAddOrder.createContentsPanel(superFrame, command);
 		
 		frame.setVisible(true);
 	}
 	
-	public static void createContentsPanel(JFrame superFrame) {
+	public static void createContentsPanel(JFrame superFrame, String command) {
 		JPanel panelAddOrder = new JPanel();
 		panelAddOrder.setFont(new Font("굴림", Font.PLAIN, 15));
 		panelAddOrder.setBounds(12, 10, 562, 343);
 		frame.getContentPane().add(panelAddOrder);
 		panelAddOrder.setLayout(null);
-		createLabels(panelAddOrder);
-		createButtons(panelAddOrder);
-		createInputFields(panelAddOrder);
+		createLabels(panelAddOrder, command);
+		createButtons(panelAddOrder, command);
+		createInputFields(panelAddOrder, command);
 		
 		
 		lbNotice = new JLabel("");
@@ -65,7 +66,7 @@ public class DisplayAddOrder implements ActionListener {
         panelAddOrder.add(lbNotice);
 	}
 	
-	public static void createLabels(JPanel panel) {
+	public static void createLabels(JPanel panel, String command) {
 		JLabel lblPatientID = new JLabel("HealthCard#");
         lblPatientID.setFont(new Font("굴림", Font.BOLD, 18));
         lblPatientID.setBounds(0, 0, 150, 35);
@@ -75,45 +76,49 @@ public class DisplayAddOrder implements ActionListener {
         lblMercID.setFont(new Font("굴림", Font.BOLD, 18));
         lblMercID.setBounds(0, 45, 150, 35);
         panel.add(lblMercID);
-        
-        JLabel lblQty = new JLabel("Qty Bought");
-        lblQty.setFont(new Font("굴림", Font.BOLD, 18));
-        lblQty.setBounds(0, 100, 180, 35);
-        panel.add(lblQty);
-        
-        JLabel lblRefill = new JLabel("Prescribed Refills");
-        lblRefill.setFont(new Font("굴림", Font.BOLD, 18));
-        lblRefill.setBounds(300, 100, 180, 35);
-        panel.add(lblRefill);
+        if(command.equals("AddOrder")) {
+	        JLabel lblQty = new JLabel("Qty Bought");
+	        lblQty.setFont(new Font("굴림", Font.BOLD, 18));
+	        lblQty.setBounds(0, 100, 180, 35);
+	        panel.add(lblQty);
+        }
+        if(command.equals("AddPrescription")) {
+	        JLabel lblRefill = new JLabel("Prescribed Refills");
+	        lblRefill.setFont(new Font("굴림", Font.BOLD, 18));
+	        lblRefill.setBounds(0, 100, 180, 35);
+	        panel.add(lblRefill);
+        }
 	}
 	
-	public static void createButtons(JPanel panel) {
+	public static void createButtons(JPanel panel, String command) {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("굴림", Font.BOLD, 18));
 		btnCancel.setBounds(437, 308, 125, 35);
 		btnCancel.addActionListener(new DisplayAddOrder());
 		panel.add(btnCancel);
-		
-		JButton btnAdjustRefill = new JButton("Give refill for a prescription");
-        btnAdjustRefill.setFont(new Font("굴림", Font.BOLD, 18));
-        btnAdjustRefill.setBounds(0, 308, 318, 35);
-        btnAdjustRefill.addActionListener(new DisplayAddOrder());
-        panel.add(btnAdjustRefill);
-
-        JButton btnAddOTCOrder = new JButton("Add OTC order");
-        btnAddOTCOrder.setFont(new Font("굴림", Font.BOLD, 18));
-        btnAddOTCOrder.setBounds(0, 262, 318, 35);
-        btnAddOTCOrder.addActionListener(new DisplayAddOrder());
-        panel.add(btnAddOTCOrder);
-
-		JButton btnAddPresOrder = new JButton("Add prescription form");
-        btnAddPresOrder.setFont(new Font("굴림", Font.BOLD, 18));
-        btnAddPresOrder.setBounds(0, 216, 318, 35);
-        btnAddPresOrder.addActionListener(new DisplayAddOrder());
-        panel.add(btnAddPresOrder);
+		if(command.equals("AddOrder")) {
+			JButton btnAdjustRefill = new JButton("Give refill for a prescription");
+	        btnAdjustRefill.setFont(new Font("굴림", Font.BOLD, 18));
+	        btnAdjustRefill.setBounds(0, 308, 318, 35);
+	        btnAdjustRefill.addActionListener(new DisplayAddOrder());
+	        panel.add(btnAdjustRefill);
+	
+	        JButton btnAddOTCOrder = new JButton("Add OTC order");
+	        btnAddOTCOrder.setFont(new Font("굴림", Font.BOLD, 18));
+	        btnAddOTCOrder.setBounds(0, 262, 318, 35);
+	        btnAddOTCOrder.addActionListener(new DisplayAddOrder());
+	        panel.add(btnAddOTCOrder);
+		}
+        if(command.equals("AddPrescription")) {
+			JButton btnAddPresOrder = new JButton("Add prescription form");
+	        btnAddPresOrder.setFont(new Font("굴림", Font.BOLD, 18));
+	        btnAddPresOrder.setBounds(0, 308, 318, 35);
+	        btnAddPresOrder.addActionListener(new DisplayAddOrder());
+	        panel.add(btnAddPresOrder);
+        }
 	}
 	
-	public static void createInputFields(JPanel panel) {
+	public static void createInputFields(JPanel panel, String command) {
 		textFieldPatientID = new JTextField();
         textFieldPatientID.setFont(new Font("굴림", Font.PLAIN, 15));
         textFieldPatientID.setBounds(150, 0, 412, 35);
@@ -125,19 +130,21 @@ public class DisplayAddOrder implements ActionListener {
         textFieldMercID.setBounds(150, 45, 412, 35);
         panel.add(textFieldMercID);
         textFieldMercID.setColumns(10);
-        
-        textFieldQty = new JTextField();
-        textFieldQty.setFont(new Font("굴림", Font.PLAIN, 15));
-        textFieldQty.setBounds(0, 130, 150, 35);
-        panel.add(textFieldQty);
-        textFieldQty.setColumns(10);
+        if(command.equals("AddOrder")) {
+	        textFieldQty = new JTextField();
+	        textFieldQty.setFont(new Font("굴림", Font.PLAIN, 15));
+	        textFieldQty.setBounds(0, 130, 150, 35);
+	        panel.add(textFieldQty);
+	        textFieldQty.setColumns(10);
+        }
 
-        
-        textFieldRefill = new JTextField();
-        textFieldRefill.setFont(new Font("굴림", Font.PLAIN, 15));
-        textFieldRefill.setBounds(300, 130, 150, 35);
-        panel.add(textFieldRefill);
-        textFieldRefill.setColumns(10);
+        if(command.equals("AddPrescription")) {
+	        textFieldRefill = new JTextField();
+	        textFieldRefill.setFont(new Font("굴림", Font.PLAIN, 15));
+	        textFieldRefill.setBounds(0, 130, 150, 35);
+	        panel.add(textFieldRefill);
+	        textFieldRefill.setColumns(10);
+        }
 	}
 	
 	@Override
@@ -227,8 +234,15 @@ public class DisplayAddOrder implements ActionListener {
 	}	
 	
 	/*public static void main(String[] args) {
-		DisplayAddOrder.displayAddOrder(new JFrame());
+		try {
+			superDAO.setPassword("Motp1104#");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DisplayAddOrder.displayAddOrder(new JFrame(), "AddOrder");
 	}*/
+	
 	
 
 }
