@@ -250,7 +250,7 @@ public class DisplayInitialScreen{
         
 
         JPanel panelVisibleToAdminSub1 = new JPanel();
-        panelVisibleToAdminSub1.setBounds(1001, 98, 170, 366);
+        panelVisibleToAdminSub1.setBounds(1001, 98, 170, 407);
         totalGUI.add(panelVisibleToAdminSub1);
         panelVisibleToAdminSub1.setLayout(null);
         
@@ -460,13 +460,14 @@ public class DisplayInitialScreen{
         totalGUI.add(panelVisibleToAdminSub1);
         
         JButton btnAddOrder = new JButton("<html>Add<br>Order</html>");
+        btnAddOrder.setActionCommand("AddOrder");
         btnAddOrder.setFont(new Font("굴림", Font.BOLD, 18));
-        btnAddOrder.setBounds(0, 70, 170, 60);
+        btnAddOrder.setBounds(0, 140, 170, 60);
         btnAddOrder.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DisplayAddOrder.displayAddOrder(frame);
+				DisplayAddOrder.displayAddOrder(frame, e.getActionCommand());
 
 			}
         	
@@ -475,7 +476,7 @@ public class DisplayInitialScreen{
         
         JButton btnModifyItem = new JButton("<html>Modify<br>Item</html>");
         btnModifyItem.setFont(new Font("굴림", Font.BOLD, 18));
-        btnModifyItem.setBounds(0, 140, 170, 60);
+        btnModifyItem.setBounds(0, 70, 170, 60);
         btnModifyItem.addActionListener(new ActionListener() {
 
 			@Override
@@ -490,7 +491,7 @@ public class DisplayInitialScreen{
     	JButton btnSeeOrders = new JButton("<html>See<br>Orders</html>");
     	btnSeeOrders.setActionCommand("SeeOrders");
     	btnSeeOrders.setFont(new Font("굴림", Font.BOLD, 18));
-    	btnSeeOrders.setBounds(0, 210, 170, 60);
+    	btnSeeOrders.setBounds(0, 277, 170, 60);
     	btnSeeOrders.addActionListener(new ActionListener() {
 
 			@Override
@@ -502,11 +503,26 @@ public class DisplayInitialScreen{
     	});
     	panelVisibleToAdminSub1.add(btnSeeOrders);
     	
+    	JButton btnAddPrescription = new JButton("<html>Add<br>Prescription</html>");
+    	btnAddPrescription.setActionCommand("AddPrescription");
+    	btnAddPrescription.setHorizontalTextPosition(SwingConstants.CENTER);
+    	btnAddPrescription.setFont(new Font("굴림", Font.BOLD, 18));
+    	btnAddPrescription.setBounds(0, 210, 170, 57);
+    	btnAddPrescription.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DisplayAddOrder.displayAddOrder(frame, e.getActionCommand());
+			}
+    		
+    	});
+    	panelVisibleToAdminSub1.add(btnAddPrescription);
 
         if(userType == USER.OWNER || userType == USER.DEVELOPER) {
         	JButton btnSeeReport = new JButton("See Report");
         	btnSeeReport.setFont(new Font("굴림", Font.BOLD, 18));
-	        btnSeeReport.setBounds(0, 280, 170, 60);
+	        btnSeeReport.setBounds(0, 347, 170, 60);
 	        btnSeeReport.addActionListener(new ActionListener() {
 	
 	            @Override
@@ -518,6 +534,8 @@ public class DisplayInitialScreen{
 
 	        });
         	panelVisibleToAdminSub1.add(btnSeeReport);
+        	
+        	
         	
 
        }
