@@ -116,7 +116,8 @@ public class ListOfOrders {
 //		this.updateOrderListFromDatabase();
 //	}
 	
-	public void addOrderToDatabase(Order o) throws Exception {
+	// returns whether need to output low in stock reminder
+	public boolean addOrderToDatabase(Order o) throws Exception {
 	
 		//Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
 		if (o.quantityBought <= 0) {
@@ -148,8 +149,10 @@ public class ListOfOrders {
 	//		_orderDAO.addToPrescriptionTable(p);
 	//	}
 		
-		merList.decreaseQuantity(mFound.getMedicationID(), o.getQuantityBought());
+		boolean lowInStockReminder = merList.decreaseQuantity(mFound.getMedicationID(), o.getQuantityBought());
 		this.updateOrderListFromDatabase();
+		
+		return lowInStockReminder;
 	}
 	public void addPresOrderToDb(Prescription p) throws Exception {
 //		if(p.getOriginalNumOfRefills() == 0){
@@ -185,8 +188,8 @@ public class ListOfOrders {
 		this.updateOrderListFromDatabase();
 	}
 
-
-	public void addRefillToDatabase(Order o) throws Exception {
+	// returns whether need to output low in stock reminder
+	public boolean addRefillToDatabase(Order o) throws Exception {
 		
 		Boolean prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
 		
@@ -213,9 +216,11 @@ public class ListOfOrders {
 		o.setTotalPriceOfOrder(getMer.getPrice()*o.quantityBought);
 		
 		_orderDAO.addRefillToOrderTable(o);
-		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
+		
+		boolean lowInStockReminder = merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
 		this.updateOrderListFromDatabase();
-
+		
+		return lowInStockReminder;
 	}
 	
 	// aiza added for easy access
@@ -326,26 +331,26 @@ public class ListOfOrders {
 		
 		if (presOfPatient.isEmpty()) {
 			if (userType == USER.OWNER || userType == USER.PHARMACIST) {
-				refillsDetails.add("Patient with health card number " + healthCardID + " has not made any prescription orders.");
+				refillsDetails.add("Patient with health card number " + healthCardID + " does not have any prescription forms in the system.");
 			}
 			else {
-				refillsDetails.add("You have not made any prescription orders.");
+				refillsDetails.add("You have not entered any prescription forms into the system.");
 			}
 			return refillsDetails;
 		}
 		
 		if (userType == USER.OWNER || userType == USER.PHARMACIST) {
-			refillsDetails.add("PRESCRIPTION ORDER HISTORY OF PATIENT WITH HEALTH CARD NUMBER " + healthCardID + "\n\n");
+			refillsDetails.add("PRESCRIPTION FORM HISTORY OF PATIENT WITH HEALTH CARD NUMBER " + healthCardID + "\n\n");
 		}
 		else {
-			refillsDetails.add("YOUR PRESCRIPTION ORDERS:\n\n");
+			refillsDetails.add("YOUR PRESCRIPTION FORMS:\n\n");
 		}
 		
 		int presNum = 1;
 		Merchandise associatedMedication = null;
 		for (Prescription p : presOfPatient) {
 			String oneFullOrder = "";
-			oneFullOrder += "ORDER #" + presNum + "\n";
+			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
 			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + _orderDAO.numOfRefill(healthCardID, p.getMedicationID()); 
 			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
 			

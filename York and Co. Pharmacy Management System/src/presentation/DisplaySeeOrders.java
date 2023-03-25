@@ -78,14 +78,14 @@ public class DisplaySeeOrders implements ActionListener{
 		btnClose.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnClose);
 		
-		JButton btnSearch = new JButton("Search All");
+		JButton btnSearch = new JButton("See All Orders");
 		btnSearch.setFont(new Font("굴림", Font.BOLD, 18));
 		btnSearch.setBounds(390, 19, 230, 35);
 		btnSearch.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnSearch);
 		frame.revalidate();
 
-		JButton btnSearch2 = new JButton("Search Prescription");
+		JButton btnSearch2 = new JButton("See Prescription Forms");
 		btnSearch2.setFont(new Font("굴림", Font.BOLD, 18));
 		btnSearch2.setBounds(390, 60, 230, 35);
 		btnSearch2.addActionListener(new DisplaySeeOrders());
@@ -139,7 +139,7 @@ public class DisplaySeeOrders implements ActionListener{
 			superFrame.toFront();
 			frame.dispose();
 		}
-		else if(action.compareTo("Search All") == 0) {
+		else if(action.compareTo("See All Orders") == 0) {
         		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
         		try {
 					String _textFieldHCN = textFieldHCN.getText();
@@ -165,11 +165,13 @@ public class DisplaySeeOrders implements ActionListener{
 				}
 				textFieldTotalSpent.setText(Double.toString(val));
         	}
-        else if(action.compareTo("Search Prescription") == 0){
+        else if(action.compareTo("See Prescription Forms") == 0){
 			ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
         		try {
-					if (textFieldHCN.getText().isEmpty()) 
+        			String _textFieldHCN = textFieldHCN.getText();
+					if (_textFieldHCN.isEmpty()) 
 						throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
+					
 					long healthCardID = Long.parseLong(textFieldHCN.getText());
 					textAreaOutput.setText("");
 					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputPresRefill(healthCardID, USER.OWNER);

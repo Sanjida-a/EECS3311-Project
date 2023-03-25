@@ -66,3 +66,9 @@
 
 17. 2023/3/23 00:00-02:15   contributor: Minh Tran
 *Worked on number of refills left detailed story.
+
+18. 2023/3/24 1:00 - 00:00 2023/3/25   contributor: Aiza Bajwa
+*Fixed exception handling for all classes in presentation layer and methods in logic layer accordingly
+*made neater try catch blocks by adding more types of exceptions to cover all possible errors during user input
+*made return types of methods void instead of boolean/boolean[] in logic layer and replaced them with throwing exceptions instead
+*created new Exception class: NegativeInputException

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
+import middleLayer.NegativeInputException;
 import middleLayer.MerchandiseInventory.*;
 
 import javax.swing.JButton;
@@ -144,71 +145,113 @@ public class DisplayModifyMerchandise implements ActionListener{
 			}
 			
 			else{
+				//				errorMessage = "MediciationID is required";
+				int _textFieldMercID = 0;
+				try {
+					String stringMercID = textFieldMercID.getText();
+					
+					if (stringMercID.isEmpty()) {
+						throw new NullPointerException("MediciationID is required. Please enter one");
+					}
+					_textFieldMercID = Integer.parseInt(stringMercID);
+				}
+				catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame,"Merchandise ID must be an integer", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
 				
-				
-				errorMessage = "MediciationID is required";
-				int _textFieldMercID = Integer.parseInt(textFieldMercID.getText());
-				
-				Boolean result = true;
-				
-			
+//				Boolean result = true;
 				
 				if (actionCommand.equals("Change name")) {
-					String _textFieldName = textFieldName.getText().toUpperCase();
-					
-					if (_textFieldName.isEmpty()) { // ensures a medication name has been entered
-						errorMessage = "MedicationID and/or Name are needed";
-						throw new Exception(); 
-					}
 					try {
-						result = inv.modifyMedicationName(_textFieldMercID, _textFieldName);
-	
+						String _textFieldName = textFieldName.getText().toUpperCase();
+						
+						if (_textFieldName.isEmpty()) { // ensures a medication name has been entered
+							throw new NullPointerException("Name is required. Please enter a name."); 
+						}
+//						try {
+						inv.modifyMedicationName(_textFieldMercID, _textFieldName);
+		
+//						}
 					}
-					catch (Exception e1) {
-						// popup
-						errorMessage = "Already exists";
-						JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
+					catch (NullPointerException exception) {
+						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (Exception exception) {
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					
 				}
+				
 				else if(actionCommand.equals("Change Price")) {
-					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
-					double _textFieldPrice = Double.parseDouble(textFieldPrice.getText());
+//					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
+					
+					try {
+						String stringPrice = textFieldPrice.getText();
+						
+						if (stringPrice.isEmpty()) {
+							throw new NullPointerException("Price is required. Please enter a price."); 
+						}
+						
+						double _textFieldPrice = Double.parseDouble(stringPrice); //throws NumberFormatException if not an int/double
+//						try {
+						inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
+//							}
+//							catch (Exception e2) {
+//								JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
+//							}
+					} 
+					catch (NullPointerException exception) {
+						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (NumberFormatException exception) {
+						JOptionPane.showMessageDialog(frame,"Price must be an integer or double", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (NegativeInputException exception) {
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (Exception exception) {
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
 					//invoke method(s) for modifying Merchandise here
 				/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
 					throw new Exception(); // ensures a first name, last name and address have been entered				
 				}*/
-					try {
-					result = inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-					}
-					catch (Exception e2) {
-						JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
-					}
 					
 				}
 				else if(actionCommand.equals("Change Description")) {
-					String _textAreaDescription = textAreaDescription.getText();
-					
-					if (_textAreaDescription.isEmpty()) { // ensures a description has been entered
-						errorMessage = "MedicationID and/or Description are needed";
-						throw new Exception(); 
-					}
 					try {
-						result = inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
+						String _textAreaDescription = textAreaDescription.getText();
 						
-						
+						if (_textAreaDescription.isEmpty()) { // ensures a description has been entered
+							throw new NullPointerException("Description is required. Please enter a description."); 
+						}
+//						try {
+						inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
+//							
+//							
+//						}
+//						catch(Exception ex) {
+//							
+//						}
 					}
-					catch(Exception ex) {
-						
+					catch (NullPointerException exception) {
+						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
+					catch (Exception exception) {
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					
 				}
 				
-				if (result == false) {
-					// popup
-					errorMessage = "MedicationID Does Not Exist in Inventory";
-					
-					JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
+//				if (result == false) {
+//					// popup
+//					errorMessage = "MedicationID Does Not Exist in Inventory";
+//					
+//					JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
+//				}
 			}
 			
 			

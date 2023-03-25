@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 
 import databaseDAO.UserData.UserDAO;
 import databaseDAO.UserData.UserRoot;
+import middleLayer.NegativeInputException;
 import middleLayer.Orders.Order;
 import presentation.USER;
 
@@ -118,16 +119,20 @@ public class ListOfUsers {
 	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
 		
-		if (dateOfBirth < 0) {
-			throw new Exception("Date Of Birth has to be a non-negative number");
+		if (_textFieldHCNumber < 0) {
+			throw new NegativeInputException("Health card number must be a positive number");
+		}
+		
+		if (_textFieldPhoneNumber < 0) {
+			throw new NegativeInputException("Phone number must be a positive number");
 		}
 		
 		if (!((1000000000 <= _textFieldHCNumber) && (_textFieldHCNumber <= 9999999999L))) {
-			throw new Exception("Health Card Number must be a positive, 10 digit number");
+			throw new Exception("Health Card Number must be a 10 digit number");
 		}
 		
 		if (!((1000000000 <= _textFieldPhoneNumber) && (_textFieldPhoneNumber <= 9999999999L))) {
-			throw new Exception("Phone Number must be a positive, 10 digit number");
+			throw new Exception("Phone Number must be a 10 digit number");
 		}
 		
 		Patient newPatient = new Patient(firstName.toUpperCase(), lastName.toUpperCase(), address.toUpperCase(), _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
@@ -141,9 +146,61 @@ public class ListOfUsers {
 		updatePatientListFromDatabase();
 	}
 	
+//	// modifies the details of the patient
+//		// OCP Followed (all in 1 method instead of 4 methods)
+//	public boolean modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
+//		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
+//		
+//		String[] inputsAsStrings = new String[4];
+//		
+//		inputsAsStrings[0] = fName.getText().toUpperCase();
+//		inputsAsStrings[1] = lName.getText().toUpperCase();
+//		inputsAsStrings[2] = phoneNum.getText();
+//		inputsAsStrings[3] = address.getText().toUpperCase();
+//
+//		Patient specificPatient = this.searchPatientWithID(patientHealthCard); // checks if patient with that healthcardNum exists in system
+//		
+//		if (specificPatient == null) { // if such patient doesn't exist, can't modify details
+//    		return false;
+//    	}
+//		
+//		// if all textboxes left empty, nothing to modify --> exception for popup in front end
+//		if (inputsAsStrings[0].isEmpty() && inputsAsStrings[1].isEmpty() && inputsAsStrings[2].isEmpty() && inputsAsStrings[3].isEmpty()) { 
+//			throw new Exception("One of fName, lName, PhoneNum is required");
+//		}
+//		
+//		// 4 if's below make sure to update the patients accordingly based on whether anything was typed in for any of the textboxes
+//		if (!(inputsAsStrings[0].isEmpty())) {
+//			specificPatient.setFirstName(inputsAsStrings[0]);
+//		}
+//		
+//		if (!(inputsAsStrings[1].isEmpty())) {
+//			specificPatient.setLastName(inputsAsStrings[1]);
+//		}
+//		if (!(inputsAsStrings[2].isEmpty())) {
+//			if (!((1000000000 <= Long.parseLong(inputsAsStrings[2])) && (Long.parseLong(inputsAsStrings[2]) <= 9999999999L))) {
+//				throw new Exception("Phone Number must be a positive, 10 digit number");
+//			}
+//			specificPatient.setPhoneNum(Long.parseLong(inputsAsStrings[2]));
+//		}
+//		
+//		if (!(inputsAsStrings[3].isEmpty())) {
+//			specificPatient.setAddress(inputsAsStrings[3]);
+//		}
+//    	
+//    	// modify database accordingly
+//    	_userDAO.updatePatientInDatabase(patientHealthCard, specificPatient);
+//    	
+//    	//once database is updated, also updated this class's list variable by reading from the database
+//    	updatePatientListFromDatabase();
+//    	
+//    	return true;
+//    }
+	
 	// modifies the details of the patient
-		// OCP Followed (all in 1 method instead of 4 methods)
-	public boolean modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
+	// OCP Followed (all in 1 method instead of 4 methods)
+	// AIZA UPDATED VERSION TO FIX RETURN VALUE & EXCEPTIONS 
+	public void modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
 		
 		String[] inputsAsStrings = new String[4];
@@ -156,12 +213,12 @@ public class ListOfUsers {
 		Patient specificPatient = this.searchPatientWithID(patientHealthCard); // checks if patient with that healthcardNum exists in system
 		
 		if (specificPatient == null) { // if such patient doesn't exist, can't modify details
-    		return false;
+			throw new Exception("Unsuccessful");
     	}
 		
 		// if all textboxes left empty, nothing to modify --> exception for popup in front end
 		if (inputsAsStrings[0].isEmpty() && inputsAsStrings[1].isEmpty() && inputsAsStrings[2].isEmpty() && inputsAsStrings[3].isEmpty()) { 
-			throw new Exception("One of fName, lName, PhoneNum is required");
+			throw new Exception("One of fName, lName, PhoneNum is required. Please fill in at least one of them.");
 		}
 		
 		// 4 if's below make sure to update the patients accordingly based on whether anything was typed in for any of the textboxes
@@ -172,11 +229,16 @@ public class ListOfUsers {
 		if (!(inputsAsStrings[1].isEmpty())) {
 			specificPatient.setLastName(inputsAsStrings[1]);
 		}
+		
 		if (!(inputsAsStrings[2].isEmpty())) {
-			if (!((1000000000 <= Long.parseLong(inputsAsStrings[2])) && (Long.parseLong(inputsAsStrings[2]) <= 9999999999L))) {
-				throw new Exception("Phone Number must be a positive, 10 digit number");
+			long longPhoneNum = Long.parseLong(inputsAsStrings[2]); // throws numberFormatException if not a long
+			if (longPhoneNum < 0) {
+				throw new NegativeInputException("Phone number must be a positive number");
 			}
-			specificPatient.setPhoneNum(Long.parseLong(inputsAsStrings[2]));
+			if (!((1000000000 <= longPhoneNum) && (longPhoneNum <= 9999999999L))) {
+				throw new Exception("Phone Number must be a 10 digit number");
+			}
+			specificPatient.setPhoneNum(longPhoneNum);
 		}
 		
 		if (!(inputsAsStrings[3].isEmpty())) {
@@ -189,18 +251,13 @@ public class ListOfUsers {
     	//once database is updated, also updated this class's list variable by reading from the database
     	updatePatientListFromDatabase();
     	
-    	return true;
     }
 	
 	// OCP followed to allow search by any type of name (first, last, or both) in 1 method
 	// searches and returns list of patients in system that have same entered name
 	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
-		
-		if (patientName.isEmpty()) {
-			throw new Exception("input field is empty"); // ensures something is entered 
-		}
-		
+	
 		ArrayList<Patient> searchResult = new ArrayList <Patient> ();
 		
 		if (typeOfSearch.equals("FirstName")) {

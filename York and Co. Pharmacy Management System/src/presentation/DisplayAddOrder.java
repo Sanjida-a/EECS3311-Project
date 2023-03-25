@@ -170,46 +170,60 @@ public class DisplayAddOrder implements ActionListener {
 					qty = Integer.parseInt(textFieldQty.getText()) ;					
 					Order newOrder = new Order(medID, patientID, qty);         // 
 //					String refillMess = "Number of refills needed!";
-					if(textFieldRefill.getText().isBlank()){
-						refills = 0;						
-					}
-					else{
-//						refills = Integer.parseInt(textFieldRefill.getText());
-						throw new Exception("Only enter quantity bought for refill order!");
-					}
+//					if(textFieldRefill.getText().isBlank()){
+//						refills = 0;						
+//					}
+//					else{
+////						refills = Integer.parseInt(textFieldRefill.getText());
+//						throw new Exception("Only enter quantity bought for refill order!");
+//					}
 					
 					//call method for giving a patient refill order
-					listOfOrders.addRefillToDatabase(newOrder);
+					Boolean lowInStock = listOfOrders.addRefillToDatabase(newOrder);
 					lbNotice.setText("Refill is given successfully");
-				
+					
+					if (lowInStock == true) {
+						JOptionPane.showMessageDialog(frame,"Medication with ID: " + medID + " is low on stock, please reorder!", "Warning", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 				else if(e.getActionCommand().equals("Add OTC order")) { // for OTC order 
 					qty = Integer.parseInt(textFieldQty.getText()) ;					
 					Order newOrder = new Order(medID, patientID, qty);
-					if(textFieldRefill.getText().isBlank()){
-						refills = 0;
-					}
-					else{
+//					if(textFieldRefill.getText().isBlank()){
+//						refills = 0;
+//					}
+//					else{
 //						refills = Integer.parseInt(textFieldRefill.getText());
-						throw new Exception ("Only enter quantity bought for OTC order!");
-					}
+//						throw new Exception ("Only enter quantity bought for OTC order!");
+//					}
 					//call method for adding new order to a patient
 				//	Prescription potentialPrescription = new Prescription(medID, patientID, refills);
 					
-					listOfOrders.addOrderToDatabase(newOrder);
+					Boolean lowInStock = listOfOrders.addOrderToDatabase(newOrder);
 					lbNotice.setText("Add OTC successfull");
+					
+					if (lowInStock == true) {
+						JOptionPane.showMessageDialog(frame,"Medication with ID: " + medID + " is low on stock, please reorder!", "Warning", JOptionPane.WARNING_MESSAGE);
+					}
 
 				}
 				else if(e.getActionCommand().equals("Add prescription form")) { // for new prescription
-					if(textFieldRefill.getText().isBlank()){
-						refills = 0;
+					String stringPresRefills = textFieldRefill.getText();
+					
+
+					// if any input field is left empty, throw exception
+					if (stringPresRefills.isEmpty()) {
+						throw new NullPointerException(); 
 					}
-					else{
-						refills = Integer.parseInt(textFieldRefill.getText());
-					}
-					if (!textFieldQty.getText().isBlank() ) {
-						throw new Exception ("No quantity bought for new prescription!");
-					}					
+//					if(textFieldRefill.getText().isBlank()){
+//						refills = 0; // MINH IS THIS DEFAULT BEHAVIOUR WITH TWO DIFF SCREENS?
+//					}
+//					else{
+					refills = Integer.parseInt(textFieldRefill.getText());
+//					}
+//					if (!textFieldQty.getText().isBlank() ) {
+//						throw new Exception ("No quantity bought for new prescription!");
+//					}					
 //					if ((refills == 0 && qty == 0) || (qty > refills)){
 //						String errPres = "Check quantity and refills!";
 //						throw new Exception (errPres);
@@ -223,6 +237,9 @@ public class DisplayAddOrder implements ActionListener {
 					lbNotice.setText("Add prescription successfull");
 
 				}
+			}
+			catch (NullPointerException exception) {
+				JOptionPane.showMessageDialog(frame,"Some fields are empty and they are required. Please enter both fields", "Invalid input", JOptionPane.WARNING_MESSAGE);
 			}
 			catch (NumberFormatException nFEx) {
 				JOptionPane.showMessageDialog(frame, "One or more fields are blank. Please fill it.", "Warning",  JOptionPane.WARNING_MESSAGE);

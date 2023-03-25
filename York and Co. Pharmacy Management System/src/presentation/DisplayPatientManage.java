@@ -33,6 +33,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import databaseDAO.superDAO;
+import middleLayer.NegativeInputException;
 import middleLayer.Users.*;
 
 
@@ -140,29 +141,31 @@ public class DisplayPatientManage {
 					//addPatient is bound to success
 					lblNotice.setText("");
 					String _textFieldSearchKeyword = textFieldSearchKeyword.getText().toUpperCase();
+				
+					// throws an exception if search input box is empty
+					if (_textFieldSearchKeyword.isEmpty()) {
+						throw new NullPointerException(); // ensures something is entered 
+					}
 					
-					// moved below to searchPatientByName method
-//					if (_textFieldSearchKeyword.isEmpty()) {
-//						throw new Exception(); // ensures something is entered 
-//					}
 					
-//					Owner o1 = new Owner(1,1);
+					ArrayList<Patient> searchResult = new ArrayList<Patient>();
 					
-					ArrayList<Patient> searchResult;
-					
-					//Daniel can you please add the drop down and use the drop down to send as parameter instead of the hardcoded string
 					searchResult = listOfUsersInstance.searchPatientByName(_textFieldSearchKeyword, (String)comboBox.getSelectedItem());
 					displayList(table, searchResult);
-
 					
+					if (searchResult.isEmpty()) {
+						lblNotice.setText("No patients with that name have been found");
+					}
+					else {
+						lblNotice.setText("See search results below");
+					}
 				}
-				catch(SQLException exception) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
+				catch(NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame, "Search keyword is empty. Input required: type something in the search box", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
-				catch(Exception e2) { //catch any exceptions and show popup error
+				catch(Exception exception) { //catch any exceptions and show popup error
 					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
 			}
@@ -185,6 +188,7 @@ public class DisplayPatientManage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				lblNotice.setText("");
 				displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
 			//	lblNotice.setText("Patient is added successfully");
 			}
@@ -193,7 +197,7 @@ public class DisplayPatientManage {
 		panelPatientList.add(btnRefresh);
 		
 		lblNotice = new JLabel("");
-		lblNotice.setBounds(0, 45, 507, 45);
+		lblNotice.setBounds(0, 45, 1000, 45);
 		panelPatientList.add(lblNotice);
 		lblNotice.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblNotice.setHorizontalAlignment(SwingConstants.LEFT);
@@ -328,48 +332,51 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//call method for add patient
-				try {	//Exception is thrown when insufficient number of arguments is passed to Patient constructor. if all argument is fed, 
-					//addPatient is bound to success
-
+				try {	
+					String stringHCNumber = textFieldHCNumber.getText();
 					String _textFieldFName = textFieldFName.getText().toUpperCase();
 					String _textFieldLName = textFieldLName.getText().toUpperCase();
+					String stringPhoneNumber = textFieldPhoneNumber.getText();
 					String _textFieldAddress = textFieldAddress.getText().toUpperCase();
 					
-					if (_textFieldFName.isEmpty() || _textFieldLName.isEmpty() || _textFieldAddress.isEmpty()) {
-						throw new Exception(); // ensures a first name, last name and address have been entered
+					if (stringHCNumber.isEmpty() || _textFieldFName.isEmpty() || _textFieldLName.isEmpty() || stringPhoneNumber.isEmpty() || _textFieldAddress.isEmpty()) {
+						throw new NullPointerException(); // ensures a HCnumber, first name, last name, phone num and address have been entered
 					}
 					
-//					int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText()); // changed to Long
-//					int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText()); // changed to Long
+					// turned below ints to LONGS
+					// int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText()); // changed to Long
+					// int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText()); // changed to Long
+					
+					// throws NumberFormatException if one of those are not an int/long
+					long _textFieldHCNumber = Long.parseLong(stringHCNumber);
+					long _textFieldPhoneNumber = Long.parseLong(stringPhoneNumber);
+					
+					// throws IllegalArgumentException if DOB chosen is after today's date
 					int _textFieldDOB = convertDate(datePicker);
 					
-					long _textFieldHCNumber = Long.parseLong(textFieldHCNumber.getText());
-					long _textFieldPhoneNumber = Long.parseLong(textFieldPhoneNumber.getText());
-					
-//					Pharmacist p1 = new Pharmacist(1,1);
-					try {
-						listOfUsersInstance.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
-						displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
-						lblNotice.setText("Patient is added successfully");
-					}
-					catch(SQLException exception) { //catch any exceptions and show popup error
-						//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-						JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
-					}
-					catch (Exception e2) {
-						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Incorrect Input", JOptionPane.WARNING_MESSAGE);
-					}
-					
-//					should we make addPatient() return a boolean to see if it was successful or not? what is the case it is not successful in?
+					listOfUsersInstance.addPatient(_textFieldFName, _textFieldLName, _textFieldAddress, _textFieldPhoneNumber, _textFieldHCNumber, _textFieldDOB);
+					displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
+					lblNotice.setText("Patient is added successfully");
+
 					
 				}
-				catch(IllegalArgumentException argExc) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					JOptionPane.showMessageDialog(frame,argExc.getMessage(),"Invalid input",  JOptionPane.WARNING_MESSAGE);
+				catch(NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame, "HealthCardNumber, First name, Last name, Phone Number, and Address are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
-				catch(Exception exception) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
-					JOptionPane.showMessageDialog(frame,"First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				catch(NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame, "HealthCardNumber and Phone Number must be (whole) numbers", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(IllegalArgumentException exception) { 
+					JOptionPane.showMessageDialog(frame, exception.getMessage() + " Please select a valid date that is not in the future","Invalid input",  JOptionPane.WARNING_MESSAGE);
+				}
+				catch(NegativeInputException exception) {
+					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(SQLException exception) {
+					JOptionPane.showMessageDialog(frame,"Duplicated Health Card Number not allowed. A patient with this health card was already found in the system.", "SQL Error", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception exception) {
+					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
 
@@ -386,32 +393,49 @@ public class DisplayPatientManage {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				//invoke method for modify
 				try {
-//					int _textFieldPatientID = Integer.parseInt(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
-					long _textFieldPatientID = Long.parseLong(textFieldHCNumber.getText()); // throws exception if HCNum textbox left empty
-					Boolean result;
-					try {
-						result = listOfUsersInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
-						
-						if (result == false) {
-							// popup that says patient doesn't exist
-							//System.out.println("patient doesn't exist. try again");
-							JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
-						}
-						
-						displayList(table, listOfUsersInstance.getAllPatientsList() );
-						lblNotice.setText("Patient is modified successfully");
+					String stringHCNumber = textFieldHCNumber.getText();
+					
+					if (stringHCNumber.isEmpty()) {
+						throw new NullPointerException(); // ensures a healthcard number is entered
 					}
-					catch (Exception e2) {
-						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-					}
+					
+					// throws NumberFormatException if not an int/long
+					long _textFieldPatientID = Long.parseLong(stringHCNumber);
+//					Boolean result;
+//					try {
+					listOfUsersInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
+						
+//					if (result == false) {
+						// popup that says patient doesn't exist
+						//System.out.println("patient doesn't exist. try again");
+//						JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
+//					}
+						
+					displayList(table, listOfUsersInstance.getAllPatientsList() );
+					lblNotice.setText("Patient is modified successfully. See below");
+//					}
+//					catch (Exception e2) {
+//						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+//					}
 										
 				}
-				catch (Exception e1) {
-					// add popup saying need at least 2 things: HCNum and one of fName, lName, PhoneNum, Add
-					//System.out.println("not enough param");
-					JOptionPane.showMessageDialog(frame,"Healthcard# required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				catch(NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame, "HealthCardNumber is required. Please fill it in", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame, "HealthCardNumber and phone number must be integers", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(NegativeInputException exception) {
+					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (Exception exception) {
+					if (exception.getMessage().compareTo("Unsuccessful") == 0) {
+						lblNotice.setText("Modification unsuccessful. No patient with such health card number exists in the system.");
+					}
+					else {
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
 				}
 				
 			}
@@ -465,7 +489,7 @@ public class DisplayPatientManage {
 		Date currentDate = new Date();
 		Date selectedDate = ((Date) datePicker.getModel().getValue());
 		if(selectedDate.after(currentDate)) {
-			throw new IllegalArgumentException("Invalid date is selected");
+			throw new IllegalArgumentException("Invalid date is selected.");
 		}
 		//Date date = ((Date) datePicker.getModel().getValue());
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");

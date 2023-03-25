@@ -31,6 +31,7 @@ import javax.swing.border.LineBorder;
 
 import databaseDAO.superDAO;
 import middleLayer.Users.*;
+import middleLayer.NegativeInputException;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Orders.*;
 
@@ -138,7 +139,7 @@ public class DisplayInitialScreen{
         			login.displayLogin(frame);
         			
         		}
-        		else {
+        		else { // some one logged in; if they click "log out"
         			frame.dispose();
         			displayInitialScreen(USER.GUEST);
         		}
@@ -274,47 +275,60 @@ public class DisplayInitialScreen{
         btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {	//Exception is thrown when insufficient number of arguments is passed to Merchandise constructor. if all argument is fed, 
-						//addToInventory is bound to success
-
+				try {	
 					String _inputFieldName = inputFieldName.getText().toUpperCase();
-					if (_inputFieldName.isEmpty()) throw new Exception(); // ensures a medication name has been entered
-					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
-					double _inputFieldPrice = Double.parseDouble(inputFieldPrice.getText());
-					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(inputFieldType.getText().toUpperCase());
-					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(inputFieldForm.getText().toUpperCase());
+					String stringQty = inputFieldQty.getText();
+					String stringPrice = inputFieldPrice.getText();
+					String stringType = inputFieldType.getText().toUpperCase();
+					String stringForm = inputFieldForm.getText().toUpperCase();
+					
+					// if any input field is left empty, throw exception
+					if (_inputFieldName.isEmpty() || stringQty.isEmpty() || stringPrice.isEmpty() || stringType.isEmpty() || stringForm.isEmpty()) {
+						throw new NullPointerException(); 
+					}
+					
+					int _inputFieldQty = Integer.parseInt(stringQty); // throws NumberFormatException if stringQty not an int
+					double _inputFieldPrice = Double.parseDouble(stringPrice); // throws NumberFormatException if stringPrice not an int/double
+					MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(stringType);
+					MERCHANDISE_FORM _inputFieldForm = MERCHANDISE_FORM.valueOf(stringForm);
+					
 					Boolean _isOTC = false;
 					if(rdbtnOTC.isSelected()) {
 						_isOTC = true;
 					}
-					Boolean medicationAdded = false;					
+		
 					Merchandise newMerchandise = new Merchandise(_inputFieldName, _inputFieldQty, _inputFieldPrice, _inputFieldType, _inputFieldForm, _isOTC);
 					
-					try {
-						medicationAdded = inv.addToInventory(newMerchandise);
-						if (medicationAdded == true) {
-							operationResult = "Add successful. See updated inventory";
-						}
-						else {
-							operationResult = "Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory";
-						}
-						currentList = inv.getMerchandise();
-						displayMercList(outputList, currentList);
-						lblOperationResult.setText(operationResult);
-						inputFieldName.setText("");
-						inputFieldQty.setText("");
-						inputFieldPrice.setText("");
-						inputFieldType.setText("");
-						inputFieldForm.setText("");
-					}
-					catch (Exception e2){
-						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-					}
+					inv.addToInventory(newMerchandise);
 					
-
+					operationResult = "Add successful. See updated inventory";
+					lblOperationResult.setText(operationResult);
+					
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
+					
+					inputFieldName.setText("");
+					inputFieldQty.setText("");
+					inputFieldPrice.setText("");
+					inputFieldType.setText("");
+					inputFieldForm.setText("");
+					
 				}
-				catch(Exception exception) { //catch any exceptions and show popup error
+				catch (NullPointerException exception) {
 					JOptionPane.showMessageDialog(frame,"name, Qty, price, type, and form are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame,"Qty must be an integer, Price must be an integer or double", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (IllegalArgumentException exception) {
+					JOptionPane.showMessageDialog(frame,"Merchandise Type or Form invalid. Please enter a valid Merchandise Type and Form", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NegativeInputException exception) { // thrown by method
+					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception exception) { //catch any exceptions/errors that the method call produces -> means method unsuccessful
+					operationResult = exception.getMessage();
+					lblOperationResult.setText(operationResult);
 				}
 			
 			}
@@ -332,27 +346,34 @@ public class DisplayInitialScreen{
         btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {	//catches exceptions thrown from delete() caused by not passing enough number of arguments
-				
-					Boolean medicationRemoved = false;
-					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
-//					System.out.println("med ID initialized");
-					medicationRemoved = inv.delete(_inputFieldID);
-//					System.out.println("med deleted");
-							
-					if (medicationRemoved == false) {
-						operationResult = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
-					}
-					else {
-						operationResult = "Remove successful. See updated inventory";
-					}
+				try {
+					String stringMedID = inputFieldID.getText();
+					
+					// if input field is left empty, throw exception
+					if (stringMedID.isEmpty()) {
+						throw new NullPointerException(); 
+					}			
+			
+					int _inputFieldID = Integer.parseInt(stringMedID); // throws NumberFormatException if stringMedID not an int
+					
+					inv.delete(_inputFieldID);
+					
+					operationResult = "Remove successful. See updated inventory";
+					lblOperationResult.setText(operationResult);
+					
 					currentList = inv.getMerchandise();
 					displayMercList(outputList, currentList);
-					lblOperationResult.setText(operationResult);
-
+	
 				}
-				catch (Exception ex) {	//display error popup
-					JOptionPane.showMessageDialog(frame,"ID required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame,"ID is required. Please enter a medication ID", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame,"ID must be an integer", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (Exception exception) { //thrown by method if it is unsuccessful
+					operationResult = exception.getMessage();
+					lblOperationResult.setText(operationResult);
 				}
 			
 			}
@@ -365,33 +386,40 @@ public class DisplayInitialScreen{
         btnIncrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {	//catches exception thrown by increaseQuantity() caused by passing insufficient number of arguments
+				try {
+					String stringMedID = inputFieldID.getText();
+					String stringMedQty = inputFieldQty.getText();
 					
-					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
-					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+					// if any input field is left empty, throw exception
+					if (stringMedID.isEmpty() || stringMedQty.isEmpty()) {
+						throw new NullPointerException(); 
+					}	
 					
-					Boolean medicationIncreased = false;
+					// throws NumberFormatException if one of those are not an int
+					int _inputFieldID = Integer.parseInt(stringMedID);
+					int _inputFieldQty = Integer.parseInt(stringMedQty);
 					
-					try {
-						medicationIncreased = inv.increaseQuantity(_inputFieldID, _inputFieldQty);
-						if (medicationIncreased == false) {
-							operationResult = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
-						}
-						else {
-							operationResult = "Increase successful. See updated inventory";
-						}
-	
-						currentList = inv.getMerchandise();
-						displayMercList(outputList, currentList);
-						lblOperationResult.setText(operationResult);
-					}
-					catch (Exception e2) {
-						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-					}
+					inv.increaseQuantity(_inputFieldID, _inputFieldQty);
+					
+					operationResult = "Increase successful. See updated inventory";
+					lblOperationResult.setText(operationResult);
+
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
 				
 				}
-				catch(Exception ex) {
-					JOptionPane.showMessageDialog(frame,"ID and Quantity are required","Invalid input", JOptionPane.WARNING_MESSAGE);
+				catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame,"ID and Qty are required. Please enter both fields", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame,"ID and Qty must be integers", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NegativeInputException exception) {
+					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception exception) { //thrown by method if it is unsuccessful
+					operationResult = exception.getMessage();
+					lblOperationResult.setText(operationResult);
 				}
 			
 			}
@@ -404,49 +432,45 @@ public class DisplayInitialScreen{
         btnDecrease.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {	//catches exception thrown from decreseQuantity() caused by passing insufficient number of arguments
-				
-					int _inputFieldID = Integer.parseInt(inputFieldID.getText());
-					int _inputFieldQty = Integer.parseInt(inputFieldQty.getText());
+				try {
+					String stringMedID = inputFieldID.getText();
+					String stringMedQty = inputFieldQty.getText();
 					
-					boolean[] medicationDecreasedANDEnoughQuantityToDecrease = {false, false, false};
+					// if any input field is left empty, throw exception
+					if (stringMedID.isEmpty() || stringMedQty.isEmpty()) {
+						throw new NullPointerException(); 
+					}	
 					
-					try {
-						medicationDecreasedANDEnoughQuantityToDecrease = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
-						
-						if (medicationDecreasedANDEnoughQuantityToDecrease[0] == true && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-							//entry to decrease its quantity is found in the list and the current_quantity >= quantity_to_decrease 
-							operationResult = "Decrease successful. See inventory";
-						}
-						else if (medicationDecreasedANDEnoughQuantityToDecrease[0] == false && medicationDecreasedANDEnoughQuantityToDecrease[1] == true) {
-							//entry to decrease its quantity is not found in the list
-							operationResult = "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory";
-						}
-						else {
-							//entry is found but current_quantity < quantity_to_decrease
-							operationResult = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + _inputFieldQty + ". See inventory";
-						}
+					// throws NumberFormatException if one of those are not an int
+					int _inputFieldID = Integer.parseInt(stringMedID);
+					int _inputFieldQty = Integer.parseInt(stringMedQty);
 					
-						if (medicationDecreasedANDEnoughQuantityToDecrease[2] == true) {
-							//notify popup for medication low in stock
-							//DisplayErrorPopup.displayErrorPopup(_inputFieldName + " is low on stock, please order.", frame);
-							JOptionPane.showMessageDialog(frame,"Medication with ID: " + _inputFieldID + " is low on stock, please order.", "Warning", JOptionPane.WARNING_MESSAGE);
-						}
-						lblOperationResult.setText(operationResult);
-						currentList = inv.getMerchandise();
-						displayMercList(outputList, currentList);
-					}
-					catch (Exception e2) {
-						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					boolean lowInStock = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
+					
+					operationResult = "Decrease successful. See updated inventory";
+					lblOperationResult.setText(operationResult);
+					
+					if (lowInStock == true) {
+						JOptionPane.showMessageDialog(frame,"Medication with ID: " + _inputFieldID + " is low on stock, please reorder!", "Warning", JOptionPane.WARNING_MESSAGE);
 					}
 					
-				}
-				catch(Exception ex) {	//display popup when the number of arguments passed to decreaseQuantity() is insufficient
-					//DisplayErrorPopup.displayErrorPopup("name, Qty, type, and form are required", frame);
-					JOptionPane.showMessageDialog(frame,"ID and Quantity are required", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					currentList = inv.getMerchandise();
+					displayMercList(outputList, currentList);
 					
 				}
-			
+				catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame,"ID and Qty are required. Please enter both fields", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame,"ID and Qty must be integers", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch (NegativeInputException exception) {
+					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				catch(Exception exception) { //thrown by method if it is unsuccessful
+					operationResult = exception.getMessage();
+					lblOperationResult.setText(operationResult);
+				}
 			}
 		});
         panelVisibleToAdmin.add(btnDecrease);
@@ -588,19 +612,24 @@ public class DisplayInitialScreen{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					String _inputKeyword = inputKeyword.getText().toUpperCase();
-					String searchBy = (String)comboBox.getSelectedItem();
-					ArrayList<Merchandise> methodResult = new ArrayList<Merchandise>();
+					
+					// throws an exception if input is empty
 					if(_inputKeyword.isEmpty()) {
-						throw new Exception();
+						throw new NullPointerException();
 					}
 					
+					String searchBy = (String)comboBox.getSelectedItem();
+					
+					ArrayList<Merchandise> methodResult = new ArrayList<Merchandise>();
+
 					Owner owner1 = new Owner(1,1);
 					
 					if(searchBy.compareTo("Name") == 0) { //checking drop down list value
 						methodResult = owner1.searchMedicineByName(_inputKeyword, userType);
 					}
 					else if(searchBy.compareTo("Type") == 0) {
-						methodResult = owner1.searchMedicineByType(MERCHANDISE_TYPE.getValue(_inputKeyword), userType);
+						MERCHANDISE_TYPE _inputFieldType = MERCHANDISE_TYPE.valueOf(_inputKeyword);
+						methodResult = owner1.searchMedicineByType(_inputFieldType, userType);
 					}
 					
 					if(methodResult.isEmpty()) {
@@ -614,11 +643,13 @@ public class DisplayInitialScreen{
 					currentList = methodResult;
 					displayMercList(outputList, currentList);
 				}	
-				catch(Exception ex) {
-					JOptionPane.showMessageDialog(frame,"search keyword is empty", "input required", JOptionPane.WARNING_MESSAGE);
+				catch (NullPointerException exception) {
+					JOptionPane.showMessageDialog(frame,"Search keyword is empty. Input required: type something in the search box", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
-			
-
+				catch (IllegalArgumentException exception) {
+					JOptionPane.showMessageDialog(frame,"Merchandise Type is invalid. Please enter a valid Merchandise Type: Cough, Cold, Fever, Sinus", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				}
+				// do i need to add a general Exception too to be safe?
 			}
 		});
         
@@ -861,9 +892,9 @@ public class DisplayInitialScreen{
 		merchandises = refreshList(Inventory.getInstance(),   merchandises);
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		list.removeAll();
-			for(Merchandise m : merchandises) {
-				model.addElement(m);
-			}
+		for(Merchandise m : merchandises) {
+			model.addElement(m);
+		}
 		list.setModel(model);
 	}
 	

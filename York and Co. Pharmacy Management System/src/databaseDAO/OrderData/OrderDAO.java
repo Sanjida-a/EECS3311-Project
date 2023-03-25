@@ -81,7 +81,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 				
 				while (result.next()) { 
 					prescriptionNum =  result.getInt("prescriptionNum");
-					System.out.println(prescriptionNum);
+//					System.out.println(prescriptionNum);
 					medicationID =  result.getInt("medicationID");
 					patientID =  result.getLong("patientID");
 					numOfRefills =  result.getInt("numOfRefills");
