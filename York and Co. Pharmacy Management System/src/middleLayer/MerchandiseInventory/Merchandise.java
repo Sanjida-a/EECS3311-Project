@@ -136,8 +136,15 @@ public class Merchandise{
 			this.type != comparator.type || 
 			this.form != comparator.form ||
 			this.isOTC != comparator.isOTC || 
-			!this.description.equals(comparator.description) ||
 			this.isValid != comparator.isValid) {
+			return false;
+		}
+		if((this.description != null && comparator.description == null) ||
+			(this.description == null && comparator.description != null)) {
+			return false;
+		}
+		if((this.description != null && comparator.description != null) 
+			&& this.description.compareTo(comparator.description) != 0) {
 			return false;
 		}
 		return true;
