@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-
+import middleLayer.NegativeInputException;
 import middleLayer.Orders.*;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -139,51 +139,60 @@ public class DisplaySeeOrders implements ActionListener{
 			superFrame.toFront();
 			frame.dispose();
 		}
-		else if(action.compareTo("See All Orders") == 0) {
-        		ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
-        		try {
-					String _textFieldHCN = textFieldHCN.getText();
-					if (_textFieldHCN.isEmpty()) 
-						throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
-					long healthCardID = Long.parseLong(textFieldHCN.getText());
+		
+		else {
+			ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
+			
+			try {
+				// note health card number is same as patient ID
+				String stringHCN = textFieldHCN.getText();
+				
+				if (stringHCN.isEmpty()) 
+					throw new NullPointerException("Please enter a health card number!"); // ensures a medication name has been entered
+					
+				// throws a NumberFormatException if not an integer/long
+				long healthCardID = Long.parseLong(stringHCN);
+					
+				if(action.compareTo("See All Orders") == 0) {
+					textFieldTotalSpent.setText("");
         			textAreaOutput.setText("");
-					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
+					
+        			ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputOrderHistoryDetails(healthCardID, USER.OWNER);
 					
 					for(String s : resultPurchaseHistory) {
 						textAreaOutput.append(s);
 					}
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				int patientID = Integer.parseInt(textFieldHCN.getText());
-				double val = 0;
-				try {
-					val = ListOfOrders.getInstance().specificPatientMoneySpent(patientID);
 
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-				textFieldTotalSpent.setText(Double.toString(val));
-        	}
-        else if(action.compareTo("See Prescription Forms") == 0){
-			ListOfOrders listOfOrdersInstance = ListOfOrders.getInstance();
-        		try {
-        			String _textFieldHCN = textFieldHCN.getText();
-					if (_textFieldHCN.isEmpty()) 
-						throw new Exception("Please enter a health card number!"); // ensures a medication name has been entered
-					
-					long healthCardID = Long.parseLong(textFieldHCN.getText());
+					double val = ListOfOrders.getInstance().specificPatientMoneySpent(healthCardID);
+
+					textFieldTotalSpent.setText(Double.toString(val));
+	        	}
+		        else if(action.compareTo("See Prescription Forms") == 0){
+		        	
 					textAreaOutput.setText("");
+					
 					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputPresRefill(healthCardID, USER.OWNER);
 					
 					for(String s : resultPurchaseHistory) {
 						textAreaOutput.append(s);
 					}
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				textFieldTotalSpent.setText("");
-        }
+					
+					// daniel can you hide the "total spent" textfield for this button?
+					textFieldTotalSpent.setText(""); // prescription forms have no correlation to money 
+		        }
+			} 
+			catch (NullPointerException exception) {
+				JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+			}
+			catch (NegativeInputException exception) {
+				JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+			}
+			catch (Exception exception) {
+				JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+			}
+			
+		}
+		
 	}
 			
 		

@@ -491,7 +491,7 @@ public class DisplayInitialScreen{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DisplayAddOrder.displayAddOrder(frame, e.getActionCommand());
+				DisplayAddOrderAddPresciptionForm.displayAddOrder(frame, e.getActionCommand());
 
 			}
         	
@@ -537,7 +537,7 @@ public class DisplayInitialScreen{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				DisplayAddOrder.displayAddOrder(frame, e.getActionCommand());
+				DisplayAddOrderAddPresciptionForm.displayAddOrder(frame, e.getActionCommand());
 			}
     		
     	});

@@ -7,6 +7,7 @@ import databaseDAO.MerchandiseData.MerchandiseRoot;
 import databaseDAO.OrderData.OrderDAO;
 import databaseDAO.OrderData.OrderRoot;
 import databaseDAO.UserData.UserRoot;
+import middleLayer.NegativeInputException;
 import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Users.AuthenticateUser;
@@ -118,31 +119,33 @@ public class ListOfOrders {
 	
 	// returns whether need to output low in stock reminder
 	public boolean addOrderToDatabase(Order o) throws Exception {
-	
-		//Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
-		if (o.quantityBought <= 0) {
-			throw new Exception("Quantity Bought Must Be Positive!");    
-		}
-	
-		Merchandise mFound = merList.searchMerchandiseWithID(o.medicationID);
 		
-		if (mFound == null) {
-			throw new Exception("Medication doesn't exist!");
-		}
-		o.setTotalPriceOfOrder(mFound.getPrice()*o.quantityBought);
-		o.setIsPrescription(!mFound.getisOTC());
 		Patient pFound = userList.searchPatientWithID(o.patientID);
 		if (pFound == null) {
 			throw new Exception("Patient doesn't exist!");
 		}
-		if (!mFound.getisOTC()) {
-			throw new Exception ("Not an OTC!");
+		
+		Merchandise mFound = merList.searchMerchandiseWithID(o.medicationID);
+		if (mFound == null) {
+			throw new Exception("Medication doesn't exist!");
 		}
 		
-		if (mFound.getQuantity() <= 0 || mFound.getisValid() == false || mFound.getQuantity() < o.getQuantityBought()) {
-			//System.out.println(mFound);
-			throw new Exception("Check inventory!");
+		//Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
+		if (o.quantityBought <= 0) {
+			throw new NegativeInputException("Quantity Bought Must Be Positive (at least 1)!");    
 		}
+	
+		if (!mFound.getisOTC()) {
+			throw new Exception ("Not an OTC! Use the \"Give Refill for a prescription\" button");
+		}
+		
+		if (mFound.getQuantity() <= 0 || mFound.getQuantity() < o.getQuantityBought()) {
+			throw new Exception("Check quantity in stock for medication! Not enough!");
+		}
+		
+		o.setTotalPriceOfOrder(mFound.getPrice()*o.quantityBought);
+		o.setIsPrescription(!mFound.getisOTC());
+
 		_orderDAO.addToOrderTable(o);
 		
 	//	if (o.getIsPrescription() == true) {
@@ -154,66 +157,81 @@ public class ListOfOrders {
 		
 		return lowInStockReminder;
 	}
-	public void addPresOrderToDb(Prescription p) throws Exception {
+	
+	// adds prescription FORM to prescription table in database
+	public void addPresFormToDb(Prescription p) throws Exception {
 //		if(p.getOriginalNumOfRefills() == 0){
 //			throw new Exception("Please enter refill numbers!");
 //		}
 //		else{
-			if (p.getOriginalNumOfRefills() <= 0) {
-				throw new Exception ("Refills must be positive");
-			}
-//		}
-		
+		Patient pFound = userList.searchPatientWithID(p.patientID);
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
 		
 		Merchandise getMer = merList.searchMerchandiseWithID(p.getMedicationID());
 		if (getMer == null) {
 			throw new Exception("Medication doesn't exist!");
 		}
+		
 		if (getMer.getisOTC()) {
-			throw new Exception("Not an Rx!");
+			throw new Exception("Not an Rx! You can only add prescription forms for Rx Medications");
 		}
-		Patient pFound = userList.searchPatientWithID(p.patientID);
-		if (pFound == null) {
-			throw new Exception("Patient doesn't exist!");
+		
+		if (p.getOriginalNumOfRefills() <= 0) {
+			throw new Exception ("Refills must be positive (at least 1)!");
 		}
-	
-		
-		
+//		}
+
 		_orderDAO.addToPrescriptionTable(p);
-		
-	//	if (o.getIsPrescription() == true) {
-	//		_orderDAO.addToPrescriptionTable(p);
-	//	}
 		
 		this.updateOrderListFromDatabase();
 	}
-
+	
+	// adds prescription ORDER/Rx refill to ORDER table in database
 	// returns whether need to output low in stock reminder
 	public boolean addRefillToDatabase(Order o) throws Exception {
+		
+		Patient pFound = userList.searchPatientWithID(o.patientID);
+		if (pFound == null) {
+			throw new Exception("Patient doesn't exist!");
+		}
+		
+		Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
+		if (getMer == null) {
+			throw new Exception("Medication doesn't exist!");
+		}
+		
+		if (o.quantityBought <= 0) {
+			throw new NegativeInputException("Quantity Bought Must Be Positive (at least 1)!");    
+		}
+		
+		if (getMer.getisOTC()) {
+			throw new Exception ("Not an Rx! Use the \"Add OTC Order\" button");
+		}
 		
 		Boolean prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
 		
 		if (prescriptionExists == false) {
-			throw new Exception("No record found of prescription!");
-		}
-		if (o.quantityBought <= 0) {
-			throw new Exception("Quantity Bought Must Be Positive!");    
+			throw new Exception("No record found of prescription under Patient with Health Card Number: " + o.getPatientID() + ". Add prescription form into system first.");
 		}
 		
-
-		
+		// if no exception, prescription does exist in system. Now check if enough refills
 		int refillLeft = _orderDAO.numOfRefill(o.getPatientID(), o.getMedicationID());
 		if (refillLeft <= 0) {
-			throw new Exception ("No refills left!");
+			throw new Exception ("0 refills left!");
 		}
 		if ( o.getQuantityBought() > refillLeft) {
-			throw new Exception( "Only have " + refillLeft +  " refills left!");
+			throw new Exception( "Not enough refills! Only have " + refillLeft +  " refills left!");
 		}
-		Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
-		if (getMer.getQuantity() <= 0 || getMer.getisValid() == false || getMer.getQuantity() < o.getQuantityBought()) {
-			throw new Exception("Check inventory!");
+		
+//		Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
+		if (getMer.getQuantity() <= 0 ||  getMer.getQuantity() < o.getQuantityBought()) {
+			throw new Exception("Check quantity in stock for medication! Not enough!");
 		}
+		
 		o.setTotalPriceOfOrder(getMer.getPrice()*o.quantityBought);
+		o.setIsPrescription(!getMer.getisOTC());
 		
 		_orderDAO.addRefillToOrderTable(o);
 		
@@ -226,8 +244,12 @@ public class ListOfOrders {
 	// aiza added for easy access
 	public ArrayList<Order> specificPatientOrderHistory(long healthCardID) throws Exception {
 		
+		if (healthCardID < 0) {
+			throw new NegativeInputException("Please enter a positive health card number");
+		}
+		
 		if (!((1000000000 <= healthCardID) && (healthCardID <= 9999999999L))) {
-			throw new Exception("Please enter a valid, positive, 10-digit health card number");
+			throw new Exception("Please enter a valid 10-digit health card number");
 		}
 		
 		Patient pFound = userList.searchPatientWithID(healthCardID);
@@ -299,8 +321,12 @@ public class ListOfOrders {
 	
 	public ArrayList<Prescription> specificPatientPres(long healthCardID) throws Exception {
 		
+		if (healthCardID < 0) {
+			throw new NegativeInputException("Please enter a positive health card number");
+		}
+		
 		if (!((1000000000 <= healthCardID) && (healthCardID <= 9999999999L))) {
-			throw new Exception("Please enter a valid, positive, 10-digit health card number");
+			throw new Exception("Please enter a valid 10-digit health card number");
 		}
 		
 		Patient pFound = userList.searchPatientWithID(healthCardID);

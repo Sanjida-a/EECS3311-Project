@@ -178,7 +178,7 @@ class ListOfOrdersUnitTest {
 		Prescription pres = new Prescription(5, 3, 1111122222, 0);
 		String errorString = null;
 		try {
-			orders.addPresOrderToDb(pres);
+			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
@@ -192,7 +192,7 @@ class ListOfOrdersUnitTest {
 		Prescription pres = new Prescription(5, 10, 1111122222, 5);
 		String errorString = null;
 		try {
-			orders.addPresOrderToDb(pres);
+			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
@@ -206,7 +206,7 @@ class ListOfOrdersUnitTest {
 		Prescription pres = new Prescription(5, 1, 1111122222, 5);
 		String errorString = null;
 		try {
-			orders.addPresOrderToDb(pres);
+			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
@@ -220,7 +220,7 @@ class ListOfOrdersUnitTest {
 		Prescription pres = new Prescription(5, 3, 1111155555, 5);
 		String errorString = null;
 		try {
-			orders.addPresOrderToDb(pres);
+			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
@@ -234,7 +234,7 @@ class ListOfOrdersUnitTest {
 		Prescription pres = new Prescription(3, 3, 1111122222, 5);
 
 		try {
-			orders.addPresOrderToDb(pres);
+			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			fail();

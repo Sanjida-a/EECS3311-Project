@@ -222,7 +222,7 @@ public class Inventory{
 
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
     	
-    	if (specificMedication == null || decreasedQuantity < 0) { // if medID does not exist in inventory, can't do anything
+    	if (specificMedication == null) { // if medID does not exist in inventory, can't do anything
     		throw new Exception("Decrease unsuccessful. No such medication currently exists in the inventory. See inventory");
     	}
     	
