@@ -72,3 +72,7 @@
 *made neater try catch blocks by adding more types of exceptions to cover all possible errors during user input
 *made return types of methods void instead of boolean/boolean[] in logic layer and replaced them with throwing exceptions instead
 *created new Exception class: NegativeInputException
+
+19. 2023/3/25 1:00 - 16:30, 17:00 - 22:15   contributor: Aiza Bajwa
+*Modified all remaining tests to match changes in exception handling
+*Added more tests for all classes

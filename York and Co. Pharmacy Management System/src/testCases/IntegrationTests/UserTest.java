@@ -53,7 +53,7 @@ class UserTest {
 //    }
 	
 	@Test
-    void searchMedicineByName() {
+    void searchMedicineByNameForAdmin() {
         
 		Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
         ArrayList<Merchandise> answer = new ArrayList<Merchandise>();
@@ -103,6 +103,50 @@ class UserTest {
         assertEquals("[]", o.searchMedicineByName("CompletelyRandomNoName", USER.OWNER).toString());
     }
     
+    @Test
+    void searchMedicineByNameForPatient() {
+        
+		Patient o = new Patient(0, 0);	//User is abstract so it has to be created using its subclasses
+        ArrayList<Merchandise> answer = new ArrayList<Merchandise>();
+		
+		try { // difference from admin test is that isOTC = 1 as well (guests/patients only have access to OTC medicine)
+			String queryGetAllRows = "SELECT * FROM Medications Where isValid = 1 AND isOTC = 1 and medName = 'ADVIL';";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int medicationID;
+		    String name;
+		    int quantity;
+		    double price;
+		    MERCHANDISE_TYPE type;
+		    MERCHANDISE_FORM form;
+		    boolean isOTC;
+		    String description;
+		    boolean isValid;
+		    
+		    Merchandise m;
+			
+			while (result.next()) { 
+				
+				medicationID =  result.getInt("medicationID");
+				name = result.getString("medName") ;
+				quantity =  result.getInt("quantity");
+				price =  result.getDouble("price");
+				type = MERCHANDISE_TYPE.valueOf(result.getString("medType").toUpperCase());
+				form = MERCHANDISE_FORM.valueOf(result.getString("medForm").toUpperCase());
+				isOTC = result.getBoolean("isOTC");
+				description = result.getString("medDescription") ;
+				isValid = result.getBoolean("isValid");
+				
+				m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);
+				answer.add(m);
+			}
+	
+		} catch (Exception e) {
+		}
+		
+		assertEquals(answer.toString(), o.searchMedicineByName("ADVIL", USER.PATIENT).toString());
+    }
+    
 //    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
 //    void searchMedicineByType() {
 //        
@@ -119,7 +163,7 @@ class UserTest {
 //    }
     
     @Test
-    void searchMedicineByType() {
+    void searchMedicineByTypeForAdmin() {
         
     	Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
         ArrayList<Merchandise> answer = new ArrayList<Merchandise>();
@@ -160,6 +204,51 @@ class UserTest {
 		}
 		
 		assertEquals(answer.toString(), o.searchMedicineByType(MERCHANDISE_TYPE.COLD, USER.OWNER).toString());
+		
+    }
+    
+    @Test
+    void searchMedicineByTypeForPatient() {
+        
+    	Patient o = new Patient(0, 0);	//User is abstract so it has to be created using its subclasses
+        ArrayList<Merchandise> answer = new ArrayList<Merchandise>();
+		
+		try {
+			String queryGetAllRows = "SELECT * FROM Medications Where isValid = 1 AND isOTC = 1 AND medType = 'COLD';";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int medicationID;
+		    String name;
+		    int quantity;
+		    double price;
+		    MERCHANDISE_TYPE type;
+		    MERCHANDISE_FORM form;
+		    boolean isOTC;
+		    String description;
+		    boolean isValid;
+		    
+		    Merchandise m;
+			
+			while (result.next()) { 
+				
+				medicationID =  result.getInt("medicationID");
+				name = result.getString("medName") ;
+				quantity =  result.getInt("quantity");
+				price =  result.getDouble("price");
+				type = MERCHANDISE_TYPE.valueOf(result.getString("medType").toUpperCase());
+				form = MERCHANDISE_FORM.valueOf(result.getString("medForm").toUpperCase());
+				isOTC = result.getBoolean("isOTC");
+				description = result.getString("medDescription") ;
+				isValid = result.getBoolean("isValid");
+				
+				m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);
+				answer.add(m);
+			}
+	
+		} catch (Exception e) {
+		}
+		
+		assertEquals(answer.toString(), o.searchMedicineByType(MERCHANDISE_TYPE.COLD, USER.PATIENT).toString());
 		
     }
 

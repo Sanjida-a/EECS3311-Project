@@ -375,7 +375,7 @@ public class Inventory{
         	_merDAO.addMedicationToDatabase(m);
     	}
         
-      //once database is updated, also updated this class's list variable by reading from database
+        //once database is updated, also updated this class's list variable by reading from database
     	list = _merDAO.getListOfMerchandise();
     }
 

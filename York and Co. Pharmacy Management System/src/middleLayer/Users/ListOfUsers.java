@@ -322,7 +322,7 @@ public class ListOfUsers {
 				String lastName = patientName.substring(indexOfSpace + 1); //added trim to remove white spaces
 				
 				if (lastName.isBlank()) {
-					throw new Exception("Please enter both a first and last name");
+					throw new Exception("Please enter both a first and last name to search by Full Name");
 				}
 				
 				for (Patient p : allPatientsList) {

@@ -38,11 +38,12 @@ class ListOfOrdersTest {
 		} 
 		
 	}
-	
-    @Test
-    void updateOrderListFromDatabase() {
-    }
-    
+// MINH To Do / TODO: I think stated all tests (at least 20) you should add in comments in these 5 lines below; try to organize the tests in same manner as methods found in ListOfOrders.java class
+// MINH To Do / TODO: I added one VALID test for addOrderToDatabase, so please add 5 INVALID tests for addOrderToDatabase, one for each exception thrown (so should have tests for addOrderToDatabaseInvalid1...addOrderToDatabaseInvalid5)
+//	for addOrderToDatabase tests, don't need to check return value (i think it's a minor thing)
+//	MINH To Do / TODO: add 1 VALID test and 4 INVALID tests (for the 4 exceptions) for addPresFormToDb
+// MINH To Do / TODO: I already added one INVALID test for addRefillToDatabase, so please add 1 VALID TEST (maybe add a fake prescription form into MySQL for john smith guy) and the remaining 7 INVALID tests, one for each of the remaining exceptions
+// MINH To Do / TODO: add 2 INVALID tests for specificPatientPres for the two exceptions (don't do a test for "patient doesn't exist" exception)
     @Test 
     void addOrderToDatabaseTest() {
     	
@@ -59,17 +60,17 @@ class ListOfOrdersTest {
         
         try {
         	if (MedIDWithQuantityMoreThan1 != -1) {
-           	 Order O = new Order(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 1);
-                Prescription p = new Prescription(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 2);
+        		Order o = new Order(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 1);
+//                Prescription p = new Prescription(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 2);
 //                val.addOrderToDatabase(O,p);
-                listOfOrders.addOrderToDatabase(O);
-                ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-                assertEquals(originalList.size()+1, newList.size());
+                listOfOrders.addOrderToDatabase(o);
            }
-        } catch(Exception e) {
-        	
+        } catch(Exception e) { // no exception expected
+        	fail();
         }
-    
+        
+        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+        assertEquals(originalList.size()+1, newList.size());
     }
     
     /*@Test
@@ -95,12 +96,14 @@ class ListOfOrdersTest {
     }*/
 
     @Test
-    void addRefillInvalid() {
+    void addRefillInvalid4() { // not an Rx medication
        
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         
         ArrayList<Merchandise> medList = inv.getMerchandise();
 
+        String expectedMsg = "Not an Rx! Use the \"Add OTC Order\" button";
+        String resultMsg = null;
         
         int indexForOTC = -1;
         for (int i = 0; i < originalList.size(); i++) {
@@ -112,15 +115,15 @@ class ListOfOrdersTest {
         try {
         	 if (indexForOTC != -1) {
 	        	Order O = new Order(medList.get(indexForOTC).getMedicationID(), 1111122222, 1);
-        	        
-        	       
-		        //prescription doesn't exist because medication is OTC
-		        assertThrows(Exception.class,  () -> listOfOrders.addRefillToDatabase(O));
-		        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+        	     
+		        listOfOrders.addRefillToDatabase(O);
         	 }
-        } catch (Exception e){
-        	
+        } 
+        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+        	resultMsg = e.getMessage();
         }
+        
+        assertEquals(expectedMsg, resultMsg);
        
     }
     
@@ -179,7 +182,8 @@ class ListOfOrdersTest {
 				answer.add(order);  // to create Order object and put in a list
 			}
 			
-		} catch (Exception e) {
+		} catch (Exception e) { // no exception expected
+			fail();
 		}
     	
     	ArrayList<Order> result = new ArrayList<Order>();
@@ -191,15 +195,49 @@ class ListOfOrdersTest {
 		assertEquals(answer.size(), result.size());
 		assertEquals(answer, result); //don't need toString; automatically does .toString for each element of arraylist
     	
-    	
     }
     
     @Test
-    void specificPatientOrderHistoryTest2() { //invalid patient id
+    void specificPatientOrderHistoryInvalid1() { //negative health card number
     	
-    	assertThrows(Exception.class, () -> listOfOrders.specificPatientOrderHistory(1)); // patientID can't be of size 1
+    	assertThrows(NegativeInputException.class, () -> listOfOrders.specificPatientOrderHistory(-5)); // patientID can't be of size 1
     }
     
+    @Test
+    void specificPatientOrderHistoryInvalid2() { // healthcard num not 10 digits long
+    	
+    	String expectedMsg = "Please enter a valid 10-digit health card number";
+    	
+    	String resultMsg = null;
+    	
+    	try {
+    		listOfOrders.specificPatientOrderHistory(12345);
+    	}
+    	catch(Exception e) {
+    		resultMsg = e.getMessage();
+    	}
+    	
+    	assertEquals(expectedMsg, resultMsg);
+    }
+    
+    // this test is risky bc what if they add a patient with this id into the system? then it fails our test
+//    @Test
+//    void specificPatientOrderHistoryInvalid3() { // patient doesn't exist (assuming ID 1111191
+//    	
+//    	String expectedMsg = "Patient doesn't exist!";
+//    	
+//    	String resultMsg = null;
+//    	
+//    	try {
+//    		listOfOrders.specificPatientOrderHistory(1111191111); // assuming this patient doesn't exist in system
+//    	}
+//    	catch(Exception e) {
+//    		resultMsg = e.getMessage();
+//    	}
+//    	
+//    	assertEquals(expectedMsg, resultMsg);
+//    }
+//    
 //    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
 //    void specificPatientMoneySpentTest1() {
 //    	
@@ -221,7 +259,7 @@ class ListOfOrdersTest {
 //    }
     
     @Test
-    void specificPatientMoneySpentTest1() {
+    void specificPatientMoneySpentTest1() { //don't need invalid tests because already tested exceptions in specificPatientOrderHistory tests
     	
     	long patientOfInterestID = 1111122222; //Smith John always exists and always has at least 1 order (from our Sql script)
     	
@@ -245,10 +283,10 @@ class ListOfOrdersTest {
 		assertEquals(answer, resultMoney);
     }
     
-    @Test
-    void specificPatientMoneySpentTest2() { //invalid patient id
-    	assertThrows(Exception.class, () -> listOfOrders.specificPatientOrderHistory(1)); // patientID can't be of size 1
-    }
+//    @Test
+//    void specificPatientMoneySpentInvalid1() { //invalid patient id
+//    	assertThrows(Exception.class, () -> listOfOrders.specificPatientOrderHistory(1)); // patientID can't be of size 1
+//    }
 
     
 

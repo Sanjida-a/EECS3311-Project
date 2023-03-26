@@ -17,6 +17,7 @@ import javax.swing.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +45,11 @@ public class ListOfUsersTest {
 		
 	}
 	
+	//AIZA TO DO: test addPatient for exceptions only!!
+	// AIZA TO DO: check/fix modifyPatientDetails and add more cuz of exceptions
+	
 	@Test
-	void searchPatientWithIDTest1() {
+	void searchPatientWithIDTest1() { //always going to be at least 1 patient in system because of smith john
 		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
 		
 		Patient chosenPatient = listOfPatients.get(0);
@@ -55,20 +59,20 @@ public class ListOfUsersTest {
 		assertEquals(chosenPatient.toString(), result.toString());
 	}
 	
-	@Test
-	void searchPatientWithIDTest2() {
-		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-		
-		if (listOfPatients.size() > 1) {
-			Patient chosenPatient = listOfPatients.get(1);
-			long chosenID = listOfPatients.get(1).getHealthCardNum();
-			
-			
-			Patient result = listOfUsers.searchPatientWithID(chosenID);
-			assertEquals(chosenPatient.toString(), result.toString());
-		}
-	
-	}
+//	@Test
+//	void searchPatientWithIDTest2() {
+//		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+//		
+//		if (listOfPatients.size() > 1) {
+//			Patient chosenPatient = listOfPatients.get(1);
+//			long chosenID = listOfPatients.get(1).getHealthCardNum();
+//			
+//			
+//			Patient result = listOfUsers.searchPatientWithID(chosenID);
+//			assertEquals(chosenPatient.toString(), result.toString());
+//		}
+//	
+//	}
 	
 	@Test
 	void searchPatientWithIDTest3() { // ID doesn't exist	
@@ -102,35 +106,90 @@ public class ListOfUsersTest {
             assertEquals(originalListOfPat.size()+1, newListOfPat.size());
         }
 
-        else { //health card ID already exist
-    		assertThrows(Exception.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9999999999L, 11222012));
-        	
+        else { //health card ID already exist (for second time the test is run since Test Man patient with same ID already exists)
+    		assertThrows(SQLException.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9999999999L, 11222012));
         }
        
     }
    
     @Test
-    void addPatientTest2() { // negative health card num
+    void addPatientTestInvalid1() { // negative health card num
        
         long newHealthCardNum = -555;
+        
+        String expectedMsg = "Health card number must be a positive number";
+        
+        String resultMsg = null;
       
-        assertThrows(Exception.class, () -> listOfUsers.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010));
+        try {
+        	listOfUsers.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010);
+        }
+        catch (NegativeInputException e) { //expected to throw this exception
+        	resultMsg = e.getMessage();
+        }
+        catch (Exception e) {
+        	fail();
+        }
+        
+        assertEquals(expectedMsg, resultMsg);   
+    }
+    
+    @Test
+    void addPatientTestInvalid2() { // negative phone number
+    	 long phoneNum = -4164164169L;
+         
+         String expectedMsg = "Phone number must be a positive number";
+         
+         String resultMsg = null;
        
+         try {
+        	listOfUsers.addPatient("New", "Test", "123 Fake Street", phoneNum, 123789, 11222012);
+         }
+         catch (NegativeInputException e) { //expected to throw this exception
+         	resultMsg = e.getMessage();
+         }
+         catch (Exception e) {
+         	fail();
+         }
+         
+         assertEquals(expectedMsg, resultMsg);   
+    }
+    
+    
+    @Test
+    void addPatientTestInvalid3() { // less than 10 digit Health card num
+    	long healthCardNum = 2;
+         
+    	String expectedMsg = "Health Card Number must be a 10 digit number";
+         
+        String resultMsg = null;
+       
+        try {
+        	listOfUsers.addPatient("New", "Test", "123 Fake Street", 4164161234L, healthCardNum, 11222012);
+        }
+        catch (Exception e) { // expected to throw
+        	resultMsg = e.getMessage();
+        }
+         
+        assertEquals(expectedMsg, resultMsg);  
     }
     
     @Test
-    void addPatientTest3() { // less than 10 digit Health card num
-        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", 4161112222L, 2, 11222012));
-    }
-    
-    @Test
-    void addPatientTest4() { // negative phone number
-        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", -416, 123789, 11222012));
-    }
-    
-    @Test
-    void addPatientTest5() { // less than 10 digit phone number
-        assertThrows(Exception.class, () -> listOfUsers.addPatient("New", "Test", "123 Fake Street", 416, 123789, 11222012));
+    void addPatientTestInvalid4() { // less than 10 digit phone num
+    	long phoneNum = 416;
+         
+    	String expectedMsg = "Phone Number must be a 10 digit number";
+         
+        String resultMsg = null;
+       
+        try {
+        	listOfUsers.addPatient("New", "Test", "123 Fake Street", phoneNum, 1234567890, 11222012);
+        }
+        catch (Exception e) { // expected to throw
+        	resultMsg = e.getMessage();
+        }
+         
+        assertEquals(expectedMsg, resultMsg);  
     }
     
     @Test
@@ -163,44 +222,40 @@ public class ListOfUsersTest {
             fname.setText("Smith");
             listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
         }
-        catch (Exception e) {
-        	
+        catch (Exception e) { // no exception expected
+        	fail();
         }
         
     }
     
     @Test
-    void modifyPatientDetailsTest2() { // negative phoneNum
+    void modifyPatientDetailsInvalid1() { // patient doesn't exist (with ID 1)
         JTextField fname = new JTextField();
-        fname.setText("");
+        fname.setText("test");
         JTextField lname = new JTextField();
         JTextField phoneNum = new JTextField();
         JTextField address = new JTextField();
         lname.setText("");
-        phoneNum.setText("-1234567890");
+        phoneNum.setText("");
         address.setText("");
         
-        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+        String expectedMsg = "Unsuccessful";
+        
+        String resultMsg = null;
+        
+        try {
+        	listOfUsers.modifyPatientDetails(1, fname, lname, phoneNum, address);
+        }
+        catch (Exception e) {
+        	resultMsg = e.getMessage();
+        }
+        
+        assertEquals(expectedMsg, resultMsg);
       
     }
     
     @Test
-    void modifyPatientDetailsTest3() { // less than 10 digit phoneNum
-        JTextField fname = new JTextField();
-        fname.setText("");
-        JTextField lname = new JTextField();
-        JTextField phoneNum = new JTextField();
-        JTextField address = new JTextField();
-        lname.setText("");
-        phoneNum.setText("1234");
-        address.setText("");
-        
-        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
-      
-    }
-    
-    @Test
-    void modifyPatientDetailsTest4() { // all Jtextfields empty (nothing to be modified)
+    void modifyPatientDetailsInvalid2() { // all Jtextfields empty (nothing to be modified)
         JTextField fname = new JTextField();
         fname.setText("");
         JTextField lname = new JTextField();
@@ -210,36 +265,86 @@ public class ListOfUsersTest {
         phoneNum.setText("");
         address.setText("");
         
-        assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+        String expectedMsg = "One of fName, lName, PhoneNum is required. Please fill in at least one of them.";
+        
+        String resultMsg = null;
+        
+        try {
+        	listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+        }
+        catch (Exception e) {
+        	resultMsg = e.getMessage();
+        }
+        
+        assertEquals(expectedMsg, resultMsg);
     }
-	
-	@Test
-    void searchFNameTest1(){
-		
-		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-		ArrayList<Patient> answer = new ArrayList<Patient>();
-		
-		for (Patient p: listOfPatients) {
-			if (p.getFirstName().compareToIgnoreCase("SMITH") == 0) {
-				answer.add(p);
-			}
-		}
-		
-		ArrayList<Patient> methodResult = null;
-		try {
-			methodResult = listOfUsers.searchPatientByName("Smith", "FirstName");
-		} catch (Exception e1) {
-		}
-
-		assertEquals(answer.size(), methodResult.size());
-		
-		for (int i = 0; i < answer.size(); i++) {
-			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-		}
+    
+    @Test
+    void modifyPatientDetailsInvalid3() { // negative phoneNum
+        JTextField fname = new JTextField();
+        fname.setText("");
+        JTextField lname = new JTextField();
+        JTextField phoneNum = new JTextField();
+        JTextField address = new JTextField();
+        lname.setText("");
+        phoneNum.setText("-1234567890");
+        address.setText("");
+        
+        assertThrows(NegativeInputException.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+      
     }
+    
+    @Test
+    void modifyPatientDetailsInvalid4() { // less than 10 digit phoneNum
+        JTextField fname = new JTextField();
+        fname.setText("");
+        JTextField lname = new JTextField();
+        JTextField phoneNum = new JTextField();
+        JTextField address = new JTextField();
+        lname.setText("");
+        phoneNum.setText("416");
+        address.setText("");
+        
+        String expectedMsg = "Phone Number must be a 10 digit number";
+        String resultMsg = null;
+        
+        try {
+        	listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+        }
+        catch (Exception e) {
+        	resultMsg = e.getMessage();
+        }
+        
+        assertEquals(expectedMsg, resultMsg);
+    }
+    
+//	@Test (don't need since have sql replacement below)
+//    void searchFNameTest1(){
+//		
+//		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+//		ArrayList<Patient> answer = new ArrayList<Patient>();
+//		
+//		for (Patient p: listOfPatients) {
+//			if (p.getFirstName().compareToIgnoreCase("SMITH") == 0) {
+//				answer.add(p);
+//			}
+//		}
+//		
+//		ArrayList<Patient> methodResult = null;
+//		try {
+//			methodResult = listOfUsers.searchPatientByName("Smith", "FirstName");
+//		} catch (Exception e1) {
+//		}
+//
+//		assertEquals(answer.size(), methodResult.size());
+//		
+//		for (int i = 0; i < answer.size(); i++) {
+//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+//		}
+//    }
 
 	@Test
-    public void searchFNameTest1NEWSQLTRY(){
+    public void searchFNameTest1(){
 		
 		ArrayList<Patient> answer = new ArrayList<Patient>();
 		
@@ -267,7 +372,8 @@ public class ListOfUsersTest {
 				answer.add(patient);
 			}
 
-		} catch (Exception e) {
+		} catch (Exception e) { //not expecting exception
+			fail();
 		}
 		
 		ArrayList<Patient> methodResult = null;
@@ -290,37 +396,38 @@ public class ListOfUsersTest {
 		
         try {
 			assertEquals("[]", listOfUsers.searchPatientByName("NonExistentName", "FirstName").toString());
-		} catch (Exception e) {
+		} catch (Exception e) {  //not expecting exception
+			fail();
 		}
     }
 
-	@Test
-	void searchLNameTest1(){
-		
-		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-		ArrayList<Patient> answer = new ArrayList<Patient>();
-		
-		for (Patient p: listOfPatients) {
-			if (p.getLastName().compareToIgnoreCase("John") == 0) {
-				answer.add(p);
-			}
-		}
-		
-		ArrayList<Patient> methodResult = null;
-		try {
-			methodResult = listOfUsers.searchPatientByName("John", "LastName");
-		} catch (Exception e1) {
-		}
-		
-		assertEquals(answer.size(), methodResult.size());
-		
-		for (int i = 0; i < answer.size(); i++) {
-			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-		}
-	}
+//	@Test (don't need since have sql replacement below)
+//	void searchLNameTest1(){
+//		
+//		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+//		ArrayList<Patient> answer = new ArrayList<Patient>();
+//		
+//		for (Patient p: listOfPatients) {
+//			if (p.getLastName().compareToIgnoreCase("John") == 0) {
+//				answer.add(p);
+//			}
+//		}
+//		
+//		ArrayList<Patient> methodResult = null;
+//		try {
+//			methodResult = listOfUsers.searchPatientByName("John", "LastName");
+//		} catch (Exception e1) {
+//		}
+//		
+//		assertEquals(answer.size(), methodResult.size());
+//		
+//		for (int i = 0; i < answer.size(); i++) {
+//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+//		}
+//	}
 	
 	@Test
-    public void searchLNameTest1NEWSQLTRY(){
+    public void searchLNameTest1(){
 		
 		ArrayList<Patient> answer = new ArrayList<Patient>();
 		
@@ -348,7 +455,8 @@ public class ListOfUsersTest {
 				answer.add(patient);
 			}
 
-		} catch (Exception e) {
+		} catch (Exception e) { // no exception expected
+			fail();
 		}
 		
 		ArrayList<Patient> methodResult = null;
@@ -376,33 +484,33 @@ public class ListOfUsersTest {
 		}
 	}
     
-    @Test
-    void searchFullNameTest1() { 
-		
-    	ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-		ArrayList<Patient> answer = new ArrayList<Patient>();
-		
-		for (Patient p: listOfPatients) {
-			if ((p.getFirstName().compareToIgnoreCase("Smith") == 0) && (p.getLastName().compareToIgnoreCase("John") == 0)) {
-				answer.add(p);
-			}
-		}
-		
-		ArrayList<Patient> methodResult = null;
-		try {
-			methodResult = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
-		} catch (Exception e1) {
-		}
-		
-		assertEquals(answer.size(), methodResult.size());
-		
-		for (int i = 0; i < answer.size(); i++) {
-			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-		}
-    }
+//    @Test (don't need since have sql replacement below)
+//    void searchFullNameTest1() { 
+//		
+//    	ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
+//		ArrayList<Patient> answer = new ArrayList<Patient>();
+//		
+//		for (Patient p: listOfPatients) {
+//			if ((p.getFirstName().compareToIgnoreCase("Smith") == 0) && (p.getLastName().compareToIgnoreCase("John") == 0)) {
+//				answer.add(p);
+//			}
+//		}
+//		
+//		ArrayList<Patient> methodResult = null;
+//		try {
+//			methodResult = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
+//		} catch (Exception e1) {
+//		}
+//		
+//		assertEquals(answer.size(), methodResult.size());
+//		
+//		for (int i = 0; i < answer.size(); i++) {
+//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
+//		}
+//    }
     
-    @Test
-    public void searchFullNameTest1NEWSQLTRY(){
+    @Test 
+    public void searchFullNameTest1(){
 		
 		ArrayList<Patient> answer = new ArrayList<Patient>();
 		
@@ -453,8 +561,8 @@ public class ListOfUsersTest {
 		
     	try {
 			assertEquals("[]", listOfUsers.searchPatientByName("NonExistentFirst NonExistentLast", "FullName").toString());
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) { //exception not expected
+			fail();
 		}
     }
     
@@ -479,33 +587,52 @@ public class ListOfUsersTest {
 //    	
 //    }
     
+    // these two tests don't work anymore because empty string is checked in the front end
+//    @Test
+//    void searchPatientByNameTest1() { //empty string for patient name
+//		try {
+//			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "FirstName"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    	
+//    }
+//    
+//    @Test
+//    void searchPatientByNameTest2() {
+//		try {
+//			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "LastName"));
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    	
+//    }
+    
     @Test
-    void searchPatientByNameTest1() { //empty string for patient name
+    void searchPatientByNameTest3() { //exception expected bc need both first AND last name (only provided first name)
+    	String expectedMsg = "Please enter both a first and last name to search by Full Name";
+    	String resultMsg = null;
 		try {
-			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "FirstName"));
-		} catch (Exception e) {
-			e.printStackTrace();
+			listOfUsers.searchPatientByName("First", "FullName");
+		} catch (Exception e) { //exception expected bc need both first AND last name
+			resultMsg = e.getMessage();
 		}
+		
+		assertEquals(expectedMsg, resultMsg);
     	
     }
     
     @Test
-    void searchPatientByNameTest2() {
+    void searchPatientByNameTest6() { //exception expected bc need both first AND last name (notice, also has a space)
+    	String expectedMsg = "Please enter both a first and last name to search by Full Name";
+    	String resultMsg = null;
 		try {
-			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "LastName"));
-		} catch (Exception e) {
-			e.printStackTrace();
+			listOfUsers.searchPatientByName("First ", "FullName");
+		} catch (Exception e) { //exception expected bc need both first AND last name
+			resultMsg = e.getMessage();
 		}
-    	
-    }
-    
-    @Test
-    void searchPatientByNameTest3() {
-		try {
-			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "FullName"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		assertEquals(expectedMsg, resultMsg);
     	
     }
     
@@ -676,19 +803,20 @@ public class ListOfUsersTest {
 		}
     }
     
-    @Test
-    void specificPatientDetailsTest1() {
-    	
-    	long specificHealthCard = 1111122222;
-    	Patient p = listOfUsers.searchPatientWithID(1111122222);
-    	
-    	try {
-			ArrayList<String> result = listOfUsers.specificPatientDetails(specificHealthCard, USER.OWNER);
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    }
+//    test below not needed because same as just reading from query (--> would be same thing as what method in logic layer does)
+//    @Test
+//    void specificPatientDetailsTest1() {
+//    	
+//    	long specificHealthCard = 1111122222;
+//    	Patient p = listOfUsers.searchPatientWithID(1111122222);
+//    	
+//    	try {
+//			ArrayList<String> result = listOfUsers.specificPatientDetails(specificHealthCard, USER.OWNER);
+//			
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//    }
    
 }
