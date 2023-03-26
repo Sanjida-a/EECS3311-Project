@@ -85,9 +85,10 @@ public class DisplaySeeOrders implements ActionListener{
 		frame.getContentPane().add(btnSearch);
 		frame.revalidate();
 
-		JButton btnSearch2 = new JButton("See Prescription Forms");
+		JButton btnSearch2 = new JButton("See Prescription");
 		btnSearch2.setFont(new Font("굴림", Font.BOLD, 18));
 		btnSearch2.setBounds(390, 60, 230, 35);
+		btnSearch2.setActionCommand("See Prescription");
 		btnSearch2.addActionListener(new DisplaySeeOrders());
 		frame.getContentPane().add(btnSearch2);
 		frame.revalidate();
@@ -167,7 +168,7 @@ public class DisplaySeeOrders implements ActionListener{
 
 					textFieldTotalSpent.setText(Double.toString(val));
 	        	}
-		        else if(action.compareTo("See Prescription Forms") == 0){
+		        else if(action.compareTo("See Prescription") == 0){
 		        	
 					textAreaOutput.setText("");
 					

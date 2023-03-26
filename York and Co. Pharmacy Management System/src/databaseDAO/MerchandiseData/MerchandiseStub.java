@@ -44,7 +44,7 @@ public class MerchandiseStub implements MerchandiseRoot {
 	public void updateMedicationInDatabase(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
 		for(Merchandise m : allInventoryStub) {
 			if(m.getMedicationID() == medIDOfModifiedMedication) {
-				m = actualMedicationObject;
+				allInventoryStub.set(medIDOfModifiedMedication-1, actualMedicationObject);
 				break;
 			}
 		}
