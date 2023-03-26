@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Orders.*;
 import presentation.USER;
@@ -103,7 +104,7 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		
-		assertEquals("Quantity Bought Must Be Positive!", errorString);
+		assertEquals("Quantity Bought Must Be Positive (at least 1)!", errorString);
 	}
 	
 	@Test
@@ -142,7 +143,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Not an OTC!", errorString);
+		assertEquals("Not an OTC! Use the \"Give Refill for a prescription\" button", errorString);
 	}
 	
 	@Test
@@ -158,7 +159,7 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 
-		assertEquals("Check inventory!", errorString);
+		assertEquals("Check quantity in stock for medication! Not enough!", errorString);
 		
 		merStub.allInventoryStub.get(0).setQuantity(3);
 		errorString = null;
@@ -170,7 +171,7 @@ class ListOfOrdersUnitTest {
 			
 			errorString = e.getMessage();
 		}
-		assertEquals("Check inventory!", errorString);
+		assertEquals("Check quantity in stock for medication! Not enough!", errorString);
 	}
 	
 	@Test
@@ -183,7 +184,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Refills must be positive", errorString);
+		assertEquals("Refills must be positive (at least 1)!", errorString);
 		
 	}
 	
@@ -212,7 +213,7 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 			
 		}
-		assertEquals("Not an Rx!", errorString);
+		assertEquals("Not an Rx! You can only add prescription forms for Rx Medications", errorString);
 	}
 	
 	@Test
@@ -264,7 +265,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("No record found of prescription!", errorString);
+		assertEquals("Medication doesn't exist!", errorString);
 	}
 	
 	@Test
@@ -277,7 +278,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("No record found of prescription!", errorString);
+		assertEquals("Patient doesn't exist!", errorString);
 	}
 	
 	@Test
@@ -290,7 +291,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Quantity Bought Must Be Positive!", errorString);
+		assertEquals("Quantity Bought Must Be Positive (at least 1)!", errorString);
 	}
 	
 	@Test
@@ -309,7 +310,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("No refills left!", errorString);
+		assertEquals("0 refills left!", errorString);
 	}
 	
 	@Test
@@ -322,7 +323,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Only have " + 5 +  " refills left!", errorString);
+		assertEquals("Not enough refills! Only have " + 5 +  " refills left!", errorString);
 	}
 	
 	@Test
@@ -335,7 +336,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Only have " + 5 +  " refills left!", errorString);
+		assertEquals("Not enough refills! Only have " + 5 +  " refills left!", errorString);
 	}
 	
 	@Test
@@ -358,7 +359,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Please enter a valid, positive, 10-digit health card number", errorString);
+		assertEquals("Please enter a valid 10-digit health card number", errorString);
 	}
 	@Test
 	void testSpecificPatientOrderHistory3() {
@@ -369,7 +370,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			errorString = e.getMessage();
 		}
-		assertEquals("Please enter a valid, positive, 10-digit health card number", errorString);
+		assertEquals("Please enter a valid 10-digit health card number", errorString);
 	}
 	@Test
 	void testSpecificPatientOrderHistory4() {
@@ -529,7 +530,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			result = e.getMessage();
 		}
-		assertEquals( "Please enter a valid, positive, 10-digit health card number", result);
+		assertEquals( "Please enter a valid 10-digit health card number", result);
 	}
 	
 	@Test 
@@ -541,7 +542,7 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			result = e.getMessage();
 		}
-		assertEquals( "Please enter a valid, positive, 10-digit health card number", result);
+		assertEquals( "Please enter a valid 10-digit health card number", result);
 	}
 	
 	@Test 
@@ -570,6 +571,141 @@ class ListOfOrdersUnitTest {
 		
 		
 	}
+	
+	@Test
+	void testOutputPresRefill1() {
+		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<Prescription> prescriptionList = new ArrayList<Prescription>();
+		Prescription pres1 = new Prescription(1, 3, 1111122222, 10);
+		Prescription pres2 = new Prescription(1, 4, 1111122222, 20);
+		prescriptionList.add(pres1);
+		prescriptionList.add(pres2);
+		int presNum = 1;
+		Merchandise associatedMedication = null;
+		Inventory inv = Inventory.getInstance(merStub);
+		expected.add("PRESCRIPTION FORM HISTORY OF PATIENT WITH HEALTH CARD NUMBER " + 1111122222 + "\n\n");
+		for (Prescription p : prescriptionList) {
+			String oneFullOrder = "";
+			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
+			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + orderStub.numOfRefill(1111122222, p.getMedicationID()); 
+			associatedMedication = inv.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
+			
+			
+			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\n";
+			
+			oneFullOrder += "\n";
+			oneFullOrder += "----------------------------\n";
+			expected.add(oneFullOrder);
+			presNum++;
+		}
+		try {
+			result = orders.outputPresRefill(1111122222, USER.OWNER);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+		try {
+			result = orders.outputPresRefill(1111122222, USER.PHARMACIST);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	void testOutputPresRefill2() {
+		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<Prescription> prescriptionList = new ArrayList<Prescription>();
+		Prescription pres1 = new Prescription(1, 3, 1111122222, 10);
+		Prescription pres2 = new Prescription(1, 4, 1111122222, 20);
+		prescriptionList.add(pres1);
+		prescriptionList.add(pres2);
+		int presNum = 1;
+		Merchandise associatedMedication = null;
+		Inventory inv = Inventory.getInstance(merStub);
+		expected.add("YOUR PRESCRIPTION FORMS:\n\n");
+		for (Prescription p : prescriptionList) {
+			String oneFullOrder = "";
+			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
+			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + orderStub.numOfRefill(1111122222, p.getMedicationID()); 
+			associatedMedication = inv.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
+			
+			
+			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\n";
+			
+			oneFullOrder += "\n";
+			oneFullOrder += "----------------------------\n";
+			expected.add(oneFullOrder);
+			presNum++;
+		}
+		try {
+			result = orders.outputPresRefill(1111122222, USER.PATIENT);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+
+	}
+	
+	@Test
+	void testOutputPresRefill3() {
+		ArrayList<String> expected = new ArrayList<String>();
+		expected.add("Patient with health card number " + 2222233333L + " does not have any prescription forms in the system.");
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+			result = orders.outputPresRefill(2222233333L, USER.OWNER);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+		try {
+			result = orders.outputPresRefill(2222233333L, USER.PHARMACIST);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+	}
+	@Test
+	void testOutputPresRefill4() {
+		ArrayList<String> expected = new ArrayList<String>();
+		expected.add("You have not entered any prescription forms into the system.");
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+			result = orders.outputPresRefill(2222233333L, USER.PATIENT);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+
+	}
+	
+	@Test 
+	void testSpecificPatientMoneySpent1() {
+		try {
+			assertEquals(70.0, orders.specificPatientMoneySpent(1111122222), 0.001);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+	}
+	@Test 
+	void testSpecificPatientMoneySpent2() {
+		try {
+			assertEquals(0.0, orders.specificPatientMoneySpent(2222233333L), 0.001);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+	}
+	
 	
 
 
