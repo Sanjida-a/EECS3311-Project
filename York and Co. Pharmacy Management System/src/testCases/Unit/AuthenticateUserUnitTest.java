@@ -31,13 +31,10 @@ class AuthenticateUserUnitTest {
 	}
 
 	@Test
-	void testCheckUserValid() throws Exception {
+	void testCheckUserValid1()  {
 
 		AuthenticateUser auth = AuthenticateUser.getInstance();
-		//UserStub stub = new UserStub();
-		//listOfUsers.set_userDAO(stub);
-//		auth.set_userDAO(stub);
-		//System.out.println(auth.);
+
 		
 		USER result;
 		//input account info for OWNER
@@ -53,6 +50,12 @@ class AuthenticateUserUnitTest {
 		assertEquals(USER.PATIENT, result );
 
 
+	}
+	
+	@Test
+	void testCheckUserValid2() {
+		AuthenticateUser auth = AuthenticateUser.getInstance();
+		assertEquals(null, auth.checkUserValid(2222, 2222));
 	}
 
 }

@@ -23,9 +23,6 @@ class pharmacyAppMainUnitTest {
 	 * nothing to be tested
 	 * the method is error free
 	 */
-	@Test
-	void testMain() {
-		
-	}
+
 
 }

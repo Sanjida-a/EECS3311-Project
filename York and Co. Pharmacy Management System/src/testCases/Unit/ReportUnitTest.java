@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import middleLayer.Orders.*;
@@ -19,8 +20,8 @@ class ReportUnitTest {
 	private static MerchandiseStub merStub;
 	private static UserStub userStub;
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
-	@BeforeAll
-	public static void before() {
+	@BeforeEach
+	public void before() {
 		
 
 		orderStub = new OrderStub();
