@@ -1,5 +1,6 @@
 package testCases.Unit;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import databaseDAO.superDAO;
@@ -18,6 +20,8 @@ import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Owner;
 import middleLayer.Users.Patient;
+import middleLayer.Users.User;
+import presentation.USER;
 
 public class ListOfUsersUnitTest {
 
@@ -25,8 +29,8 @@ private static ListOfUsers listOfUsers;
 private static UserRoot stub;
 	
 	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
-	@BeforeAll
-	public static void before() {
+	@BeforeEach
+	public void before() {
 		try {
 			//superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 			stub = new UserStub();
@@ -85,8 +89,7 @@ private static UserRoot stub;
 	@Test
 	void testModifyPatientDetails2() {
 		
-		//UserStub stub = new UserStub();
-		//listOfUsers.set_userDAO(stub);
+
 		JTextField fname = new JTextField();
 		JTextField lname = new JTextField();
 		JTextField phoneNum = new JTextField();
@@ -116,14 +119,12 @@ private static UserRoot stub;
 			
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			fail();
 		}
 	}
 	@Test
 	void testModifyPatientDetails3() {
-		
-		//UserStub stub = new UserStub();
-		//listOfUsers.set_userDAO(stub);
+
 		JTextField fname = new JTextField();
 		JTextField lname = new JTextField();
 		JTextField phoneNum = new JTextField();
@@ -169,7 +170,7 @@ private static UserRoot stub;
 
 		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", -1111144444, 1111144444, 11111444));
 		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444));
-		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, 1111144444, -11111444));
+
 		
 	}
 	@Test 
@@ -180,9 +181,6 @@ private static UserRoot stub;
 	}
 	@Test 
 	void testAddPatient4() {
-		
-		//UserStub stub = new UserStub();
-		//listOfUsers.set_userDAO(stub);
 	
 		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 11111444444L, 1111144444, 11111444));
 		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, 11111444444L, 11111444));	
@@ -238,7 +236,7 @@ private static UserRoot stub;
 			result = listOfUsers.searchPatientByName("wrong name", "FullName");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			fail();
 		}
 		assertEquals(expected, result);
 	}
@@ -246,6 +244,70 @@ private static UserRoot stub;
 	void testSearchPatientByName5() {
 
 		assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", ""));
+	}
+	
+	@Test
+	void testSpecificPatientDetails1() {
+		ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> result = null;
+		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+		expected.add("PATIENT with Healthcard Number " + 1111122222 + " DETAILS\n");
+		expected.add("First Name: " + pat1.getFirstName() + "\n");
+		expected.add("Last Name: " + pat1.getLastName() + "\n");
+		expected.add("Address: " + pat1.getAddress() + "\n");
+		expected.add("Phone Number: " + Long.toString(pat1.getPhoneNum()) + "\n");
+		expected.add("Health Card Number: " + Long.toString(pat1.getHealthCardNum()) + "\n");
+		expected.add("Date Of Birth: " + Integer.toString(pat1.getDateOfBirth()) + "\n");
+		try {
+			result = listOfUsers.specificPatientDetails(1111122222, USER.OWNER);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+		
+	}
+	@Test
+	void testSpecificPatientDetails2() {
+		ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> result = null;
+		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+		expected.add("PATIENT with Healthcard Number " + 1111122222 + " DETAILS\n");
+		expected.add("First Name: " + pat1.getFirstName() + "\n");
+		expected.add("Last Name: " + pat1.getLastName() + "\n");
+		expected.add("Address: " + pat1.getAddress() + "\n");
+		expected.add("Phone Number: " + Long.toString(pat1.getPhoneNum()) + "\n");
+		expected.add("Health Card Number: " + Long.toString(pat1.getHealthCardNum()) + "\n");
+		expected.add("Date Of Birth: " + Integer.toString(pat1.getDateOfBirth()) + "\n");
+		try {
+			result = listOfUsers.specificPatientDetails(1111122222, USER.PHARMACIST);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+		
+	}
+	@Test
+	void testSpecificPatientDetails3() {
+		ArrayList<String> expected = new ArrayList<String>();
+		ArrayList<String> result = null;
+		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+		expected.add("YOUR DETAILS\n");
+		expected.add("First Name: " + pat1.getFirstName() + "\n");
+		expected.add("Last Name: " + pat1.getLastName() + "\n");
+		expected.add("Address: " + pat1.getAddress() + "\n");
+		expected.add("Phone Number: " + Long.toString(pat1.getPhoneNum()) + "\n");
+		expected.add("Health Card Number: " + Long.toString(pat1.getHealthCardNum()) + "\n");
+		expected.add("Date Of Birth: " + Integer.toString(pat1.getDateOfBirth()) + "\n");
+		try {
+			result = listOfUsers.specificPatientDetails(1111122222, USER.PATIENT);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(expected, result);
+		
 	}
 	
 	

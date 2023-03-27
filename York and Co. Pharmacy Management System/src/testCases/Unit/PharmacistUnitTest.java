@@ -27,13 +27,5 @@ class PharmacistUnitTest {
 
 	
 
-	@Test
-	void testSearchPatientByName() {
-		/*the implementation of the method SearchPatientByName() for this class
-		 * is exactly identical to the one of the same method in Owner class
-		 * no need to test twice 
-		 */
-		
-	}
 
 }

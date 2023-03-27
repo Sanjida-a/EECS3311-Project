@@ -37,10 +37,6 @@ public class InventoryUnitTest {
 		
 	}
 	
-	@BeforeEach
-	public void beforeEach() {
-		val.set_merDAO(new MerchandiseStub());
-	}
 	
 	@Test
     void getInstanceTest() {
@@ -72,16 +68,11 @@ public class InventoryUnitTest {
 
     @Test
     void getOnlyOTCMerchandiseTest(){
-       // Inventory val = Inventory.getInstance();
-    	//MerchandiseStub mStub = new MerchandiseStub();
-       // val.set_merDAO(new MerchandiseStub());
         ArrayList<Merchandise> subject1 = val.getOnlyOTCMerchandise();
 		ArrayList<Merchandise> comparator1 = new ArrayList<Merchandise>();
 		comparator1.add(mStub.getListOfMerchandise().get(0));
 		comparator1.add(mStub.getListOfMerchandise().get(1));
-		/*for(int i = 0; i < subject1.size(); i ++) {
-			assertEquals(subject1.get(i), comparator1.get(i));
-		}*/
+
 		assertEquals(subject1, comparator1);
     }
 
@@ -89,9 +80,7 @@ public class InventoryUnitTest {
 
     @Test
     void increaseQuantityTest1(){
-       // Inventory val = Inventory.getInstance();
-      //  MerchandiseStub mStub = new MerchandiseStub();
-      //  val.set_merDAO(mStub);
+
     	try {
 			val.increaseQuantity(1,10);
 		} catch (Exception e) {
@@ -100,10 +89,6 @@ public class InventoryUnitTest {
 		}
         assertEquals(20,val.getMerchandise().get(0).getQuantity());
     	
-    	
-        //assertEquals(val.getMerchandise().get(0).toString(), new Merchandise(1, "pill1", 20, 2.0, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true).toString() );
-
-        
     }
     
     @Test

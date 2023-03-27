@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 public class DisplayDescription {
 	private static JFrame superFrame;
 	private static JFrame frame;
+	private static JPanel panel;
 	
 	public static void displayDescription(JFrame previous, Merchandise merc) {
 		superFrame = previous;
@@ -27,20 +28,17 @@ public class DisplayDescription {
 		
 		frame.setVisible(true);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBounds(12, 10, 586, 361);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
+		createButton();
+		createOutputArea(merc);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		textArea.setFont(new Font("Arial", Font.PLAIN, 18));
-		textArea.setBounds(0, 0, 586, 293);
-		textArea.setText(merc.getDescription());
-		textArea.setEditable(false);;
-		panel.add(textArea);
-		
+
+	}
+	
+	public static void createButton() {
 		JButton btnClose = new JButton("Close");
 		btnClose.setFont(new Font("굴림", Font.BOLD, 18));
 		btnClose.setBounds(461, 316, 125, 35);
@@ -56,6 +54,19 @@ public class DisplayDescription {
 			
 		});
 		panel.add(btnClose);
+		
+	}
+	
+	public static void createOutputArea(Merchandise merc) {
+		JTextArea textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setFont(new Font("Arial", Font.PLAIN, 18));
+		textArea.setBounds(0, 0, 586, 293);
+		textArea.setText(merc.getDescription());
+		textArea.setEditable(false);;
+		panel.add(textArea);
+		
 	}
 
 }

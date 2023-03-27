@@ -40,9 +40,7 @@ class ListOfOrdersUnitTest {
 
 	@Test
 	void testUpdateOrderListFromDatabase() {
-		//orders = ListOfOrders.getInstance();
-		//orders.setOrderDAO(new OrderStub());
-		//orders.updateOrderListFromDatabase();
+
 		ArrayList<Order> expected = new ArrayList<Order>();
 		ArrayList<Order> result = new ArrayList<Order>();
 

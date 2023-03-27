@@ -23,10 +23,6 @@ class PatientUnitTest {
  * no notable method to be tested
  * all of them is error free
  */
-	//done
-	@Test
-	void test() {
-		
-	}
+
 
 }
