@@ -46,7 +46,7 @@ class AuthenticateUserUnitTest {
 		assertEquals(USER.PHARMACIST, result );
 		
 		//input account info for PATIENT
-		result = auth.checkUserValid(1111122222, 11111222);
+		result = auth.checkUserValid(1111122222, 19990101);
 		assertEquals(USER.PATIENT, result );
 
 

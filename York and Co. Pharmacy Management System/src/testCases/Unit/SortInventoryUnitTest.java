@@ -53,7 +53,7 @@ public class SortInventoryUnitTest {
     	subject1.add(merc3);
     	subject1.add(merc1);
     	subject1.add(merc4);
-    	subject1 = val.displayAlphabetically(subject1);
+    	subject1 = val.displayByQuantity(subject1);
     	comparator1.add(merc1);
     	comparator1.add(merc2);
        	comparator1.add(merc3);
@@ -76,7 +76,7 @@ public class SortInventoryUnitTest {
     	subject1.add(merc3);
     	subject1.add(merc1);
     	subject1.add(merc4);
-    	subject1 = val.displayAlphabetically(subject1);
+    	subject1 = val.displayByPrice(subject1);
     	comparator1.add(merc1);
     	comparator1.add(merc2);
        	comparator1.add(merc3);

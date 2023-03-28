@@ -232,3 +232,4 @@ York and Co. Pharmacy Management System/.classpath
 .metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
 .metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
 .metadata/.plugins/org.eclipse.m2e.logback.configuration/0.log
+*.log
