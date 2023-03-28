@@ -80,3 +80,8 @@
 20. 2023/3/26 15:30 - 15:45 contributor: Geon Kim
 * more unit tests for ListOfOrders and Inventory added
 * issues are fixed in those two unit tests above
+
+21. 2023/3/27 00:00 - 2:30 contributor: Minh Tran
+    2023/3/27 21:00 - 2023/3/28 01:00
+* fixed add prescriptions and refills left
+* integration test for ListOfOrders

@@ -50,8 +50,11 @@ FOREIGN KEY (prescriptionNum) REFERENCES Prescriptions(prescriptionNum)
 INSERT INTO AllUsernamesAndPasswords
 VALUES (1111, 1111, "Owner"), (1234, 1234, "Pharmacist");
 
+/*INSERT INTO AllUsernamesAndPasswords
+VALUES (1111122222, 11111222, "Patient"); */
+
 INSERT INTO AllUsernamesAndPasswords
-VALUES (1111122222, 11111222, "Patient");
+VALUES (1111122222, 19990101, "Patient");
 
 
 /*--------------------------------------------------------------------------------------
@@ -129,8 +132,11 @@ ALTER TABLE Prescriptions MODIFY COLUMN prescriptionNum INT AUTO_INCREMENT;
 ALTER TABLE Patient
 DROP COLUMN ID;
 
+/* INSERT INTO Patient
+VALUES ("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222); */
+
 INSERT INTO Patient
-VALUES ("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+VALUES ("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101);
 
 /* Minh changed*/
 
@@ -160,4 +166,14 @@ VALUES (1, 1, 1111122222, 1, 5, 0); /* for integration tests */
 ALTER TABLE Prescriptions 
 ADD CONSTRAINT `fk_prescription_patientId` FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber);
 
+INSERT INTO Medications VALUES
+(7,"Test", 10000, 10.00, 'COLD', 'LIQUID' ,false,null, true),
+(8,"Test1", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true),
+(9,"Test2", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true),
+(10,"Test3", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true); /* for integration tests */
+
+
 select * from allusernamesandpasswords;
+select * from prescriptions;
+select * from orders;
+select * from Medications;

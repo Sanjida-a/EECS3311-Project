@@ -46,7 +46,7 @@ class PharmacistTest {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-//    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
+//    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));	
 //    	assertNotEquals(comparator1.toString(), result.toString());
 //    }
 
@@ -65,7 +65,7 @@ class PharmacistTest {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-//    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+//    	comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));
 //    	assertNotEquals(comparator1.toString(), result.toString());
 //    }
     

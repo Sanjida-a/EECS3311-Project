@@ -196,15 +196,20 @@ public class OrderDAO extends superDAO implements OrderRoot{
 	}
 	
 	//to check whether a record exists in prescription table before giving a refill
-	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
+//	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
+	public int checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
 			String queryOrderStatement = "SELECT *  FROM Prescriptions WHERE medicationID= " + _medicationId +" AND" + " patientID=" + _patientID;
 			ResultSet totalRecord = statement.executeQuery(queryOrderStatement);	
-			boolean isRecord = true;
-			if (!totalRecord.next()) {
-				isRecord = false;
+//			boolean isRecord = true;
+			int isRecord = -1;
+//			if (!totalRecord.next()) {
+//				isRecord = false;
+//			}
+			while (totalRecord.next()) {
+				isRecord =  totalRecord.getInt("prescriptionNum");
 			}
 			return isRecord;
 		}
@@ -213,6 +218,44 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			throw e1;
 		}
 	}
+	
+	public void updatePresDB (int presNum, int refillsNum) throws Exception {
+		try {		
+			con = DriverManager.getConnection(url, user, password);
+			Statement statement = con.createStatement();
+//			String queryOrderStatement = "UPDATE Prescriptions SET numOfRefills = " + refillsNum + 
+//					                 "WHERE prescriptionNum= " + presNum;
+			
+			String queryPresStatement = "SELECT numOfRefills  FROM Prescriptions WHERE prescriptionNum= " + presNum ;					
+			ResultSet numberOfOriginalRefill = statement.executeQuery(queryPresStatement);
+			int originalRefill = 0;
+			while (numberOfOriginalRefill.next()) {
+				originalRefill = numberOfOriginalRefill.getInt("numOfRefills");						
+			}
+
+			int newRefill = originalRefill + refillsNum;
+			String queryOrderStatement = "UPDATE Prescriptions SET numOfRefills = ? WHERE prescriptionNum = ?"; 
+			PreparedStatement st = con.prepareStatement(queryOrderStatement);
+
+			st.setInt(1, newRefill);
+			st.setInt(2, presNum);
+			
+			st.executeUpdate();
+			
+			
+			con.close();
+			
+		}
+		catch (SQLException e1) {
+			e1.printStackTrace();
+			throw e1;
+		}
+		
+	}
+
+
+
+
 
 
 }

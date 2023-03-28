@@ -21,7 +21,7 @@ class AuthenticateUserTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
 			authenticateUserInstance = AuthenticateUser.getInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,6 +51,7 @@ class AuthenticateUserTest {
 
     @Test
     void checkUserValidPatientLogin() {
-        assertEquals(USER.PATIENT, authenticateUserInstance.checkUserValid(1111122222, 11111222));
+
+        assertEquals(USER.PATIENT, authenticateUserInstance.checkUserValid(1111122222, 19990101));
     }
 }

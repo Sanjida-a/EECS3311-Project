@@ -36,7 +36,7 @@ public class ListOfUsersTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
 			con = superDAO.getCon();
 			listOfUsers = ListOfUsers.getInstance();
 		} catch (Exception e) {
@@ -579,7 +579,7 @@ public class ListOfUsersTest {
 //		try {
 //			ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
 //			
-//			comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));	
+//			comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));	   
 //	    	assertNotEquals(comparator1.toString(), result.toString());
 //		} catch (Exception e) {
 //			e.printStackTrace();

@@ -182,8 +182,18 @@ public class ListOfOrders {
 			throw new Exception ("Refills must be positive (at least 1)!");
 		}
 //		}
-
-		_orderDAO.addToPrescriptionTable(p);
+		
+		
+		int presNumToBeUpd = _orderDAO.checkIfExistsInPrescriptionTable(p.getPatientID(), p.getMedicationID());
+		
+		if (presNumToBeUpd != -1) {
+			int refillsLeft = _orderDAO.numOfRefill(p.getPatientID(), p.getMedicationID());
+			int newRefills = p.originalNumOfRefills + refillsLeft;
+			_orderDAO.updatePresDB(presNumToBeUpd, newRefills);
+		}
+		else {
+		_orderDAO.addToPrescriptionTable(p);		
+		}
 		
 		this.updateOrderListFromDatabase();
 	}
@@ -210,9 +220,11 @@ public class ListOfOrders {
 			throw new Exception ("Not an Rx! Use the \"Add OTC Order\" button");
 		}
 		
-		Boolean prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
+//		Boolean prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
+		int prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
 		
-		if (prescriptionExists == false) {
+//		if (prescriptionExists == false) {
+		if (prescriptionExists == -1) {
 			throw new Exception("No record found of prescription under Patient with Health Card Number: " + o.getPatientID() + ". Add prescription form into system first.");
 		}
 		

@@ -88,12 +88,26 @@ public class OrderStub implements OrderRoot {
 
 	}
 	
+//	@Override
+//	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId) throws SQLException {		
+//		Boolean existsInPrescriptionList = false;
+//		for (Prescription p: prescriptionList) {
+//			if ((p.getMedicationID() == _medicationId) && (p.getPatientID() == _patientID)) {
+//				existsInPrescriptionList = true;
+//				break;
+//			}
+//		}
+//		
+//		return existsInPrescriptionList;
+//		
+//	}
+	
 	@Override
-	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId) throws SQLException {		
-		Boolean existsInPrescriptionList = false;
+	public int checkIfExistsInPrescriptionTable(long _patientID, int _medicationId) throws SQLException {		
+		int existsInPrescriptionList = -1;
 		for (Prescription p: prescriptionList) {
 			if ((p.getMedicationID() == _medicationId) && (p.getPatientID() == _patientID)) {
-				existsInPrescriptionList = true;
+				existsInPrescriptionList = p.getPrescriptionNum();
 				break;
 			}
 		}
@@ -105,5 +119,11 @@ public class OrderStub implements OrderRoot {
 	@Override
 	public ArrayList<Prescription> getListOfAllPres() throws Exception {
 		return prescriptionList;
+	}
+
+	@Override
+	public void updatePresDB(int presNum, int refillsNum) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}	
 }
