@@ -156,8 +156,8 @@ private static UserRoot stub;
 			
 			e.printStackTrace();
 		}
-		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
-		expected.add(new Patient("JANE", "DOE", "5000 YONGE ST", 2223334444L, 2222233333L, 22222333));
+		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));
+		expected.add(new Patient("JANE", "DOE", "5000 YONGE ST", 2223334444L, 2222233333L, 19990202));
 		expected.add(new Patient("TEST", "NAME", "ADDRESS", 1111144444, 1111144444, 11111444));
 		
 		result = listOfUsers.getAllPatientsList();
@@ -196,7 +196,7 @@ private static UserRoot stub;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));
 		assertEquals(expected, result);
 		
 	}
@@ -210,7 +210,7 @@ private static UserRoot stub;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		expected.add(new Patient("JANE", "DOE", "5000 YONGE ST", 2223334444L, 2222233333L, 22222333));
+		expected.add(new Patient("JANE", "DOE", "5000 YONGE ST", 2223334444L, 2222233333L, 19990202));
 		assertEquals(expected, result);
 		
 	}
@@ -224,7 +224,7 @@ private static UserRoot stub;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222));
+		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));
 		assertEquals(expected, result);
 		
 	}
@@ -250,7 +250,7 @@ private static UserRoot stub;
 	void testSpecificPatientDetails1() {
 		ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> result = null;
-		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101);
 		expected.add("PATIENT with Healthcard Number " + 1111122222 + " DETAILS\n");
 		expected.add("First Name: " + pat1.getFirstName() + "\n");
 		expected.add("Last Name: " + pat1.getLastName() + "\n");
@@ -271,7 +271,7 @@ private static UserRoot stub;
 	void testSpecificPatientDetails2() {
 		ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> result = null;
-		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101);
 		expected.add("PATIENT with Healthcard Number " + 1111122222 + " DETAILS\n");
 		expected.add("First Name: " + pat1.getFirstName() + "\n");
 		expected.add("Last Name: " + pat1.getLastName() + "\n");
@@ -292,7 +292,7 @@ private static UserRoot stub;
 	void testSpecificPatientDetails3() {
 		ArrayList<String> expected = new ArrayList<String>();
 		ArrayList<String> result = null;
-		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 11111222);
+		Patient pat1 = new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101);
 		expected.add("YOUR DETAILS\n");
 		expected.add("First Name: " + pat1.getFirstName() + "\n");
 		expected.add("Last Name: " + pat1.getLastName() + "\n");
