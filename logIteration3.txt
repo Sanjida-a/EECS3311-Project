@@ -85,3 +85,6 @@
     2023/3/27 21:00 - 2023/3/28 01:00
 * fixed add prescriptions and refills left
 * integration test for ListOfOrders
+
+22. 2023/3/28 21:00 - 21:30 contributor: Geon Kim
+* unit test for Inventory.java, ListOfOrders.java, and ListOfUsers.java are refined for better coverage
