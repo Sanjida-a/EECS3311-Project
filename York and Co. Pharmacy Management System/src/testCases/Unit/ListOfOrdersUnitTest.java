@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import middleLayer.MerchandiseInventory.Inventory;
+import middleLayer.MerchandiseInventory.MERCHANDISE_FORM;
+import middleLayer.MerchandiseInventory.MERCHANDISE_TYPE;
 import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Orders.*;
 import presentation.USER;
@@ -62,9 +64,7 @@ class ListOfOrdersUnitTest {
 	
 	@Test
 	void testAddOrderToDatabase1() {
-		//orders = ListOfOrders.getInstance();
-		//orders.setOrderDAO(new OrderStub());
-		//orders.updateOrderListFromDatabase();
+
 		ArrayList<Order> expected = new ArrayList<Order>();
 		ArrayList<Order> result = new ArrayList<Order>();
 
@@ -94,6 +94,8 @@ class ListOfOrdersUnitTest {
 
 		Order newOrder = new Order(5, 1, 1111122222, -1, 10.00, true);  
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 
 		try {
 			orders.addOrderToDatabase(newOrder);
@@ -103,12 +105,16 @@ class ListOfOrdersUnitTest {
 		}
 		
 		assertEquals("Quantity Bought Must Be Positive (at least 1)!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddOrderToDatabase3() {
 		Order newOrder = new Order(5, 10, 1111122222, 5, 10.00, false);  
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
@@ -116,12 +122,16 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Medication doesn't exist!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddOrderToDatabase4() {
 		Order newOrder = new Order(5, 1, 1111122229, 5, 10.00, false);  
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
@@ -129,12 +139,16 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Patient doesn't exist!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddOrderToDatabase5() {
 		Order newOrder = new Order(5, 4, 1111122222, 5, 10.00, false);  
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
@@ -142,6 +156,8 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Not an OTC! Use the \"Give Refill for a prescription\" button", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
@@ -149,6 +165,8 @@ class ListOfOrdersUnitTest {
 		Order newOrder = new Order(5, 1, 1111122222, 5, 10.00, false);  
 		String errorString = null;
 		merStub.allInventoryStub.get(0).setQuantity(0);
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
@@ -170,12 +188,16 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Check quantity in stock for medication! Not enough!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddPresOrderToDb1() {
 		Prescription pres = new Prescription(5, 3, 1111122222, 0);
 		String errorString = null;
+		ArrayList<Prescription> before = orders.getListofAllPres();
+		ArrayList<Prescription> after;
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
@@ -183,13 +205,15 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Refills must be positive (at least 1)!", errorString);
-		
+
 	}
 	
 	@Test
 	void testAddPresOrderToDb2() {
 		Prescription pres = new Prescription(5, 10, 1111122222, 5);
 		String errorString = null;
+		ArrayList<Prescription> before = orders.getListofAllPres();
+		ArrayList<Prescription> after;
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
@@ -198,12 +222,16 @@ class ListOfOrdersUnitTest {
 			
 		}
 		assertEquals("Medication doesn't exist!", errorString);
+		after = orders.getListofAllPres();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddPresOrderToDb3() {
 		Prescription pres = new Prescription(5, 1, 1111122222, 5);
 		String errorString = null;
+		ArrayList<Prescription> before = orders.getListofAllPres();
+		ArrayList<Prescription> after;
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
@@ -212,12 +240,16 @@ class ListOfOrdersUnitTest {
 			
 		}
 		assertEquals("Not an Rx! You can only add prescription forms for Rx Medications", errorString);
+		after = orders.getListofAllPres();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddPresOrderToDb4() {
 		Prescription pres = new Prescription(5, 3, 1111155555, 5);
 		String errorString = null;
+		ArrayList<Prescription> before = orders.getListofAllPres();
+		ArrayList<Prescription> after;
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
@@ -226,11 +258,29 @@ class ListOfOrdersUnitTest {
 			
 		}
 		assertEquals("Patient doesn't exist!", errorString);
+		after = orders.getListofAllPres();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddPresOrderToDb5() {
-		Prescription pres = new Prescription(3, 3, 1111122222, 5);
+		Prescription pres = new Prescription(3, 6, 1111122222, 5);
+		Merchandise merc4 = new Merchandise(6, "test", 7, 5.00, MERCHANDISE_TYPE.SINUS, MERCHANDISE_FORM.LIQUID, false, null, true);
+		Inventory inv = Inventory.getInstance(merStub);
+		
+		try {
+			inv.addToInventory(merc4);
+			orders.addPresFormToDb(pres);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail();
+		}
+		assertEquals(pres, orders.getListofAllPres().get(2));
+	}
+	
+	@Test
+	void testAddPresOrderToDb6() {
+		Prescription pres = new Prescription(3, 3, 2222233333L, 2);
 
 		try {
 			orders.addPresFormToDb(pres);
@@ -238,7 +288,8 @@ class ListOfOrdersUnitTest {
 			// TODO Auto-generated catch block
 			fail();
 		}
-		assertEquals(pres, orderStub.prescriptionList.get(2));
+		assertEquals(pres, orders.getListofAllPres().get(2));
+		
 	}
 	
 	@Test
@@ -257,6 +308,8 @@ class ListOfOrdersUnitTest {
 	void testAddRefillToDatabase2() {
 		Order order = new Order(5, 10, 1111122222, 1, 20.00, true);
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
@@ -264,12 +317,16 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Medication doesn't exist!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddRefillToDatabase3() {
 		Order order = new Order(5, 3, 1111122225, 1, 20.00, true);
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
@@ -277,12 +334,16 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Patient doesn't exist!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddRefillToDatabase4() {
 		Order order = new Order(5, 3, 1111122222, -1, 20.00, true);
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
@@ -290,6 +351,8 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Quantity Bought Must Be Positive (at least 1)!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
@@ -315,6 +378,8 @@ class ListOfOrdersUnitTest {
 	void testAddRefillToDatabase6() {
 		Order order = new Order(5, 3, 1111122222, 11, 20.00, true);
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
@@ -322,12 +387,16 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Not enough refills! Only have " + 5 +  " refills left!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test
 	void testAddRefillToDatabase7() {
 		Order order = new Order(5, 3, 1111122222, 11, 20.00, true);
 		String errorString = null;
+		ArrayList<Order> before = orders.getListofAllOrders();
+		ArrayList<Order> after;
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
@@ -335,6 +404,8 @@ class ListOfOrdersUnitTest {
 			errorString = e.getMessage();
 		}
 		assertEquals("Not enough refills! Only have " + 5 +  " refills left!", errorString);
+		after = orders.getListofAllOrders();
+		assertEquals(before, after);
 	}
 	
 	@Test

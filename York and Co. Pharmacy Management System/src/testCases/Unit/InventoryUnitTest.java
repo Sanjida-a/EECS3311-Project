@@ -95,6 +95,8 @@ public class InventoryUnitTest {
     void increaseQuantityTest2() {
     	String expected = "Quantity to increase by must be a non-negative number!";
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.increaseQuantity(1, -1);
 		} catch (Exception e) {
@@ -102,12 +104,16 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals(expected, result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     
     @Test
     void increaseQuantityTest3() {
     	String expected = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.increaseQuantity(6, 10);
 		} catch (Exception e) {
@@ -115,6 +121,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals(expected, result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
 
 
@@ -134,11 +142,16 @@ public class InventoryUnitTest {
 
     @Test
     void decreaseQuantityTest2(){ 
-
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	assertThrows(NegativeInputException.class, () -> val.decreaseQuantity(1, -1));
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void decreaseQuantityTest3(){
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	String result = null;
     	try {
 			val.decreaseQuantity(10, 1);
@@ -147,9 +160,13 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Decrease unsuccessful. No such medication currently exists in the inventory. See inventory", result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void decreaseQuantityTest4(){
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	String result = null;
     	try {
 			val.decreaseQuantity(1, 11);
@@ -158,6 +175,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + 11 + ". See inventory", result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void decreaseQuantityTest5(){
@@ -183,6 +202,8 @@ public class InventoryUnitTest {
     @Test
     void deleteTest2(){
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.delete(10);
 		} catch (Exception e) {
@@ -190,6 +211,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Remove unsuccessful. No such medication currently exists in the inventory. See current inventory", result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
 
     @Test
@@ -209,6 +232,8 @@ public class InventoryUnitTest {
     void addToInventoryTest2() {
         Merchandise m1 = new Merchandise(6, "ASPIRIN", 10, -15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
         try {
 			val.addToInventory(m1);
 		} catch (Exception e) {
@@ -216,12 +241,15 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
         assertEquals("Price must be a non-negative number!", result);
-  
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void addToInventoryTest3() {
         Merchandise m1 = new Merchandise(6, "ASPIRIN", -10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
         try {
 			val.addToInventory(m1);
 		} catch (Exception e) {
@@ -229,12 +257,15 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
         assertEquals("Quantity must be a non-negative number!", result);
-  
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void addToInventoryTest4() {
         Merchandise m1 = new Merchandise(6, "ASPIRIN", 10, 15.0, MERCHANDISE_TYPE.FEVER, MERCHANDISE_FORM.TABLET, true, null, true);
         String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
         try {
 			val.addToInventory(m1);
 			val.addToInventory(m1);
@@ -243,7 +274,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
         assertEquals("Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory", result);
-  
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void addToInventoryTest5() {
@@ -314,6 +346,8 @@ public class InventoryUnitTest {
     @Test
     void modifyMedicationNameTest2() {
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.modifyMedicationName(7, "new pill");
 		} catch (Exception e) {
@@ -321,7 +355,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. No such medication currently exists in the inventory. See current inventory", result);
-        
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     @Test
     void modifyMedicationNameTest3() {
@@ -333,6 +368,8 @@ public class InventoryUnitTest {
 			fail();
 		}
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.modifyMedicationName(6, "pill1");
 		} catch (Exception e) {
@@ -340,7 +377,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory.", result);
-        
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
 
     @Test
@@ -356,12 +394,18 @@ public class InventoryUnitTest {
     
     @Test
     void modifyMedicationPrice2(){
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	assertThrows(NegativeInputException.class , () -> val.modifyMedicationPrice(1, -10.00));
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     
     @Test
     void modifyMedicationPrice3(){
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.modifyMedicationPrice(10, 10.00);
 		} catch (Exception e) {
@@ -369,6 +413,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. No such medication currently exists in the inventory.", result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     
     @Test
@@ -384,6 +430,8 @@ public class InventoryUnitTest {
     @Test
     void modifyMedicationDescription2() {
     	String result = null;
+    	ArrayList<Merchandise> before = val.getValidAndInvalidMerchandise();
+    	ArrayList<Merchandise> after;
     	try {
 			val.modifyMedicationDescription(10, "test");
 		} catch (Exception e) {
@@ -391,6 +439,8 @@ public class InventoryUnitTest {
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. No such medication currently exists in the inventory.", result);
+    	after = val.getValidAndInvalidMerchandise();
+    	assertEquals(before, after);
     }
     
 
