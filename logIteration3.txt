@@ -81,10 +81,18 @@
 * more unit tests for ListOfOrders and Inventory added
 * issues are fixed in those two unit tests above
 
-21. 2023/3/27 00:00 - 2:30 contributor: Minh Tran
+21. 2023/3/27 21:00 - 22:00 contributor: All
+* Virtual call
+* discussed presentation; planned rough draft of script; planned overall presentation delivery
+
+22. 2023/3/27 00:00 - 2:30 contributor: Minh Tran
     2023/3/27 21:00 - 2023/3/28 01:00
 * fixed add prescriptions and refills left
 * integration test for ListOfOrders
 
-22. 2023/3/28 21:00 - 21:30 contributor: Geon Kim
+23. 2023/3/28 20:00 - 22:30 contributor: Aiza Bajwa
+* Finished and finalized presentation script
+* Finished retrospective activity write-up
+
+24. 2023/3/28 21:00 - 21:30 contributor: Geon Kim
 * unit test for Inventory.java, ListOfOrders.java, and ListOfUsers.java are refined for better coverage
