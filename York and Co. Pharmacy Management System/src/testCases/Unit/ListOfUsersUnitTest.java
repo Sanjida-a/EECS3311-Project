@@ -16,6 +16,7 @@ import databaseDAO.superDAO;
 import databaseDAO.MerchandiseData.MerchandiseStub;
 import databaseDAO.UserData.UserRoot;
 import databaseDAO.UserData.UserStub;
+import middleLayer.NegativeInputException;
 import middleLayer.MerchandiseInventory.Inventory;
 import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Owner;
@@ -72,8 +73,8 @@ private static UserRoot stub;
 	}
 	@Test
 	void testModifyPatientDetails1() {	
-		assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(99, null, null, null, null));
-
+		
+		String result = null;
 		JTextField fname = new JTextField();
 		JTextField lname = new JTextField();
 		JTextField phoneNum = new JTextField();
@@ -82,8 +83,17 @@ private static UserRoot stub;
 		lname.setText("");
 		phoneNum.setText("");
 		address.setText("");
-
-		assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		try {
+			listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("One of fName, lName, PhoneNum is required. Please fill in at least one of them.", result);
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
 	}
 	
 	@Test
@@ -129,8 +139,13 @@ private static UserRoot stub;
 		JTextField lname = new JTextField();
 		JTextField phoneNum = new JTextField();
 		JTextField address = new JTextField();
+
 		phoneNum.setText("-1112223333");
-		assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		assertThrows(NegativeInputException.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
 	}
 	
 	@Test
@@ -139,10 +154,48 @@ private static UserRoot stub;
 		JTextField lname = new JTextField();
 		JTextField phoneNum = new JTextField();
 		JTextField address = new JTextField();
+		String result = null;
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
 		phoneNum.setText("111222");
-		assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+		try {
+			listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Phone Number must be a 10 digit number", result);
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+	}
+	@Test
+	void testModifyPatientDetails5() {
+		JTextField fname = new JTextField();
+		JTextField lname = new JTextField();
+		JTextField phoneNum = new JTextField();
+		JTextField address = new JTextField();
+		String result = null;
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
 		phoneNum.setText("11122233334");
-		assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
+		try {
+			listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Phone Number must be a 10 digit number", result);
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+	}
+	
+	@Test 
+	void testModifyPatientDetails6() {
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		assertThrows(Exception.class, () -> listOfUsers.modifyPatientDetails(99, null, null, null, null));
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
 	}
 	
 	@Test
@@ -167,24 +220,107 @@ private static UserRoot stub;
 	
 	@Test 
 	void testAddPatient2() {
-
-		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", -1111144444, 1111144444, 11111444));
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		String result = null;
+		try {
+			listOfUsers.addPatient("test", "name", "address", -1111144444, 1111144444, 11111444);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Phone number must be a positive number", result);
 		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444));
-
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
 		
 	}
 	@Test 
 	void testAddPatient3() {
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		String result = null;
+		try {
+			listOfUsers.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Health card number must be a positive number", result);
 
-		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 111114444, 1111144444, 11111444));
-		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, 111114444, 11111444));	
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+		
 	}
 	@Test 
 	void testAddPatient4() {
-	
-		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 11111444444L, 1111144444, 11111444));
-		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, 11111444444L, 11111444));	
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		String result = null;
+		try {
+			listOfUsers.addPatient("test", "name", "address", 1111144444, 111114444, 11111444);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Health Card Number must be a 10 digit number", result);
+
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+		
 	}
+	@Test 
+	void testAddPatient5() {
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		String result = null;
+		try {
+			listOfUsers.addPatient("test", "name", "address", 1111144444, 11111444444L, 11111444);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Health Card Number must be a 10 digit number", result);
+
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+		
+	}
+	@Test 
+	void testAddPatient6() {
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		String result = null;
+		try {
+			listOfUsers.addPatient("test", "name", "address", 111114444, 1111144444, 11111444);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Phone Number must be a 10 digit number", result);
+		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444));
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+		
+	}
+	@Test 
+	void testAddPatient7() {
+		ArrayList<Patient> before = listOfUsers.getAllPatientsList();
+		ArrayList<Patient> after;
+		String result = null;
+		try {
+			listOfUsers.addPatient("test", "name", "address", 11111444444L, 1111144444, 11111444);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			result = e.getMessage();
+		}
+		assertEquals("Phone Number must be a 10 digit number", result);
+		assertThrows(Exception.class, () -> listOfUsers.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444));
+		after = listOfUsers.getAllPatientsList();
+		assertEquals(before, after);
+		
+	}
+
 
 	@Test
 	void testSearchPatientByName1() {
