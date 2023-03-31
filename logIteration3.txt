@@ -99,3 +99,6 @@
 
 25. 2023/3/28 18:00 - 19:00 contributor: Aiza Bajwa, Alvin Ta, Geon Kim
 * rehearsed and shortened presentation script
+
+26. 2023/3/31 12:00 - 15:00 contributor: Geon Kim
+* refactoring for DisplayInitialScreen.java: it is divided into several classes to resolve large class issue
