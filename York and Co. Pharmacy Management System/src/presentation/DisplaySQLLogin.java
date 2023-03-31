@@ -12,6 +12,7 @@ import java.awt.Color;
 import javax.swing.SwingConstants;
 
 import databaseDAO.superDAO;
+import presentation.InitialScreen.DisplayInitialScreen;
 
 import javax.swing.JButton;
 
@@ -85,6 +86,7 @@ public class DisplaySQLLogin implements ActionListener {
 				superDAO.setPassword(_passwordField);
 				frame.dispose();
 				//executed after validation succeed
+				//DisplayInitialScreen.createPanels(null);
 				DisplayInitialScreen.displayInitialScreen(USER.GUEST);
 			}
 		}catch(Exception ex) {

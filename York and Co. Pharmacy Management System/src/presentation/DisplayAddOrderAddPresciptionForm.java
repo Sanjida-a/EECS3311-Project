@@ -37,7 +37,7 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 	public static void displayAddOrder(JFrame previous, String command) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
-		frame = new JFrame("Add order");
+		frame = new JFrame(command.substring(0, 3) + " " + command.substring(3));
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(new Dimension(600,400));

@@ -12,6 +12,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 import middleLayer.Users.AuthenticateUser;
+import presentation.InitialScreen.DisplayInitialScreen;
+import presentation.InitialScreen.InitialScreenPanelPatient;
 
 import javax.swing.SwingConstants;
 
@@ -33,6 +35,7 @@ public class DisplayLogin {
         frmLogin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frmLogin.setContentPane(background.createContentPanel(frmLogin, superFrame));
         frmLogin.setSize(600, 400);
+        frmLogin.setLocationRelativeTo(null);
         frmLogin.setVisible(true);
 	}
 	
@@ -109,7 +112,7 @@ public class DisplayLogin {
 					USER userType = AuthenticateUser.getInstance().checkUserValid(username, password); //returns null when validation fails
 					if (userType != null) {
 						superFrame.dispose();	
-						DisplayInitialScreen.setUserLoggedIn(AuthenticateUser.getInstance().getUserLoggedIn());
+						InitialScreenPanelPatient.setUserLoggedIn(AuthenticateUser.getInstance().getUserLoggedIn());
 						DisplayInitialScreen.displayInitialScreen(userType);
 						
 		        		frame.dispose();

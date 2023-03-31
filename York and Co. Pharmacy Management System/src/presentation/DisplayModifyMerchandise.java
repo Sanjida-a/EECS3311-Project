@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import middleLayer.NegativeInputException;
 import middleLayer.MerchandiseInventory.*;
+import presentation.InitialScreen.InitialScreenPanelAll;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -34,11 +35,11 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JTextField textFieldMercID;
 	private static JTextArea textAreaDescription;
 	private static ArrayList<Merchandise> list;
-	private static JList output;
+	private static JList<Merchandise> output;
 	private static Inventory inv = Inventory.getInstance();
 	
 	
-	public static void displayModifyMerchandise(JFrame previous, JList outputList, ArrayList<Merchandise> currentList) {
+	public static void displayModifyMerchandise(JFrame previous, JList<Merchandise> outputList, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
 		list = currentList;
@@ -140,8 +141,8 @@ public class DisplayModifyMerchandise implements ActionListener{
 				superFrame.setEnabled(true);
 				superFrame.toFront();
 				
-				list = DisplayInitialScreen.refreshList(inv.getInstance(), list);
-				DisplayInitialScreen.displayMercList(output, list);
+				//list = DisplayInitialScreen.refreshList(Inventory.getInstance(), list);
+				InitialScreenPanelAll.displayMercList( list);
 			}
 			
 			else{
@@ -257,7 +258,8 @@ public class DisplayModifyMerchandise implements ActionListener{
 			
 		}
 		catch(Exception ex) {
-			JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
+			//JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
+			ex.printStackTrace();
 		}
 
 		
