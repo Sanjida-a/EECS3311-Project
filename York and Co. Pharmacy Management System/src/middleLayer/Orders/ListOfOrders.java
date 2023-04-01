@@ -117,6 +117,7 @@ public class ListOfOrders {
 //		this.updateOrderListFromDatabase();
 //	}
 	
+	// adds OTC order to ORDER table in database
 	// returns whether need to output low in stock reminder
 	public boolean addOrderToDatabase(Order o) throws Exception {
 		
@@ -187,9 +188,7 @@ public class ListOfOrders {
 		int presNumToBeUpd = _orderDAO.checkIfExistsInPrescriptionTable(p.getPatientID(), p.getMedicationID());
 		
 		if (presNumToBeUpd != -1) {
-			int refillsLeft = _orderDAO.numOfRefill(p.getPatientID(), p.getMedicationID());
-			int newRefills = p.originalNumOfRefills + refillsLeft;
-			_orderDAO.updatePresDB(presNumToBeUpd, newRefills);
+			_orderDAO.updateRefillsInExistingPresFormInDB(presNumToBeUpd, p.getOriginalNumOfRefills());
 		}
 		else {
 		_orderDAO.addToPrescriptionTable(p);		
@@ -229,7 +228,7 @@ public class ListOfOrders {
 		}
 		
 		// if no exception, prescription does exist in system. Now check if enough refills
-		int refillLeft = _orderDAO.numOfRefill(o.getPatientID(), o.getMedicationID());
+		int refillLeft = _orderDAO.numOfRemainingRefills(o.getPatientID(), o.getMedicationID());
 		if (refillLeft <= 0) {
 			throw new Exception ("0 refills left!");
 		}
@@ -331,6 +330,7 @@ public class ListOfOrders {
 		return orderHistoryDetails;
 	}
 	
+	// gets a specific patient's prescription FORMS
 	public ArrayList<Prescription> specificPatientPres(long healthCardID) throws Exception {
 		
 		if (healthCardID < 0) {
@@ -389,7 +389,7 @@ public class ListOfOrders {
 		for (Prescription p : presOfPatient) {
 			String oneFullOrder = "";
 			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
-			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + _orderDAO.numOfRefill(healthCardID, p.getMedicationID()); 
+			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + _orderDAO.numOfRemainingRefills(healthCardID, p.getMedicationID()); 
 			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
 			
 			

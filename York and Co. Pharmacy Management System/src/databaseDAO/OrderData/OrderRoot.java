@@ -14,10 +14,10 @@ public interface OrderRoot {
 	public void addToOrderTable(Order o) throws Exception;	
 	public void addToPrescriptionTable (Prescription p) throws Exception;
 	public void addRefillToOrderTable(Order o) throws Exception;	
-	public int numOfRefill (long _patientID, int _medicationId) throws SQLException;	
+	public int numOfRemainingRefills (long _patientID, int _medicationId) throws SQLException;	
 //	public boolean checkIfExistsInPrescriptionTable (long _patientID, int _medicationId)  throws SQLException;
 	public int checkIfExistsInPrescriptionTable (long _patientID, int _medicationId)  throws SQLException;
 	public ArrayList<Order> getListOfAllOrders() throws Exception;
 	public ArrayList<Prescription> getListOfAllPres() throws Exception;
-	public void updatePresDB(int presNum, int refillsNum ) throws Exception;
+	public void updateRefillsInExistingPresFormInDB(int presNum, int refillsNum ) throws Exception;
 }

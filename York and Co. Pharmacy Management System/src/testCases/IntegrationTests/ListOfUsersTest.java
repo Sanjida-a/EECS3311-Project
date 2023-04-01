@@ -16,6 +16,7 @@ import org.junit.platform.commons.annotation.Testable;
 import javax.swing.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -86,35 +87,61 @@ public class ListOfUsersTest {
        
         ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
         
-        long newHealthCardNum = 9999999999L;
+        long newHealthCardNum = 9983273371L; // highly unlikely that this number is used
         for (int i = 0; i < originalListOfPat.size(); i++) {
         	if (originalListOfPat.get(i).getHealthCardNum() == newHealthCardNum) {
-        		newHealthCardNum = -1; // patient already exists
+        		newHealthCardNum = -1; // health card already exists
         		break;
         	}
         }
         
-        if (newHealthCardNum != -1) { // patient doesn't already exist, so can add
+        if (newHealthCardNum != -1) { // health card doesn't already exist, so can add
             try {
             	listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, newHealthCardNum, 20121231);
         	} catch (Exception e) {
-     			//no exception expected
         		fail();
      		}
             
             ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
             
             assertEquals(originalListOfPat.size()+1, newListOfPat.size());
+            
+            //back to normal (remove patient from patient and allUsernamesAndPass tables)
+	        try {
+	            String queryDelete = "Delete from patient where healthCardNumber = ?;";   // to get newest row/order from Orders table
+	    		
+	    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+	    		pstmt.setLong(1, newHealthCardNum);
+	    		pstmt.executeUpdate();
+	    		
+	    		String queryDelete2 = "Delete from allusernamesandpasswords where usernameID = ?;";   // to get newest row/order from Orders table
+	    		
+	    		PreparedStatement pstmt2 = con.prepareStatement(queryDelete2);
+	    		pstmt2.setLong(1, newHealthCardNum);
+	    		pstmt2.executeUpdate();
+	    
+	        } catch(Exception e) { // no exception expected
+	        	fail();
+	        }
         }
 
         else { //health card ID already exist (for second time the test is run since Test Man patient with same ID already exists)
-    		assertThrows(SQLException.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9999999999L, 20121231));
+    		assertThrows(SQLException.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9983273371L, 20121231));
     		
     		ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
             assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
         }
        
     }
+	
+	@Test
+	void addPatientTestInvalid() {
+		ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+		assertThrows(SQLException.class, () -> listOfUsers.addPatient("TEST2", "MAN2", "5334 YONGE ST", 1112224444, 1111122222, 20121231)); //same health card num as Smith John
+		
+		ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+        assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
+	}
    
     @Test
     void addPatientTestInvalid1() { // negative health card num
