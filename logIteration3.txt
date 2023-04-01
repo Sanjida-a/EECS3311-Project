@@ -102,3 +102,13 @@
 
 26. 2023/3/31 12:00 - 15:00 contributor: Geon Kim
 * refactoring for DisplayInitialScreen.java: it is divided into several classes to resolve large class issue
+
+27. 2023/3/31 17:00 - 18:30 contributor: Aiza Bajwa
+* fixed/added some asserts to integration tests
+
+28. 2023/3/31 18:30 - 20:00 && 21:00-00:00 contributor: Aiza Bajwa, Geon Kim
+* virtual call
+* fixed minor bugs; tested program and exceptions
+* discussed potential changes in design
+
+

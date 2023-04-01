@@ -192,7 +192,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
         btnManagePatients.addActionListener(this);
         panel.add(btnManagePatients);
         
-        JButton btnAddOrder = new JButton("<html>Add<br>Order</html>");
+        JButton btnAddOrder = new JButton("<html>Add<br>Order/Refill</html>");
         btnAddOrder.setActionCommand("AddOrder");
         btnAddOrder.setFont(new Font("굴림", Font.BOLD, 18));
         btnAddOrder.setBounds(0, 140, 170, 60);
@@ -213,7 +213,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
     	btnSeeOrders.addActionListener(this);
     	panel.add(btnSeeOrders);
     	
-    	JButton btnAddPrescription = new JButton("<html>Add<br>Prescription</html>");
+    	JButton btnAddPrescription = new JButton("<html>Add<br>Rx Form</html>");
     	btnAddPrescription.setActionCommand("AddPrescription");
     	btnAddPrescription.setHorizontalTextPosition(SwingConstants.CENTER);
     	btnAddPrescription.setFont(new Font("굴림", Font.BOLD, 18));
@@ -275,6 +275,8 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	}
 	private void addMedication() {
 		try {	
+			InitialScreenPanelAll.setOperationResult("");
+			
 			String _inputFieldName = inputFieldName.getText().toUpperCase();
 			String stringQty = inputFieldQty.getText();
 			String stringPrice = inputFieldPrice.getText();
@@ -335,6 +337,8 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	
 	private void deleteMedication() {
 		try {
+			InitialScreenPanelAll.setOperationResult("");
+			
 			String stringMedID = inputFieldID.getText();
 			
 			// if input field is left empty, throw exception
@@ -369,6 +373,8 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	
 	private void increaseQty() {
 		try {
+			InitialScreenPanelAll.setOperationResult("");
+			
 			String stringMedID = inputFieldID.getText();
 			String stringMedQty = inputFieldQty.getText();
 			
@@ -409,6 +415,8 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	
 	private void decreaseQty() {
 		try {
+			InitialScreenPanelAll.setOperationResult("");
+			
 			String stringMedID = inputFieldID.getText();
 			String stringMedQty = inputFieldQty.getText();
 			

@@ -137,9 +137,9 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				//call method for patient search
-				try {	//Exception is thrown when insufficient number of arguments is passed to Patient constructor. if all argument is fed, 
-					//addPatient is bound to success
+				try {
 					lblNotice.setText("");
+					
 					String _textFieldSearchKeyword = textFieldSearchKeyword.getText().toUpperCase();
 				
 					// throws an exception if search input box is empty
@@ -189,6 +189,13 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				lblNotice.setText("");
+				
+				textFieldHCNumber.setText("");
+				textFieldFName.setText("");
+				textFieldLName.setText("");
+				textFieldPhoneNumber.setText("");
+				textFieldAddress.setText("");
+				
 				displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
 			//	lblNotice.setText("Patient is added successfully");
 			}
@@ -333,6 +340,8 @@ public class DisplayPatientManage {
 				// TODO Auto-generated method stub
 				//call method for add patient
 				try {	
+					lblNotice.setText("");
+					
 					String stringHCNumber = textFieldHCNumber.getText();
 					String _textFieldFName = textFieldFName.getText().toUpperCase();
 					String _textFieldLName = textFieldLName.getText().toUpperCase();
@@ -394,6 +403,8 @@ public class DisplayPatientManage {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				try {
+					lblNotice.setText("");
+					
 					String stringHCNumber = textFieldHCNumber.getText();
 					
 					if (stringHCNumber.isEmpty()) {

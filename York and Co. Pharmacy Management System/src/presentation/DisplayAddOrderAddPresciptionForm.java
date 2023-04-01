@@ -157,6 +157,7 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 			superFrame.toFront();
 		}
 		else {
+			lbNotice.setText("");
 			
 			try {
 				int medID, qty, refills;

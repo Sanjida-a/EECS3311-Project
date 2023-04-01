@@ -36,7 +36,7 @@ public class ListOfUsersTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 			con = superDAO.getCon();
 			listOfUsers = ListOfUsers.getInstance();
 		} catch (Exception e) {
@@ -94,11 +94,12 @@ public class ListOfUsersTest {
         	}
         }
         
-        if (newHealthCardNum != -1) {
+        if (newHealthCardNum != -1) { // patient doesn't already exist, so can add
             try {
-            	listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, newHealthCardNum, 11222012);
+            	listOfUsers.addPatient("Test", "Man", "5334 yonge St", 1112224444, newHealthCardNum, 20121231);
         	} catch (Exception e) {
-     			e.printStackTrace();
+     			//no exception expected
+        		fail();
      		}
             
             ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
@@ -107,14 +108,19 @@ public class ListOfUsersTest {
         }
 
         else { //health card ID already exist (for second time the test is run since Test Man patient with same ID already exists)
-    		assertThrows(SQLException.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9999999999L, 11222012));
+    		assertThrows(SQLException.class, () -> listOfUsers.addPatient("TEST", "MAN", "5334 YONGE ST", 1112224444, 9999999999L, 20121231));
+    		
+    		ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+            assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
         }
        
     }
    
     @Test
     void addPatientTestInvalid1() { // negative health card num
-       
+    	
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
         long newHealthCardNum = -555;
         
         String expectedMsg = "Health card number must be a positive number";
@@ -122,7 +128,7 @@ public class ListOfUsersTest {
         String resultMsg = null;
       
         try {
-        	listOfUsers.addPatient("another", "test", "123 fake street", 647, newHealthCardNum, 20221010);
+        	listOfUsers.addPatient("another", "test", "123 fake street", 6471231234L, newHealthCardNum, 20221010);
         }
         catch (NegativeInputException e) { //expected to throw this exception
         	resultMsg = e.getMessage();
@@ -132,32 +138,42 @@ public class ListOfUsersTest {
         }
         
         assertEquals(expectedMsg, resultMsg);   
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+        assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
     }
     
     @Test
     void addPatientTestInvalid2() { // negative phone number
-    	 long phoneNum = -4164164169L;
-         
-         String expectedMsg = "Phone number must be a positive number";
-         
-         String resultMsg = null;
-       
-         try {
-        	listOfUsers.addPatient("New", "Test", "123 Fake Street", phoneNum, 123789, 11222012);
-         }
-         catch (NegativeInputException e) { //expected to throw this exception
-         	resultMsg = e.getMessage();
-         }
-         catch (Exception e) {
-         	fail();
-         }
-         
-         assertEquals(expectedMsg, resultMsg);   
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
+		long phoneNum = -4164164169L;
+	     
+	    String expectedMsg = "Phone number must be a positive number";
+	     
+	    String resultMsg = null;
+	   
+	    try {
+	    	listOfUsers.addPatient("New", "Test", "123 Fake Street", phoneNum, 9999999999L, 20121231);
+	    }
+	    catch (NegativeInputException e) { //expected to throw this exception
+	    	resultMsg = e.getMessage();
+	    }
+	    catch (Exception e) {
+	    	fail();
+	    }
+	     
+     	assertEquals(expectedMsg, resultMsg);   
+	     
+ 		ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
     }
     
     
     @Test
     void addPatientTestInvalid3() { // less than 10 digit Health card num
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
     	long healthCardNum = 2;
          
     	String expectedMsg = "Health Card Number must be a 10 digit number";
@@ -165,17 +181,22 @@ public class ListOfUsersTest {
         String resultMsg = null;
        
         try {
-        	listOfUsers.addPatient("New", "Test", "123 Fake Street", 4164161234L, healthCardNum, 11222012);
+        	listOfUsers.addPatient("New", "Test", "123 Fake Street", 4164161234L, healthCardNum, 20121231);
         }
         catch (Exception e) { // expected to throw
         	resultMsg = e.getMessage();
         }
          
         assertEquals(expectedMsg, resultMsg);  
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
     }
     
     @Test
     void addPatientTestInvalid4() { // less than 10 digit phone num
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
     	long phoneNum = 416;
          
     	String expectedMsg = "Phone Number must be a 10 digit number";
@@ -183,13 +204,16 @@ public class ListOfUsersTest {
         String resultMsg = null;
        
         try {
-        	listOfUsers.addPatient("New", "Test", "123 Fake Street", phoneNum, 1234567890, 11222012);
+        	listOfUsers.addPatient("New", "Test", "123 Fake Street", phoneNum, 1234567890, 20121231);
         }
         catch (Exception e) { // expected to throw
         	resultMsg = e.getMessage();
         }
          
         assertEquals(expectedMsg, resultMsg);  
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because patient wasn't added
     }
     
     @Test
@@ -230,6 +254,8 @@ public class ListOfUsersTest {
     
     @Test
     void modifyPatientDetailsInvalid1() { // patient doesn't exist (with ID 1)
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
         JTextField fname = new JTextField();
         fname.setText("test");
         JTextField lname = new JTextField();
@@ -251,11 +277,15 @@ public class ListOfUsersTest {
         }
         
         assertEquals(expectedMsg, resultMsg);
-      
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because no patient details modified
     }
     
     @Test
     void modifyPatientDetailsInvalid2() { // all Jtextfields empty (nothing to be modified)
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
         JTextField fname = new JTextField();
         fname.setText("");
         JTextField lname = new JTextField();
@@ -277,10 +307,15 @@ public class ListOfUsersTest {
         }
         
         assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because no patient details modified
     }
     
     @Test
     void modifyPatientDetailsInvalid3() { // negative phoneNum
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+    	
         JTextField fname = new JTextField();
         fname.setText("");
         JTextField lname = new JTextField();
@@ -291,11 +326,15 @@ public class ListOfUsersTest {
         address.setText("");
         
         assertThrows(NegativeInputException.class, () -> listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address));
-      
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because no patient details modified
     }
     
     @Test
     void modifyPatientDetailsInvalid4() { // less than 10 digit phoneNum
+    	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
+	   
         JTextField fname = new JTextField();
         fname.setText("");
         JTextField lname = new JTextField();
@@ -316,6 +355,9 @@ public class ListOfUsersTest {
         }
         
         assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Patient> newListOfPat = listOfUsers.getAllPatientsList();
+	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because no patient details modified
     }
     
 //	@Test (don't need since have sql replacement below)
@@ -384,10 +426,7 @@ public class ListOfUsersTest {
 
 		assertEquals(answer.size(), methodResult.size());
 		
-//		for (int i = 0; i < answer.size(); i++) {
-//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-//		}
-		assertEquals(answer, methodResult); //QUESTION: do we need for loop above or no?
+		assertEquals(answer, methodResult);
 		
     }
 	
@@ -467,10 +506,7 @@ public class ListOfUsersTest {
 
 		assertEquals(answer.size(), methodResult.size());
 		
-//		for (int i = 0; i < answer.size(); i++) {
-//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-//		}
-		assertEquals(answer, methodResult); //QUESTION: do we need for loop above or no?
+		assertEquals(answer, methodResult);
 		
     }
 

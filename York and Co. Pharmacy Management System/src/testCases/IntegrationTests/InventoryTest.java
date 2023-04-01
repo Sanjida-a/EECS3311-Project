@@ -33,7 +33,7 @@ class InventoryTest {
   	public static void before() {
   		try {
 
-  			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
+  			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
   			con = superDAO.getCon();
   			inventoryInstance = Inventory.getInstance();
   		} catch (Exception e) {
@@ -143,33 +143,38 @@ class InventoryTest {
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
-        // if no medication in inventory, throws exception --> test still passes because nothing to increase (ID doesn't exist)
-        try {
-			inventoryInstance.increaseQuantity(originalList.get(0).getMedicationID(),10);
-			
-			ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
-	        assertEquals(originalList.get(0).getQuantity() + 10, newList.get(0).getQuantity());
-		} catch (Exception e) {
-			// expecting no exception
-			fail();
-		}
-        
-        // back to normal
-        try {
-        	inventoryInstance.decreaseQuantity(originalList.get(0).getMedicationID(), 10);
-        }
-        catch (Exception e) {
-        	fail();
+        if (originalList.size() > 0) { // if originalList is empty, no medication to increase
+	        try {
+				inventoryInstance.increaseQuantity(originalList.get(0).getMedicationID(),10);
+				
+				ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+		        assertEquals(originalList.get(0).getQuantity() + 10, newList.get(0).getQuantity());
+			} catch (Exception e) {
+				fail();
+			}
+	        
+	        // back to normal
+	        try {
+	        	inventoryInstance.decreaseQuantity(originalList.get(0).getMedicationID(), 10);
+	        }
+	        catch (Exception e) {
+	        	fail();
+	        }
         }
     }
     
     @Test
-    void increaseQuantityInvalid(){ // negative quantity
+    void increaseQuantityInvalid() throws Exception{ // negative quantity
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-      
-        assertThrows(NegativeInputException.class, () -> inventoryInstance.increaseQuantity(originalList.size(),-10));
         
+        if (originalList.size() > 0) {
+        	assertThrows(NegativeInputException.class, () -> inventoryInstance.increaseQuantity(originalList.get(0).getMedicationID(),-10));
+            
+            ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+            assertEquals(originalList, newList); // all medications in DB should remain the same (no quantity should have changed)
+        }
+       
     }
     
     @Test
@@ -180,14 +185,15 @@ class InventoryTest {
         
         String resultMsg = null;
         try {
-        	inventoryInstance.increaseQuantity(originalList.size() + 1,10);
+        	inventoryInstance.increaseQuantity(1000,10); //assuming 1000 medications not inventory
         }
         catch (Exception e) { // expecting an exception
         	resultMsg = e.getMessage();
         }
         
         assertEquals(expectedMsg, resultMsg);
-        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no quantity should have changed)
     }
 
     @Test
@@ -218,8 +224,13 @@ class InventoryTest {
     void decreaseQuantityInvalid1(){ // negative quantity
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-      
-    	assertThrows(NegativeInputException.class, () -> inventoryInstance.decreaseQuantity(originalList.get(0).getMedicationID(), -10));
+        
+        if (originalList.size() > 0) { 
+			assertThrows(NegativeInputException.class, () -> inventoryInstance.decreaseQuantity(originalList.get(0).getMedicationID(), -10));
+			
+			ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+		    assertEquals(originalList, newList); // all medications in DB should remain the same (no quantity should have changed)
+        }
     }
     
     @Test
@@ -230,14 +241,16 @@ class InventoryTest {
         
         String resultMsg = null;
         try {
-        	inventoryInstance.decreaseQuantity(originalList.size() + 1,10);
+        	inventoryInstance.decreaseQuantity(1000,10); //assuming 1000 medications not inventory
         }
         catch (Exception e) { // expecting an exception
         	resultMsg = e.getMessage();
         }
         
         assertEquals(expectedMsg, resultMsg);
-
+        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no quantity should have changed)
     }
     
     @Test
@@ -245,22 +258,27 @@ class InventoryTest {
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
-        int decreaseQuantityBy = originalList.get(0).getQuantity()+1;
+        if (originalList.size() > 1) {
         
-        String expectedMsg = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + decreaseQuantityBy + ". See inventory";
-        
-        String resultMsg = null;
-        
-        // if originalList is empty, throws exception --> test still passes because nothing to decrease (ID doesn't exist)
-        try { 
-        	inventoryInstance.decreaseQuantity(originalList.get(0).getMedicationID(),decreaseQuantityBy);
-           
-        } catch (Exception e) { //exception expected to be thrown
-        	resultMsg = e.getMessage();
+		    int decreaseQuantityBy = originalList.get(0).getQuantity()+1;
+		    
+		    String expectedMsg = "Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + decreaseQuantityBy + ". See inventory";
+		    
+		    String resultMsg = null;
+		    
+		    // if originalList is empty, throws exception --> test still passes because nothing to decrease (ID doesn't exist)
+		    try { 
+		    	inventoryInstance.decreaseQuantity(originalList.get(0).getMedicationID(),decreaseQuantityBy);
+		       
+		    } catch (Exception e) { //exception expected to be thrown
+		    	resultMsg = e.getMessage();
+		    }
+		    
+		    assertEquals(expectedMsg, resultMsg);
+		    
+		    ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+		    assertEquals(originalList, newList); // all medications in DB should remain the same (no quantity should have changed)
         }
-        
-        assertEquals(expectedMsg, resultMsg);
-
     }
 
     @Test
@@ -272,10 +290,9 @@ class InventoryTest {
 	        Merchandise deletedM = originalList.get(originalList.size()-1);
 	        
 	        try {
-	        	inventoryInstance.delete(originalList.size()); //bc ID of medications ranges from 1-size of array
+	        	inventoryInstance.delete(deletedM.getMedicationID());
 	        	ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
 	 	        assertEquals(originalList.size() - 1, newList.size());
-	 	        
 	        }
 	        catch (Exception e) { // exception not expected
 	        	fail();
@@ -294,17 +311,22 @@ class InventoryTest {
     }
 
     @Test
-    void deleteInvalid(){ //medicationID doesn't exist (assuming 100 ID too large)
+    void deleteInvalid(){ //medicationID doesn't exist (assuming 1000 ID too large)
+    	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
+    	
         String expectedMsg = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
         String resultMsg = null;
         try {
-        	inventoryInstance.delete(100);
+        	inventoryInstance.delete(1000);
         }
         catch (Exception e) {
         	resultMsg = e.getMessage();
         }
         
         assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no medication should be deleted)
     }
     
 //    @Test
@@ -317,29 +339,76 @@ class InventoryTest {
 //            assertEquals(originalList.get(0).toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
 //        }
 //    }
-    
     @Test
-    void addToInventoryInvalid(){ // negative price
-        String expectedMsg = "Price must be a non-negative number!";
-        String resultMsg = null;
-       
-        Merchandise m = new Merchandise("AddedForTest", 50, -50.99, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.TABLET, true);
-        	
-        try {
-        	inventoryInstance.addToInventory(m);
-        }
-        catch (NegativeInputException e) {
-        	resultMsg = e.getMessage();
-        }
-        catch (Exception e) {
-        	fail();
-        }
-        
-        assertEquals(expectedMsg, resultMsg);
+    void addToInventory() { // for already deleted medication
+    	ArrayList<Merchandise> originaValidAndlInvalidList = inventoryInstance.getValidAndInvalidMerchandise();
+    	
+    	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise(); // only valid list
+    	
+    	int indexOfInvalid = -1;
+    	for (int i = 0; i < originaValidAndlInvalidList.size(); i++) {
+    		if (originaValidAndlInvalidList.get(i).getisValid() == false) { //already deleted medication
+    			indexOfInvalid = i;
+    			
+    			break;
+    		}
+    	}
+    	
+    	if (indexOfInvalid != -1) {
+
+    		Merchandise foundM = originaValidAndlInvalidList.get(indexOfInvalid);
+    		Merchandise m = new Merchandise(foundM.getName(), 50, 49.99, foundM.getType(), foundM.getForm(), foundM.getisOTC());
+
+    		try {
+				inventoryInstance.addToInventory(m);
+			} catch (Exception e) {
+				// no exception expected
+				fail();
+			}
+    		
+    		ArrayList<Merchandise> newList = inventoryInstance.getMerchandise(); // only valid list
+    		
+    		assertEquals(originalList.size()+1, newList.size());
+    		
+    		//back to normal
+    		try {
+				inventoryInstance.delete(foundM.getMedicationID());
+			} catch (Exception e) {
+				//no exception expected
+				fail();
+			}
+    	}
     }
     
     @Test
+    void addToInventoryInvalid(){ // negative price
+    	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
+    	
+	    String expectedMsg = "Price must be a non-negative number!";
+	    String resultMsg = null;
+	   
+	    Merchandise m = new Merchandise("AddedForTest", 50, -50.99, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.TABLET, true);
+	    	
+	    try {
+	    	inventoryInstance.addToInventory(m);
+	    }
+	    catch (NegativeInputException e) {
+	    	resultMsg = e.getMessage();
+	    }
+	    catch (Exception e) {
+	    	fail();
+	    }
+	    
+	    assertEquals(expectedMsg, resultMsg);
+	    
+	    ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+	    assertEquals(originalList, newList); // all medications in DB should remain the same (no medication should be added)
+	}
+    
+    @Test
     void addToInventoryInvalid2(){ // negative quantity
+    	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
+    	
         String expectedMsg = "Quantity must be a non-negative number!";
         String resultMsg = null;
        
@@ -356,6 +425,9 @@ class InventoryTest {
         }
         
         assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no medication should be added)
     }
     
     @Test
@@ -391,22 +463,24 @@ class InventoryTest {
     			m = new Merchandise(medicationID, name, quantity, price, type, form, isOTC, description, isValid);
     		}
     		
-    	} catch (Exception e) {
+    	} catch (Exception e) { //no exception expected
     	}
  
         if (m != null) {
-            assertEquals(m.toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
+			assertEquals(m.toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
         }
         else {
-        	assertEquals(null, inventoryInstance.searchMerchandiseWithID(1));
+			assertEquals(null, inventoryInstance.searchMerchandiseWithID(1));
         }
     }
 
 
     @Test
     void searchByIDInvalid(){ //medicationID doesn't exist
-        ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-        assertEquals(null, inventoryInstance.searchMerchandiseWithID(originalList.size() + 1));
+//        ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
+        
+		assertEquals(null, inventoryInstance.searchMerchandiseWithID(1000));
+		
     }
     
     @Test
@@ -436,12 +510,13 @@ class InventoryTest {
 
     @Test
     void modifyNameInvalid() { //medicationID doesn't exist
+    	 ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
         String expectedMsg = "Modification unsuccessful. No such medication currently exists in the inventory. See current inventory";
         String resultMsg = null;
         
         try {
-        	inventoryInstance.modifyMedicationName(100, "RANDOMNONAME");
+        	inventoryInstance.modifyMedicationName(1000, "RANDOMNONAME");
            
         }
         catch (Exception e) {
@@ -449,6 +524,9 @@ class InventoryTest {
         }
         
         assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no medication name should be changed)
     }
     
     
@@ -459,10 +537,11 @@ class InventoryTest {
         
         if (originalList.size() > 0) { // if originalList is empty, no medication to modify price for
 	        double originalPrice = originalList.get(0).getPrice();
+	        double newPrice = originalPrice + 100;
 	        try { 
-		        inventoryInstance.modifyMedicationPrice(originalList.get(0).getMedicationID(), 100.00);
+		        inventoryInstance.modifyMedicationPrice(originalList.get(0).getMedicationID(), newPrice);
 		        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
-		        assertEquals(100.00, newList.get(0).getPrice());
+		        assertEquals(newPrice, newList.get(0).getPrice());
 		        
 		        // back to normal
 		       	inventoryInstance.modifyMedicationPrice(originalList.get(0).getMedicationID(), originalPrice);
@@ -479,24 +558,34 @@ class InventoryTest {
     void modifyPriceInvalid1(){ // negative price
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-
-	    assertThrows(NegativeInputException.class, () -> inventoryInstance.modifyMedicationPrice(originalList.get(0).getMedicationID(), -10));
+        
+        if (originalList.size() > 0) {
+        	assertThrows(NegativeInputException.class, () -> inventoryInstance.modifyMedicationPrice(originalList.get(0).getMedicationID(), -10));
+    	    
+    	    ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+            assertEquals(originalList, newList); // all medications in DB should remain the same (no medication price should be changed)
+        }
+	    
     }
     
     @Test
     void modifyPriceInvalid2(){ // medicationID doesn't exist (assuming 100 too large)
+    	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
     	
         String expectedMsg = "Modification unsuccessful. No such medication currently exists in the inventory.";
         String resultMsg = null;
         
         try {
-	        inventoryInstance.modifyMedicationPrice(100, 100.00);
+	        inventoryInstance.modifyMedicationPrice(1000, 100.00);
         }
         catch (Exception e) {
         	resultMsg = e.getMessage();
         }
         
         assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no medication price should be changed)
     }
  
 
@@ -526,12 +615,13 @@ class InventoryTest {
 
     @Test
     void modifyDescriptionInvalid(){ //medicationID does not exist
-        
+    	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
+    	 
         String expectedMsg = "Modification unsuccessful. No such medication currently exists in the inventory.";
         String resultMsg = null;
         
         try {
-        	inventoryInstance.modifyMedicationDescription(100, "howdy");
+        	inventoryInstance.modifyMedicationDescription(1000, "howdy");
         }
         catch(Exception e) {
         	resultMsg = e.getMessage();
@@ -539,6 +629,8 @@ class InventoryTest {
         
         assertEquals(expectedMsg, resultMsg);
        
+        ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
+        assertEquals(originalList, newList); // all medications in DB should remain the same (no medication price should be changed)
     }
 
   

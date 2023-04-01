@@ -113,6 +113,20 @@ public class Inventory{
     	
     	return sortInv.displayByPrice(listToSortByPrice);
     }
+    
+    // finds from VALID list and returns a medication with medID == medicationID
+    public Merchandise searchMerchandiseWithID(int medicationID){
+
+    	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
+    	this.updateFromDatabase();
+    	for (int i = 0; i < list.size(); i ++){
+    		if (list.get(i).medicationID == medicationID){
+    			foundMWithID = list.get(i);
+    		}
+    	}
+    	
+    	return foundMWithID;
+    }
 
 //    // increase quantity of medication already existing in inventory (if exists)
 //    public boolean increaseQuantity(int medicationID, int increasedQuantity) throws Exception{
@@ -393,20 +407,6 @@ public class Inventory{
     	}
     	return medID; //returns -1 if medication doesn't exist as invalid medication
 	}
-    
-    // finds from VALID list and returns a medication with medID == medicationID
-    public Merchandise searchMerchandiseWithID(int medicationID){
-    	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
-    	this.updateFromDatabase();
-    	for (int i = 0; i < list.size(); i ++){
-    		if (list.get(i).medicationID == medicationID){
-    			foundMWithID = list.get(i);
-    		}
-    	}
-    	
-    	return foundMWithID;
-    }
-    
     
     // OCP NOT followed for below 3 modification methods because as a group, we have decided that there are no other modifications to the medication that can be added in the future
     // modifies the name of the medication but first makes sure the same medication doesn't already exist in the system
