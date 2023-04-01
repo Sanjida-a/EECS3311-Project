@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -36,11 +37,13 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JTextArea textAreaDescription;
 	private static ArrayList<Merchandise> list;
 	private static JList<Merchandise> output;
-	private static Inventory inv = Inventory.getInstance();
+	private static Inventory inv;
+	private static JLabel lblNotice;
 	
 	
 	public static void displayModifyMerchandise(JFrame previous, JList<Merchandise> outputList, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
+		inv = Inventory.getInstance();
 		superFrame.setEnabled(false);
 		list = currentList;
 		output = outputList;
@@ -57,7 +60,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(12, 10, 662, 443);
+		panel.setBounds(12, 10, 662, 350);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -73,6 +76,12 @@ public class DisplayModifyMerchandise implements ActionListener{
 		lblMercID.setFont(new Font("굴림", Font.BOLD, 18));
 		lblMercID.setBounds(0, 0, 145, 35);
 		panel.add(lblMercID);
+		
+		lblNotice = new JLabel("");
+		lblNotice.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		lblNotice.setForeground(new Color(255, 0, 0));
+		lblNotice.setBounds(300,0,350,35);
+		panel.add(lblNotice);
 	}
 	
 	public static void createInputFields(JPanel panel) {
@@ -134,7 +143,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		
 		String errorMessage = "";
 		inv.updateFromDatabase();
-		try {
+
 			
 			if(actionCommand.equals("Exit")) {
 				frame.dispose();
@@ -174,13 +183,15 @@ public class DisplayModifyMerchandise implements ActionListener{
 						}
 //						try {
 						inv.modifyMedicationName(_textFieldMercID, _textFieldName);
-		
+						setNotice("Name changed successfully");
 //						}
 					}
 					catch (NullPointerException exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					catch (Exception exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					
@@ -199,21 +210,26 @@ public class DisplayModifyMerchandise implements ActionListener{
 						double _textFieldPrice = Double.parseDouble(stringPrice); //throws NumberFormatException if not an int/double
 //						try {
 						inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-//							}
+//						}
 //							catch (Exception e2) {
 //								JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
 //							}
+						setNotice("Price changed successfully");
 					} 
 					catch (NullPointerException exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					catch (NumberFormatException exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame,"Price must be an integer or double", "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					catch (NegativeInputException exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					catch (Exception exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					//invoke method(s) for modifying Merchandise here
@@ -229,43 +245,35 @@ public class DisplayModifyMerchandise implements ActionListener{
 						if (_textAreaDescription.isEmpty()) { // ensures a description has been entered
 							throw new NullPointerException("Description is required. Please enter a description."); 
 						}
-//						try {
+
 						inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
-//							
-//							
-//						}
-//						catch(Exception ex) {
-//							
-//						}
+
+						setNotice("Description changed successfully");
 					}
 					catch (NullPointerException exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					catch (Exception exception) {
+						setNotice("");
 						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
 					
 				}
 				
-//				if (result == false) {
-//					// popup
-//					errorMessage = "MedicationID Does Not Exist in Inventory";
-//					
-//					JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
-//				}
+
 			}
 			
 			
-		}
-		catch(Exception ex) {
-			//JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
-			ex.printStackTrace();
-		}
+
 
 		
 	}	
+	private static void setNotice(String string) {
+		lblNotice.setText(string);
+	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
 			superDAO.setPassword("Motp1104#");
@@ -275,5 +283,5 @@ public class DisplayModifyMerchandise implements ActionListener{
 		}
 		DisplayModifyMerchandise.displayModifyMerchandise(new JFrame(), output, new ArrayList<Merchandise>());
 
-	}*/
+	}
 }
