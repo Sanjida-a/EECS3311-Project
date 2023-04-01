@@ -167,10 +167,10 @@ ALTER TABLE Prescriptions
 ADD CONSTRAINT `fk_prescription_patientId` FOREIGN KEY (patientID) REFERENCES Patient(healthCardNumber);
 
 INSERT INTO Medications VALUES
-(7,"Test", 10000, 10.00, 'COLD', 'LIQUID' ,false,null, true),
-(8,"Test1", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true),
-(9,"Test2", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true),
-(10,"Test3", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true); /* for integration tests */
+(7,"TEST", 10000, 10.00, 'COLD', 'LIQUID' ,false,null, true),
+(8,"TEST1", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true),
+(9,"TEST2", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true),
+(10,"TEST3", 10000, 10.00, 'COLD', 'LIQUID' ,false, null,true); /* for integration tests */
 
 
 select * from allusernamesandpasswords;

@@ -29,7 +29,7 @@ class ListOfOrdersTest {
 	@BeforeAll
 	public static void before() {
 		try {
-			superDAO.setPassword("hello@123456");// TA please change this according to your mySQL password in order for the tests to work
+			superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
 			con = superDAO.getCon();
 			listOfOrders = ListOfOrders.getInstance();
 			inv = Inventory.getInstance();
@@ -53,7 +53,7 @@ class ListOfOrdersTest {
         int MedIDWithQuantityMoreThan1 = -1;
         for (int i = 0; i < medList.size(); i++) {
         	if (medList.get(i).getQuantity() > 1 )  {
-        		MedIDWithQuantityMoreThan1 = i;
+        		MedIDWithQuantityMoreThan1 = i; // found medID with at least 1 quantity in stock
         		break;
         	}
         }
@@ -80,15 +80,15 @@ class ListOfOrdersTest {
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         
         try {
-        		Order o = new Order(3, 5, 1);
-                listOfOrders.addOrderToDatabase(o);
+    		Order o = new Order(3, 5, 1); // patientId = 5 is impossible
+            listOfOrders.addOrderToDatabase(o);
            
-        } catch(Exception e) { // no exception expected
+        } catch(Exception e) { // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
-        assertEquals(expectedMsg, resultMsg);
+        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
+        assertEquals(expectedMsg, resultMsg); 
     }
     
     @Test 
@@ -97,65 +97,68 @@ class ListOfOrdersTest {
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         try {
-        		Order o = new Order(500, 1111122222, 1);
-                listOfOrders.addOrderToDatabase(o);
+    		Order o = new Order(500, 1111122222, 1); // medID = 500 is impossible (assuming too large)
+            listOfOrders.addOrderToDatabase(o);
            
-        } catch(Exception e) { // no exception expected
+        } catch(Exception e) { // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
+        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
         assertEquals(expectedMsg, resultMsg);
     }
     
+ // * ASK / IMPORTANT QUESTION / HELP: what if 3 is deleted? will get 'medication doens't exist' right? look at first test, should we find any medID that*
     @Test 
     void addOrderToDatabaseTestInvalid3() {  //test "Quantity Bought Must Be Positive (at least 1)!"
         String expectedMsg = "Quantity Bought Must Be Positive (at least 1)!";
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         try {
-        		Order o = new Order(3, 1111122222, -1);
-                listOfOrders.addOrderToDatabase(o);
+    		Order o = new Order(3, 1111122222, -1); // can't order negative quantity
+            listOfOrders.addOrderToDatabase(o);
            
-        } catch(Exception e) { // no exception expected
+        } catch(Exception e) { // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
+        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
         assertEquals(expectedMsg, resultMsg);
     }
     
+ // * ASK / IMPORTANT QUESTION / HELP: what if 5 is deleted? will get 'medication doens't exist' right? look at first test, should we find medID with that is Rx and use that*
     @Test 
     void addOrderToDatabaseTestInvalid4() {  //test "Not an OTC! Use the \"Give Refill for a prescription\" button"
         String expectedMsg = "Not an OTC! Use the \"Give Refill for a prescription\" button";
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         try {
-        		Order o = new Order(5, 1111122222, 1);
-                listOfOrders.addOrderToDatabase(o);
+    		Order o = new Order(5, 1111122222, 1);
+            listOfOrders.addOrderToDatabase(o);
            
-        } catch(Exception e) { // no exception expected
+        } catch(Exception e) { // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
+        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
         assertEquals(expectedMsg, resultMsg);
     }
     
+    // * ASK / IMPORTANT QUESTION / HELP: what if medID 3 is deleted? shouldn't we use one of the test medications?*
     @Test 
     void addOrderToDatabaseTestInvalid5() {  //test "Check quantity in stock for medication! Not enough!"
         String expectedMsg = "Check quantity in stock for medication! Not enough!";
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         try {
-        		Order o = new Order(3, 1111122222, 100000000);
-                listOfOrders.addOrderToDatabase(o);
+    		Order o = new Order(3, 1111122222, 100000000); // assuming too large quantity to buy
+            listOfOrders.addOrderToDatabase(o);
            
-        } catch(Exception e) { // no exception expected
+        } catch(Exception e) { // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
+        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
         assertEquals(expectedMsg, resultMsg);
     }
     
@@ -181,6 +184,7 @@ class ListOfOrdersTest {
         assertThrows(Exception.class, () -> new Order(1, 1111122222, -5)); // negative quantity
     }*/
     
+    // * ASK / IMPORTANT QUESTION / HELP: is this test fine??*
     @Test 
     void addPresFormToDbTestValid() {  
     	ArrayList<Merchandise> medList = inv.getMerchandise();
@@ -225,6 +229,7 @@ class ListOfOrdersTest {
         }      
     }
     
+    // * ASK / IMPORTANT QUESTION / HELP: what if 3 is deleted? will get 'medication doens't exist' right? look at first test, should we find medID with that is OTC and use that*
     @Test 
     void addPresFormToDbTestValid1() {  //test "Not an Rx! You can only add prescription forms for Rx Medications"
         ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres(); 
@@ -234,14 +239,15 @@ class ListOfOrdersTest {
         	Prescription p = new Prescription(3, 1111122222, 1);
                 listOfOrders.addPresFormToDb(p);
            
-        } catch(Exception e) { // no exception expected
+        } catch(Exception e) { // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Prescription> newListPres = listOfOrders.getListofAllPres(); 
-        assertEquals(originalListPres.size(), newListPres.size());
-        assertEquals(expectedMsg, resultMsg);
+        assertEquals(originalListPres.size(), newListPres.size()); // size of prescription forms table in DB shouldn't change
+        assertEquals(expectedMsg, resultMsg); 
     }
     
+ // * ASK / IMPORTANT QUESTION / HELP: what if 5 is deleted? will get 'medication doens't exist' right? look at first test, should we find medID with that is OTC and use that*
     @Test 
     void addPresFormToDbTestValid2() {  //test "Refills must be positive (at least 1)!"
         String expectedMsg = "Refills must be positive (at least 1)!";
@@ -283,7 +289,7 @@ class ListOfOrdersTest {
 		        listOfOrders.addRefillToDatabase(O);
         	 }
         } 
-        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+        catch (Exception e){ // exception not expected
         	fail();
         }
         
@@ -321,7 +327,7 @@ class ListOfOrdersTest {
         	 }
         	}
         } 
-        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+        catch (Exception e){ // exception expected
         	resultMsg = e.getMessage();
         }
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
@@ -581,7 +587,8 @@ class ListOfOrdersTest {
 			
 			resultMoney = listOfOrders.specificPatientMoneySpent(patientOfInterestID); 
 			
-		} catch (Exception e) {
+		} catch (Exception e) { // no exception expected
+			fail();
 		}
     	
 		assertEquals(answer, resultMoney);
