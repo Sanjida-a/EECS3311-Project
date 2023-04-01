@@ -111,4 +111,11 @@
 * fixed minor bugs; tested program and exceptions
 * discussed potential changes in design
 
+29. 2023/4/01 14:00 - 17:00 contributor: Aiza Bajwa, Geon Kim
+* virtual call
+* adjusted integration tests in ListOfOrdersTest.java so not dependent on initial database state
+
+30. 2023/4/01 18:00 - 19:30 contributor: Aiza Bajwa
+* finalized ListOfOrdersTest.java tests for addRefillToDatabase
+* adjusted Sql script accordingly
 

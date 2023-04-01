@@ -166,7 +166,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 	}
 	
 	//checking how many refills left for prescriptions
-	public int numOfRefill (long _patientID, int _medicationId) throws SQLException {
+	public int numOfRemainingRefills (long _patientID, int _medicationId) throws SQLException {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
@@ -219,7 +219,8 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}
 	}
 	
-	public void updatePresDB (int presNum, int refillsNum) throws Exception {
+	// if prescription record already exists; simply adding new refills to original num of refills
+	public void updateRefillsInExistingPresFormInDB (int presNum, int refillsNum) throws Exception {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();

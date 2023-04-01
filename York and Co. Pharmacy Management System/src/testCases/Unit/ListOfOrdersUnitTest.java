@@ -657,7 +657,7 @@ class ListOfOrdersUnitTest {
 		for (Prescription p : prescriptionList) {
 			String oneFullOrder = "";
 			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
-			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + orderStub.numOfRefill(1111122222, p.getMedicationID()); 
+			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + orderStub.numOfRemainingRefills(1111122222, p.getMedicationID()); 
 			associatedMedication = inv.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
 			
 			
@@ -700,7 +700,7 @@ class ListOfOrdersUnitTest {
 		for (Prescription p : prescriptionList) {
 			String oneFullOrder = "";
 			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
-			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + orderStub.numOfRefill(1111122222, p.getMedicationID()); 
+			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + orderStub.numOfRemainingRefills(1111122222, p.getMedicationID()); 
 			associatedMedication = inv.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
 			
 			

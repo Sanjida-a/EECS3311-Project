@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import databaseDAO.superDAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -38,39 +39,82 @@ class ListOfOrdersTest {
 		} 
 		
 	}
-// MINH To Do / TODO: I think stated all tests (at least 20) you should add in comments in these 5 lines below; try to organize the tests in same manner as methods found in ListOfOrders.java class
-// MINH To Do / TODO: I added one VALID test for addOrderToDatabase, so please add 5 INVALID tests for addOrderToDatabase, one for each exception thrown (so should have tests for addOrderToDatabaseInvalid1...addOrderToDatabaseInvalid5)
-//	for addOrderToDatabase tests, don't need to check return value (i think it's a minor thing)
-//	MINH To Do / TODO: add 1 VALID test and 4 INVALID tests (for the 4 exceptions) for addPresFormToDb
-// MINH To Do / TODO: I already added one INVALID test for addRefillToDatabase, so please add 1 VALID TEST (maybe add a fake prescription form into MySQL for john smith guy) and the remaining 7 INVALID tests, one for each of the remaining exceptions
-// MINH To Do / TODO: add 2 INVALID tests for specificPatientPres for the two exceptions (don't do a test for "patient doesn't exist" exception)
+
     @Test 
-    void addOrderToDatabaseTest() {
+    void addOrderToDatabaseTest() { //OTC Order
     	
-        ArrayList<Merchandise> medList = inv.getMerchandise();
-        ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-        
-        int MedIDWithQuantityMoreThan1 = -1;
-        for (int i = 0; i < medList.size(); i++) {
-        	if (medList.get(i).getQuantity() > 1 )  {
-        		MedIDWithQuantityMoreThan1 = i; // found medID with at least 1 quantity in stock
-        		break;
-        	}
-        }
-        
-        try {
-        	if (MedIDWithQuantityMoreThan1 != -1) {
-        		Order o = new Order(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 1);
-//                Prescription p = new Prescription(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 2);
-//                val.addOrderToDatabase(O,p);
+    	ArrayList<Merchandise> originalOTCList = inv.getOnlyOTCMerchandise();
+    	ArrayList<Order> originalOrdersList = listOfOrders.getListofAllOrders();
+    	 
+    	Merchandise OTCMed = null;
+    	int originalInStock = -1;
+        double originalPrice = -1;
+    	
+        if (originalOTCList.size() > 0) { //if OTC exists in inventory
+    		OTCMed = originalOTCList.get(0);
+    		originalInStock = OTCMed.getQuantity();
+    		originalPrice = OTCMed.getPrice();
+    		
+    		try {
+    			inv.increaseQuantity(OTCMed.getMedicationID(), 2); //ensures enough quantity to make order (increase quantity by 2)
+    			
+        		Order o = new Order(OTCMed.getMedicationID(), 1111122222, 2); //(decrease quantity by 2)
+
                 listOfOrders.addOrderToDatabase(o);
-           }
-        } catch(Exception e) { // no exception expected
-        	fail();
-        }
-        
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size()+1, newList.size());
+        	} catch(Exception e) { // no exception expected
+            	fail();
+            }
+    		
+    		int orderNum = -1, medID = -1, quantityBought = -1;
+	        long patID = -1;
+			double totalPrice = -1;
+			boolean isPrescription = true;
+			
+			// sql query to confirm order details are right
+	        try {
+	            String queryGetAllRows = "SELECT * FROM Orders WHERE orderNum IN (Select max(orderNum) from Orders);";   // to get newest row/order from Orders table
+	    		Statement statement = con.createStatement();
+	    		ResultSet result = statement.executeQuery(queryGetAllRows);
+	    		
+	    		
+	    		while (result.next()) { 
+	    			orderNum =  result.getInt("orderNum");
+	    			medID =  result.getInt("medicationID");
+					patID =  result.getLong("patientID");
+	    			quantityBought = result.getInt("quantityBought");
+	    			totalPrice =  result.getDouble("priceAtPurchase");
+	    			isPrescription =  result.getBoolean("isPrescription");
+	    		}
+	        } catch(Exception e) { // no exception expected
+	        	fail();
+	        }
+	        
+	        assertEquals(OTCMed.getMedicationID(), medID);
+	        assertEquals(1111122222, patID);
+	        assertEquals(2, quantityBought);
+	        assertEquals(originalPrice*2, totalPrice);
+	        assertEquals(false, isPrescription);
+	    
+	        ArrayList<Order> newOrdersList = listOfOrders.getListofAllOrders();
+	        assertEquals(originalOrdersList.size()+1, newOrdersList.size()); // number of orders should increase
+	        
+	        ArrayList<Merchandise> newMedList = inv.getOnlyOTCMerchandise();
+	        int newQuantity = newMedList.get(0).getQuantity();
+	        assertEquals(originalInStock, newQuantity); // new quantity of medication should be same as original because did +2 -2
+	        
+	        //back to normal
+	        try {
+	            String queryDelete = "DELETE FROM Orders WHERE orderNum = ?";   // to get newest row/order from Orders table
+	    		
+	    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+	    		pstmt.setInt(1, orderNum);
+	    		pstmt.executeUpdate();
+	    
+	        } catch(Exception e) { // no exception expected
+	        	fail();
+	        }
+    	}
+       
     }
     
     @Test 
@@ -80,7 +124,7 @@ class ListOfOrdersTest {
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
         
         try {
-    		Order o = new Order(3, 5, 1); // patientId = 5 is impossible
+    		Order o = new Order(3, 5, 1); // patientId = 5 is impossible; medID also doesn't matter because first exception thrown regards patient
             listOfOrders.addOrderToDatabase(o);
            
         } catch(Exception e) { // exception expected
@@ -108,58 +152,78 @@ class ListOfOrdersTest {
         assertEquals(expectedMsg, resultMsg);
     }
     
- // * ASK / IMPORTANT QUESTION / HELP: what if 3 is deleted? will get 'medication doens't exist' right? look at first test, should we find any medID that*
     @Test 
     void addOrderToDatabaseTestInvalid3() {  //test "Quantity Bought Must Be Positive (at least 1)!"
         String expectedMsg = "Quantity Bought Must Be Positive (at least 1)!";
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-        try {
-    		Order o = new Order(3, 1111122222, -1); // can't order negative quantity
-            listOfOrders.addOrderToDatabase(o);
-           
-        } catch(Exception e) { // exception expected
-        	resultMsg = e.getMessage();
+        
+        ArrayList<Merchandise> medList = inv.getOnlyOTCMerchandise();
+        
+        if (medList.size() > 0) { // confirms there's at least 1 OTC medication in inventory
+	        try {
+	    		Order o = new Order(medList.get(0).getMedicationID(), 1111122222, -1); // can't order negative quantity
+	            listOfOrders.addOrderToDatabase(o);
+	        } catch(Exception e) { // exception expected
+	        	resultMsg = e.getMessage();
+	        }
+	        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+	        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
+	        assertEquals(expectedMsg, resultMsg);
         }
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
-        assertEquals(expectedMsg, resultMsg);
     }
     
- // * ASK / IMPORTANT QUESTION / HELP: what if 5 is deleted? will get 'medication doens't exist' right? look at first test, should we find medID with that is Rx and use that*
     @Test 
     void addOrderToDatabaseTestInvalid4() {  //test "Not an OTC! Use the \"Give Refill for a prescription\" button"
         String expectedMsg = "Not an OTC! Use the \"Give Refill for a prescription\" button";
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-        try {
-    		Order o = new Order(5, 1111122222, 1);
-            listOfOrders.addOrderToDatabase(o);
-           
-        } catch(Exception e) { // exception expected
-        	resultMsg = e.getMessage();
+        
+        ArrayList<Merchandise> medList = inv.getMerchandise();
+        
+        int medIDRxMed = -1;
+        for (Merchandise m: medList) {
+        	if (m.getisOTC() == false) { // found an Rx medication in inventory
+        		medIDRxMed = m.getMedicationID();
+        		break;
+        	}
         }
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
-        assertEquals(expectedMsg, resultMsg);
+        
+        if (medIDRxMed != -1) {
+	        try {
+	    		Order o = new Order(medIDRxMed, 1111122222, 1);
+	            listOfOrders.addOrderToDatabase(o);
+	           
+	        } catch(Exception e) { // exception expected
+	        	resultMsg = e.getMessage();
+	        }
+	        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+	        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
+	        assertEquals(expectedMsg, resultMsg);
+        }
     }
     
-    // * ASK / IMPORTANT QUESTION / HELP: what if medID 3 is deleted? shouldn't we use one of the test medications?*
     @Test 
     void addOrderToDatabaseTestInvalid5() {  //test "Check quantity in stock for medication! Not enough!"
         String expectedMsg = "Check quantity in stock for medication! Not enough!";
         String resultMsg = null;
         ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-        try {
-    		Order o = new Order(3, 1111122222, 100000000); // assuming too large quantity to buy
-            listOfOrders.addOrderToDatabase(o);
-           
-        } catch(Exception e) { // exception expected
-        	resultMsg = e.getMessage();
+        
+        ArrayList<Merchandise> medList = inv.getOnlyOTCMerchandise();
+        
+        if (medList.size() > 0) {
+        	Merchandise chosenM = medList.get(0);
+	        try {
+	    		Order o = new Order(chosenM.getMedicationID(), 1111122222, chosenM.getQuantity() + 100);
+	            listOfOrders.addOrderToDatabase(o);
+	           
+	        } catch(Exception e) { // exception expected
+	        	resultMsg = e.getMessage();
+	        }
+	        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+	        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
+	        assertEquals(expectedMsg, resultMsg);
         }
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size()); // size of orders table in DB shouldn't change
-        assertEquals(expectedMsg, resultMsg);
     }
     
     /*@Test
@@ -184,258 +248,717 @@ class ListOfOrdersTest {
         assertThrows(Exception.class, () -> new Order(1, 1111122222, -5)); // negative quantity
     }*/
     
-    // * ASK / IMPORTANT QUESTION / HELP: is this test fine??*
     @Test 
     void addPresFormToDbTestValid() {  
     	ArrayList<Merchandise> medList = inv.getMerchandise();
-        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();        
-        int MedIDWithQuantityMoreThan1 = -1;
-        for (int i = 0; i < medList.size(); i++) {
-        	if (medList.get(i).getQuantity() > 1 && medList.get(i).getisOTC() != true) {
-        		MedIDWithQuantityMoreThan1 = i;
+    	ArrayList<Prescription> originalSmithListPres = new ArrayList<Prescription>();
+    	try {
+    		originalSmithListPres = listOfOrders.specificPatientPres(1111122222); // Smith John's prescription forms
+    	} catch(Exception e) {
+    		// no exception expected
+    		fail();
+    	}
+    	
+        Merchandise chosenM = null;
+        for (Merchandise m: medList) {
+        	if (m.getisOTC() == false) { // found Rx med
+        		chosenM = m;
         		break;
         	}
         }
-        int originalRefills = 0; int johnRefill = 0;
-        for(Prescription pres : originalListPres ) {
-        	originalRefills += pres.getOriginalNumOfRefills();
-        	if (pres.getPatientID() == 1111122222 && pres.getMedicationID() == medList.get(MedIDWithQuantityMoreThan1).getMedicationID()) {
-        		johnRefill = pres.getOriginalNumOfRefills();
-        	}
-        }       
-        try {
-        	if (MedIDWithQuantityMoreThan1 != -1) {
-        		Prescription p = new Prescription(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 10);
-                listOfOrders.addPresFormToDb(p);
-           }
-        } catch(Exception e) { // no exception expected
-        	fail();
-        }
         
-        ArrayList<Prescription> newList = listOfOrders.getListofAllPres();
-        int newRefills =0; int johnUpdate = 0;
-        for(Prescription prescript : newList ) {
-        	newRefills += prescript.getOriginalNumOfRefills();
-        	if (prescript.getPatientID() == 1111122222 && prescript.getMedicationID() == medList.get(MedIDWithQuantityMoreThan1).getMedicationID()) {
-        		johnUpdate = prescript.getOriginalNumOfRefills();
+        if (chosenM != null) { // if an Rx exists in system, can only add prescription then
+        	
+        	int originalRefills = -1;
+        	for (Prescription pres : originalSmithListPres) {
+        		if (pres.getMedicationID() == chosenM.getMedicationID()) {
+        			originalRefills = pres.getOriginalNumOfRefills(); // if comes here, a prescription with same medID and patID already exists
+        		}
         	}
+        	
+        	// add prescription
+        	try {
+	        	Prescription p = new Prescription(chosenM.getMedicationID(), 1111122222, 10);
+	        	listOfOrders.addPresFormToDb(p);
+        	} catch (Exception e) {
+        		// no exception expected
+        		fail();
+        	}
+        	
+        	// get new list of Smith's prescription forms
+        	ArrayList<Prescription> newSmithListPres = new ArrayList<Prescription>();
+        	try {
+	        	newSmithListPres = listOfOrders.specificPatientPres(1111122222);
+        	} catch (Exception e) {
+        		// no exception expected
+        		fail();
+        	}
+        	
+        	// sql query to confirm pres form details are right
+        	int newNumOfRefills = -1;
+	        try {
+	        	String query = "SELECT numOfRefills FROM prescriptions where patientID = 1111122222 and medicationID = " + chosenM.getMedicationID() + ";";
+	    		Statement statement = con.createStatement();
+	    		ResultSet result = statement.executeQuery(query);
+	    		
+	    		
+	    		while (result.next()) { 
+	    			newNumOfRefills =  result.getInt("numOfRefills");
+	    		}
+	        	
+	        } catch(Exception e) { // no exception expected
+	        	fail();
+	        }
+	        
+        	if (originalRefills == -1) { //added new row in prescription form table
+        		assertEquals(originalSmithListPres.size()+1, newSmithListPres.size());
+        		assertEquals(10, newNumOfRefills);
+        		
+        		// back to normal by deleting row
+        		try {
+        			String queryDelete = "DELETE FROM Prescriptions WHERE patientID = 1111122222 and medicationID = " + chosenM.getMedicationID() + ";";   // to get newest row/order from Orders table
+    	    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+    	    		pstmt.executeUpdate();
+     	        	
+     	        } catch(Exception e) { // no exception expected
+     	        	fail();
+     	        }
+        	}
+        	
+        	
+        	else { //added quantity of prescription to existing row in prescription form table
+        		assertEquals(originalSmithListPres.size(), newSmithListPres.size());
+        		assertEquals(originalRefills + 10, newNumOfRefills);
+        		
+        		// back to normal by updating numOfRefills to original value
+        		try {
+        			String queryUpdate = "UPDATE Prescriptions SET numOfRefills = " + originalRefills + " WHERE patientID = 1111122222 and medicationID = " + chosenM.getMedicationID() + ";";   // to get newest row/order from Orders table
+    	    		PreparedStatement pstmt = con.prepareStatement(queryUpdate);
+    	    		pstmt.executeUpdate();
+     	        	
+     	        } catch(Exception e) { // no exception expected
+     	        	fail();
+     	        }
+        	}
+
         }
-        int newSize = originalListPres.size()+1;
-        if (newSize == newList.size()) {
-        	assertEquals(10, newRefills- originalRefills);
-        }
-        else {
-        	assertNotEquals(johnRefill, johnUpdate);
-        }      
     }
     
-    // * ASK / IMPORTANT QUESTION / HELP: what if 3 is deleted? will get 'medication doens't exist' right? look at first test, should we find medID with that is OTC and use that*
+//    @Test 
+//    void addPresFormToDbTestValidMINH() {  
+//    	ArrayList<Merchandise> medList = inv.getMerchandise();
+//        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();        
+//        int MedIDWithQuantityMoreThan1 = -1;
+//        for (int i = 0; i < medList.size(); i++) {
+//        	if (medList.get(i).getQuantity() > 1 && medList.get(i).getisOTC() != true) { // found Rx med with more than 1 quantity
+//        		MedIDWithQuantityMoreThan1 = i;
+//        		break;
+//        	}
+//        }
+//        int originalRefills = 0; int johnRefill = 0;
+//        for(Prescription pres : originalListPres ) {
+//        	originalRefills += pres.getOriginalNumOfRefills();
+//        	if (pres.getPatientID() == 1111122222 && pres.getMedicationID() == medList.get(MedIDWithQuantityMoreThan1).getMedicationID()) {
+//        		johnRefill = pres.getOriginalNumOfRefills();
+//        	}
+//        }       
+//        try {
+//        	if (MedIDWithQuantityMoreThan1 != -1) {
+//        		Prescription p = new Prescription(medList.get(MedIDWithQuantityMoreThan1).getMedicationID(), 1111122222, 10);
+//                listOfOrders.addPresFormToDb(p);
+//           }
+//        } catch(Exception e) { // no exception expected
+//        	fail();
+//        }
+//        
+//        ArrayList<Prescription> newList = listOfOrders.getListofAllPres();
+//        int newRefills =0; int johnUpdate = 0;
+//        for(Prescription prescript : newList ) {
+//        	newRefills += prescript.getOriginalNumOfRefills();
+//        	if (prescript.getPatientID() == 1111122222 && prescript.getMedicationID() == medList.get(MedIDWithQuantityMoreThan1).getMedicationID()) {
+//        		johnUpdate = prescript.getOriginalNumOfRefills();
+//        	}
+//        }
+//        int newSize = originalListPres.size()+1;
+//        if (newSize == newList.size()) {
+//        	assertEquals(10, newRefills- originalRefills);
+//        }
+//        else {
+//        	assertNotEquals(johnRefill, johnUpdate);
+//        }      
+//    }
+    
     @Test 
-    void addPresFormToDbTestValid1() {  //test "Not an Rx! You can only add prescription forms for Rx Medications"
+    void addPresFormToDbTestInvalid1() {  //test "Not an Rx! You can only add prescription forms for Rx Medications"
         ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres(); 
         String expectedMsg = "Not an Rx! You can only add prescription forms for Rx Medications";
         String resultMsg = null;
-        try {
-        	Prescription p = new Prescription(3, 1111122222, 1);
-                listOfOrders.addPresFormToDb(p);
-           
-        } catch(Exception e) { // exception expected
-        	resultMsg = e.getMessage();
+        
+        ArrayList<Merchandise> medOTCList = inv.getOnlyOTCMerchandise();
+    
+        if (medOTCList.size() > 0) { // need at least one OTC medication in inventory
+	        try {
+	        	Prescription p = new Prescription(medOTCList.get(0).getMedicationID(), 1111122222, 1);
+	                listOfOrders.addPresFormToDb(p);
+	           
+	        } catch(Exception e) { // exception expected
+	        	resultMsg = e.getMessage();
+	        }
+	        ArrayList<Prescription> newListPres = listOfOrders.getListofAllPres(); 
+	        assertEquals(originalListPres.size(), newListPres.size()); // size of prescription forms table in DB shouldn't change
+	        assertEquals(expectedMsg, resultMsg); 
         }
-        ArrayList<Prescription> newListPres = listOfOrders.getListofAllPres(); 
-        assertEquals(originalListPres.size(), newListPres.size()); // size of prescription forms table in DB shouldn't change
-        assertEquals(expectedMsg, resultMsg); 
     }
     
- // * ASK / IMPORTANT QUESTION / HELP: what if 5 is deleted? will get 'medication doens't exist' right? look at first test, should we find medID with that is OTC and use that*
     @Test 
-    void addPresFormToDbTestValid2() {  //test "Refills must be positive (at least 1)!"
+    void addPresFormToDbTestInvalid2() {  //test "Refills must be positive (at least 1)!"
         String expectedMsg = "Refills must be positive (at least 1)!";
         String resultMsg = null;
         ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres(); 
-        try {
-        	Prescription p = new Prescription(5, 1111122222, -1);
-                listOfOrders.addPresFormToDb(p);
-           
-        } catch(Exception e) { // no exception expected
-        	resultMsg = e.getMessage();
-        } 
-        ArrayList<Prescription> newListPres = listOfOrders.getListofAllPres(); 
-        assertEquals(originalListPres.size(), newListPres.size());
-        assertEquals(expectedMsg, resultMsg);
+        
+        ArrayList<Merchandise> medList = inv.getMerchandise();
+        int medIDOfRx = -1;
+        for (Merchandise m : medList) {
+        	if (m.getisOTC() == false)
+        		medIDOfRx = m.getMedicationID();
+        }
+        
+        if (medIDOfRx != -1) { // need at least 1 Rx in inventory
+	        try {
+	        	Prescription p = new Prescription(medIDOfRx, 1111122222, -1);
+	                listOfOrders.addPresFormToDb(p);
+	           
+	        } catch(Exception e) { // no exception expected
+	        	resultMsg = e.getMessage();
+	        } 
+	        ArrayList<Prescription> newListPres = listOfOrders.getListofAllPres(); 
+	        assertEquals(originalListPres.size(), newListPres.size());
+	        assertEquals(expectedMsg, resultMsg);
+        }
     }
     
     @Test
-    void addRefillValid() { 
-       
-        ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-//        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
-        ArrayList<Merchandise> medList = inv.getMerchandise();
-        int indexForRx = -1;
-        for (int i = 0; i < medList.size(); i++) {
-        	if (medList.get(i).getName().equalsIgnoreCase("Test")) {
-        		indexForRx = medList.get(i).getMedicationID();
-        		break;
-        	}
-        }
-        
+    void addRefillValid() { // Rx medication
+    	ArrayList<Order> originalOrderList = listOfOrders.getListofAllOrders();
+    	ArrayList<Merchandise> originalMercList = inv.getMerchandise();
+    	
+    	Merchandise chosenMed = inv.searchMerchandiseWithID(7); // medID = 7 is our test Rx medication
+    	double originalPrice = chosenMed.getPrice();
+    	
+    	try {
+    		inv.increaseQuantity(chosenMed.getMedicationID(), 2); //increases quantity by 2
+	       	Order o = new Order(chosenMed.getMedicationID(), 1111122222, 2);  //decreases quantity by 2
+	   	    listOfOrders.addRefillToDatabase(o);
+	   	} 
+    	catch (Exception e){ // exception not expected
+    		fail();
+    	}
+	   
+    	ArrayList<Order> newOrderList = listOfOrders.getListofAllOrders();
+    	ArrayList<Merchandise> newMercList = inv.getMerchandise();
+    	assertEquals(originalOrderList.size()+1, newOrderList.size()); // number of orders should increase
+    	assertEquals(originalMercList, newMercList); // merch list should be same before and after because increased AND decreased quantity by 2
+    	
+    	// sql query to confirm order details are right
+    	int orderNum = -1, medID = -1, quantityBought = -1;
+    	long patID = -1;
+    	double totalPrice = -1;
+    	boolean isPrescription = false;
         try {
-        	 if (indexForRx != -1) {
-        		
-//        		listOfOrders.addPresFormToDb(new Prescription(medList.get(indexForRx).getMedicationID(), 1111122222, 50));
-        		listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 10));
-	        	Order O = new Order(indexForRx, 1111122222, 1);
-        	     
-		        listOfOrders.addRefillToDatabase(O);
-        	 }
-        } 
-        catch (Exception e){ // exception not expected
+            String queryGetAllRows = "SELECT * FROM Orders WHERE orderNum IN (Select max(orderNum) from Orders);";   // to get newest row/order from Orders table
+    		Statement statement = con.createStatement();
+    		ResultSet result = statement.executeQuery(queryGetAllRows);
+    		
+    		
+    		while (result.next()) { 
+    			orderNum =  result.getInt("orderNum");
+    			medID =  result.getInt("medicationID");
+				patID =  result.getLong("patientID");
+    			quantityBought = result.getInt("quantityBought");
+    			totalPrice =  result.getDouble("priceAtPurchase");
+    			isPrescription =  result.getBoolean("isPrescription");
+    		}
+        } catch(Exception e) { // no exception expected
         	fail();
         }
         
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size()+1, newList.size());
-       
-    }
-
-    @Test
-    void addRefillInvalid1() { // "0 refills left!"
-       
-    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-//        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
-        ArrayList<Merchandise> medList = inv.getMerchandise();
-        int indexForRx = -1;
-        for (int i = 0; i < medList.size(); i++) {
-        	if (medList.get(i).getName().equals("Test1")) {
-        		indexForRx = medList.get(i).getMedicationID();
-        		break;
-        	}
-        }
-
-        String expectedMsg = "0 refills left!";
-        String resultMsg = null;
+        assertEquals(chosenMed.getMedicationID(), medID);
+        assertEquals(1111122222, patID);
+        assertEquals(2, quantityBought);
+        assertEquals(originalPrice*2, totalPrice);
+        assertEquals(true, isPrescription);
         
-       
+        //back to normal
         try {
-        	if (indexForRx != -1) {
-        	  {
-        		 listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 1)); 
-        		  Order O = new Order(indexForRx, 1111122222, 1);
-		        listOfOrders.addRefillToDatabase(O);
-		        Order O1 = new Order(indexForRx, 1111122222, 10);
-		        listOfOrders.addRefillToDatabase(O1);
-        	 }
-        	}
-        } 
-        catch (Exception e){ // exception expected
-        	resultMsg = e.getMessage();
-        }
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size()+1, newList.size());
-        assertEquals(expectedMsg, resultMsg);
-       
-    }
+            String queryDelete = "DELETE FROM Orders WHERE orderNum = ?";
+    		
+    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+    		pstmt.setInt(1, orderNum);
+    		pstmt.executeUpdate();
     
-    @Test
-    void addRefillInvalid2() { // "Not enough refills! Only have " + refillLeft +  " refills left!"
-    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
-        ArrayList<Merchandise> medList = inv.getMerchandise();
-        int indexForRx = -1;
-        for (int i = 0; i < medList.size(); i++) {
-        	if (medList.get(i).getName().equals("Test2")) {
-        		indexForRx = medList.get(i).getMedicationID();
-        		break;
-        	}
+        } catch(Exception e) { // no exception expected
+        	fail();
         }
-        int refillLeft = 0;       
-        String resultMsg = null;
+        
+        //back to normal
         try {
-        	if (indexForRx != -1) {
-        	  {
-        		 listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 1)); 
-                  originalListPres = listOfOrders.getListofAllPres();
-        		 for (int i = 0; i < originalListPres.size(); i++) {
- 		        	if (originalListPres.get(i).getMedicationID() == indexForRx && originalListPres.get(i).getPatientID() == 1111122222 ) {
- 		        		refillLeft = refillLeft + originalListPres.get(i).getOriginalNumOfRefills();
- 		        	}
- 		        }
-        		  Order O = new Order(indexForRx, 1111122222, 100000000);
-		        listOfOrders.addRefillToDatabase(O);		        		       
-        	 }
-        	}
-        } 
-        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
-        	resultMsg = e.getMessage();
-        }
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
-        String expectedMsg = "Not enough refills! Only have " + refillLeft +  " refills left!";
-        assertEquals(expectedMsg, resultMsg);
-       
-    }
+        	String queryUpdate = "UPDATE Prescriptions SET numOfRefills = " + 100 + " WHERE prescriptionNum = " + 1 + ";";
+    		PreparedStatement pstmt = con.prepareStatement(queryUpdate);
+    		pstmt.executeUpdate();
     
+        } catch(Exception e) { // no exception expected
+        	fail();
+        }
+    }
     @Test
-    void addRefillInvalid3() { // "No record found of prescription under Patient with Health Card Number: " + o.getPatientID() + ". Add prescription form into system first."
+	void addRefillInvalid1() { // not an Rx medication
+  	
     	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+      
     	ArrayList<Merchandise> medList = inv.getMerchandise();
-        int indexForRx = -1;
-        for (int i = 0; i < medList.size(); i++) {
-        	if (medList.get(i).getName().equals("Test3")) {
-        		indexForRx = medList.get(i).getMedicationID();
-        		break;
-        	}
-        }
-        String expectedMsg = "No record found of prescription under Patient with Health Card Number: " + 1111122222 + ". Add prescription form into system first.";
-        String resultMsg = null;  
-        try {
-        	if (indexForRx != -1) {
-        	  {
-        		  Order O = new Order(indexForRx, 1111122222, 100000000);
-		        listOfOrders.addRefillToDatabase(O);
-        	 }
-        	}
-        } 
-        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
-        	resultMsg = e.getMessage();
-        }  
-        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
-        assertEquals(originalList.size(), newList.size());
-        assertEquals(expectedMsg, resultMsg);     
-    }
-    
-    @Test
-    void addRefillInvalid4() { // not an Rx medication
-       
-        ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
-        
-        ArrayList<Merchandise> medList = inv.getMerchandise();
 
-        String expectedMsg = "Not an Rx! Use the \"Add OTC Order\" button";
-        String resultMsg = null;
-        
-        int indexForOTC = -1;
-        for (int i = 0; i < originalList.size(); i++) {
-        	if (medList.get(i).getisOTC() == true) {
-        		indexForOTC = i;
-        		break;
-        	}
-        }
-        try {
-        	 if (indexForOTC != -1) {
-	        	Order O = new Order(medList.get(indexForOTC).getMedicationID(), 1111122222, 1);
-        	     
-		        listOfOrders.addRefillToDatabase(O);
-        	 }
-        } 
+    	String expectedMsg = "Not an Rx! Use the \"Add OTC Order\" button";
+    	String resultMsg = null;
+      
+    	int indexForOTC = -1;
+    	for (int i = 0; i < originalList.size(); i++) {
+    		if (medList.get(i).getisOTC() == true) {
+    			indexForOTC = i;
+    			break;
+    		}
+    	}
+      
+    	if (indexForOTC != -1) { // means at least one OTC exists in inventory
+      	try {
+        	Order O = new Order(medList.get(indexForOTC).getMedicationID(), 1111122222, 1);
+	        listOfOrders.addRefillToDatabase(O); 
+      	} 
         catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
         	resultMsg = e.getMessage();
         }
+      	
         ArrayList<Order> newList = listOfOrders.getListofAllOrders();
         assertEquals(originalList.size(), newList.size());
         assertEquals(expectedMsg, resultMsg);
-       
+      }
+    
+     
     }
+    
+    @Test
+    void addRefillInvalid2() { // "No record found of prescription under Patient with Health Card Number: " + o.getPatientID() + ". Add prescription form into system first."
+	  	
+    	// deleting test prescription in prescription table
+    	try {
+            String queryDelete = "DELETE FROM Prescriptions WHERE prescriptionNum = 1";
+    		
+    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+    		pstmt.executeUpdate();
+        } catch(Exception e) { // no exception expected
+        	fail();
+        }
+    	
+    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+	  	
+	  	String expectedMsg = "No record found of prescription under Patient with Health Card Number: " + 1111122222 + ". Add prescription form into system first.";
+	  	String resultMsg = null;  
+	  	try {
+	  		Order O = new Order(7, 1111122222, 5);
+	  		listOfOrders.addRefillToDatabase(O);
+	  	}
+	  	catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+	  		resultMsg = e.getMessage();
+	  	}  
+	  	ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+	  	assertEquals(originalList.size(), newList.size());
+	  	assertEquals(expectedMsg, resultMsg);    
+	  	
+	  	// back to normal (adding prescription form again)
+	  	try {
+            String queryInsert = "INSERT INTO Prescriptions VALUES (1, 7, 1111122222, 100)";
+    		PreparedStatement pstmt = con.prepareStatement(queryInsert);
+    		pstmt.executeUpdate();
+        } catch(Exception e) { // no exception expected
+        	fail();
+        }
+	  	
+    }
+    
+    @Test
+    void addRefillInvalid3() { // "0 refills left!"
+    	
+    	try {
+			inv.increaseQuantity(7, 100); //keeps medication quantity the same before and after
+			Order boughtAllRefillsOrder = new Order(7, 1111122222, 100);  // buying all 100 (original numOfRefills on prescriptionForm) to mimic 0 refills left
+			listOfOrders.addRefillToDatabase(boughtAllRefillsOrder);
+    	} catch (Exception e) {
+    		// not expected
+    		fail();
+		}
+ 
+    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+	  	
+    	String expectedMsg = "0 refills left!";;
+	  	String resultMsg = null;  
+	  	
+    	//actual test order
+    	try {
+    		Order o = new Order(7, 1111122222, 5);
+			listOfOrders.addRefillToDatabase(o);
+		} catch (Exception e1) {
+			resultMsg = e1.getMessage();
+		}
+    	
+    	assertEquals(expectedMsg, resultMsg);
+    	ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+    	assertEquals(originalList, newList);
+    	
+    	// back to normal (delete fake order row added at beginning)
+    	try {
+	    	String queryGetAllRows = "SELECT max(orderNum) FROM Orders;";   // to get newest row/order from Orders table
+	 		Statement statement = con.createStatement();
+	 		ResultSet result = statement.executeQuery(queryGetAllRows);
+	 		
+	 		int maxOrderNum = -1;
+	 		while (result.next()) { 
+	 			maxOrderNum =  result.getInt("max(orderNum)");
+	 			
+	 		}
+	 		
+	 		String queryDelete = "DELETE FROM Orders WHERE orderNum = ?";
+    		
+    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+    		pstmt.setInt(1, maxOrderNum);
+    		pstmt.executeUpdate();
+    		
+    	} catch(Exception e) { //not expected
+    		fail();
+    	}
+     
+    }
+    
+    @Test
+    void addRefillInvalid4() { // "Not enough refills! Only have " + refillLeft +  " refills left!"
+    	
+    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+    	
+    	String expectedMsg = "Not enough refills! Only have " + 100 +  " refills left!";
+    	String resultMsg = null;
+    	
+    	try {
+    		Order o = new Order(7, 1111122222, 200); //only have 100 refills in total, so trying to buy 200
+			listOfOrders.addRefillToDatabase(o);
+		} catch (Exception e1) {
+			resultMsg = e1.getMessage();
+		}
+    	
+    	assertEquals(expectedMsg, resultMsg);
+    	ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+    	assertEquals(originalList, newList);
+    	
+    }
+    
+    // --------- MINH'S TESTS BELOW ---------
+//    @Test
+//    void addRefillValidaizaattempt2() {
+//    	ArrayList<Order> originalOrderList = listOfOrders.getListofAllOrders();
+//    	ArrayList<Prescription> originalSmithListPres = new ArrayList<Prescription>();
+//    	ArrayList<Merchandise> medList = inv.getMerchandise();
+//    	try {
+//    		originalSmithListPres = listOfOrders.specificPatientPres(1111122222); // Smith John's prescription forms
+//    	} catch(Exception e) {
+//    		// no exception expected
+//    		fail();
+//    	}
+//    	
+//    	if (originalSmithListPres.size() > 0) { //can add refill only if prescription form already exists
+//    	System.out.println("HELLO");
+//    		
+//    		Prescription chosenPres = null;
+//    		int originalRefills = -1;
+//    		for (Prescription p : originalSmithListPres) {
+//    			if (inv.searchMerchandiseWithID(p.getMedicationID()) != null) {
+//    				chosenPres = p;
+//    				originalRefills = chosenPres.getOriginalNumOfRefills();
+//    			}
+//    		}
+//    		
+//    		if (chosenPres != null) { // can only add refill if medication  exists in inventory
+//    			System.out.println("EXISTING");
+//    		
+//	    		Prescription addFewRefills = new Prescription(chosenPres.getMedicationID(), 1111122222, 5); //adds 5 to the smithPresForm refills number
+//	    		try {
+//					listOfOrders.addPresFormToDb(addFewRefills);
+//				} catch (Exception e) {
+//					// no exception expected
+//					fail();
+//				} 
+//	
+//	    		Order o = new Order(chosenPres.getMedicationID(), 1111122222, 5);
+//		        try {
+//					listOfOrders.addRefillToDatabase(o);
+//				} catch (Exception e) {
+//					// no exception expected
+//					fail();
+//				}
+//		        
+//		        ArrayList<Order> newOrderList = listOfOrders.getListofAllOrders();
+//		        assertEquals(originalOrderList.size()+1, newOrderList.size());
+//		        
+//		        ArrayList<Prescription> newSmithListPres = new ArrayList<Prescription>();
+//		    	try {
+//		    		newSmithListPres = listOfOrders.specificPatientPres(1111122222); // Smith John's prescription forms
+//		    	} catch(Exception e) {
+//		    		// no exception expected
+//		    		fail();
+//		    	}
+//		    	
+//		    	// back to normal by updating numOfRefills to original value
+//	    		try {
+//	    			String queryUpdate = "UPDATE Prescriptions SET numOfRefills = " + originalRefills + " WHERE patientID = 1111122222 and medicationID = " + chosenPres.getMedicationID() + ";";   // to get newest row/order from Orders table
+//		    		PreparedStatement pstmt = con.prepareStatement(queryUpdate);
+//		    		pstmt.executeUpdate();
+//	 	        } catch(Exception e) { // no exception expected
+//	 	        	fail();
+//	 	        }
+//	    		
+//	    		// back to normal by deleting row in Orders table
+//	    		try {
+//	    			String query = "SELECT max(orderNum) From Orders;";	
+//	    			Statement statement = con.createStatement();
+//	    			ResultSet result = statement.executeQuery(query);
+//	    			
+//	    			int newOrderOrderNum = -1;
+//	    			while (result.next()) {
+//	    				newOrderOrderNum =  result.getInt("orderNum");
+//	    			}
+//	    			
+//	    			String queryDelete = "DELETE FROM Orders WHERE orderNum = " + newOrderOrderNum + ";";   // to get newest row/order from Orders table
+//		    		PreparedStatement pstmt = con.prepareStatement(queryDelete);
+//		    		pstmt.executeUpdate();
+//	 	        	
+//	 	        } catch(Exception e) { // no exception expected
+//	 	        	fail();
+//	 	        }
+//	    		
+//		    	assertEquals(originalSmithListPres.size(), newSmithListPres.size());
+//	    	}
+//    	}
+//    }
+////    @Test
+////    void addRefillValidMINH() { 
+////    	
+////        ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+//////        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
+////        ArrayList<Merchandise> medList = inv.getMerchandise();
+////        int indexForRx = -1;
+////        for (int i = 0; i < medList.size(); i++) {
+////        	if (medList.get(i).getName().equalsIgnoreCase("Test")) {
+////        		indexForRx = medList.get(i).getMedicationID();
+////        		break;
+////        	}
+////        }
+////        
+////        try {
+////        	 if (indexForRx != -1) {
+////        		
+//////        		listOfOrders.addPresFormToDb(new Prescription(medList.get(indexForRx).getMedicationID(), 1111122222, 50));
+////        		listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 10));
+////	        	Order O = new Order(indexForRx, 1111122222, 1);
+////        	     
+////		        listOfOrders.addRefillToDatabase(O);
+////        	 }
+////        } 
+////        catch (Exception e){ // exception not expected
+////        	fail();
+////        }
+////        
+////        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+////        assertEquals(originalList.size()+1, newList.size());
+////       
+////    }
+//    
+//    @Test
+//    void addRefillInvalid1MINH() { // "0 refills left!"
+//       
+//    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+////        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
+//        ArrayList<Merchandise> medList = inv.getMerchandise();
+//        
+//        int indexForRx = -1;
+//        for (int i = 0; i < medList.size(); i++) {
+//        	if (medList.get(i).getName().equals("Test1")) {
+//        		indexForRx = medList.get(i).getMedicationID();
+//        		break;
+//        	}
+//        }
+//
+//        String expectedMsg = "0 refills left!";
+//        String resultMsg = null;
+//        
+//       
+//        try {
+//        	if (indexForRx != -1) {
+//        	  {
+//        		 listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 1)); 
+//        		  Order O = new Order(indexForRx, 1111122222, 1);
+//		        listOfOrders.addRefillToDatabase(O);
+//		        Order O1 = new Order(indexForRx, 1111122222, 10);
+//		        listOfOrders.addRefillToDatabase(O1);
+//        	 }
+//        	}
+//        } 
+//        catch (Exception e){ // exception expected
+//        	resultMsg = e.getMessage();
+//        }
+//        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+//        assertEquals(originalList.size()+1, newList.size());
+//        assertEquals(expectedMsg, resultMsg);
+//       
+//    }
+////    @Test
+////    void addRefillInvalid1MINH() { // "0 refills left!"
+////       
+////    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+//////        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
+////        ArrayList<Merchandise> medList = inv.getMerchandise();
+////        int indexForRx = -1;
+////        for (int i = 0; i < medList.size(); i++) {
+////        	if (medList.get(i).getName().equals("Test1")) {
+////        		indexForRx = medList.get(i).getMedicationID();
+////        		break;
+////        	}
+////        }
+////
+////        String expectedMsg = "0 refills left!";
+////        String resultMsg = null;
+////        
+////       
+////        try {
+////        	if (indexForRx != -1) {
+////        	  {
+////        		 listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 1)); 
+////        		  Order O = new Order(indexForRx, 1111122222, 1);
+////		        listOfOrders.addRefillToDatabase(O);
+////		        Order O1 = new Order(indexForRx, 1111122222, 10);
+////		        listOfOrders.addRefillToDatabase(O1);
+////        	 }
+////        	}
+////        } 
+////        catch (Exception e){ // exception expected
+////        	resultMsg = e.getMessage();
+////        }
+////        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+////        assertEquals(originalList.size()+1, newList.size());
+////        assertEquals(expectedMsg, resultMsg);
+////       
+////    }
+//    
+//    @Test
+//    void addRefillInvalid2MINH() { // "Not enough refills! Only have " + refillLeft +  " refills left!"
+//    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+//        ArrayList<Prescription> originalListPres = listOfOrders.getListofAllPres();
+//        ArrayList<Merchandise> medList = inv.getMerchandise();
+//        int indexForRx = -1;
+//        for (int i = 0; i < medList.size(); i++) {
+//        	if (medList.get(i).getName().equals("Test2")) {
+//        		indexForRx = medList.get(i).getMedicationID();
+//        		break;
+//        	}
+//        }
+//        int refillLeft = 0;       
+//        String resultMsg = null;
+//        try {
+//        	if (indexForRx != -1) {
+//        	  {
+//        		 listOfOrders.addPresFormToDb(new Prescription(indexForRx, 1111122222, 1)); 
+//                  originalListPres = listOfOrders.getListofAllPres();
+//        		 for (int i = 0; i < originalListPres.size(); i++) {
+// 		        	if (originalListPres.get(i).getMedicationID() == indexForRx && originalListPres.get(i).getPatientID() == 1111122222 ) {
+// 		        		refillLeft = refillLeft + originalListPres.get(i).getOriginalNumOfRefills();
+// 		        	}
+// 		        }
+//        		  Order O = new Order(indexForRx, 1111122222, 100000000);
+//		        listOfOrders.addRefillToDatabase(O);		        		       
+//        	 }
+//        	}
+//        } 
+//        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+//        	resultMsg = e.getMessage();
+//        }
+//        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+//        assertEquals(originalList.size(), newList.size());
+//        String expectedMsg = "Not enough refills! Only have " + refillLeft +  " refills left!";
+//        assertEquals(expectedMsg, resultMsg);
+//       
+//    }
+//    
+//    @Test
+//    void addRefillInvalid3MINH() { // "No record found of prescription under Patient with Health Card Number: " + o.getPatientID() + ". Add prescription form into system first."
+//    	ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+//    	ArrayList<Merchandise> medList = inv.getMerchandise();
+//        int indexForRx = -1;
+//        for (int i = 0; i < medList.size(); i++) {
+//        	if (medList.get(i).getName().equals("Test3")) {
+//        		indexForRx = medList.get(i).getMedicationID();
+//        		break;
+//        	}
+//        }
+//        String expectedMsg = "No record found of prescription under Patient with Health Card Number: " + 1111122222 + ". Add prescription form into system first.";
+//        String resultMsg = null;  
+//        try {
+//        	if (indexForRx != -1) {
+//        	  {
+//        		  Order O = new Order(indexForRx, 1111122222, 100000000);
+//		        listOfOrders.addRefillToDatabase(O);
+//        	 }
+//        	}
+//        } 
+//        catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+//        	resultMsg = e.getMessage();
+//        }  
+//        ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+//        assertEquals(originalList.size(), newList.size());
+//        assertEquals(expectedMsg, resultMsg);     
+//    }
+//    
+//    @Test
+//    void addRefillInvalid4MINH() { // not an Rx medication
+//    	
+//        ArrayList<Order> originalList = listOfOrders.getListofAllOrders();
+//        
+//        ArrayList<Merchandise> medList = inv.getMerchandise();
+//
+//        String expectedMsg = "Not an Rx! Use the \"Add OTC Order\" button";
+//        String resultMsg = null;
+//        
+//        int indexForOTC = -1;
+//        for (int i = 0; i < originalList.size(); i++) {
+//        	if (medList.get(i).getisOTC() == true) {
+//        		indexForOTC = i;
+//        		break;
+//        	}
+//        }
+//        
+//        if (indexForOTC != -1) {
+//        	try {
+//              	
+//  	        	Order O = new Order(medList.get(indexForOTC).getMedicationID(), 1111122222, 1);
+//          	     
+//  		        listOfOrders.addRefillToDatabase(O);
+//          	 
+//        	} 
+//          catch (Exception e){ // exception expected because can't add a refill order for an OTC medication
+//          	resultMsg = e.getMessage();
+//          }
+//          ArrayList<Order> newList = listOfOrders.getListofAllOrders();
+//          assertEquals(originalList.size(), newList.size());
+//          assertEquals(expectedMsg, resultMsg);
+//        }
+//      
+//       
+//    }
+//     ----------------- end of Minh's fix -----------
     
     // aiza added tests below for the methods she added in Itr3
 //    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
@@ -510,7 +1033,7 @@ class ListOfOrdersTest {
     @Test
     void specificPatientOrderHistoryInvalid1() { //negative health card number
     	
-    	assertThrows(NegativeInputException.class, () -> listOfOrders.specificPatientOrderHistory(-5)); // patientID can't be of size 1
+    	assertThrows(NegativeInputException.class, () -> listOfOrders.specificPatientOrderHistory(-5)); // patientID can't be negative
     }
     
     @Test

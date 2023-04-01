@@ -68,7 +68,7 @@ public class OrderStub implements OrderRoot {
 	}
 	
 	@Override
-	public int numOfRefill(long _patientID, int _medicationId)  {
+	public int numOfRemainingRefills(long _patientID, int _medicationId)  {
 		int sumQuantityBought = 0;
 		for (Order o: orderList) {
 			if ((o.getMedicationID() == _medicationId) && (o.getPatientID() == _patientID)) {
@@ -122,7 +122,7 @@ public class OrderStub implements OrderRoot {
 	}
 
 	@Override
-	public void updatePresDB(int presNum, int refillsNum) throws Exception {
+	public void updateRefillsInExistingPresFormInDB(int presNum, int refillsNum) throws Exception {
 		// TODO Auto-generated method stub
 		
 	}	

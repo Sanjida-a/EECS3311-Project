@@ -19,7 +19,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	boolean isPrescription;
 
 	// constructor for front end
-	public Order(int medicationID, long patientID, int quantityBought) throws Exception{
+	public Order(int medicationID, long patientID, int quantityBought){
 		
 		this.medicationID = medicationID;
 		this.patientID = patientID;
