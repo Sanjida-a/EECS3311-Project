@@ -25,6 +25,9 @@ public class Owner extends User {
 	}
 	@Override
 	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
 		Owner comparator = (Owner)obj;
 		if(this.username != comparator.username ||
 			this.password != comparator.password) {

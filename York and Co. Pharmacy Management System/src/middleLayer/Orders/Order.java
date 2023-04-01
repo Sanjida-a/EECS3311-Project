@@ -102,7 +102,7 @@ public class Order { //ALL ORDER: both OTC and Prescription
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(	this.orderNum == ((Order)obj).orderNum ) {
+		if(	obj != null && this.orderNum == ((Order)obj).orderNum ) {
 			return true;
 		}
 		return false;

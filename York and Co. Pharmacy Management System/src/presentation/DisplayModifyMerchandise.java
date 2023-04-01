@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -36,11 +37,28 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JTextArea textAreaDescription;
 	private static ArrayList<Merchandise> list;
 	private static JList<Merchandise> output;
-	private static Inventory inv = Inventory.getInstance();
+	private static Inventory inv;
+	private static JLabel lblNotice;
+	
+	
+	public class DisplayModifyMerchandise implements ActionListener{
+	private static JFrame superFrame;
+	private static JFrame frame;
+	private static JTextField textFieldName;
+	private static JTextField textFieldType;
+	private static JTextField textFieldForm;
+	private static JTextField textFieldPrice;
+	private static JTextField textFieldMercID;
+	private static JTextArea textAreaDescription;
+	private static ArrayList<Merchandise> list;
+	private static JList<Merchandise> output;
+	private static Inventory inv;
+	private static JLabel lblNotice;
 	
 	
 	public static void displayModifyMerchandise(JFrame previous, JList<Merchandise> outputList, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
+		inv = Inventory.getInstance();
 		superFrame.setEnabled(false);
 		list = currentList;
 		output = outputList;
@@ -57,7 +75,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(12, 10, 662, 443);
+		panel.setBounds(12, 10, 662, 350);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -73,6 +91,12 @@ public class DisplayModifyMerchandise implements ActionListener{
 		lblMercID.setFont(new Font("굴림", Font.BOLD, 18));
 		lblMercID.setBounds(0, 0, 145, 35);
 		panel.add(lblMercID);
+		
+		lblNotice = new JLabel("");
+		lblNotice.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 15));
+		lblNotice.setForeground(new Color(255, 0, 0));
+		lblNotice.setBounds(300,0,350,35);
+		panel.add(lblNotice);
 	}
 	
 	public static void createInputFields(JPanel panel) {
@@ -132,138 +156,137 @@ public class DisplayModifyMerchandise implements ActionListener{
 					
 		String actionCommand = e.getActionCommand();
 		
-//		String errorMessage = "";
+		String errorMessage = "";
 		inv.updateFromDatabase();
-//		try {
-//			
-		if(actionCommand.equals("Exit")) {
-			frame.dispose();
-			superFrame.setEnabled(true);
-			superFrame.toFront();
+
 			
-			//list = DisplayInitialScreen.refreshList(Inventory.getInstance(), list);
-			InitialScreenPanelAll.displayMercList( list);
-		}
-		
-		else{
-			//				errorMessage = "MediciationID is required";
-			int _textFieldMercID = 0;
-			try {
-				String stringMercID = textFieldMercID.getText();
+			if(actionCommand.equals("Exit")) {
+				frame.dispose();
+				superFrame.setEnabled(true);
+				superFrame.toFront();
 				
-				if (stringMercID.isEmpty()) {
-					throw new NullPointerException("MediciationID is required. Please enter one");
-				}
-				_textFieldMercID = Integer.parseInt(stringMercID);
-			}
-			catch (NullPointerException exception) {
-				JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-			}
-			catch (NumberFormatException exception) {
-				JOptionPane.showMessageDialog(frame,"Merchandise ID must be an integer", "Invalid input", JOptionPane.WARNING_MESSAGE);
+				//list = DisplayInitialScreen.refreshList(Inventory.getInstance(), list);
+				InitialScreenPanelAll.displayMercList( list);
 			}
 			
-//				Boolean result = true;
-			
-			if (actionCommand.equals("Change name")) {
+			else{
+				//				errorMessage = "MediciationID is required";
+				int _textFieldMercID = 0;
 				try {
-					String _textFieldName = textFieldName.getText().toUpperCase();
+					String stringMercID = textFieldMercID.getText();
 					
-					if (_textFieldName.isEmpty()) { // ensures a medication name has been entered
-						throw new NullPointerException("Name is required. Please enter a name."); 
+					if (stringMercID.isEmpty()) {
+						throw new NullPointerException("MediciationID is required. Please enter one");
 					}
-//						try {
-					inv.modifyMedicationName(_textFieldMercID, _textFieldName);
-	
-//						}
+					_textFieldMercID = Integer.parseInt(stringMercID);
 				}
-				catch (NullPointerException exception) {
-					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				catch (Exception exception) {
-					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				
-			}
-			
-			else if(actionCommand.equals("Change Price")) {
-//					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
-				
-				try {
-					String stringPrice = textFieldPrice.getText();
-					
-					if (stringPrice.isEmpty()) {
-						throw new NullPointerException("Price is required. Please enter a price."); 
-					}
-					
-					double _textFieldPrice = Double.parseDouble(stringPrice); //throws NumberFormatException if not an int/double
-//						try {
-					inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-//							}
-//							catch (Exception e2) {
-//								JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
-//							}
-				} 
 				catch (NullPointerException exception) {
 					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				catch (NumberFormatException exception) {
-					JOptionPane.showMessageDialog(frame,"Price must be an integer or double", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(frame,"Merchandise ID must be an integer", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
-				catch (NegativeInputException exception) {
-					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				catch (Exception exception) {
-					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				//invoke method(s) for modifying Merchandise here
-			/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
-				throw new Exception(); // ensures a first name, last name and address have been entered				
-			}*/
 				
-			}
-			else if(actionCommand.equals("Change Description")) {
-				try {
-					String _textAreaDescription = textAreaDescription.getText();
-					
-					if (_textAreaDescription.isEmpty()) { // ensures a description has been entered
-						throw new NullPointerException("Description is required. Please enter a description."); 
-					}
+//				Boolean result = true;
+				
+				if (actionCommand.equals("Change name")) {
+					try {
+						String _textFieldName = textFieldName.getText().toUpperCase();
+						
+						if (_textFieldName.isEmpty()) { // ensures a medication name has been entered
+							throw new NullPointerException("Name is required. Please enter a name."); 
+						}
 //						try {
-					inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
-//							
-//							
+						inv.modifyMedicationName(_textFieldMercID, _textFieldName);
+						setNotice("Name changed successfully");
 //						}
-//						catch(Exception ex) {
-//							
-//						}
-				}
-				catch (NullPointerException exception) {
-					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-				}
-				catch (Exception exception) {
-					JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (NullPointerException exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (Exception exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					
 				}
 				
-			}
+				else if(actionCommand.equals("Change Price")) {
+//					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
+					
+					try {
+						String stringPrice = textFieldPrice.getText();
+						
+						if (stringPrice.isEmpty()) {
+							throw new NullPointerException("Price is required. Please enter a price."); 
+						}
+						
+						double _textFieldPrice = Double.parseDouble(stringPrice); //throws NumberFormatException if not an int/double
+//						try {
+						inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
+//						}
+//							catch (Exception e2) {
+//								JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
+//							}
+						setNotice("Price changed successfully");
+					} 
+					catch (NullPointerException exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (NumberFormatException exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame,"Price must be an integer or double", "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (NegativeInputException exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (Exception exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					//invoke method(s) for modifying Merchandise here
+				/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
+					throw new Exception(); // ensures a first name, last name and address have been entered				
+				}*/
+					
+				}
+				else if(actionCommand.equals("Change Description")) {
+					try {
+						String _textAreaDescription = textAreaDescription.getText();
+						
+						if (_textAreaDescription.isEmpty()) { // ensures a description has been entered
+							throw new NullPointerException("Description is required. Please enter a description."); 
+						}
+
+						inv.modifyMedicationDescription(_textFieldMercID, _textAreaDescription);
+
+						setNotice("Description changed successfully");
+					}
+					catch (NullPointerException exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					catch (Exception exception) {
+						setNotice("");
+						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
+					}
+					
+				}
 				
-//				if (result == false) {
-//					// popup
-//					errorMessage = "MedicationID Does Not Exist in Inventory";
-//					
-//					JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
-//				}
+
 			}
 			
 			
-//		}
-//		catch(Exception ex) {
-//			//JOptionPane.showMessageDialog(frame,errorMessage, "Invalid input", JOptionPane.WARNING_MESSAGE);
-//			ex.printStackTrace();
-//		}
+
 
 		
 	}	
+	private static void setNotice(String string) {
+		lblNotice.setText(string);
+	}
 	
 	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
