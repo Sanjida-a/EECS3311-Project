@@ -304,7 +304,7 @@ public class ListOfUsers {
 				}
 
 			}
-			patientName.trim();
+			patientName = patientName.trim();
 			for (Patient p : allPatientsList) {
 				if (p.getLastName().equalsIgnoreCase(patientName)) {
 					searchResult.add(p);

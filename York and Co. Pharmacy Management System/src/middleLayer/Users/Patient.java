@@ -127,12 +127,13 @@ public class Patient extends User {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(this.firstName.equals( ((Patient)obj).firstName) &&
+		if(obj != null && 
+		(this.firstName.equals( ((Patient)obj).firstName) &&
 		this.lastName.equals( ((Patient)obj).lastName) &&
 		this.address.equals( ((Patient)obj).address)&&
 		this.phoneNum == ((Patient)obj).phoneNum &&
 		this.healthCardNum == ((Patient)obj).healthCardNum &&
-		this.dateOfBirth == ((Patient)obj).dateOfBirth) {
+		this.dateOfBirth == ((Patient)obj).dateOfBirth)) {
 			return true;
 		}
 		return false;

@@ -41,7 +41,10 @@ public class Pharmacist extends User {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj) {	
+		if(obj == null) {
+			return false;
+		}
 		Pharmacist comparator = (Pharmacist)obj;
 		if(this.username != comparator.username ||
 			this.password != comparator.password) {
