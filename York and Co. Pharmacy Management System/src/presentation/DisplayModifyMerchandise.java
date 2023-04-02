@@ -39,7 +39,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static JList<Merchandise> output;
 	private static Inventory inv;
 	private static JLabel lblNotice;
-	
+
 	public static void displayModifyMerchandise(JFrame previous, JList<Merchandise> outputList, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
 		inv = Inventory.getInstance();
