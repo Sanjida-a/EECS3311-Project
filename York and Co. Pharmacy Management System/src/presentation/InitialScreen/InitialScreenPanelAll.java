@@ -39,7 +39,7 @@ public class InitialScreenPanelAll implements ActionListener {
 	private static USER userType;
 	private String operationResult;
 	private static JLabel lblOperationResult;
-	private ArrayList<Merchandise> currentList;
+	private static ArrayList<Merchandise> currentList;
 	private JFrame frame;
 	private static JList<Merchandise> outputList;
 	private Inventory inv;
@@ -230,10 +230,10 @@ public class InitialScreenPanelAll implements ActionListener {
 		return input + new String(temp);
 	}
 	public static void displayMercList( ArrayList<Merchandise> merchandises) {
-		merchandises = refreshList(Inventory.getInstance(),   merchandises);
+		currentList = refreshList(Inventory.getInstance(),   merchandises);
 		DefaultListModel<Merchandise> model = new DefaultListModel<Merchandise>();	//the list will automatically be refreshed
 		outputList.removeAll();
-		for(Merchandise m : merchandises) {
+		for(Merchandise m : currentList) {
 			model.addElement(m);
 		}
 		outputList.setModel(model);

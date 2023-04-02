@@ -124,6 +124,12 @@ public class OrderStub implements OrderRoot {
 	@Override
 	public void updateRefillsInExistingPresFormInDB(int presNum, int refillsNum) throws Exception {
 		// TODO Auto-generated method stub
+		for (Prescription p : prescriptionList) {
+			if(p.getPrescriptionNum() == presNum) {
+				p.setOriginalNumOfRefills(p.getOriginalNumOfRefills() + refillsNum);
+				break;
+			}
+		}
 		
 	}	
 }
