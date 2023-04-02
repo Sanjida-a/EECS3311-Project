@@ -40,22 +40,6 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static Inventory inv;
 	private static JLabel lblNotice;
 	
-	
-	public class DisplayModifyMerchandise implements ActionListener{
-	private static JFrame superFrame;
-	private static JFrame frame;
-	private static JTextField textFieldName;
-	private static JTextField textFieldType;
-	private static JTextField textFieldForm;
-	private static JTextField textFieldPrice;
-	private static JTextField textFieldMercID;
-	private static JTextArea textAreaDescription;
-	private static ArrayList<Merchandise> list;
-	private static JList<Merchandise> output;
-	private static Inventory inv;
-	private static JLabel lblNotice;
-	
-	
 	public static void displayModifyMerchandise(JFrame previous, JList<Merchandise> outputList, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
 		inv = Inventory.getInstance();
