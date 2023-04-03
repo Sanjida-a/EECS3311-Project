@@ -74,7 +74,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 	
 	}
 	
-	// whenever a specific/individual medication from the inventory is updated (ex. name/price/quantity changed), this method makes sure that that row of medication in the database is updated accordingly
+	// whenever a specific/individual medication from the inventory is updated (ex. name/price/quantity/isValid changed), this method makes sure that that row of medication in the database is updated accordingly
 	public void updateMedicationInDatabase(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
 		try {
 			con = DriverManager.getConnection(url, user, password);
@@ -106,7 +106,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		try {
 			con = DriverManager.getConnection(url, user, password);
 			
-			 // we are not explicitly deleting the row since it would cause errors in other database tables...
+			 // we are not explicitly deleting the row since it would cause errors (and confusion) in other database tables...
 			//... instead we are modifying the value of isValid for that medication
 			String deleteMedicationQuery = "UPDATE Medications SET isValid = 0 WHERE medicationID = ?"; 
 			PreparedStatement statement = con.prepareStatement(deleteMedicationQuery);
@@ -147,33 +147,8 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 			e.printStackTrace();
 		}
 	}
-//		DON'T NEED? CAN DELETE
-//	public void updateQuantPurchase (int merID, int quantBought) {
-//		try {
-//			con = DriverManager.getConnection(url, user, password);
-//			int quant = 0;
-//			String QuantQuery = "SELECT quantity FROM Medications WHERE medicationID = "+ merID;
-//			PreparedStatement statement = con.prepareStatement(QuantQuery);
-//			ResultSet setResult = statement.executeQuery(QuantQuery);
-//			while(setResult.next()) {
-//				quant = setResult.getInt("quantity");
-//			}
-//			int newQuant = quant - quantBought;
-//	
-//			String newQuantQuery = "UPDATE Medications SET quantity = ? WHERE medicationID = ?";
-//			PreparedStatement st = con.prepareStatement(newQuantQuery);
-//			st.setInt(1, newQuant);
-//			st.setInt(2, merID);
-//			st.execute();
-//			
-//			con.close();
-//		}
-//		catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
-	//reads all rows of both VALID and Invalid medication from database and puts it into arrayList
+	//reads all rows of both VALID and INvalid medication from database and returns that arrayList (only needed for special cases)
 	public ArrayList<Merchandise> getListOfValidAndInvalidMerchandise() { 
 		ArrayList<Merchandise> allValidAndInvalidInventory = new ArrayList<Merchandise>();
 		try {
@@ -218,36 +193,6 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 		
 		return allValidAndInvalidInventory;
 	
-	}
-		
-	// DON'T NEED = REPETITION OF ONE OF THE ABOVE METHODS
-//	public void updateValidInDB(int medIDOfModifiedMedication, Merchandise actualMedicationObject) {
-//		try {
-//			con = DriverManager.getConnection(url, user, password);
-//			
-//			String updateMedicationQuery = "UPDATE Medications SET isValid = ? WHERE medicationID = ?";
-//			PreparedStatement statement = con.prepareStatement(updateMedicationQuery);
-//
-////			statement.setString(1, actualMedicationObject.getName());
-////			statement.setInt(2, actualMedicationObject.getQuantity());
-////			statement.setDouble(3, actualMedicationObject.getPrice());
-////			statement.setString(4, actualMedicationObject.getType().toString());
-////			statement.setString(5, actualMedicationObject.getForm().toString());
-////			statement.setBoolean(6, actualMedicationObject.getisOTC());
-////			statement.setString(7, actualMedicationObject.getDescription());
-//			statement.setBoolean(1, actualMedicationObject.getisValid());
-//			statement.setInt(2, medIDOfModifiedMedication);
-//			
-//			statement.executeUpdate();
-//		
-//			con.close();
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-		
-	
+	}	
 
 }

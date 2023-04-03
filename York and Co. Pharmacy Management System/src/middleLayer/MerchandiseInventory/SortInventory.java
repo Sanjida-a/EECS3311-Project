@@ -3,7 +3,7 @@ package middleLayer.MerchandiseInventory;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SortInventory {
+public class SortInventory { // this class was created to solve/fix for REFACTORING #2: Code Smell - Large Class
 	
 	// organizes and returns inventory sorted alphabetically
     public ArrayList<Merchandise> displayAlphabetically(ArrayList<Merchandise> listToSortAlphabetically){

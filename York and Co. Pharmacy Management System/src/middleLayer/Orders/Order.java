@@ -8,9 +8,6 @@ import middleLayer.Users.ListOfUsers;
 import middleLayer.Users.Patient;
 
 public class Order { //ALL ORDER: both OTC and Prescription
-//	private Inventory merList = Inventory.getInstance();
-//	private ListOfUsers userList = ListOfUsers.getInstance();
-	
 	int orderNum;
 	int medicationID;
 	long patientID;
@@ -24,10 +21,6 @@ public class Order { //ALL ORDER: both OTC and Prescription
 		this.medicationID = medicationID;
 		this.patientID = patientID;
 		this.quantityBought = quantityBought;
-		
-		
-		//this.totalPriceOfOrder = mFound.getPrice()*quantityBought;
-		//this.isPrescription = !mFound.getisOTC();
 	}
 	
 	

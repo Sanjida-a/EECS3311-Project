@@ -59,9 +59,5 @@ public class Report {
 		 this.listOfOrders.setOrderDAO(orderDAO, mercDAO, userDAO);
 		 this.allOrders = this.listOfOrders.getListofAllOrders();
 	 }
-	
-
-	 
-	
 
 }

@@ -4,17 +4,12 @@ import java.util.ArrayList;
 
 public class Owner extends User {
 	
-//	private Inventory merListByOwner = Inventory.getInstance(); 
-//	private ListOfPatients listOfPatientsByOwner = ListOfPatients.getInstance(); // moved to ADMIN
-	
 	// having only this constructor avoids having an owner without a username and password
 	public Owner(long username, int password) {
-//		super(username, password);
 		this.username = username;
 		this.password = password;
 	}
 	
-	// Minh moved 2 methods here from ListOfUsers.java class
 	public Owner getOwnerUser() {
 		return this;
 	}
@@ -35,8 +30,8 @@ public class Owner extends User {
 		}
 		return true;
 	}
-	// two below methods have the implementation of the below two methods to decrease repeated code
-	// implementation of inherited abstract method from User superclass
+	
+	// REFACTORING #1: CODE SMELL - DUPLCIATION: two below methods have the same implementation in Pharmacist and Patient class --> moved to User.java
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
 //		
 //		ArrayList<Merchandise> searchMedNameOwner = new ArrayList <Merchandise> ();
@@ -64,9 +59,9 @@ public class Owner extends User {
 //		return searchMedTypeOwner;
 //	}
 	
+	// REFACTORING #1: CODE SMELL - DUPLCIATION: method below has same implementation in Pharmacist class --> moved to ListOfUsers.java
 	// OCP followed to allow search by any type of name (first, last, or both) in 1 method by using an extra parameter to record typeOfSearch
 	// searches and returns list of patients in system that have same entered name
-	// MOVED TO ADMIN CLASS
 //	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) {
 //		
 //		ArrayList<Patient> searchResult = new ArrayList <Patient> ();

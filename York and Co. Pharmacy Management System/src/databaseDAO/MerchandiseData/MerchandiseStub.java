@@ -23,7 +23,6 @@ public class MerchandiseStub implements MerchandiseRoot {
 		allInventoryStub.add(merc5);
 	}
 	
-	// Daniel, you need to change this method to only return when isValid == true (just how the merchandiseDAO reads from the sql table); the getListtOfValidandInvalidMerchandise should return both invalid and valid so returns the entire list correctly on line 32
 	@Override
 	public ArrayList<Merchandise> getListOfMerchandise() {
 		ArrayList<Merchandise> result = new ArrayList<Merchandise>();
@@ -66,21 +65,4 @@ public class MerchandiseStub implements MerchandiseRoot {
 		allInventoryStub.add(newMedication);
 
 	}
-	//DON'T NEED BELOW 2
-//	@Override
-//	public void updateQuantPurchase(int merID, int quantBought) {
-//		for(int i = 0; i < allInventoryStub.size(); i ++) {
-//			if(allInventoryStub.get(i).getMedicationID() == merID) {
-//				int newQuant = allInventoryStub.get(i).getQuantity() - quantBought;
-//				allInventoryStub.get(i).setQuantity(newQuant);
-//			}
-//		}
-//	}
-
-//	@Override
-//	public void updateValidInDB(int medicationID, Merchandise m) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
 }

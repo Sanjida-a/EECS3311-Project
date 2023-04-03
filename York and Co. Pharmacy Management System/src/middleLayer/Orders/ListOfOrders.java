@@ -34,17 +34,16 @@ public class ListOfOrders {
 			e.printStackTrace();
 		}
 	}
+	
 	//this is a part of dependency injection for unit tests
 	private ListOfOrders(OrderRoot orderDAO, MerchandiseRoot merDAO, UserRoot userDAO) {
 		_orderDAO = orderDAO;
 		try {
-			//System.out.println("LIstOfOrders constructor called with two DAOs");
 			this.merList = Inventory.getInstance(merDAO);
 			this.allOrdersList = _orderDAO.getListOfAllOrders();
 			this.userList = ListOfUsers.getInstance(userDAO);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,6 +64,7 @@ public class ListOfOrders {
         return ListOfOrdersInstance;
 	}
 	
+	// dependency injection principle (database vs stub)
 	public void setOrderDAO(OrderRoot orderDAO, MerchandiseRoot mercDAO, UserRoot userDAO ) {
 		this._orderDAO = orderDAO;
 		this.merList.set_merDAO(mercDAO);
@@ -100,26 +100,8 @@ public class ListOfOrders {
 		return allPresList;
 	}
 	
-//	public void addOrderToDatabase(Order o, Prescription p) throws Exception {
-//		
-//		Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
-//		
-//		if (getMer.getQuantity() <= 0 || getMer.getisValid() == false || getMer.getQuantity() < o.getQuantityBought()) {
-//			throw new Exception("Check inventory!");
-//		}
-//		_orderDAO.addToOrderTable(o);
-//		
-//		if (o.getIsPrescription() == true) {
-//			_orderDAO.addToPrescriptionTable(p);
-//		}
-//		
-//		merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
-//		this.updateOrderListFromDatabase();
-//	}
-	
 	// adds OTC order to ORDER table in database
-	// returns whether need to output low in stock reminder
-	public boolean addOrderToDatabase(Order o) throws Exception {
+	public boolean addOrderToDatabase(Order o) throws Exception { 
 		
 		Patient pFound = userList.searchPatientWithID(o.patientID);
 		if (pFound == null) {
@@ -131,7 +113,6 @@ public class ListOfOrders {
 			throw new Exception("Medication doesn't exist!");
 		}
 		
-		//Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
 		if (o.quantityBought <= 0) {
 			throw new NegativeInputException("Quantity Bought Must Be Positive (at least 1)!");    
 		}
@@ -144,27 +125,24 @@ public class ListOfOrders {
 			throw new Exception("Check quantity in stock for medication! Not enough!");
 		}
 		
+		// if reached here: no exception, and can successfully continue finalizing order object by setting total price isPres variable
 		o.setTotalPriceOfOrder(mFound.getPrice()*o.quantityBought);
 		o.setIsPrescription(!mFound.getisOTC());
-
+		
+		// add new row to database Orders table
 		_orderDAO.addToOrderTable(o);
 		
-	//	if (o.getIsPrescription() == true) {
-	//		_orderDAO.addToPrescriptionTable(p);
-	//	}
+		boolean lowInStockReminder = merList.decreaseQuantity(mFound.getMedicationID(), o.getQuantityBought()); // decreaseQuantity method returns boolean value for restock reminder
 		
-		boolean lowInStockReminder = merList.decreaseQuantity(mFound.getMedicationID(), o.getQuantityBought());
+		//once database is updated, also updated this class's list variable by reading from database
 		this.updateOrderListFromDatabase();
 		
-		return lowInStockReminder;
+		return lowInStockReminder; // returns true of restock reminder is needed for the medication just made an order for
 	}
 	
 	// adds prescription FORM to prescription table in database
 	public void addPresFormToDb(Prescription p) throws Exception {
-//		if(p.getOriginalNumOfRefills() == 0){
-//			throw new Exception("Please enter refill numbers!");
-//		}
-//		else{
+
 		Patient pFound = userList.searchPatientWithID(p.patientID);
 		if (pFound == null) {
 			throw new Exception("Patient doesn't exist!");
@@ -182,24 +160,22 @@ public class ListOfOrders {
 		if (p.getOriginalNumOfRefills() <= 0) {
 			throw new Exception ("Refills must be positive (at least 1)!");
 		}
-//		}
 		
+		int presNumToBeUpd = _orderDAO.checkIfExistsInPrescriptionTable(p.getPatientID(), p.getMedicationID()); // checks if prescription form record already exists (same patID and same medID)
 		
-		int presNumToBeUpd = _orderDAO.checkIfExistsInPrescriptionTable(p.getPatientID(), p.getMedicationID());
-		
-		if (presNumToBeUpd != -1) {
+		if (presNumToBeUpd != -1) { // if prescription form record already exists, use presNum primary key to UPDATE an EXISTING row in prescription form table
 			_orderDAO.updateRefillsInExistingPresFormInDB(presNumToBeUpd, p.getOriginalNumOfRefills());
 		}
-		else {
+		else { // otherwise, add NEW row to prescription form table
 		_orderDAO.addToPrescriptionTable(p);		
 		}
 		
+		//once database is updated, also updated this class's list variable by reading from database
 		this.updateOrderListFromDatabase();
 	}
 	
 	// adds prescription ORDER/Rx refill to ORDER table in database
-	// returns whether need to output low in stock reminder
-	public boolean addRefillToDatabase(Order o) throws Exception {
+	public boolean addRefillToDatabase(Order o) throws Exception { // boolean return value returns whether need to output low in stock reminder (because orders invoke decreaseQuantity method)
 		
 		Patient pFound = userList.searchPatientWithID(o.patientID);
 		if (pFound == null) {
@@ -219,40 +195,43 @@ public class ListOfOrders {
 			throw new Exception ("Not an Rx! Use the \"Add OTC Order\" button");
 		}
 		
-//		Boolean prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
-		int prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID());
+		int prescriptionExists = _orderDAO.checkIfExistsInPrescriptionTable(o.getPatientID(), o.getMedicationID()); // in order to add refill order, need prescription form with same patID and medID to exist in system first
 		
-//		if (prescriptionExists == false) {
-		if (prescriptionExists == -1) {
+		if (prescriptionExists == -1) { // if prescription form not found, can't fulfill order
 			throw new Exception("No record found of prescription under Patient with Health Card Number: " + o.getPatientID() + ". Add prescription form into system first.");
 		}
 		
-		// if no exception, prescription does exist in system. Now check if enough refills
+		// if no exception: prescription form does exist in system. Now check if enough refills remain to fulfill order
 		int refillLeft = _orderDAO.numOfRemainingRefills(o.getPatientID(), o.getMedicationID());
 		if (refillLeft <= 0) {
 			throw new Exception ("0 refills left!");
 		}
+		
 		if ( o.getQuantityBought() > refillLeft) {
 			throw new Exception( "Not enough refills! Only have " + refillLeft +  " refills left!");
 		}
 		
-//		Merchandise getMer = merList.searchMerchandiseWithID(o.getMedicationID());
 		if (getMer.getQuantity() <= 0 ||  getMer.getQuantity() < o.getQuantityBought()) {
 			throw new Exception("Check quantity in stock for medication! Not enough!");
 		}
 		
+		// if reached here: no exception, and can successfully continue finalizing order object by setting total price isPres variable
 		o.setTotalPriceOfOrder(getMer.getPrice()*o.quantityBought);
 		o.setIsPrescription(!getMer.getisOTC());
 		
+		// add new row to database Orders table
 		_orderDAO.addRefillToOrderTable(o);
 		
+		// decreaseQuantity method returns boolean value for restock reminder
 		boolean lowInStockReminder = merList.decreaseQuantity(getMer.getMedicationID(), o.getQuantityBought());
+		
+		//once database is updated, also updated this class's list variable by reading from database
 		this.updateOrderListFromDatabase();
 		
-		return lowInStockReminder;
+		return lowInStockReminder; // returns true of restock reminder is needed for the medication just made an order for
 	}
 	
-	// aiza added for easy access
+	// returns arrayList of all orders (both OTC and Rx refills) made by a specific patient with health card # = healthCardID
 	public ArrayList<Order> specificPatientOrderHistory(long healthCardID) throws Exception {
 		
 		if (healthCardID < 0) {
@@ -274,27 +253,29 @@ public class ListOfOrders {
 		ArrayList<Order> specificPatientOrderList = new ArrayList<Order>();
 	
 		for (Order o : allOrdersList) {
-			if (o.getPatientID() == healthCardID) {
+			if (o.getPatientID() == healthCardID) { // since health card numbers are unique for each patient, using that to distinguish each order
 				specificPatientOrderList.add(o);
 			}
 		}
 		
 		return specificPatientOrderList;
-		
 	}
 	
-	// aiza added below method for Itr3 detailed story, userType defines if Owner/Pharmacist OR patient itself is calling this method (follows OCP)
+	// returns all orders, including their associated medication details, for a specific patient with health card # = healthCardID
+	// userType defines who invoked the method since tiny string formatting details should change accordingly
 	public ArrayList<String> outputOrderHistoryDetails(long healthCardID, USER userType) throws Exception {
 		
+		// invokes method above to simplify this method
 		ArrayList<Order> ordersOfPatient = this.specificPatientOrderHistory(healthCardID);
 		
+		// do not want to print straight up data from database; need to format using strings so that it is readable and makes sense to users
 		ArrayList<String> orderHistoryDetails = new ArrayList<String>();
 		
 		if (ordersOfPatient.isEmpty()) {
-			if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+			if (userType == USER.OWNER || userType == USER.PHARMACIST) { // based on if admin, need to specify health card number they requested for
 				orderHistoryDetails.add("Patient with health card number " + healthCardID + " has not made any orders.");
 			}
-			else {
+			else { // otherwise if patient him/herself requested their own orders, need to use refer to them as "You"
 				orderHistoryDetails.add("You have not made any orders.");
 			}
 			return orderHistoryDetails;
@@ -313,6 +294,8 @@ public class ListOfOrders {
 			String oneFullOrder = "";
 			oneFullOrder += "ORDER #" + orderNum + "\n";
 			oneFullOrder += "Medication ID: " + o.getMedicationID() + "\nQuantity bought: " + o.getQuantityBought() + "\nTotal price: " + o.getTotalPriceOfOrder(); 
+			
+			// finding associated medication for that order so can also retrieve those the medication details for output
 			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(o.getMedicationID());
 			String OTCorRx = "Rx";
 			if (associatedMedication.getisOTC() == true) {
@@ -330,7 +313,7 @@ public class ListOfOrders {
 		return orderHistoryDetails;
 	}
 	
-	// gets a specific patient's prescription FORMS
+	// returns arrayList of all prescription FORMS in system of a specific patient with health card # = healthCardID
 	public ArrayList<Prescription> specificPatientPres(long healthCardID) throws Exception {
 		
 		if (healthCardID < 0) {
@@ -347,31 +330,33 @@ public class ListOfOrders {
 			throw new Exception("Patient doesn't exist!");
 		}
 		
-	//	this.updateOrderListFromDatabase();	
 		getListofAllPres();
 		ArrayList<Prescription> specificPatientPres = new ArrayList<Prescription>();
 	
 		for (Prescription p : allPresList) {
-			if (p.getPatientID() == healthCardID) {
+			if (p.getPatientID() == healthCardID) {  // since health card numbers are unique for each patient, using that to distinguish each prescription
 				specificPatientPres.add(p);
 			}
 		}
 		
 		return specificPatientPres;
-		
 	}
 	
+	// returns all prescription forms, including their associated medication details, for a specific patient with health card # = healthCardID
+	// userType defines who invoked the method since tiny string formatting details should change accordingly
 	public ArrayList<String> outputPresRefill(long healthCardID, USER userType) throws Exception {
 		
+		// invokes method above to simplify this method
 		ArrayList<Prescription> presOfPatient = specificPatientPres(healthCardID);
 		
+		// do not want to print straight up data from database; need to format using strings so that it is readable and makes sense to users
 		ArrayList<String> refillsDetails = new ArrayList<String>();
 		
 		if (presOfPatient.isEmpty()) {
-			if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+			if (userType == USER.OWNER || userType == USER.PHARMACIST) { // based on if admin, need to specify health card number they requested for
 				refillsDetails.add("Patient with health card number " + healthCardID + " does not have any prescription forms in the system.");
 			}
-			else {
+			else { // otherwise if patient him/herself requested their own orders, need to use refer to them as "You"
 				refillsDetails.add("You have not entered any prescription forms into the system.");
 			}
 			return refillsDetails;
@@ -390,8 +375,9 @@ public class ListOfOrders {
 			String oneFullOrder = "";
 			oneFullOrder += "PRESCRIPTION FORM #" + presNum + "\n";
 			oneFullOrder += "Medication ID: " + p.getMedicationID() + "\n" + "Number of Refills Left: " + _orderDAO.numOfRemainingRefills(healthCardID, p.getMedicationID()); 
-			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
 			
+			// finding associated medication for that order so can also retrieve those the medication details for output
+			associatedMedication = merList.searchAllValidAndInvalidMerchandiseWithID(p.getMedicationID());
 			
 			oneFullOrder += "\nMEDICATION DETAILS: \nName: " + associatedMedication.getName() + "\nType: " + associatedMedication.getType() + "\nForm: " + associatedMedication.getForm() + "\n";
 			
@@ -404,10 +390,10 @@ public class ListOfOrders {
 		return refillsDetails;
 	}
 	
-	
-	
+	// returns total money spent at pharmacy (wrt orders made) for a specific patient with health card # = healthCardID
 	public double specificPatientMoneySpent(long healthCardID) throws Exception {
 		
+		// invokes previously defined method to simplify this method
 		ArrayList<Order> ordersOfPatient = this.specificPatientOrderHistory(healthCardID);
 		
 		double totalMoneySpentByPatient = 0;

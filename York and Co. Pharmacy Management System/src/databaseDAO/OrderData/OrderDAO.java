@@ -25,7 +25,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}
 	}
 	
-	//reads all rows of orders from database and puts it into arrayList
+	//reads all rows of orders (both OTC and Rx refill orders) from database and puts it into arrayList
 	public ArrayList<Order> getListOfAllOrders() throws Exception {
 		try {
 			orderList = new ArrayList<Order>(); //need to empty current list first so new list overrides
@@ -47,12 +47,12 @@ public class OrderDAO extends superDAO implements OrderRoot{
 				medicationID =  result.getInt("medicationID");
 				patientID =  result.getLong("patientID");
 				quantityBought =  result.getInt("quantityBought");
-				priceAtPurchase =  result.getDouble("priceAtPurchase");
+				priceAtPurchase =  result.getDouble("priceAtPurchase"); // actually refers to totalPriceOfOrder
 				isPrescription =  result.getBoolean("isPrescription");
 				
 				order = new Order(orderNum, medicationID, patientID, quantityBought, priceAtPurchase, isPrescription);
 				
-				orderList.add(order);  // to create Order object and put in a list
+				orderList.add(order);  // created Order object added to array list
 			}
 			
 			con.close();
@@ -64,41 +64,40 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		return orderList;
 	}
 	
-	//reads all rows of prescriptions from database and puts it into arrayList
-		public ArrayList<Prescription> getListOfAllPres() throws Exception {
-			try {
-				presList = new ArrayList<Prescription>(); //need to empty current list first so new list overrides
+	//reads all rows of prescription FORMS from database and puts it into arrayList
+	public ArrayList<Prescription> getListOfAllPres() throws Exception {
+		try {
+			presList = new ArrayList<Prescription>(); //need to empty current list first so new list overrides
+			
+			con = DriverManager.getConnection(url, user, password);
+			
+			String queryGetAllRows = "SELECT * FROM Prescriptions;";   // to get all rows from prescriptions table
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int prescriptionNum, medicationID, numOfRefills;
+			long patientID;
+			
+			Prescription pres;
+			
+			while (result.next()) { 
+				prescriptionNum =  result.getInt("prescriptionNum");
+				medicationID =  result.getInt("medicationID");
+				patientID =  result.getLong("patientID");
+				numOfRefills =  result.getInt("numOfRefills");
 				
-				con = DriverManager.getConnection(url, user, password);
+				pres = new Prescription(prescriptionNum, medicationID, patientID, numOfRefills);
 				
-				String queryGetAllRows = "SELECT * FROM Prescriptions;";   // to get all rows from Orders table
-				Statement statement = con.createStatement();
-				ResultSet result = statement.executeQuery(queryGetAllRows);
-				int prescriptionNum, medicationID, numOfRefills;
-				long patientID;
-				
-				Prescription pres;
-				
-				while (result.next()) { 
-					prescriptionNum =  result.getInt("prescriptionNum");
-//					System.out.println(prescriptionNum);
-					medicationID =  result.getInt("medicationID");
-					patientID =  result.getLong("patientID");
-					numOfRefills =  result.getInt("numOfRefills");
-					
-					pres = new Prescription(prescriptionNum, medicationID, patientID, numOfRefills);
-					
-					presList.add(pres);  // to create Order object and put in a list
-				}
-				
-				con.close();
-			}
-			catch (Exception e) {
-				throw e; 
+				presList.add(pres);  // created Prescription (form) object added to array list
 			}
 			
-			return presList;
+			con.close();
 		}
+		catch (Exception e) {
+			throw e; 
+		}
+		
+		return presList;
+	}
 	
 	//add new order row to database table (invoked whenever a new order has been added)
 	public void addToOrderTable(Order o) throws Exception {
@@ -113,16 +112,16 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			stmt.setInt(3, o.getQuantityBought());
 			stmt.setDouble(4, o.getTotalPriceOfOrder()); 
 			stmt.setBoolean(5, o.getIsPrescription());			
-				stmt.execute(); 
-				
-				con.close();		
+			stmt.execute(); 
+			
+			con.close();		
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 			throw e1;
 		}		
 	}
 	
-	//add new prescription row to database table (invoked whenever a new prescription has been added)
+	//add new prescription (FORM) row to database table (invoked whenever a new prescription FORM has been added)
 	public void addToPrescriptionTable (Prescription p) throws Exception{
 		try {
 			con = DriverManager.getConnection(url, user, password);		
@@ -142,7 +141,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		
 	}
 	
-	//add prescription refill row to database table (invoked whenever a refill has been done with "give refill" button)
+	//add Rx refill (aka Rx order) row to order table (invoked whenever a refill has been done with "Add refill for prescription" button)
 	public void addRefillToOrderTable(Order o) throws Exception{
 		try {		
 			con = DriverManager.getConnection(url, user, password);	
@@ -165,7 +164,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}
 	}
 	
-	//checking how many refills left for prescriptions
+	//calculating how many refills LEFT for prescriptions using prescription forms and order table
 	public int numOfRemainingRefills (long _patientID, int _medicationId) throws SQLException {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
@@ -174,7 +173,7 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			ResultSet numberOfOrder = statement.executeQuery(queryOrderStatement);														
 			int numOfOrder = 0;
 			if(numberOfOrder.next()) {
-				numOfOrder= numberOfOrder.getInt("totalBought");     // to get total number of orders for a given patient and a given medication
+				numOfOrder= numberOfOrder.getInt("totalBought");     // to get total number of quantity bought for a given patient and a given medication
 			}
 			numberOfOrder.close();   
 						
@@ -185,33 +184,9 @@ public class OrderDAO extends superDAO implements OrderRoot{
 				numOfRefill= numberOfRefill.getInt("totalRefills");     // to get total refills from prescriptions for a given patient and a given medication
 			}
 			numberOfRefill.close();
-			int refillLeft = numOfRefill - numOfOrder;     // to get total number of refills left for a given patient and a given medication
+			int refillLeft = numOfRefill - numOfOrder;     // to get total number of refills left/remaining for a given patient and a given medication
 			return refillLeft;
 		
-		}
-			catch (SQLException e1) {
-				e1.printStackTrace();
-				throw e1;
-			}
-	}
-	
-	//to check whether a record exists in prescription table before giving a refill
-//	public Boolean checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
-	public int checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
-		try {		
-			con = DriverManager.getConnection(url, user, password);
-			Statement statement = con.createStatement();
-			String queryOrderStatement = "SELECT *  FROM Prescriptions WHERE medicationID= " + _medicationId +" AND" + " patientID=" + _patientID;
-			ResultSet totalRecord = statement.executeQuery(queryOrderStatement);	
-//			boolean isRecord = true;
-			int isRecord = -1;
-//			if (!totalRecord.next()) {
-//				isRecord = false;
-//			}
-			while (totalRecord.next()) {
-				isRecord =  totalRecord.getInt("prescriptionNum");
-			}
-			return isRecord;
 		}
 		catch (SQLException e1) {
 			e1.printStackTrace();
@@ -219,13 +194,32 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		}
 	}
 	
-	// if prescription record already exists; simply adding new refills to original num of refills
+	//to check whether a record exists in prescription table before giving a refill
+	public int checkIfExistsInPrescriptionTable(long _patientID, int _medicationId)  throws SQLException{
+		try {		
+			con = DriverManager.getConnection(url, user, password);
+			Statement statement = con.createStatement();
+			String queryOrderStatement = "SELECT *  FROM Prescriptions WHERE medicationID= " + _medicationId +" AND" + " patientID=" + _patientID;
+			ResultSet totalRecord = statement.executeQuery(queryOrderStatement);	
+
+			int isRecord = -1;
+
+			while (totalRecord.next()) {
+				isRecord =  totalRecord.getInt("prescriptionNum");
+			}
+			return isRecord; // returns prescriptionNum (primary key) of row in prescriptions table if prescription form record already exists; if not exists, returns -1
+		}
+		catch (SQLException e1) {
+			e1.printStackTrace();
+			throw e1;
+		}
+	}
+	
+	// if prescription form record already exists, simply adding new refills to original num of refills (NOT creating a new row in prescriptions table)
 	public void updateRefillsInExistingPresFormInDB (int presNum, int refillsNum) throws Exception {
 		try {		
 			con = DriverManager.getConnection(url, user, password);
 			Statement statement = con.createStatement();
-//			String queryOrderStatement = "UPDATE Prescriptions SET numOfRefills = " + refillsNum + 
-//					                 "WHERE prescriptionNum= " + presNum;
 			
 			String queryPresStatement = "SELECT numOfRefills  FROM Prescriptions WHERE prescriptionNum= " + presNum ;					
 			ResultSet numberOfOriginalRefill = statement.executeQuery(queryPresStatement);
