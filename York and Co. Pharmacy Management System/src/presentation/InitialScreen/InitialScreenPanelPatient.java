@@ -42,13 +42,11 @@ public class InitialScreenPanelPatient implements ActionListener {
 		
 		JPanel panelVisibleToPatient = new JPanel();
         panelVisibleToPatient.setBounds(1183, 98, 170, 366);
-        //totalGUI.add(panelVisibleToPatient);
+
         panelVisibleToPatient.setLayout(null);
         this.createButtons(panelVisibleToPatient);
         this.createOutputFields(totalGUI);
         
-
-
         totalGUI.add(panelVisibleToPatient);
 	}
 	
@@ -142,8 +140,6 @@ public class InitialScreenPanelPatient implements ActionListener {
 				textAreaPatientInfo.append(s);
 			}
 			
-		//	double resultTotalSpent = listOfOrdersInstance.specificPatientMoneySpent(usernameLoggedIn);
-		//	textFieldTotalSpent.setText(Double.toString(resultTotalSpent));
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(frame, e1.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 		}
@@ -166,7 +162,7 @@ public class InitialScreenPanelPatient implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+
 		String actionCommand = e.getActionCommand();
 		if(actionCommand.equalsIgnoreCase("PurchaseHistory")) {
 			this.purchaseHistory();

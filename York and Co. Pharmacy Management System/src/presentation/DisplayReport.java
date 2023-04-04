@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import databaseDAO.superDAO;
+
 import middleLayer.Orders.*;
 import java.awt.Color;
 
@@ -112,16 +112,6 @@ public class DisplayReport {
 		this.frame.setEnabled(true);
 		this.frame.setVisible(true);
 	}
-	
-	/*public static void main(String[] args) {
-		try {
-			superDAO.setPassword("Motp1104#");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DisplayReport report = new DisplayReport();
-		report.displayReport(new JFrame());
-	}*/
+
 
 }

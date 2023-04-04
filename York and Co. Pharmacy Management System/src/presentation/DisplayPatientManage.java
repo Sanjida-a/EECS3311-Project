@@ -14,14 +14,13 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+
 import java.sql.SQLException;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+
 import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.Properties;
 
@@ -32,7 +31,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import databaseDAO.superDAO;
+
 import middleLayer.NegativeInputException;
 import middleLayer.Users.*;
 
@@ -42,10 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import java.awt.Cursor;
-import java.awt.Component;
-import javax.swing.SpringLayout;
+
 
 
 public class DisplayPatientManage {
@@ -57,12 +53,11 @@ public class DisplayPatientManage {
 	private static JTextField textFieldHCNumber;
 	private static JTextField textFieldPhoneNumber;
 	private static JTextField textFieldAddress;
-	private static JTextField textFieldDOB;
+
 	private static JComboBox<String> comboBox;
-	//private static JTextField textFieldAccount;
-	//private static JTextField textFieldPassword;\
+
 	private static JLabel lblNotice;
-	//private static JTextArea textAreaOutput;
+
 	private static ListOfUsers listOfUsersInstance;
 	private static final String[] columns= {				
 			String.format("%-20s ", "Name"),
@@ -98,7 +93,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
 				frame.dispose();
 				superFrame.toFront();
 				superFrame.setEnabled(true);
@@ -135,8 +130,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//call method for patient search
+
 				try {
 					lblNotice.setText("");
 					
@@ -164,7 +158,7 @@ public class DisplayPatientManage {
 					JOptionPane.showMessageDialog(frame, "Search keyword is empty. Input required: type something in the search box", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				catch(Exception exception) { //catch any exceptions and show popup error
-					//DisplayErrorPopup.displayErrorPopup("First name, Last name, Address, Phone Number, HealthCardNumber and Date of Birth are required", frame);
+					
 					JOptionPane.showMessageDialog(frame, exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
@@ -187,7 +181,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		
 				lblNotice.setText("");
 				
 				textFieldHCNumber.setText("");
@@ -197,7 +191,7 @@ public class DisplayPatientManage {
 				textFieldAddress.setText("");
 				
 				displayList(table, listOfUsersInstance.getAllPatientsList());	//by invoking this method, the list is refreshed.
-			//	lblNotice.setText("Patient is added successfully");
+			
 			}
 			
 		});
@@ -282,39 +276,9 @@ public class DisplayPatientManage {
 		lblDOB.setBounds(0, 136, 110, 35);
 		panelInputFields.add(lblDOB);
 		
-		/*textFieldDOB = new JTextField();
-
-		textFieldDOB.setBounds(110, 136, 260, 35);
-		textFieldDOB.setText("yyyymmdd");
-		textFieldDOB.setFont(new Font("굴림", Font.ITALIC, 14));
-		textFieldDOB.setForeground(new Color(128, 128, 128));
-		textFieldDOB.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				if(textFieldDOB.getText().isBlank() || textFieldDOB.getText().compareTo("yyyymmdd") == 0) {
-					textFieldDOB.setText("");
-					textFieldDOB.setFont(new Font("굴림", Font.PLAIN, 14));
-					textFieldDOB.setForeground(new Color(0, 0, 0));
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
-				if(textFieldDOB.getText().isBlank()) {
-					textFieldDOB.setText("yyyymmdd");
-					textFieldDOB.setFont(new Font("굴림", Font.ITALIC, 14));
-					textFieldDOB.setForeground(new Color(128, 128, 128));
-				}
-			}
-			
-		});
-		panelInputFields.add(textFieldDOB);
-		textFieldDOB.setColumns(10);*/
+		
 		model = new UtilDateModel();
-		//LocalDateTime currentDate = LocalDateTime.now();
+
 		model.setValue(new Date());
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -337,8 +301,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				//call method for add patient
+
 				try {	
 					lblNotice.setText("");
 					
@@ -352,9 +315,7 @@ public class DisplayPatientManage {
 						throw new NullPointerException(); // ensures a HCnumber, first name, last name, phone num and address have been entered
 					}
 					
-					// turned below ints to LONGS
-					// int _textFieldPhoneNumber = Integer.parseInt(textFieldPhoneNumber.getText()); // changed to Long
-					// int _textFieldHCNumber = Integer.parseInt(textFieldHCNumber.getText()); // changed to Long
+					
 					
 					// throws NumberFormatException if one of those are not an int/long
 					long _textFieldHCNumber = Long.parseLong(stringHCNumber);
@@ -401,7 +362,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 				try {
 					lblNotice.setText("");
 					
@@ -413,22 +374,14 @@ public class DisplayPatientManage {
 					
 					// throws NumberFormatException if not an int/long
 					long _textFieldPatientID = Long.parseLong(stringHCNumber);
-//					Boolean result;
-//					try {
+
 					listOfUsersInstance.modifyPatientDetails(_textFieldPatientID, textFieldFName, textFieldLName, textFieldPhoneNumber, textFieldAddress);
 						
-//					if (result == false) {
-						// popup that says patient doesn't exist
-						//System.out.println("patient doesn't exist. try again");
-//						JOptionPane.showMessageDialog(frame,"The Patient does not exist", "Invalid input", JOptionPane.WARNING_MESSAGE);
-//					}
+
 						
 					displayList(table, listOfUsersInstance.getAllPatientsList() );
 					lblNotice.setText("Patient is modified successfully. See below");
-//					}
-//					catch (Exception e2) {
-//						JOptionPane.showMessageDialog(frame,e2.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
-//					}
+
 										
 				}
 				catch(NullPointerException exception) {
@@ -502,7 +455,7 @@ public class DisplayPatientManage {
 		if(selectedDate.after(currentDate)) {
 			throw new IllegalArgumentException("Invalid date is selected.");
 		}
-		//Date date = ((Date) datePicker.getModel().getValue());
+
 		SimpleDateFormat fm = new SimpleDateFormat("yyyyMMdd");
 		String stringDate = fm.format(selectedDate);
 
@@ -510,13 +463,5 @@ public class DisplayPatientManage {
 	}
 	
 	
-	/*public static void main(String[] args) {	//for test purpose
-		try {
-			superDAO.setPassword("Motp1104#");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DisplayPatientManage.displayPatientManage(new JFrame());
-	}*/
+
 }

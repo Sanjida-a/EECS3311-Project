@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JList;
+
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
@@ -24,28 +24,27 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-import databaseDAO.superDAO;
+
 
 public class DisplayModifyMerchandise implements ActionListener{
 	private static JFrame superFrame;
 	private static JFrame frame;
 	private static JTextField textFieldName;
-	private static JTextField textFieldType;
-	private static JTextField textFieldForm;
+
 	private static JTextField textFieldPrice;
 	private static JTextField textFieldMercID;
 	private static JTextArea textAreaDescription;
 	private static ArrayList<Merchandise> list;
-	private static JList<Merchandise> output;
+
 	private static Inventory inv;
 	private static JLabel lblNotice;
 
-	public static void displayModifyMerchandise(JFrame previous, JList<Merchandise> outputList, ArrayList<Merchandise> currentList) {
+	public static void displayModifyMerchandise(JFrame previous, ArrayList<Merchandise> currentList) {
 		superFrame = previous;
 		inv = Inventory.getInstance();
 		superFrame.setEnabled(false);
 		list = currentList;
-		output = outputList;
+
 		frame = new JFrame();
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -55,7 +54,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		frame.setVisible(true);
 		
 	}
-	public static void createContentsPanel(JFrame superFrame) {
+	private static void createContentsPanel(JFrame superFrame) {
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -69,7 +68,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		
 	}
 	
-	public static void createLabels(JPanel panel) {
+	private static void createLabels(JPanel panel) {
 		
 		JLabel lblMercID = new JLabel("MerchandiseID");
 		lblMercID.setFont(new Font("굴림", Font.BOLD, 18));
@@ -83,7 +82,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		panel.add(lblNotice);
 	}
 	
-	public static void createInputFields(JPanel panel) {
+	private static void createInputFields(JPanel panel) {
 		textFieldName = new JTextField();
 		textFieldName.setBounds(145, 45, 505, 35);
 		panel.add(textFieldName);
@@ -105,7 +104,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 		panel.add(textAreaDescription);
 	}
 	
-	public static void createButtons(JPanel panel) {
+	private static void createButtons(JPanel panel) {
 
 		
 		JButton btnExit = new JButton("Exit");
@@ -140,7 +139,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 					
 		String actionCommand = e.getActionCommand();
 		
-		String errorMessage = "";
+
 		inv.updateFromDatabase();
 
 			
@@ -149,12 +148,12 @@ public class DisplayModifyMerchandise implements ActionListener{
 				superFrame.setEnabled(true);
 				superFrame.toFront();
 				
-				//list = DisplayInitialScreen.refreshList(Inventory.getInstance(), list);
+				
 				InitialScreenPanelAll.displayMercList( list);
 			}
 			
 			else{
-				//				errorMessage = "MediciationID is required";
+				
 				int _textFieldMercID = 0;
 				try {
 					String stringMercID = textFieldMercID.getText();
@@ -171,7 +170,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 					JOptionPane.showMessageDialog(frame,"Merchandise ID must be an integer", "Invalid input", JOptionPane.WARNING_MESSAGE);
 				}
 				
-//				Boolean result = true;
+
 				
 				if (actionCommand.equals("Change name")) {
 					try {
@@ -180,10 +179,10 @@ public class DisplayModifyMerchandise implements ActionListener{
 						if (_textFieldName.isEmpty()) { // ensures a medication name has been entered
 							throw new NullPointerException("Name is required. Please enter a name."); 
 						}
-//						try {
+
 						inv.modifyMedicationName(_textFieldMercID, _textFieldName);
 						setNotice("Name changed successfully");
-//						}
+
 					}
 					catch (NullPointerException exception) {
 						setNotice("");
@@ -197,7 +196,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 				}
 				
 				else if(actionCommand.equals("Change Price")) {
-//					errorMessage = "MedicationID and/or Price are needed"; // if exception is thrown because no price has been entered, this is the message printed
+
 					
 					try {
 						String stringPrice = textFieldPrice.getText();
@@ -207,12 +206,9 @@ public class DisplayModifyMerchandise implements ActionListener{
 						}
 						
 						double _textFieldPrice = Double.parseDouble(stringPrice); //throws NumberFormatException if not an int/double
-//						try {
+
 						inv.modifyMedicationPrice(_textFieldMercID, _textFieldPrice); //just changing price for now, will do name+description once buttons present
-//						}
-//							catch (Exception e2) {
-//								JOptionPane.showMessageDialog(frame,e2.getMessage(),"Invalid input", JOptionPane.WARNING_MESSAGE);
-//							}
+
 						setNotice("Price changed successfully");
 					} 
 					catch (NullPointerException exception) {
@@ -231,10 +227,7 @@ public class DisplayModifyMerchandise implements ActionListener{
 						setNotice("");
 						JOptionPane.showMessageDialog(frame,exception.getMessage(), "Invalid input", JOptionPane.WARNING_MESSAGE);
 					}
-					//invoke method(s) for modifying Merchandise here
-				/*if (textFieldName.is && textFieldPrice.isEmpty() && textFieldMercID.) {
-					throw new Exception(); // ensures a first name, last name and address have been entered				
-				}*/
+
 					
 				}
 				else if(actionCommand.equals("Change Description")) {
@@ -272,15 +265,5 @@ public class DisplayModifyMerchandise implements ActionListener{
 		lblNotice.setText(string);
 	}
 	
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			superDAO.setPassword("Motp1104#");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DisplayModifyMerchandise.displayModifyMerchandise(new JFrame(), output, new ArrayList<Merchandise>());
 
-	}*/
 }
