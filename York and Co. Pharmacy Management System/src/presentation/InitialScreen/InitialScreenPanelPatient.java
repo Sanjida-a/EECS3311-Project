@@ -27,6 +27,7 @@ public class InitialScreenPanelPatient implements ActionListener {
 	private static long usernameLoggedIn;
 	private static USER userType;
 	private static JFrame frame;
+	private JLabel lblTotalSpent;
 	
 	
 	private InitialScreenPanelPatient() {
@@ -91,7 +92,7 @@ public class InitialScreenPanelPatient implements ActionListener {
         scrollPanePatientInfo.setBounds(0,0, 944,200);
         panelOutputAreaForPatient.add(scrollPanePatientInfo);
         
-        JLabel lblTotalSpent = new JLabel("Total Spent");
+        lblTotalSpent = new JLabel("Total Spent");
         lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 18));
         lblTotalSpent.setBounds(958, 5, 160, 35);
         panelOutputAreaForPatient.add(lblTotalSpent);
@@ -164,7 +165,12 @@ public class InitialScreenPanelPatient implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		String actionCommand = e.getActionCommand();
+		lblTotalSpent.setVisible(false);
+		textFieldTotalSpent.setVisible(false);
+
 		if(actionCommand.equalsIgnoreCase("PurchaseHistory")) {
+			lblTotalSpent.setVisible(true);
+			textFieldTotalSpent.setVisible(true);
 			this.purchaseHistory();
 		}
 		else if(actionCommand.equalsIgnoreCase("Prescription")) {

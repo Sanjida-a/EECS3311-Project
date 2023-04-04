@@ -23,7 +23,7 @@ public class Report {
 	}
 	
 	//Calculate revenue for sales report
-	public double calculateRevenue () throws Exception {
+	public double calculateRevenue (){
 		double revenue = 0.0;		
 		
 		allOrders = listOfOrders.getListofAllOrders();
@@ -36,7 +36,7 @@ public class Report {
 	}
 	
 	//Calculate profit for sales report
-	public double calculateProfit () throws Exception {
+	public double calculateProfit (){
 		double revenue = calculateRevenue();
 		double profit = revenue * 0.3;		 // profit is 30% of selling price
 		return profit;

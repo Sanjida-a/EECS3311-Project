@@ -165,7 +165,9 @@ public class DisplayInitialScreen{
 		return frame;
 	}
 	
-	public static void setCurrentList() {
+	public static void setCurrentList() {	
+		//update the currentList with the current state of the DB, 
+		//depending on userType who is logged in now
 		if(userType == USER.OWNER || userType == USER.PHARMACIST || userType == USER.DEVELOPER) {
 			currentList = inv.getMerchandise();
 		}
