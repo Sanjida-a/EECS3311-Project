@@ -234,7 +234,6 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String actionCommand = e.getActionCommand();
 		if(actionCommand.equalsIgnoreCase("Add")) {
 			this.addMedication();
@@ -458,12 +457,4 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			InitialScreenPanelAll.setOperationResult(operationResult);
 		}
 	}
-
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}*/
-
-
-
 }

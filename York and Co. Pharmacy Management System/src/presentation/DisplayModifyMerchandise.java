@@ -271,16 +271,5 @@ public class DisplayModifyMerchandise implements ActionListener{
 	private static void setNotice(String string) {
 		lblNotice.setText(string);
 	}
-	
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-			superDAO.setPassword("Motp1104#");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DisplayModifyMerchandise.displayModifyMerchandise(new JFrame(), output, new ArrayList<Merchandise>());
 
-	}*/
 }

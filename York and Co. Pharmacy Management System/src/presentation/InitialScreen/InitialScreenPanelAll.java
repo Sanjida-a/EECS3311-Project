@@ -302,7 +302,6 @@ public class InitialScreenPanelAll implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String actionCommand = e.getActionCommand();
 		if(actionCommand.equalsIgnoreCase("Search")) {
 			this.search();
@@ -322,11 +321,4 @@ public class InitialScreenPanelAll implements ActionListener {
 
 	}
 	
-	
-
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}*/
-
 }

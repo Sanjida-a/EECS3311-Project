@@ -98,7 +98,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				frame.dispose();
 				superFrame.toFront();
 				superFrame.setEnabled(true);
@@ -135,7 +134,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				//call method for patient search
 				try {
 					lblNotice.setText("");
@@ -187,7 +185,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				lblNotice.setText("");
 				
 				textFieldHCNumber.setText("");
@@ -292,7 +289,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
 				if(textFieldDOB.getText().isBlank() || textFieldDOB.getText().compareTo("yyyymmdd") == 0) {
 					textFieldDOB.setText("");
 					textFieldDOB.setFont(new Font("굴림", Font.PLAIN, 14));
@@ -302,7 +298,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				// TODO Auto-generated method stub
 				if(textFieldDOB.getText().isBlank()) {
 					textFieldDOB.setText("yyyymmdd");
 					textFieldDOB.setFont(new Font("굴림", Font.ITALIC, 14));
@@ -337,7 +332,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				//call method for add patient
 				try {	
 					lblNotice.setText("");
@@ -401,7 +395,6 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				try {
 					lblNotice.setText("");
 					
@@ -509,14 +502,4 @@ public class DisplayPatientManage {
 		return Integer.parseInt(stringDate);
 	}
 	
-	
-	/*public static void main(String[] args) {	//for test purpose
-		try {
-			superDAO.setPassword("Motp1104#");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		DisplayPatientManage.displayPatientManage(new JFrame());
-	}*/
 }

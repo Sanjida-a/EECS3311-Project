@@ -209,7 +209,6 @@ public class DisplayInitialScreen{
 		try {
 			superDAO.setPassword("Motp1104#");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		DisplayInitialScreen.displayInitialScreen(USER.GUEST);

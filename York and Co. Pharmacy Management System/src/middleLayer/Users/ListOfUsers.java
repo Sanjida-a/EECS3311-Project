@@ -64,7 +64,6 @@ public class ListOfUsers {
 			allPatientsList = this._userDAO.getListOfAllPatients();
 			allCredentialsList = this._userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
