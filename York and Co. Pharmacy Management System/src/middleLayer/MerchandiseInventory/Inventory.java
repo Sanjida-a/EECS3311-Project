@@ -14,11 +14,11 @@ import middleLayer.NegativeInputException;
 public class Inventory{
     private static Inventory singletonInstance = null;
 
-    ArrayList<Merchandise> list = new ArrayList<Merchandise>(); //only valid medication
+    ArrayList<Merchandise> list = new ArrayList<Merchandise>(); // only valid medication
 
     private MerchandiseRoot _merDAO; // Dependency Injection Principle
     
-    SortInventory sortInv = new SortInventory();
+    SortInventory sortInv = new SortInventory(); // REFACTORING #2: Code Smell - Large Class
 	
 	private Inventory() {  //constructor of all singleton classes should be private
 		
@@ -46,12 +46,12 @@ public class Inventory{
     
     public static Inventory getInstance(MerchandiseRoot dao) {
         if (singletonInstance == null) {
-        	
             singletonInstance = new Inventory(dao);
         }
         return singletonInstance;
     }
-
+    
+    // dependency injection principle (database vs stub)
 	public void set_merDAO(MerchandiseRoot _merDAO) {
 		this._merDAO = _merDAO;
 		list =_merDAO.getListOfMerchandise();
@@ -63,12 +63,14 @@ public class Inventory{
     	return list;
     }
     
-    public ArrayList<Merchandise> getValidAndInvalidMerchandise() { //NOTE: method used in special few cases where invalid med are needed to be seen
+    //NOTE: method used in special few cases where invalid med are needed to be known as well
+    public ArrayList<Merchandise> getValidAndInvalidMerchandise() { 
     	return _merDAO.getListOfValidAndInvalidMerchandise();
     }
     
     // finds from ALL VALID and INVALID list and returns a medication with medID == medicationID
-    public Merchandise searchAllValidAndInvalidMerchandiseWithID(int medicationID){ //NOTE: method used in special few cases where invalid med are needed to be seen
+    //NOTE: method used in special few cases where invalid med are needed to be known as well
+    public Merchandise searchAllValidAndInvalidMerchandiseWithID(int medicationID){ 
     	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
     	
     	ArrayList<Merchandise> allValidAndInvalid = this.getValidAndInvalidMerchandise();
@@ -95,7 +97,7 @@ public class Inventory{
         return allOTCOnlyMedication;
     }
     
-    // CODE SMELL - Large Class - moved 3 methods below related to displaying/sorting inventory to new class called "SortInventory"
+    // REFACTORING #2: CODE SMELL - Large Class - moved 3 methods below related to displaying/sorting inventory to new class called "SortInventory"
     // organizes and returns inventory sorted alphabetically
     public ArrayList<Merchandise> displayAlphabetically(ArrayList<Merchandise> listToSortAlphabetically){
     	
@@ -116,8 +118,8 @@ public class Inventory{
     
     // finds from VALID list and returns a medication with medID == medicationID
     public Merchandise searchMerchandiseWithID(int medicationID){
-
     	Merchandise foundMWithID = null; // if no medication with this ID exists, returns NULL
+    	
     	this.updateFromDatabase();
     	for (int i = 0; i < list.size(); i ++){
     		if (list.get(i).medicationID == medicationID){
@@ -127,36 +129,9 @@ public class Inventory{
     	
     	return foundMWithID;
     }
-
-//    // increase quantity of medication already existing in inventory (if exists)
-//    public boolean increaseQuantity(int medicationID, int increasedQuantity) throws Exception{
-//    	
-//    	if (increasedQuantity < 0) {
-//			throw new Exception("Quantity to increase by must be a non-negative number!");
-//		}
-//    	
-//    	boolean medicationIncreased = false;
-//    	
-//    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
-//    	if (specificMedication == null) {
-//    		return medicationIncreased;
-//    	}
-//    	
-//    	specificMedication.quantity += increasedQuantity;
-//    	medicationIncreased = true;
-//    	
-//    	// modify database accordingly
-//    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
-//    	
-//    	//once database is updated, also updated this class's list variable by reading from database
-//    	list = _merDAO.getListOfMerchandise();
-//    	
-//        return medicationIncreased;
-//    }
     
     // increase quantity of medication already existing in inventory (if exists)
-    // AIZA UPDATED VERSION TO FIX RETURN VALUE & EXCEPTIONS 
-    public void increaseQuantity(int medicationID, int increasedQuantity) throws Exception{
+    public void increaseQuantity(int medicationID, int increasedQuantity) throws Exception{ // update from Itr2: turned boolean return value to void --> throw exceptions instead of using boolean value to track whether an exception occurred
     	
     	if (increasedQuantity < 0) {
 			throw new NegativeInputException("Quantity to increase by must be a non-negative number!");
@@ -177,58 +152,10 @@ public class Inventory{
     	list = _merDAO.getListOfMerchandise();
     	
     }
-
-//    // decrease quantity of medication already existing in inventory, if possible (if medication exists)
-//    public boolean[] decreaseQuantity(int medicationID, int decreasedQuantity) throws Exception{
-//    	
-//    	if (decreasedQuantity < 0) {
-//			throw new Exception("Quantity to decrease by must be a non-negative number!");
-//		}
-//    	
-//    	boolean medicationDecreased = false;
-//    	boolean enoughQuantityToDecrease = true;
-//    	boolean itemLowInStock = false;
-//    	
-//    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
-//    	
-//    	if (specificMedication == null || decreasedQuantity < 0) { // if medID does not exist in inventory, can't do anything
-//    		// no change because want initial boolean values as above
-//    		boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock};
-//    		//System.out.println("medication not found");
-//    		return booleanArray;
-//    	}
-//    	
-//    	
-//    	else { // otherwise it exists, then can potentially decrease
-//    		//System.out.println("medication found: " + specificMedication);
-//	        int potentialNewQuantity = specificMedication.quantity - decreasedQuantity; // check to see new quantity if decreased
-//			if (potentialNewQuantity < 0) {
-//	    		enoughQuantityToDecrease = false; // decrease will not occur if new quantity results in being less than 0
-//	    	}
-//	    	else { // otherwise, decrease can occur
-//	    		specificMedication.quantity -= decreasedQuantity;
-//	    		medicationDecreased = true;
-//	    	}
-//	    	
-//	    	// variable that keeps track if item is low in stock
-//	        if(specificMedication.quantity < 3){
-//	            itemLowInStock = true;
-//	        }
-//    	}
-//    	
-//    	// modify database accordingly
-//    	_merDAO.updateMedicationInDatabase(medicationID, specificMedication);
-//    	
-//    	//once database is updated, also updated this class's list variable by reading from database
-//    	list = _merDAO.getListOfMerchandise();
-//    	
-//    	boolean[] booleanArray = {medicationDecreased, enoughQuantityToDecrease, itemLowInStock}; // return values easy for front end
-//    	return booleanArray;
-//    }
     
     // decrease quantity of medication already existing in inventory, if possible (if medication exists)
-    // AIZA UPDATED VERSION TO FIX RETURN VALUE & EXCEPTIONS 
-    public boolean decreaseQuantity(int medicationID, int decreasedQuantity) throws Exception {
+    // boolean return value is just to keep track of whether quantity of medication that just decreased quantity is <= 3 so can give admin restocking reminder/pop-up
+    public boolean decreaseQuantity(int medicationID, int decreasedQuantity) throws Exception { // update from Itr2: turned boolean[] return value to void --> throw exceptions instead of using boolean values to track whether an exception occurred
     	
     	if (decreasedQuantity < 0) {
 			throw new NegativeInputException("Quantity to decrease by must be a non-negative number!");
@@ -262,33 +189,8 @@ public class Inventory{
     	return false;
     }
     
-//    // delete a medication from inventory (if exists)
-//    public boolean delete(int medicationID){
-//    	
-//    	boolean medicationRemoved = false;
-//    	
-//    	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
-//    	
-//    	if (specificMedication == null) { // if medID does not exist in inventory, can't do anything
-//    		return medicationRemoved; // return false
-//    	}
-//    	
-////    	list.remove(specificMedication);
-//    	specificMedication.setIsValid(false);
-//    	medicationRemoved = true; // remove successful
-//    	
-//    	// modify database accordingly
-//    	_merDAO.deleteMedicationInDatabase(medicationID);
-//    	
-//    	//once database is updated, also updated this class's list variable by reading from database
-//    	list = _merDAO.getListOfMerchandise();
-//        
-//        return medicationRemoved;
-//    }
-    
     // delete a medication from inventory (if exists)
-    // AIZA UPDATED VERSION TO FIX RETURN VALUE & EXCEPTIONS 
-    public void delete(int medicationID) throws Exception{
+    public void delete(int medicationID) throws Exception{ // update from Itr2: turned boolean return value to void --> throw exceptions instead of using boolean value to track whether an exception occurred
     	
     	Merchandise specificMedication = this.searchMerchandiseWithID(medicationID);
     	
@@ -307,62 +209,8 @@ public class Inventory{
     	list = _merDAO.getListOfMerchandise();
     }
     
-//    // add a new medication to inventory (if it already doesn't exist)
-//    public boolean addToInventory(Merchandise m) throws Exception{
-//    	
-//    	if (m.getPrice() < 0) {
-//			throw new Exception("Price must be a non-negative number!");
-//		}
-//    	if (m.getQuantity() < 0) {
-//			throw new Exception("Quantity must be a non-negative number!");
-//		}
-//    	boolean medicationAlreadyExists = false;
-//    	boolean medicationAdded = false;
-//    	boolean medCanBeAdded = false;
-//    	int oldMedId = -1;
-//        for (int i = 0; i < list.size(); i ++){  // check in the list of valid medication
-//            if (list.get(i).name.equals(m.name) && list.get(i).type == m.type && list.get(i).form == m.form && list.get(i).isOTC == m.isOTC){
-//            	medicationAlreadyExists = true; // if same medication already exists, can't add it again bc duplicates
-//            }
-//        }
-//        if (medicationAlreadyExists == false) {
-//        	oldMedId = isMedAddedBefore(m);
-//        	if (oldMedId != -1) {
-//        	medCanBeAdded = true;
-//        	_merDAO.updateMedicationInDatabase(oldMedId, m);
-//        	medicationAdded = true;
-//        	//once database is updated, also updated this class's list variable by reading from database
-//        	list = _merDAO.getListOfMerchandise();
-//        	}
-//        }
-//        
-//        
-//        
-////        if (medicationAlreadyExists == false) { // otherwise, can add
-////        if(medCanBeAdded == true ) { // MAYBE A SUB METHOD????
-////        	_merDAO.updateMedicationInDatabase(oldMedId, m);
-////        	medicationAdded = true;
-////        	//once database is updated, also updated this class's list variable by reading from database
-////        	list = _merDAO.getListOfMerchandise();
-////        }
-////        else if (medCanBeAdded == false && medicationAlreadyExists == false){
-//        	if (medicationAlreadyExists == false && medCanBeAdded == false) {
-//        	list.add(m);
-//        	medicationAdded = true;
-//        	
-//        	  // modify database accordingly
-//        	_merDAO.addMedicationToDatabase(m);
-//        	
-//        	//once database is updated, also updated this class's list variable by reading from database
-//        	list = _merDAO.getListOfMerchandise();
-//        }
-//      
-//        return medicationAdded;
-//    }
-    
     // add a new medication to inventory (if it already doesn't exist)
-    // AIZA UPDATED VERSION TO FIX RETURN VALUE & EXCEPTIONS 
-    public void addToInventory(Merchandise m) throws Exception {
+    public void addToInventory(Merchandise m) throws Exception { // update from Itr2: turned boolean return value to void --> throw exceptions instead of using boolean value to track whether an exception occurred
     	
     	if (m.getPrice() < 0) {
 			throw new NegativeInputException("Price must be a non-negative number!");
@@ -377,14 +225,14 @@ public class Inventory{
             }
         }
         
-        // if medication does not already exist in valid medication list (no exception thrown and code reaches here), check if it exists in invalid list
+        // if medication does not already exist in valid medication list (no exception thrown and code reaches here), check if it exists in invalid list (already deleted)
         int oldMedId = isMedAddedBefore(m);
     	
-        if (oldMedId != -1) { // if medication is found as invalid in all (invalid and valid) merchandise list, turn isValid for existing med to true
+        if (oldMedId != -1) { // if medication IS found as invalid in all (invalid and valid) merchandise list, turn isValid for existing med to true (updating row not adding new row)
         	_merDAO.updateMedicationInDatabase(oldMedId, m);
     	}
         
-    	else { // if medication not found in invalid list of medication, add new medication to table (add new row)
+    	else { // if medication IS NOT found in invalid list of medication, add new medication to table (add new row)
     		list.add(m);
         	_merDAO.addMedicationToDatabase(m);
     	}
@@ -392,8 +240,9 @@ public class Inventory{
         //once database is updated, also updated this class's list variable by reading from database
     	list = _merDAO.getListOfMerchandise();
     }
-
-	public int isMedAddedBefore(Merchandise m) {             // set previously deleted medication to valid
+    
+    // check to see if a medication is already in database as an INVALID (deleted) medication. If yes, set previously deleted medication to valid
+	public int isMedAddedBefore(Merchandise m) {            
 		int medID = -1;
 		ArrayList<Merchandise> invalidAndValidList = new ArrayList<Merchandise>();
     	invalidAndValidList = _merDAO.getListOfValidAndInvalidMerchandise();
@@ -408,7 +257,7 @@ public class Inventory{
     	return medID; //returns -1 if medication doesn't exist as invalid medication
 	}
     
-    // OCP NOT followed for below 3 modification methods because as a group, we have decided that there are no other modifications to the medication that can be added in the future
+    // NOTE: OCP NOT followed for below 3 modification methods because as a group, we have decided that there are no other modifications to the medication that can be added in the future
     // modifies the name of the medication but first makes sure the same medication doesn't already exist in the system
     public void modifyMedicationName(int medicationID, String newName) throws Exception {
     	

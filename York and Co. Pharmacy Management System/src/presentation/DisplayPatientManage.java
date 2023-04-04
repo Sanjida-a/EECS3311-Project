@@ -181,7 +181,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		
+
 				lblNotice.setText("");
 				
 				textFieldHCNumber.setText("");
@@ -275,8 +275,7 @@ public class DisplayPatientManage {
 		lblDOB.setFont(new Font("굴림", Font.BOLD, 15));
 		lblDOB.setBounds(0, 136, 110, 35);
 		panelInputFields.add(lblDOB);
-		
-		
+
 		model = new UtilDateModel();
 
 		model.setValue(new Date());
@@ -362,7 +361,7 @@ public class DisplayPatientManage {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				try {
 					lblNotice.setText("");
 					
@@ -461,7 +460,5 @@ public class DisplayPatientManage {
 
 		return Integer.parseInt(stringDate);
 	}
-	
-	
 
 }

@@ -19,11 +19,7 @@ public class ListOfUsers {
 	private ArrayList<User> allCredentialsList; // means all users
 	private ArrayList<Patient> allPatientsList;
 	
-	// don't need below
-//	private ArrayList<Pharmacist> allPharmacistsList;
-//	private Owner onlyOwner;
-	//private ArrayList<User> allUsersList = new ArrayList<User>();
-	private UserRoot _userDAO;
+	private UserRoot _userDAO; // Dependency Injection Principle
 	
 	private ListOfUsers() { //constructor of all singleton classes should be private
 		try {
@@ -35,6 +31,7 @@ public class ListOfUsers {
 			e.printStackTrace();
 		}
 	}
+	
 	private ListOfUsers(UserRoot dao) {
 		try {
 			_userDAO = dao;
@@ -67,7 +64,6 @@ public class ListOfUsers {
 			allPatientsList = this._userDAO.getListOfAllPatients();
 			allCredentialsList = this._userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +77,7 @@ public class ListOfUsers {
 		}
 	}
 	
-	//getter method
+	// getter method
 	public ArrayList<Patient> getAllPatientsList() {
 		updatePatientListFromDatabase(); //updates from database first
 		return allPatientsList;
@@ -96,15 +92,16 @@ public class ListOfUsers {
 		}
 	}
 	
-	//getter method
+	// getter method
 	public ArrayList<User> getAllCredentialsList() {
 		updateCredentialsListFromDatabase(); //updates from database first
 		return allCredentialsList;
 	}
 	
-	// search for a patient in the patient list with certain healthcardNum/ID 
+	// search for a patient in the patient list with certain healthcardNum/ID to see if the exist
 	public Patient searchPatientWithID(long patientHealthCard){
     	Patient foundPWithID = null;
+    	
     	updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
     	for (int i = 0; i < allPatientsList.size(); i ++){
     		if (allPatientsList.get(i).getHealthCardNum() == patientHealthCard){
@@ -116,6 +113,7 @@ public class ListOfUsers {
     	return foundPWithID; //if patient with such ID not found, return null
 	}
 	
+	// adds new Patient as new row in database as long as health card number is unique
 	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
 		
@@ -135,71 +133,21 @@ public class ListOfUsers {
 			throw new Exception("Phone Number must be a 10 digit number");
 		}
 		
+		// if no exception, can safely and successfully create patient object and add to database
 		Patient newPatient = new Patient(firstName.toUpperCase(), lastName.toUpperCase(), address.toUpperCase(), _textFieldPhoneNumber, _textFieldHCNumber, dateOfBirth);
 		try {
 			_userDAO.addPatientToDatabase(newPatient);
 		} catch (SQLException e) {
-			throw e;
+			throw e; // throws exception if health card number already exists in system
 		}
 		
 		// update instance variable from database
 		updatePatientListFromDatabase();
 	}
 	
-//	// modifies the details of the patient
-//		// OCP Followed (all in 1 method instead of 4 methods)
-//	public boolean modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
-//		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
-//		
-//		String[] inputsAsStrings = new String[4];
-//		
-//		inputsAsStrings[0] = fName.getText().toUpperCase();
-//		inputsAsStrings[1] = lName.getText().toUpperCase();
-//		inputsAsStrings[2] = phoneNum.getText();
-//		inputsAsStrings[3] = address.getText().toUpperCase();
-//
-//		Patient specificPatient = this.searchPatientWithID(patientHealthCard); // checks if patient with that healthcardNum exists in system
-//		
-//		if (specificPatient == null) { // if such patient doesn't exist, can't modify details
-//    		return false;
-//    	}
-//		
-//		// if all textboxes left empty, nothing to modify --> exception for popup in front end
-//		if (inputsAsStrings[0].isEmpty() && inputsAsStrings[1].isEmpty() && inputsAsStrings[2].isEmpty() && inputsAsStrings[3].isEmpty()) { 
-//			throw new Exception("One of fName, lName, PhoneNum is required");
-//		}
-//		
-//		// 4 if's below make sure to update the patients accordingly based on whether anything was typed in for any of the textboxes
-//		if (!(inputsAsStrings[0].isEmpty())) {
-//			specificPatient.setFirstName(inputsAsStrings[0]);
-//		}
-//		
-//		if (!(inputsAsStrings[1].isEmpty())) {
-//			specificPatient.setLastName(inputsAsStrings[1]);
-//		}
-//		if (!(inputsAsStrings[2].isEmpty())) {
-//			if (!((1000000000 <= Long.parseLong(inputsAsStrings[2])) && (Long.parseLong(inputsAsStrings[2]) <= 9999999999L))) {
-//				throw new Exception("Phone Number must be a positive, 10 digit number");
-//			}
-//			specificPatient.setPhoneNum(Long.parseLong(inputsAsStrings[2]));
-//		}
-//		
-//		if (!(inputsAsStrings[3].isEmpty())) {
-//			specificPatient.setAddress(inputsAsStrings[3]);
-//		}
-//    	
-//    	// modify database accordingly
-//    	_userDAO.updatePatientInDatabase(patientHealthCard, specificPatient);
-//    	
-//    	//once database is updated, also updated this class's list variable by reading from the database
-//    	updatePatientListFromDatabase();
-//    	
-//    	return true;
-//    }
-	
 	// modifies the details of the patient
-	// OCP Followed (all in 1 method instead of 4 methods)
-	// AIZA UPDATED VERSION TO FIX RETURN VALUE & EXCEPTIONS 
+	// OCP Followed (all in 1 method instead of 4 different methods)
+	// update from Itr2: turned boolean return value to void --> throw exceptions instead of using boolean value to track whether an exception occurred
 	public void modifyPatientDetails(long patientHealthCard, JTextField fName, JTextField lName, JTextField phoneNum, JTextField address) throws Exception {
 		updatePatientListFromDatabase(); //just to be safe, keeping instance variable up to date
 		
@@ -338,7 +286,8 @@ public class ListOfUsers {
 		return searchResult;
 	}
 	
-	//aiza added below for Itr3 detailed story
+	// returns all profile details for a specific patient with health card # = healthCardID
+	// userType defines who invoked the method since tiny string formatting details should change accordingly
 	public ArrayList<String> specificPatientDetails(long healthCardID, USER userType) throws Exception {
 		Patient pFound = this.searchPatientWithID(healthCardID);
 		
@@ -348,10 +297,10 @@ public class ListOfUsers {
 		
 		ArrayList<String> details = new ArrayList<String>();
 		
-		if (userType == USER.OWNER || userType == USER.PHARMACIST) {
+		if (userType == USER.OWNER || userType == USER.PHARMACIST) { // based on if admin, need to specify health card number they requested for
 			details.add("PATIENT with Healthcard Number " + healthCardID + " DETAILS\n");
 		}
-		else {
+		else { // otherwise if patient him/herself requested their own orders, need to use refer to them as "You"
 			details.add("YOUR DETAILS\n");
 		}
 		
@@ -365,13 +314,5 @@ public class ListOfUsers {
 		return details;
 
 	}
-
-//	public void setAllPatientUsersList(ArrayList<Patient> allPatientUsersList) {
-//		this.allPatientsList = allPatientUsersList;
-//	}
-//	
-//	public ArrayList<Patient> getAllUsersList() {
-//		return allPatientsList;
-//	}
 		
 }

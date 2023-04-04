@@ -8,13 +8,11 @@ import presentation.USER;
 
 public class AuthenticateUser {
 	
-//	private UserRoot _userDAO;
 	private ListOfUsers listOfUsersInstance;
 	private static AuthenticateUser instance = null;
 	private long userLoggedIn;
 	private AuthenticateUser() { //constructor of all singleton classes should be private
 		listOfUsersInstance = ListOfUsers.getInstance();
-
 	}
 	
 	// singleton classes must have this method
@@ -36,7 +34,7 @@ public class AuthenticateUser {
 				return USER.getValue(_users.get(i).getClass().getSimpleName());
 			}
 		}
-		return null;
+		return null; // returns null if credentials do not exist
 	}
 	
 	public long getUserLoggedIn() {

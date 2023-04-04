@@ -32,8 +32,8 @@ public abstract class User {
 //	// abstract method to be implemented by Owner, Pharmacist and Patient (not implemented here because implementation for patient is different)
 //	public abstract ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type);
 	
-	// two below methods are the reimplementation of the above two methods that have been commented out to decrease repeated code
-	// all users implement these same two methods as their parameters have been modified so that the list of medications they have access to can be sent accordingly
+	// REFACTORING #1: CODE SMELL - DUPLICATION: two below methods are the reimplementations of the two methods that have been commented out above to decrease duplicate code in Owner, Pharmacist and Patient classes
+	// REFACTORING #1: had to add parameter of type User since all users implement these same two methods but have different access to the list of medications
 	public  ArrayList<Merchandise> searchMedicineByName (String name, USER user) {
 		
 		Inventory inv = Inventory.getInstance(); 
@@ -42,7 +42,7 @@ public abstract class User {
 		if (user == USER.OWNER || user == USER.PHARMACIST) {
 			 listToSearchFrom = inv.getMerchandise();
 		}
-		else {
+		else { // patients/guests only have access to OTC medicine
 			 listToSearchFrom = inv.getOnlyOTCMerchandise();
 		}
 				 
@@ -57,7 +57,6 @@ public abstract class User {
 		return searchMedResult;
 	}
 	
-	// abstract method to be implemented by Owner, Pharmacist and Patient (not implemented here because implementation for patient is different)
 	public  ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type, USER user) {
 		
 		Inventory inv = Inventory.getInstance(); 

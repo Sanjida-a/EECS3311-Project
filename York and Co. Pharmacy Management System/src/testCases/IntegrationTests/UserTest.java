@@ -31,26 +31,6 @@ class UserTest {
 		} 
 		
 	}
-    
-//    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
-//    void searchMedicineByName() {
-//        
-//        Inventory inv = Inventory.getInstance();
-//        
-//        ArrayList<Merchandise> merList = inv.getMerchandise();
-//        Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
-//        
-//        ArrayList<Merchandise> searchResult = o.searchMedicineByName("ADVIL", USER.OWNER);
-//        
-//        int j = 0;
-//        for (int i = 0; i < merList.size(); i++) {
-//        	if (merList.get(i).getName().compareTo("ADVIL") == 0) {
-//        		assertEquals(merList.get(i).toString(), searchResult.get(j).toString());
-//        		j++;
-//        	}
-//        }
-//
-//    }
 	
 	@Test
     void searchMedicineByNameForAdmin() {
@@ -147,21 +127,6 @@ class UserTest {
 		assertEquals(answer.toString(), o.searchMedicineByName("ADVIL", USER.PATIENT).toString());
     }
     
-//    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
-//    void searchMedicineByType() {
-//        
-//        Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
-//        Inventory inv = Inventory.getInstance();
-//        ArrayList<Merchandise> listToSearchFrom = inv.getMerchandise();
-//        ArrayList<Merchandise> properResult = new ArrayList<Merchandise>();
-//        for (int i = 0; i < listToSearchFrom.size();i ++){
-//            if (listToSearchFrom.get(i).getType() == MERCHANDISE_TYPE.COLD){
-//            	properResult.add(listToSearchFrom.get(i));
-//            }
-//        }
-//        assertEquals(properResult.toString(), o.searchMedicineByType(MERCHANDISE_TYPE.COLD, USER.OWNER).toString());
-//    }
-    
     @Test
     void searchMedicineByTypeForAdmin() {
         
@@ -252,12 +217,4 @@ class UserTest {
 		
     }
 
-    // need to fix test below because searchMedByType only allows for MERCHANDISE_TYPE parameter... should we turn to string (but seems to work fine?
-    // maybe front end should output message "not a valid type of medication, please search again?" or no, because then restricts typing?
-//    @Test
-//    void searchMedicineByTypeNotFound() {
-//        
-//        Owner o = new Owner(0, 0);	//User is abstract so it has to be created using its subclasses
-//        assertEquals("[]", o.searchMedicineByType("fever", USER.OWNER).toString());
-//    }
 }

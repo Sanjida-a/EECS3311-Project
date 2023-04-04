@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import middleLayer.Orders.Order;
 
 public class Patient extends User {
-//	private static int IDClassVar = 1; //deleting static instance, as this will generate wrong number on different computers
-	
+
+//	private static int IDClassVar = 1; //deleting static instance, as this will generate wrong number on different computers	
 //	private int ID;                  // no need ID as healthCardNum is unique, can be used as ID
 	private String firstName;
 	private String lastName;
@@ -15,11 +15,10 @@ public class Patient extends User {
 	private long healthCardNum;
 	private int dateOfBirth;
 //	private ArrayList<Order> ordersMade;  //variable not necessary since have listofOrders class
-//	private Inventory merList = Inventory.getInstance(); 
+
 	
 	public Patient(String firstName, String lastName, String address, long phoneNum, long healthCardNum, int dateOfBirth) {
-//		IDClassVar++;
-		
+//		IDClassVar++;	
 //		this.ID = IDClassVar;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -83,15 +82,8 @@ public class Patient extends User {
 	public int getDateOfBirth() {
 		return dateOfBirth;
 	}
-	
-//	public ArrayList<Order> getOrdersMade() {
-//		return ordersMade;
-//	}
-//
-//	public void setOrdersMade(ArrayList<Order> ordersMade) {
-//		this.ordersMade = ordersMade;
-//	}
-//	
+
+	// REFACTORING #1: CODE SMELL - DUPLCIATION: two below methods have the same implementation in Owner.class and Pharmacist class --> moved to User.java
 	// implementation of inherited abstract method from User superclass but notice that in this case only concerned with OTC medicine
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
 //		
@@ -105,8 +97,7 @@ public class Patient extends User {
 //		
 //		return searchMedName;
 //	}
-//	
-//	// implementation of inherited abstract method from User superclass but notice that in this case only concerned with OTC medicine
+
 //	public ArrayList<Merchandise> searchMedicineByType (MERCHANDISE_TYPE type) {
 //		
 //		ArrayList<Merchandise> searchMedType = new ArrayList <Merchandise> ();

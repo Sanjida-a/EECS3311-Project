@@ -321,6 +321,5 @@ public class InitialScreenPanelAll implements ActionListener {
 		}
 
 	}
-	
 
 }

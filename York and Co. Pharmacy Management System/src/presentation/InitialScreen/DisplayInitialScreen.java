@@ -173,4 +173,5 @@ public class DisplayInitialScreen{
 			currentList = inv.getOnlyOTCMerchandise();
 		}
 	}
+
 }

@@ -255,15 +255,11 @@ public class DisplayModifyMerchandise implements ActionListener{
 				
 
 			}
-			
-			
 
-
-		
 	}	
 	private static void setNotice(String string) {
 		lblNotice.setText(string);
 	}
-	
+
 
 }

@@ -52,7 +52,8 @@ public class Pharmacist extends User {
 		}
 		return true;
 	}
-	// method below moved to Admin class so that both Owner and Pharmacist can add a patient; and to avoid duplication
+	
+	// REFACTORING #1: CODE SMELL - DUPLICATION: method below moved to ListOfUsers class so that both Owner and Pharmacist can add a patient; and to avoid duplication
 //	public void addPatient(String firstName, String lastName, String address, long _textFieldPhoneNumber, long _textFieldHCNumber, int dateOfBirth) throws Exception {
 //		
 //		if (_textFieldPhoneNumber < 0) {
@@ -73,7 +74,7 @@ public class Pharmacist extends User {
 //		}
 //	}
 	
-	// two below methods have the implementation of the below two methods to decrease repeated code
+	// REFACTORING #1: CODE SMELL - DUPLCIATION: two below methods have the same implementation in Owner and Patient class --> moved to User.java
 	// implementation of inherited abstract method from User superclass
 //	public ArrayList<Merchandise> searchMedicineByName (String name) {
 //		
@@ -101,8 +102,8 @@ public class Pharmacist extends User {
 //		
 //		return searchMedTypePhar;
 //	}
-//	
-	// method below moved to Admin class so that both Owner and Pharmacist can add a patient; and to avoid duplication
+
+	// REFACTORING #1: CODE SMELL - DUPLCIATION: method below has same implementation in Owner class --> moved to ListOfUsers.java
 //	public ArrayList<Patient> searchPatientByName (String patientName, String typeOfSearch) {
 //		
 //		ArrayList<Patient> searchResult = new ArrayList <Patient> ();

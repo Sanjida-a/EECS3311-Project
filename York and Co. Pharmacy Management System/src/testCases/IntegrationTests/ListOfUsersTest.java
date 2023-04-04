@@ -29,8 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ListOfUsersTest {
 	
 	private static ListOfUsers listOfUsers;
-
-//	private static superDAO _DAO = null;
 	private static Connection con;
 	
 	//beforeAll is just used to established a connection with the database before all tests
@@ -45,10 +43,7 @@ public class ListOfUsersTest {
 		} 
 		
 	}
-	
-	//AIZA TO DO: test addPatient for exceptions only!!
-	// AIZA TO DO: check/fix modifyPatientDetails and add more cuz of exceptions
-	
+
 	@Test
 	void searchPatientWithIDTest1() { //always going to be at least 1 patient in system because of smith john
 		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
@@ -59,21 +54,6 @@ public class ListOfUsersTest {
 		Patient result = listOfUsers.searchPatientWithID(chosenID);
 		assertEquals(chosenPatient.toString(), result.toString());
 	}
-	
-//	@Test
-//	void searchPatientWithIDTest2() {
-//		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-//		
-//		if (listOfPatients.size() > 1) {
-//			Patient chosenPatient = listOfPatients.get(1);
-//			long chosenID = listOfPatients.get(1).getHealthCardNum();
-//			
-//			
-//			Patient result = listOfUsers.searchPatientWithID(chosenID);
-//			assertEquals(chosenPatient.toString(), result.toString());
-//		}
-//	
-//	}
 	
 	@Test
 	void searchPatientWithIDTest3() { // ID doesn't exist	
@@ -280,7 +260,7 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void modifyPatientDetailsInvalid1() { // patient doesn't exist (with ID 1)
+    void modifyPatientDetailsInvalidTest1() { // patient doesn't exist (with ID 1)
     	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
     	
         JTextField fname = new JTextField();
@@ -310,7 +290,7 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void modifyPatientDetailsInvalid2() { // all Jtextfields empty (nothing to be modified)
+    void modifyPatientDetailsInvalidTest2() { // all Jtextfields empty (nothing to be modified)
     	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
     	
         JTextField fname = new JTextField();
@@ -340,7 +320,7 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void modifyPatientDetailsInvalid3() { // negative phoneNum
+    void modifyPatientDetailsInvalidTest3() { // negative phoneNum
     	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
     	
         JTextField fname = new JTextField();
@@ -359,7 +339,7 @@ public class ListOfUsersTest {
     }
     
     @Test
-    void modifyPatientDetailsInvalid4() { // less than 10 digit phoneNum
+    void modifyPatientDetailsInvalidTest4() { // less than 10 digit phoneNum
     	ArrayList<Patient> originalListOfPat = listOfUsers.getAllPatientsList();
 	   
         JTextField fname = new JTextField();
@@ -387,31 +367,6 @@ public class ListOfUsersTest {
 	    assertEquals(originalListOfPat, newListOfPat); // should be no change in DB because no patient details modified
     }
     
-//	@Test (don't need since have sql replacement below)
-//    void searchFNameTest1(){
-//		
-//		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-//		ArrayList<Patient> answer = new ArrayList<Patient>();
-//		
-//		for (Patient p: listOfPatients) {
-//			if (p.getFirstName().compareToIgnoreCase("SMITH") == 0) {
-//				answer.add(p);
-//			}
-//		}
-//		
-//		ArrayList<Patient> methodResult = null;
-//		try {
-//			methodResult = listOfUsers.searchPatientByName("Smith", "FirstName");
-//		} catch (Exception e1) {
-//		}
-//
-//		assertEquals(answer.size(), methodResult.size());
-//		
-//		for (int i = 0; i < answer.size(); i++) {
-//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-//		}
-//    }
-
 	@Test
     public void searchFNameTest1(){
 		
@@ -466,31 +421,6 @@ public class ListOfUsersTest {
 			fail();
 		}
     }
-
-//	@Test (don't need since have sql replacement below)
-//	void searchLNameTest1(){
-//		
-//		ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-//		ArrayList<Patient> answer = new ArrayList<Patient>();
-//		
-//		for (Patient p: listOfPatients) {
-//			if (p.getLastName().compareToIgnoreCase("John") == 0) {
-//				answer.add(p);
-//			}
-//		}
-//		
-//		ArrayList<Patient> methodResult = null;
-//		try {
-//			methodResult = listOfUsers.searchPatientByName("John", "LastName");
-//		} catch (Exception e1) {
-//		}
-//		
-//		assertEquals(answer.size(), methodResult.size());
-//		
-//		for (int i = 0; i < answer.size(); i++) {
-//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-//		}
-//	}
 	
 	@Test
     public void searchLNameTest1(){
@@ -547,31 +477,6 @@ public class ListOfUsersTest {
 		}
 	}
     
-//    @Test (don't need since have sql replacement below)
-//    void searchFullNameTest1() { 
-//		
-//    	ArrayList<Patient> listOfPatients = listOfUsers.getAllPatientsList();
-//		ArrayList<Patient> answer = new ArrayList<Patient>();
-//		
-//		for (Patient p: listOfPatients) {
-//			if ((p.getFirstName().compareToIgnoreCase("Smith") == 0) && (p.getLastName().compareToIgnoreCase("John") == 0)) {
-//				answer.add(p);
-//			}
-//		}
-//		
-//		ArrayList<Patient> methodResult = null;
-//		try {
-//			methodResult = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
-//		} catch (Exception e1) {
-//		}
-//		
-//		assertEquals(answer.size(), methodResult.size());
-//		
-//		for (int i = 0; i < answer.size(); i++) {
-//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-//		}
-//    }
-    
     @Test 
     public void searchFullNameTest1(){
 		
@@ -611,11 +516,7 @@ public class ListOfUsersTest {
 		}
 		
 		assertEquals(answer.size(), methodResult.size());
-		
-//		for (int i = 0; i < answer.size(); i++) {
-//			assertEquals(answer.get(i).toString(), methodResult.get(i).toString());
-//		}
-		assertEquals(answer, methodResult); //QUESTION: do we need for loop above or no?
+		assertEquals(answer, methodResult); 
 		
     }
     
@@ -628,48 +529,6 @@ public class ListOfUsersTest {
 			fail();
 		}
     }
-    
-//    @Test
-//    void searchPatientByNameTestValidInput4() {
-//		try {
-//			superDAO.setPassword(pass);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//    	Owner subject1 = new Owner(0, 0);
-//    	ArrayList<Patient> comparator1 = new ArrayList<Patient>();
-//    	 result = null;
-//		try {
-//			ArrayList<Patient> result = subject1.searchPatientByName("", "FirstName");
-//			
-//			comparator1.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));	   
-//	    	assertNotEquals(comparator1.toString(), result.toString());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//    	
-//    }
-    
-    // these two tests don't work anymore because empty string is checked in the front end
-//    @Test
-//    void searchPatientByNameTest1() { //empty string for patient name
-//		try {
-//			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "FirstName"));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//    	
-//    }
-//    
-//    @Test
-//    void searchPatientByNameTest2() {
-//		try {
-//			assertThrows(Exception.class, () -> listOfUsers.searchPatientByName("", "LastName"));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//    	
-//    }
     
     @Test
     void searchPatientByNameTest3() { //exception expected bc need both first AND last name (only provided first name)
@@ -865,21 +724,5 @@ public class ListOfUsersTest {
 		
 		}
     }
-    
-//    test below not needed because same as just reading from query (--> would be same thing as what method in logic layer does)
-//    @Test
-//    void specificPatientDetailsTest1() {
-//    	
-//    	long specificHealthCard = 1111122222;
-//    	Patient p = listOfUsers.searchPatientWithID(1111122222);
-//    	
-//    	try {
-//			ArrayList<String> result = listOfUsers.specificPatientDetails(specificHealthCard, USER.OWNER);
-//			
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//    }
    
 }
