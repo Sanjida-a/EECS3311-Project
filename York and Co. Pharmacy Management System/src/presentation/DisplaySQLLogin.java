@@ -78,7 +78,7 @@ public class DisplaySQLLogin implements ActionListener {
 				System.exit(0);
 			}
 			else {
-				//invoke method for password validation
+
 				String _passwordField = new String(passwordField.getPassword());
 				if (_passwordField.isEmpty()) throw new Exception(); // ensures a medication name has been entered
 				
@@ -86,19 +86,12 @@ public class DisplaySQLLogin implements ActionListener {
 				superDAO.setPassword(_passwordField);
 				frame.dispose();
 				//executed after validation succeed
-				//DisplayInitialScreen.createPanels(null);
+
 				DisplayInitialScreen.displayInitialScreen(USER.GUEST);
 			}
 		}catch(Exception ex) {
 			lblNotice.setText("Password is invalid");
 		}
 	}
-
-	/*public static void main(String[] args) {
-	
-		DisplaySQLLogin screen = new DisplaySQLLogin();
-		screen.displaySQLLogin();
-	}*/
-
 
 }

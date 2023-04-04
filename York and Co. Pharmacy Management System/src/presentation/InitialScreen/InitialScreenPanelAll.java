@@ -292,7 +292,7 @@ public class InitialScreenPanelAll implements ActionListener {
 		catch (IllegalArgumentException exception) {
 			JOptionPane.showMessageDialog(frame,"Merchandise Type is invalid. Please enter a valid Merchandise Type: Cough, Cold, Fever, Sinus", "Invalid input", JOptionPane.WARNING_MESSAGE);
 		}
-		// do i need to add a general Exception too to be safe?
+
 	
 	}
 	
@@ -302,6 +302,7 @@ public class InitialScreenPanelAll implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		String actionCommand = e.getActionCommand();
 		if(actionCommand.equalsIgnoreCase("Search")) {
 			this.search();
@@ -320,5 +321,5 @@ public class InitialScreenPanelAll implements ActionListener {
 		}
 
 	}
-	
+
 }

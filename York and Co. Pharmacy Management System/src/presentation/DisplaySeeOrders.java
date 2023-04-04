@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import middleLayer.NegativeInputException;
-import middleLayer.Orders.*;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import databaseDAO.superDAO;
+
 
 
 public class DisplaySeeOrders implements ActionListener{
@@ -96,11 +96,9 @@ public class DisplaySeeOrders implements ActionListener{
 	private static void createTextArea() {
 		textAreaOutput = new JTextArea();
 		textAreaOutput.setFont(new Font("Monospaced", Font.PLAIN, 15));
-		//textAreaOutput.setBounds(0, 0, 300, 200);
+
 		textAreaOutput.setEditable(false);
 
-		//invoke method to retrieve entire list of orders here and
-		//textAreaOutput.setText(result);
 		
 		scrollPaneOutput = new JScrollPane(textAreaOutput);
 		scrollPaneOutput.setBounds(12, 100, 612, 350);
@@ -178,7 +176,7 @@ public class DisplaySeeOrders implements ActionListener{
 						textAreaOutput.append(s);
 					}
 					
-					// daniel can you hide the "total spent" textfield for this button?
+					
 					textFieldTotalSpent.setText(""); // prescription forms have no correlation to money 
 		        }
 			} 

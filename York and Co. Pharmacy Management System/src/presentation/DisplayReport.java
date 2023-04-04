@@ -19,7 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import databaseDAO.superDAO;
+
 import middleLayer.Orders.*;
 import java.awt.Color;
 
@@ -112,5 +112,6 @@ public class DisplayReport {
 		this.frame.setEnabled(true);
 		this.frame.setVisible(true);
 	}
+
 
 }

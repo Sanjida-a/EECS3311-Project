@@ -3,71 +3,45 @@ package presentation.InitialScreen;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
+
 import javax.swing.JButton;
 
 //import javax.swin//////JTextAreaea;
 
 import java.awt.Color;
-import java.awt.Component;
+
 
 import java.awt.Dimension;
 
-import javax.swing.ListCellRenderer;
+
 
 import javax.swing.Box;
-import javax.swing.ButtonGroup;
+
 import javax.swing.border.LineBorder;
 
 import databaseDAO.superDAO;
-import middleLayer.Users.*;
+
 import presentation.DisplayLogin;
 import presentation.USER;
-import middleLayer.NegativeInputException;
+
 import middleLayer.MerchandiseInventory.*;
-import middleLayer.Orders.*;
 
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.SwingConstants;
-
-import javax.swing.UIManager;
-
-import javax.swing.JTextArea;
 import java.awt.Rectangle;
 
 
 public class DisplayInitialScreen{
 
-
 	private static JFrame frame;
-
 	private static Inventory inv;
-
 	private static USER userType;
-	
 	private static ArrayList<Merchandise> currentList;
 	
-
-
-
-	
-
 	
 	public static void displayInitialScreen(USER user) {
 		inv = Inventory.getInstance();
@@ -199,18 +173,5 @@ public class DisplayInitialScreen{
 			currentList = inv.getOnlyOTCMerchandise();
 		}
 	}
-	
 
-	
-
-
-	
-	public static void main(String[] args) {
-		try {
-			superDAO.setPassword("Motp1104#");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		DisplayInitialScreen.displayInitialScreen(USER.GUEST);
-	}
 }

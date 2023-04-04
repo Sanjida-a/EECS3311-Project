@@ -38,7 +38,7 @@ public class DisplayDescription {
 
 	}
 	
-	public static void createButton() {
+	private static void createButton() {
 		JButton btnClose = new JButton("Close");
 		btnClose.setFont(new Font("굴림", Font.BOLD, 18));
 		btnClose.setBounds(461, 316, 125, 35);
@@ -57,7 +57,7 @@ public class DisplayDescription {
 		
 	}
 	
-	public static void createOutputArea(Merchandise merc) {
+	private static void createOutputArea(Merchandise merc) {
 		JTextArea textArea = new JTextArea();
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);

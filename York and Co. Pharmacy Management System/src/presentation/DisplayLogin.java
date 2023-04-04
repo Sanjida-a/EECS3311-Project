@@ -58,21 +58,16 @@ public class DisplayLogin {
 		totalGUI.add(userNameField);
 		userNameField.setColumns(20);
 		
-		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(225, 150, 225, 35);
 		totalGUI.add(passwordField);
-		
 
 		passwordField.setColumns(20);
-		
-
 		
 		JLabel lblTitle = new JLabel("York and Co. Pharmacy Management System");
 		lblTitle.setFont(new Font("굴림", Font.BOLD | Font.ITALIC, 20));
 		lblTitle.setBounds(75, 30, 450, 50);
 		totalGUI.add(lblTitle);
-		
 		
 		loginButton(totalGUI, frame, superFrame);
 		
@@ -116,8 +111,6 @@ public class DisplayLogin {
 						DisplayInitialScreen.displayInitialScreen(userType);
 						
 		        		frame.dispose();
-						
-						
 					}
 					else {
 						

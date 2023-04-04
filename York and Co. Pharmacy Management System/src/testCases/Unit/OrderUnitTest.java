@@ -1,44 +1,17 @@
 package testCases.Unit;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import databaseDAO.superDAO;
-import databaseDAO.MerchandiseData.MerchandiseStub;
-import databaseDAO.UserData.UserStub;
-import middleLayer.MerchandiseInventory.*;
-import middleLayer.Users.*;
-import middleLayer.Orders.*;
+
 
 class OrderUnitTest {
 
+	/*
+	 * Order is a data class that has constructors, getters and setters only
+	 * no need to be tested
+	 * 
+	 */
 	
-	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
-	//@BeforeAll
-	/*public static void before() {
-		try {
-			superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
-	}*/
-	
-	/*@Test
-	void testOrderIntIntInt() {
-		
-        Inventory inv = Inventory.getInstance();
-        MerchandiseStub mStub = new MerchandiseStub();
-        ListOfUsers listOfUsers = ListOfUsers.getInstance();
-		UserStub uStub = new UserStub();
-		inv.set_merDAO(mStub);
-		listOfUsers.set_userDAO(uStub);
-		assertThrows(Exception.class, () -> new Order(1, 1, -1));
-		assertThrows(Exception.class, () -> new Order(5, 1, 1));
-		assertThrows(Exception.class, () -> new Order(1, 0, 1));
-	}*/
 
 
 }

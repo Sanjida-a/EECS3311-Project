@@ -10,7 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -37,10 +37,10 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	private JTextField inputFieldPrice;
 	private JTextField inputFieldID;
 	private String operationResult;
-	//private JLabel lblOperationResult;
+
 	private Inventory inv;
 	private ArrayList<Merchandise> currentList;
-	private JList<Merchandise> outputList;
+
 	private static USER userType;
 	private JFrame frame;
 	private ButtonGroup groupRadio;
@@ -76,7 +76,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
        
 	}
 	
-	public  void createLabels(JPanel panel) {
+	private void createLabels(JPanel panel) {
         JLabel lblName = new JLabel("Name");
         lblName.setFont(new Font("굴림", Font.BOLD, 18));
         lblName.setBounds(0, 0, 125, 35);
@@ -108,7 +108,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
         panel.add(lblID);
 	}
 	
-	public  void createInputFields(JPanel panel) {
+	private void createInputFields(JPanel panel) {
 		inputFieldName = new JTextField();
 		inputFieldName.setBounds(125, 0, 350, 35);
 		inputFieldName.setColumns(20);
@@ -142,7 +142,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 		panel.add(inputFieldID);
 	}
 	
-	public  void createButtonsOnMainPanel(JPanel panel) {
+	private void createButtonsOnMainPanel(JPanel panel) {
 		JRadioButton rdbtnRx = new JRadioButton("Rx");
         rdbtnRx.setFont(new Font("굴림", Font.BOLD, 18));
         rdbtnRx.setSelected(true);
@@ -184,7 +184,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
         btnDecrease.setFont(new Font("굴림", Font.BOLD, 18));
 	}
 	
-	public  void createButtonsOnSubPanel(JPanel panel, USER userType) {
+	private void createButtonsOnSubPanel(JPanel panel, USER userType) {
 		JButton btnManagePatients = new JButton("<html>Manage<br>Patients</html> ");
         btnManagePatients.setFont(new Font("굴림", Font.BOLD, 18));
         btnManagePatients.setBounds(0, 0, 170, 60);
@@ -234,6 +234,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		String actionCommand = e.getActionCommand();
 		if(actionCommand.equalsIgnoreCase("Add")) {
 			this.addMedication();
@@ -254,7 +255,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			DisplayPatientManage.displayPatientManage(frame);
 		}
 		else if(actionCommand.equalsIgnoreCase("ModifyItem")) {
-			DisplayModifyMerchandise.displayModifyMerchandise(frame, outputList, currentList);
+			DisplayModifyMerchandise.displayModifyMerchandise(frame, currentList);
 		}
 		else if(actionCommand.equalsIgnoreCase("SeeOrders")) {
 			DisplaySeeOrders.displaySeeOrders(frame, userType);
@@ -302,7 +303,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			inv.addToInventory(newMerchandise);
 			
 			operationResult = "Add successful. See updated inventory";
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 			
 			currentList = inv.getMerchandise();
@@ -329,7 +330,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 		}
 		catch(Exception exception) { //catch any exceptions/errors that the method call produces -> means method unsuccessful
 			operationResult = exception.getMessage();
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 		}
 	}
@@ -350,7 +351,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			inv.delete(_inputFieldID);
 			
 			operationResult = "Remove successful. See updated inventory";
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 			
 			currentList = inv.getMerchandise();
@@ -365,7 +366,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 		}
 		catch (Exception exception) { //thrown by method if it is unsuccessful
 			operationResult = exception.getMessage();
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 		}
 	}
@@ -389,7 +390,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			inv.increaseQuantity(_inputFieldID, _inputFieldQty);
 			
 			operationResult = "Increase successful. See updated inventory";
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 			
 			currentList = inv.getMerchandise();
@@ -407,7 +408,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 		}
 		catch(Exception exception) { //thrown by method if it is unsuccessful
 			operationResult = exception.getMessage();
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 		}
 	}
@@ -431,7 +432,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			boolean lowInStock = inv.decreaseQuantity(_inputFieldID, _inputFieldQty);
 			
 			operationResult = "Decrease successful. See updated inventory";
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 			
 			if (lowInStock == true) {
@@ -453,8 +454,9 @@ public class InitialScreenPanelAdmin implements ActionListener{
 		}
 		catch(Exception exception) { //thrown by method if it is unsuccessful
 			operationResult = exception.getMessage();
-			//DisplayInitialScreen.setLblOperationResult(operationResult);
+			
 			InitialScreenPanelAll.setOperationResult(operationResult);
 		}
 	}
+
 }

@@ -6,6 +6,9 @@ import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+
+//this class is for formatting DoB retrieved from JDatePicker
+@SuppressWarnings("serial")
 public class DateLabelFormatter extends AbstractFormatter {
 
 
@@ -13,11 +16,13 @@ public class DateLabelFormatter extends AbstractFormatter {
     private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 	@Override
 	public Object stringToValue(String text) throws ParseException {
+
 		return dateFormatter.parseObject(text);
 	}
 
 	@Override
 	public String valueToString(Object value) throws ParseException {
+
         if (value != null) {
             Calendar cal = (Calendar) value;
             return dateFormatter.format(cal.getTime());

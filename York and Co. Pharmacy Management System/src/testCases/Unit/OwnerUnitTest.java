@@ -1,6 +1,6 @@
 package testCases.Unit;
 
-import static org.junit.Assert.assertArrayEquals;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.superDAO;
-import databaseDAO.MerchandiseData.MerchandiseRoot;
+
 import databaseDAO.MerchandiseData.MerchandiseStub;
 import middleLayer.MerchandiseInventory.*;
 import middleLayer.Users.*;
@@ -18,11 +17,11 @@ import presentation.USER;
 class OwnerUnitTest {
 	private static Inventory inv;
 	private static MerchandiseStub stub;
-	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	
 	@BeforeAll
 	public static void before() {
 		try {
-			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			
 			stub = new MerchandiseStub();
 			inv = Inventory.getInstance(stub);
 			inv.set_merDAO(stub);
@@ -61,7 +60,7 @@ class OwnerUnitTest {
 
 	
 	/* the methods below are derived from the superclass, User, but tested here
-	 * since User is abstract class and the method behavee the same 
+	 * since User is abstract class and the method behave the same 
 	 * throughout the subclasses
 	 */
 
@@ -70,8 +69,7 @@ class OwnerUnitTest {
 	void testSearchMedicineByName() {
 		
 		Owner subject1 = new Owner(0,0);
-		//Inventory inv = Inventory.getInstance();
-		//inv.set_merDAO(new MerchandiseStub());
+
 		ArrayList<Merchandise> result = new ArrayList<Merchandise>();
 		ArrayList<Merchandise> expected = new ArrayList<Merchandise>();
 		result = subject1.searchMedicineByName("pill3", USER.OWNER);
@@ -90,8 +88,7 @@ class OwnerUnitTest {
 	void testSearchMedicineByType() {
 		
 		Owner subject1 = new Owner(0,0);
-		//Inventory inv = Inventory.getInstance();
-		//inv.set_merDAO(new MerchandiseStub());
+
 		ArrayList<Merchandise> result = new ArrayList<Merchandise>();
 		ArrayList<Merchandise> expected = new ArrayList<Merchandise>();
 		MERCHANDISE_TYPE type = MERCHANDISE_TYPE.COLD;

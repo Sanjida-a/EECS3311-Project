@@ -13,9 +13,9 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import databaseDAO.superDAO;
+
 import middleLayer.NegativeInputException;
-import middleLayer.MerchandiseInventory.*;
+
 import middleLayer.Orders.*;
 
 import javax.swing.JButton;
@@ -30,14 +30,14 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 	private static JTextField textFieldMercID;
 	private static JTextField textFieldQty;
 	private static JTextField textFieldRefill;
-	private static Inventory inv = Inventory.getInstance();
+
 	private static ListOfOrders listOfOrders = ListOfOrders.getInstance();
 	private static JLabel lbNotice;
 
 	public static void displayAddOrder(JFrame previous, String command) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
-		frame = new JFrame(command.substring(0, 3) + " " + command.substring(3));
+		frame = new JFrame(command.substring(0, 3) + " " + command.substring(3));//frame title is set to "Add [Order/Prescription]"
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(new Dimension(600,400));
@@ -48,7 +48,7 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 		frame.setVisible(true);
 	}
 	
-	public static void createContentsPanel(JFrame superFrame, String command) {
+	private static void createContentsPanel(JFrame superFrame, String command) {
 		JPanel panelAddOrder = new JPanel();
 		panelAddOrder.setFont(new Font("굴림", Font.PLAIN, 15));
 		panelAddOrder.setBounds(12, 10, 562, 343);
@@ -67,7 +67,7 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
         panelAddOrder.add(lbNotice);
 	}
 	
-	public static void createLabels(JPanel panel, String command) {
+	private static void createLabels(JPanel panel, String command) {
 		JLabel lblPatientID = new JLabel("HealthCard#");
         lblPatientID.setFont(new Font("굴림", Font.BOLD, 18));
         lblPatientID.setBounds(0, 0, 150, 35);
@@ -91,7 +91,7 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
         }
 	}
 	
-	public static void createButtons(JPanel panel, String command) {
+	private static void createButtons(JPanel panel, String command) {
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setFont(new Font("굴림", Font.BOLD, 18));
 		btnCancel.setBounds(437, 308, 125, 35);
@@ -119,7 +119,7 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
         }
 	}
 	
-	public static void createInputFields(JPanel panel, String command) {
+	private static void createInputFields(JPanel panel, String command) {
 		textFieldPatientID = new JTextField();
         textFieldPatientID.setFont(new Font("굴림", Font.PLAIN, 15));
         textFieldPatientID.setBounds(150, 0, 412, 35);
@@ -207,14 +207,14 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 					
 					if(e.getActionCommand().equals("Add OTC order")) { // for OTC order 
 						
-						// call method for giving patient OTC order
+
 						lowInStock = listOfOrders.addOrderToDatabase(newOrder);
 						lbNotice.setText("OTC order successfully added!");
 					}
 					
 					else if(e.getActionCommand().equals("Give refill for a prescription")) { // Rx ORDER aka refill of an existing prescription
 						
-						//call method for giving a patient refill order
+						
 						lowInStock = listOfOrders.addRefillToDatabase(newOrder);
 						lbNotice.setText("Refill (Rx order) successfully added!");
 						
