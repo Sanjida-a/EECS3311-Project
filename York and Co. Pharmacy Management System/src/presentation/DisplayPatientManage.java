@@ -64,7 +64,7 @@ public class DisplayPatientManage {
 			String.format("%-20s ", "Address"),
 			String.format("%-10s ", "Phone Number"),
 			String.format("%-10s ", "Healthcard"),
-			String.format("%-10s\n", "DoB")};
+			String.format("%-10s\n", "DoB")};	//column formatting for the JTable
 	private static String[][] patients = {{"", "","","",""}};
 	private static JTable table;
 	private static JScrollPane scrollPane;
