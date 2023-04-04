@@ -9,20 +9,11 @@ import databaseDAO.superDAO;
 
 class PatientUnitTest {
 	
-	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
-	/*@BeforeAll
-	public static void before() {
-		try {
-			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
-	}*/
-/*
- * no notable method to be tested
- * all of them is error free
- */
+
+	/*
+	 * this is a data class that has constructors, getters, and setters only.
+	 * no need to be tested
+	 */
 
 
 }

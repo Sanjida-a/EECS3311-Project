@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ import middleLayer.MerchandiseInventory.MERCHANDISE_TYPE;
 import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Orders.*;
 import presentation.USER;
-import databaseDAO.superDAO;
+
 import databaseDAO.MerchandiseData.MerchandiseStub;
 import databaseDAO.OrderData.OrderStub;
 import databaseDAO.UserData.UserStub;
@@ -24,11 +24,11 @@ class ListOfOrdersUnitTest {
 	public static OrderStub orderStub;
 	public static MerchandiseStub merStub;
 	public static UserStub userStub;
-	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	
 	@BeforeEach
 	public void before() {
 		try {
-			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			
 			orderStub = new OrderStub();
 			merStub = new MerchandiseStub();
 			userStub = new UserStub();
@@ -81,7 +81,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			System.out.println(e.getMessage());
 			fail(e.getMessage());
 		}
@@ -100,7 +100,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		
@@ -118,7 +118,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Medication doesn't exist!", errorString);
@@ -135,7 +135,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Patient doesn't exist!", errorString);
@@ -152,7 +152,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Not an OTC! Use the \"Give Refill for a prescription\" button", errorString);
@@ -170,7 +170,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addOrderToDatabase(newOrder);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			
 			errorString = e.getMessage();
 		}
@@ -183,7 +183,7 @@ class ListOfOrdersUnitTest {
 			orders.addOrderToDatabase(newOrder);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			
 			errorString = e.getMessage();
 		}
@@ -201,10 +201,12 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Refills must be positive (at least 1)!", errorString);
+		after = orders.getListofAllPres();
+		assertEquals(before, after);
 
 	}
 	
@@ -217,7 +219,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 			
 		}
@@ -235,7 +237,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 			
 		}
@@ -253,7 +255,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 			
 		}
@@ -272,7 +274,7 @@ class ListOfOrdersUnitTest {
 			inv.addToInventory(merc4);
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(pres, orders.getListofAllPres().get(2));
@@ -285,7 +287,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addPresFormToDb(pres);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(pres, orders.getListofAllPres().get(2));
@@ -298,7 +300,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(order, orderStub.orderList.get(4));
@@ -313,7 +315,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Medication doesn't exist!", errorString);
@@ -330,7 +332,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Patient doesn't exist!", errorString);
@@ -347,7 +349,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Quantity Bought Must Be Positive (at least 1)!", errorString);
@@ -362,13 +364,13 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail(e.getMessage());
 		}
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("0 refills left!", errorString);
@@ -383,7 +385,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Not enough refills! Only have " + 5 +  " refills left!", errorString);
@@ -400,7 +402,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.addRefillToDatabase(order);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Not enough refills! Only have " + 5 +  " refills left!", errorString);
@@ -414,7 +416,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(expected, orders.specificPatientOrderHistory(1111122222));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}
@@ -425,7 +427,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.specificPatientOrderHistory(111112222);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Please enter a valid 10-digit health card number", errorString);
@@ -436,7 +438,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.specificPatientOrderHistory(11111222222L);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Please enter a valid 10-digit health card number", errorString);
@@ -447,7 +449,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.specificPatientOrderHistory(1111122223);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			errorString = e.getMessage();
 		}
 		assertEquals("Patient doesn't exist!", errorString);
@@ -492,7 +494,7 @@ class ListOfOrdersUnitTest {
 			assertEquals(expectedString, orders.outputOrderHistoryDetails(1111122222, USER.OWNER));
 			assertEquals(expectedString, orders.outputOrderHistoryDetails(1111122222, USER.PHARMACIST));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		
@@ -536,7 +538,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(expectedString, orders.outputOrderHistoryDetails(1111122222, USER.PATIENT));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		
@@ -548,7 +550,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(expected, orders.outputOrderHistoryDetails(2222233333L, USER.OWNER));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}
@@ -559,7 +561,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(expected, orders.outputOrderHistoryDetails(2222233333L, USER.PHARMACIST));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}
@@ -571,7 +573,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(expected, orders.outputOrderHistoryDetails(2222233333L, USER.PATIENT));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}
@@ -585,7 +587,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(expected, orders.specificPatientPres(1111122222));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}
@@ -596,7 +598,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.specificPatientPres(111112222);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals( "Please enter a valid 10-digit health card number", result);
@@ -608,7 +610,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.specificPatientPres(11111222222L);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals( "Please enter a valid 10-digit health card number", result);
@@ -620,7 +622,7 @@ class ListOfOrdersUnitTest {
 		try {
 			orders.specificPatientPres(1111122223);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals( "Patient doesn't exist!", result);
@@ -633,7 +635,7 @@ class ListOfOrdersUnitTest {
 		try {
 			result = orders.specificPatientPres(2222233333L);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -671,14 +673,14 @@ class ListOfOrdersUnitTest {
 		try {
 			result = orders.outputPresRefill(1111122222, USER.OWNER);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
 		try {
 			result = orders.outputPresRefill(1111122222, USER.PHARMACIST);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -714,7 +716,7 @@ class ListOfOrdersUnitTest {
 		try {
 			result = orders.outputPresRefill(1111122222, USER.PATIENT);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -729,14 +731,14 @@ class ListOfOrdersUnitTest {
 		try {
 			result = orders.outputPresRefill(2222233333L, USER.OWNER);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
 		try {
 			result = orders.outputPresRefill(2222233333L, USER.PHARMACIST);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -749,7 +751,7 @@ class ListOfOrdersUnitTest {
 		try {
 			result = orders.outputPresRefill(2222233333L, USER.PATIENT);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -761,7 +763,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(70.0, orders.specificPatientMoneySpent(1111122222), 0.001);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}
@@ -770,7 +772,7 @@ class ListOfOrdersUnitTest {
 		try {
 			assertEquals(0.0, orders.specificPatientMoneySpent(2222233333L), 0.001);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 	}

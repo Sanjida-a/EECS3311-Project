@@ -8,20 +8,19 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.superDAO;
-import databaseDAO.MerchandiseData.MerchandiseStub;
+
 import databaseDAO.UserData.UserRoot;
 import databaseDAO.UserData.UserStub;
 import middleLayer.NegativeInputException;
-import middleLayer.MerchandiseInventory.Inventory;
+
 import middleLayer.Users.ListOfUsers;
-import middleLayer.Users.Owner;
+
 import middleLayer.Users.Patient;
-import middleLayer.Users.User;
+
 import presentation.USER;
 
 public class ListOfUsersUnitTest {
@@ -29,11 +28,11 @@ public class ListOfUsersUnitTest {
 private static ListOfUsers listOfUsers;
 private static UserRoot stub;
 	
-	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	
 	@BeforeEach
 	public void before() {
 		try {
-			//superDAO.setPassword("hello123");// TA please change this according to your mySQL password in order for the tests to work
+			
 			stub = new UserStub();
 			listOfUsers = ListOfUsers.getInstance(stub);
 			listOfUsers.set_userDAO(stub);
@@ -88,7 +87,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("One of fName, lName, PhoneNum is required. Please fill in at least one of them.", result);
@@ -161,7 +160,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Phone Number must be a 10 digit number", result);
@@ -181,7 +180,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.modifyPatientDetails(1111122222, fname, lname, phoneNum, address);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Phone Number must be a 10 digit number", result);
@@ -226,7 +225,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.addPatient("test", "name", "address", -1111144444, 1111144444, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Phone number must be a positive number", result);
@@ -243,7 +242,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.addPatient("test", "name", "address", 1111144444, -1111144444, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Health card number must be a positive number", result);
@@ -260,7 +259,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.addPatient("test", "name", "address", 1111144444, 111114444, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Health Card Number must be a 10 digit number", result);
@@ -277,7 +276,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.addPatient("test", "name", "address", 1111144444, 11111444444L, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Health Card Number must be a 10 digit number", result);
@@ -294,7 +293,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.addPatient("test", "name", "address", 111114444, 1111144444, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Phone Number must be a 10 digit number", result);
@@ -311,7 +310,7 @@ private static UserRoot stub;
 		try {
 			listOfUsers.addPatient("test", "name", "address", 11111444444L, 1111144444, 11111444);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
 		assertEquals("Phone Number must be a 10 digit number", result);
@@ -329,7 +328,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.searchPatientByName("SMITH", "FirstName");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));
@@ -343,7 +342,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.searchPatientByName("DOE", "LastName");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		expected.add(new Patient("JANE", "DOE", "5000 YONGE ST", 2223334444L, 2222233333L, 19990202));
@@ -357,7 +356,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.searchPatientByName("SMITH JOHN", "FullName");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		expected.add(new Patient("SMITH", "JOHN", "5324 YONGE ST", 1112223333, 1111122222, 19990101));
@@ -371,7 +370,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.searchPatientByName("wrong name", "FullName");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -397,7 +396,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.specificPatientDetails(1111122222, USER.OWNER);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -418,7 +417,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.specificPatientDetails(1111122222, USER.PHARMACIST);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);
@@ -439,7 +438,7 @@ private static UserRoot stub;
 		try {
 			result = listOfUsers.specificPatientDetails(1111122222, USER.PATIENT);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 		assertEquals(expected, result);

@@ -6,14 +6,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
+
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import databaseDAO.*;
+
 import databaseDAO.MerchandiseData.MerchandiseStub;
 import middleLayer.NegativeInputException;
 import middleLayer.MerchandiseInventory.*;
@@ -22,11 +21,11 @@ import middleLayer.MerchandiseInventory.*;
 public class InventoryUnitTest {
 	private static Inventory val;
 	private static MerchandiseStub mStub;
-	//beforeAll is just used to established a connection with the database to prevent exceptions. The database is NOT being accessed for unit tests
+	
 	@BeforeEach
 	public void before() {
 		try {
-			//superDAO.setPassword("Motp1104#");// TA please change this according to your mySQL password in order for the tests to work
+			
 			mStub = new MerchandiseStub();
 			val = Inventory.getInstance(mStub);
 			val.set_merDAO(mStub);
@@ -84,7 +83,7 @@ public class InventoryUnitTest {
     	try {
 			val.increaseQuantity(1,10);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
         assertEquals(20,val.getMerchandise().get(0).getQuantity());
@@ -100,7 +99,7 @@ public class InventoryUnitTest {
     	try {
 			val.increaseQuantity(1, -1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals(expected, result);
@@ -117,7 +116,7 @@ public class InventoryUnitTest {
     	try {
 			val.increaseQuantity(6, 10);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals(expected, result);
@@ -132,7 +131,7 @@ public class InventoryUnitTest {
     	try {
 			val.decreaseQuantity(1, 10);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	assertEquals(0, val.getValidAndInvalidMerchandise().get(0).getQuantity());
@@ -156,7 +155,7 @@ public class InventoryUnitTest {
     	try {
 			val.decreaseQuantity(10, 1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Decrease unsuccessful. No such medication currently exists in the inventory. See inventory", result);
@@ -171,7 +170,7 @@ public class InventoryUnitTest {
     	try {
 			val.decreaseQuantity(1, 11);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Decrease unsuccessful. There is not enough quantity of the medication to decrease by " + 11 + ". See inventory", result);
@@ -183,7 +182,7 @@ public class InventoryUnitTest {
     	try {
 			assertTrue(val.decreaseQuantity(1, 8));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     }
@@ -194,7 +193,7 @@ public class InventoryUnitTest {
     	try {
 			val.delete(1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	assertFalse(val.getValidAndInvalidMerchandise().get(0).getisValid());
@@ -207,7 +206,7 @@ public class InventoryUnitTest {
     	try {
 			val.delete(10);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Remove unsuccessful. No such medication currently exists in the inventory. See current inventory", result);
@@ -221,7 +220,7 @@ public class InventoryUnitTest {
     	try {
 			val.addToInventory(m1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	
@@ -237,7 +236,7 @@ public class InventoryUnitTest {
         try {
 			val.addToInventory(m1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
         assertEquals("Price must be a non-negative number!", result);
@@ -253,7 +252,7 @@ public class InventoryUnitTest {
         try {
 			val.addToInventory(m1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
         assertEquals("Quantity must be a non-negative number!", result);
@@ -270,7 +269,7 @@ public class InventoryUnitTest {
 			val.addToInventory(m1);
 			val.addToInventory(m1);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
         assertEquals("Add unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory. See current inventory", result);
@@ -282,7 +281,7 @@ public class InventoryUnitTest {
     	try {
 			val.delete(2);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
 
@@ -291,7 +290,7 @@ public class InventoryUnitTest {
         try {
 			val.addToInventory(merc5);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
         assertTrue(val.getValidAndInvalidMerchandise().get(4).isValid());
@@ -336,7 +335,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationName(1, "new pill");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	assertEquals("new pill", val.getValidAndInvalidMerchandise().get(0).getName());
@@ -351,7 +350,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationName(7, "new pill");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. No such medication currently exists in the inventory. See current inventory", result);
@@ -364,7 +363,7 @@ public class InventoryUnitTest {
     	try {
 			val.addToInventory(merc1);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	String result = null;
@@ -373,7 +372,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationName(6, "pill1");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. The medication (same name, type, form and OTC/Rx) already exists in the inventory.", result);
@@ -386,7 +385,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationPrice(1, 20.00);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	assertEquals(20.00, val.getMerchandise().get(0).getPrice(), 0.001);
@@ -409,7 +408,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationPrice(10, 10.00);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. No such medication currently exists in the inventory.", result);
@@ -422,7 +421,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationDescription(1, "test");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			fail();
 		}
     	assertEquals("test", val.getValidAndInvalidMerchandise().get(0).getDescription());
@@ -435,7 +434,7 @@ public class InventoryUnitTest {
     	try {
 			val.modifyMedicationDescription(10, "test");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
 			result = e.getMessage();
 		}
     	assertEquals("Modification unsuccessful. No such medication currently exists in the inventory.", result);

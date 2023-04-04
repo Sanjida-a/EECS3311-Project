@@ -15,8 +15,6 @@ public class SortInventoryUnitTest {
 	private static SortInventory val = new SortInventory();
 	@Test
     void displayAlphabeticallyTest(){
-  
-
     	ArrayList<Merchandise> subject1 = new ArrayList<Merchandise>();
     	ArrayList<Merchandise> comparator1 = new ArrayList<Merchandise>();
     	Merchandise merc1 = new Merchandise(1, "A", 10, 10, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
@@ -35,20 +33,17 @@ public class SortInventoryUnitTest {
        	comparator1.add(merc4);
        	
        	assertEquals(subject1.toString(), comparator1.toString());
-    	
-    	
     }
 
     @Test
     void displayByQuantityTest(){
-
         ArrayList<Merchandise> subject1 = new ArrayList<Merchandise>();
     	ArrayList<Merchandise> comparator1 = new ArrayList<Merchandise>();
     	Merchandise merc1 = new Merchandise(1, "A", 10, 10, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
     	Merchandise merc2 = new Merchandise(2, "B", 11, 10, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
     	Merchandise merc3 = new Merchandise(3, "C", 12, 10, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
     	Merchandise merc4 = new Merchandise(4, "D", 13, 10, MERCHANDISE_TYPE.COLD, MERCHANDISE_FORM.LIQUID, true, "", true);
-    	
+   
     	subject1.add(merc2);
     	subject1.add(merc3);
     	subject1.add(merc1);
