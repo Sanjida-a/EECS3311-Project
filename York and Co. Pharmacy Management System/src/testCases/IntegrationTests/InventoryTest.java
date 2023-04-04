@@ -76,7 +76,7 @@ class InventoryTest {
     }
 
     @Test
-    void alphabetically(){
+    void alphabeticallyTest(){
        
         ArrayList<Merchandise> listOfMedicine = inventoryInstance.getMerchandise(); // if listOfMedicine empty, test still passes because doesn't go through for loop
 
@@ -96,7 +96,7 @@ class InventoryTest {
     }
 
     @Test
-    void byQuantity(){
+    void byQuantityTest(){
         
         
         ArrayList<Merchandise> listOfMedicine = inventoryInstance.getMerchandise(); // if listOfMedicine empty, test still passes because doesn't go through for loop
@@ -117,7 +117,7 @@ class InventoryTest {
     }
 
     @Test
-    void byPrice(){
+    void byPriceTest(){
        
         
         ArrayList<Merchandise> listOfMedicine = inventoryInstance.getMerchandise(); // if listOfMedicine empty, test still passes because doesn't go through for loop
@@ -139,7 +139,7 @@ class InventoryTest {
     }
 
     @Test
-    void increaseQuantity(){
+    void increaseQuantityTest(){
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -164,7 +164,7 @@ class InventoryTest {
     }
     
     @Test
-    void increaseQuantityInvalid() throws Exception{ // negative quantity
+    void increaseQuantityInvalidTest() throws Exception{ // negative quantity
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -178,7 +178,7 @@ class InventoryTest {
     }
     
     @Test
-    void increaseQuantityInvalid2(){ //invalid because medID doesn't exist
+    void increaseQuantityInvalidTest2(){ //invalid because medID doesn't exist
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         String expectedMsg = "Increase unsuccessful. No such medication currently exists in the inventory. See current inventory";
@@ -197,7 +197,7 @@ class InventoryTest {
     }
 
     @Test
-    void decreaseQuantity(){
+    void decreaseQuantityTest(){
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
       
@@ -221,7 +221,7 @@ class InventoryTest {
     }
   
     @Test
-    void decreaseQuantityInvalid1(){ // negative quantity
+    void decreaseQuantityInvalidTest1(){ // negative quantity
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -234,7 +234,7 @@ class InventoryTest {
     }
     
     @Test
-    void decreaseQuantityInvalid2(){ // medication Id doesn't exist
+    void decreaseQuantityInvalidTest2(){ // medication Id doesn't exist
     	
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         String expectedMsg = "Decrease unsuccessful. No such medication currently exists in the inventory. See inventory";
@@ -254,7 +254,7 @@ class InventoryTest {
     }
     
     @Test
-    void decreaseQuantityInvalid3(){ // not enough med quantity in stock
+    void decreaseQuantityInvalidTest3(){ // not enough med quantity in stock
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -282,7 +282,7 @@ class InventoryTest {
     }
 
     @Test
-    void delete(){
+    void deleteTest(){
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -311,7 +311,7 @@ class InventoryTest {
     }
 
     @Test
-    void deleteInvalid(){ //medicationID doesn't exist (assuming 1000 ID too large)
+    void deleteInvalidTest(){ //medicationID doesn't exist (assuming 1000 ID too large)
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
     	
         String expectedMsg = "Remove unsuccessful. No such medication currently exists in the inventory. See current inventory";
@@ -329,18 +329,9 @@ class InventoryTest {
         assertEquals(originalList, newList); // all medications in DB should remain the same (no medication should be deleted)
     }
     
-//    @Test
-//    void searchByID(){
-//    	
-//        ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-//        
-//        if (originalList.size() > 0) { // if originalList is empty, no medication to search
-////        	ArrayList<Merchandise> newList = inventoryInstance.getMerchandise();
-//            assertEquals(originalList.get(0).toString(), inventoryInstance.searchMerchandiseWithID(1).toString());
-//        }
-//    }
+
     @Test
-    void addToInventory() { // for already deleted medication
+    void addToInventoryTest() { // for already deleted medication
     	ArrayList<Merchandise> originaValidAndlInvalidList = inventoryInstance.getValidAndInvalidMerchandise();
     	
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise(); // only valid list
@@ -381,7 +372,7 @@ class InventoryTest {
     }
     
     @Test
-    void addToInventoryInvalid(){ // negative price
+    void addToInventoryInvalidTest(){ // negative price
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
     	
 	    String expectedMsg = "Price must be a non-negative number!";
@@ -406,7 +397,7 @@ class InventoryTest {
 	}
     
     @Test
-    void addToInventoryInvalid2(){ // negative quantity
+    void addToInventoryInvalidTest2(){ // negative quantity
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
     	
         String expectedMsg = "Quantity must be a non-negative number!";
@@ -431,7 +422,7 @@ class InventoryTest {
     }
     
     @Test
-    void searchByIDWithSQLQuery(){
+    void searchByIDWithSQLQueryTest(){
     	
     	Merchandise m = null;
     	try {
@@ -476,15 +467,12 @@ class InventoryTest {
 
 
     @Test
-    void searchByIDInvalid(){ //medicationID doesn't exist
-//        ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
-        
+    void searchByIDInvalidTest(){ //medicationID doesn't exist
 		assertEquals(null, inventoryInstance.searchMerchandiseWithID(1000));
-		
     }
     
     @Test
-    void modifyName() {
+    void modifyNameTest() {
         
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -509,7 +497,7 @@ class InventoryTest {
     }
 
     @Test
-    void modifyNameInvalid() { //medicationID doesn't exist
+    void modifyNameInvalidTest() { //medicationID doesn't exist
     	 ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
         String expectedMsg = "Modification unsuccessful. No such medication currently exists in the inventory. See current inventory";
@@ -531,7 +519,7 @@ class InventoryTest {
     
     
     @Test
-    void modifyPrice(){
+    void modifyPriceTest(){
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -555,7 +543,7 @@ class InventoryTest {
     
     
     @Test
-    void modifyPriceInvalid1(){ // negative price
+    void modifyPriceInvalidTest1(){ // negative price
     	
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -569,7 +557,7 @@ class InventoryTest {
     }
     
     @Test
-    void modifyPriceInvalid2(){ // medicationID doesn't exist (assuming 100 too large)
+    void modifyPriceInvalidTest2(){ // medicationID doesn't exist (assuming 100 too large)
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
     	
         String expectedMsg = "Modification unsuccessful. No such medication currently exists in the inventory.";
@@ -590,7 +578,7 @@ class InventoryTest {
  
 
     @Test
-    void modifyDescription(){
+    void modifyDescriptionTest(){
        
         ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
         
@@ -614,7 +602,7 @@ class InventoryTest {
     }
 
     @Test
-    void modifyDescriptionInvalid(){ //medicationID does not exist
+    void modifyDescriptionInvalidTest(){ //medicationID does not exist
     	ArrayList<Merchandise> originalList = inventoryInstance.getMerchandise();
     	 
         String expectedMsg = "Modification unsuccessful. No such medication currently exists in the inventory.";
@@ -633,10 +621,4 @@ class InventoryTest {
         assertEquals(originalList, newList); // all medications in DB should remain the same (no medication price should be changed)
     }
 
-  
-
-//    @Test
-//    void isMedAddedBefore(Merchandise m) { //medicationID doesn't exist
-//    
-//    }
 }

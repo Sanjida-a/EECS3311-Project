@@ -30,24 +30,6 @@ class ReportTest {
 		} 
 		
 	}
-		
-//    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
-//    void calculateRevenueTest() {
-//        
-//        Report r = new Report();
-//        ListOfOrders listOfOrders = ListOfOrders.getInstance();
-//        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
-//		
-//        double revenue = 0;
-//		for ( Order e : allOrders) {
-//			revenue = revenue + e.getTotalPriceOfOrder();
-//		}
-//	
-//        try {
-//			assertEquals(revenue, r.calculateRevenue());
-//		} catch (Exception e1) {
-//		}
-//    }
 	
 	@Test
     void calculateRevenueTest() {
@@ -70,29 +52,6 @@ class ReportTest {
 		}
     	
     }
-
-//    @Test OLD TEST WITHOUT QUERYING - BAD I BELIVE
-//    void calculateProfitTest() {
-//       
-//        Report r = new Report();
-//        
-//        ListOfOrders listOfOrders = ListOfOrders.getInstance();
-//        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
-//		
-//        double revenue = 0;
-//		for ( Order e : allOrders) {
-//			revenue = revenue + e.getTotalPriceOfOrder();
-//		}
-//		
-//		double profit = 0.3*revenue;
-//	
-//        try {
-//			assertEquals(profit, r.calculateProfit());
-//		} catch (Exception e1) {
-//			e1.printStackTrace();
-//		}
-//
-//    }
 	
 	@Test
     void calculateProfitTest() {
@@ -116,24 +75,6 @@ class ReportTest {
 		}
 
     }
-
-//    @Test  OLD TEST WITHOUT QUERYING - BAD I BELIVE
-//    void seeSummaryOfSalesTest() {
-//        
-//        Report r = new Report();
-//        
-//        ListOfOrders listOfOrders = ListOfOrders.getInstance();
-//        
-//        ArrayList<Order> allOrders = listOfOrders.getListofAllOrders();
-//        
-//        ArrayList<String> summary = r.seeSummaryOfSales();
-//		
-//		for ( int i = 0; i < allOrders.size(); i++) {
-//			assertEquals(allOrders.get(i).toString(), summary.get(i));
-//		}
-//
-//    }
-    
 
     @Test
     void seeSummaryOfSalesTest() {
