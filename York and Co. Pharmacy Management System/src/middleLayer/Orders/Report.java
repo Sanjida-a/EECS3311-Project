@@ -24,7 +24,7 @@ public class Report {
 	public Report(OrderRoot orderDAO, MerchandiseRoot merDAO, UserRoot userDAO) {
 		listOfOrders = ListOfOrders.getInstance(orderDAO, merDAO, userDAO);
 		allOrders = listOfOrders.getListofAllOrders();
-		inv = Inventory.getInstance();
+		inv = Inventory.getInstance(merDAO);
 	}
 	
 	//Calculate revenue for sales report
@@ -93,7 +93,7 @@ public class Report {
 	 public void setOrderDAO(OrderRoot orderDAO, MerchandiseRoot mercDAO, UserRoot userDAO) {
 		 this.listOfOrders.setOrderDAO(orderDAO, mercDAO, userDAO);
 		 this.allOrders = this.listOfOrders.getListofAllOrders();
-		 this.inv = Inventory.getInstance();
+		 this.inv.set_merDAO(mercDAO);
 	 }
 
 }
