@@ -49,6 +49,7 @@ class ReportTest {
 			assertEquals(answer, r.calculateRevenue());
 			
 		} catch (Exception e) {
+			// no exception expected
 		}
     	
     }
@@ -72,6 +73,7 @@ class ReportTest {
 			assertEquals(answer, r.calculateProfit());
 			
 		} catch (Exception e) {
+			// no exception expected
 		}
 
     }
@@ -105,9 +107,37 @@ class ReportTest {
 			}
 			
 		} catch (Exception e) {
+			// no exception expected
 		}
 		
 		assertEquals(answer, r.seeSummaryOfSales());
+
+    }
+    
+    @Test
+    void seeMedicationSalesTest() {
+        
+    	ArrayList<String> expected = new ArrayList<String>();
+		try {
+			String queryGetAllRows = "SELECT medicationID, sum(quantityBought) as totalBought, sum(priceAtPurchase) as totalPrice FROM Orders GROUP BY medicationID;";
+			Statement statement = con.createStatement();
+			ResultSet result = statement.executeQuery(queryGetAllRows);
+			int medicationID, totalBought;
+			double totalPrice;
+			
+			while (result.next()) { 
+				medicationID =  result.getInt("medicationID");
+				totalBought =  result.getInt("totalBought");
+				totalPrice =  result.getDouble("totalPrice");
+				
+				expected.add("MEDID: " + medicationID + " - " + "Sold: " + totalBought + ", $" + totalPrice + "\n");
+			}
+			
+		} catch (Exception e) {
+			// no exception expected
+		}
+		
+		assertEquals(expected, r.seeMedicationSales());
 
     }
     
