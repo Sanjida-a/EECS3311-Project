@@ -119,14 +119,28 @@
 * finalized ListOfOrdersTest.java tests for addRefillToDatabase
 * adjusted Sql script accordingly
 
-31. 2023/4/4 0:00-0:50 Contributor: Alvin Ta
+31. 2023/4/03 08:00 - 10:30 contributor: Aiza Bajwa
+* hardening phase: Deleting unnecessary comments
+* adding more comments where necessary
+
+32. 2023/4/4 0:00-0:50 Contributor: Alvin Ta
 * Split the edge cases for customer tests in a document
 * Completed assigned edge cases
 
-32. 2023/4/4 17:30 - 18:00 Contributor: All
+34. 2023/4/03 12:00 - 13:00 contributor: Aiza Bajwa
+* hardening phase: remove TODO lines and unnecessary comments found in integration tests; organize code
+
+35. 2023/4/4 17:30 - 18:00 Contributor: All
 * Meeting to discuss over iteration 3 and assign things
 * Went over retrospective
 * looked over refactoring document
 
-33. 2023/4/4 18:00-18:10 contributor: Alvin Ta
+36. 2023/4/4 18:00-18:10 contributor: Alvin Ta
 * added another edge case for the type spelt wrong
+
+37. 2023/4/03 19:00 - 20:00 contributor: Aiza Bajwa
+* added a method in Report.java to enhance detailed story from Itr2
+
+38. 2023/4/03 23:55 - 00:10 contributor: Aiza Bajwa
+* added an integration test for new method just added to Report.java
+
