@@ -64,83 +64,106 @@
 *throw exceptions for bad inputs (empty string and too short/long health card number) for seeOrders
 *refactoring: large class fix for inventory class
 
-17. 2023/3/23 00:00-02:15   contributor: Minh Tran
+17. 2023/3/22 23:00 - 1:30   contributor: Sanjida Afreen
+* Implemented get patient purchase hisotry by searching patientID
+
+18. 2023/3/23 00:00-02:15   contributor: Minh Tran
 *Worked on number of refills left detailed story.
 
-18. 2023/3/24 1:00 - 00:00 2023/3/25   contributor: Aiza Bajwa
+19. 2023/3/23 20:00 - 0:00   contributor: Sanjida Afreen
+Updated DisplaySeeOrders.java
+
+20. 2023/3/24 1:00 - 00:00 2023/3/25   contributor: Aiza Bajwa
 *Fixed exception handling for all classes in presentation layer and methods in logic layer accordingly
 *made neater try catch blocks by adding more types of exceptions to cover all possible errors during user input and to output proper messages, corresponding to Issue#67
 *made return types of methods void instead of boolean/boolean[] in logic layer and replaced them with throwing exceptions instead
 *created new Exception class: NegativeInputException
 
-19. 2023/3/25 1:00 - 16:30, 19:00 - 22:15   contributor: Aiza Bajwa
+21. 2023/3/24 20:00 - 0:00   contributor: Sanjida Afreen
+* Updated idsplay list of orders
+* fixed formatting 
+
+22. 2023/3/25 1:00 - 16:30, 19:00 - 22:15   contributor: Aiza Bajwa
 *Modified all remaining tests to match changes in exception handling
 *Added more tests for all classes
 
-20. 2023/3/26 15:30 - 15:45 contributor: Geon Kim
+23. 2023/3/25 20:00 - 0:00   contributor: Sanjida Afreen
+* Added another feather to displayseeorders.java
+
+24. 2023/3/26 15:30 - 15:45 contributor: Geon Kim
 * more unit tests for ListOfOrders and Inventory added
 * issues are fixed in those two unit tests above
 
-21. 2023/3/27 21:00 - 22:00 contributor: All
+25. 2023/3/27 21:00 - 22:00 contributor: All
 * Virtual call
 * discussed presentation; planned rough draft of script; planned overall presentation delivery
 
-22. 2023/3/27 00:00 - 2:30 contributor: Minh Tran
+26. 2023/3/27 00:00 - 2:30 contributor: Minh Tran
     2023/3/27 21:00 - 2023/3/28 01:00
 * fixed add prescriptions and refills left
 * integration test for ListOfOrders
 
-23. 2023/3/28 20:00 - 22:30 contributor: Aiza Bajwa
+27. 2023/3/28 20:00 - 22:30 contributor: Aiza Bajwa
 * Finished and finalized presentation script
 * Finished retrospective activity write-up
 
-24. 2023/3/28 21:00 - 21:30 contributor: Geon Kim
+28. 2023/3/28 21:00 - 21:30 contributor: Geon Kim
 * unit test for Inventory.java, ListOfOrders.java, and ListOfUsers.java are refined for better coverage
 
-25. 2023/3/28 18:00 - 19:00 contributor: Aiza Bajwa, Alvin Ta, Geon Kim
+29. 2023/3/28 18:00 - 19:00 contributor: Aiza Bajwa, Alvin Ta, Geon Kim
 * rehearsed and shortened presentation script
 
-26. 2023/3/31 12:00 - 15:00 contributor: Geon Kim
+30. 2023/3/31 12:00 - 15:00 contributor: Geon Kim
 * refactoring for DisplayInitialScreen.java: it is divided into several classes to resolve large class issue
 
-27. 2023/3/31 17:00 - 18:30 contributor: Aiza Bajwa
+31. 2023/3/31 17:00 - 18:30 contributor: Aiza Bajwa
 * fixed/added some asserts to integration tests
 
-28. 2023/3/31 18:30 - 20:00 && 21:00-00:00 contributor: Aiza Bajwa, Geon Kim
+32. 2023/3/31 18:30 - 20:00 && 21:00-00:00 contributor: Aiza Bajwa, Geon Kim
 * virtual call
 * fixed minor bugs; tested program and exceptions
 * discussed potential changes in design
 
-29. 2023/4/01 14:00 - 17:00 contributor: Aiza Bajwa, Geon Kim
+33. 2023/3/31 21:00 - 1:30   contributor: Sanjida Afreen
+* Worked on customer tests
+
+34. 2023/4/01 14:00 - 17:00 contributor: Aiza Bajwa, Geon Kim
 * virtual call
 * adjusted integration tests in ListOfOrdersTest.java so not dependent on initial database state
 
-30. 2023/4/01 18:00 - 19:30 contributor: Aiza Bajwa
+35. 2023/4/01 18:00 - 19:30 contributor: Aiza Bajwa
 * finalized ListOfOrdersTest.java tests for addRefillToDatabase
 * adjusted Sql script accordingly
 
-31. 2023/4/03 08:00 - 10:30 contributor: Aiza Bajwa
+36. 2023/4/03 08:00 - 10:30 contributor: Aiza Bajwa
 * hardening phase: Deleting unnecessary comments
 * adding more comments where necessary
 
-32. 2023/4/4 0:00-0:50 Contributor: Alvin Ta
+37. 2023/4/4 08:00 - 10:30 Contributor: Sanjida Afreen
+* Updated System Architecture
+
+38. 2023/4/4 0:00-0:50 Contributor: Alvin Ta
 * Split the edge cases for customer tests in a document
 * Completed assigned edge cases
 
-34. 2023/4/03 12:00 - 13:00 contributor: Aiza Bajwa
+39. 2023/4/4 3:00-5:50 Contributor: Sanjida Afreen
+* Split the edge cases for customer tests in a document
+* Completed assigned edge cases
+
+40. 2023/4/03 12:00 - 13:00 contributor: Aiza Bajwa
 * hardening phase: remove TODO lines and unnecessary comments found in integration tests; organize code
 
-35. 2023/4/4 17:30 - 18:00 Contributor: All
+41. 2023/4/4 17:30 - 18:00 Contributor: All
 * Meeting to discuss over iteration 3 and assign things
 * Went over retrospective
 * looked over refactoring document
 
-36. 2023/4/4 18:00-18:10 contributor: Alvin Ta
+42. 2023/4/4 18:00-18:10 contributor: Alvin Ta
 * added another edge case for the type spelt wrong
 
-37. 2023/4/03 19:00 - 20:00 contributor: Aiza Bajwa
+43. 2023/4/03 19:00 - 20:00 contributor: Aiza Bajwa
 * added a method in Report.java to enhance detailed story from Itr2
 
-38. 2023/4/03 23:55 - 00:10 contributor: Aiza Bajwa
+44. 2023/4/03 23:55 - 00:10 contributor: Aiza Bajwa
 * added an integration test for new method just added to Report.java
 
