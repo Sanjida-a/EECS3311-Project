@@ -33,12 +33,15 @@ public class DisplaySeeOrders implements ActionListener{
 	private static JTextField textFieldTotalSpent;
 	private static JTextArea textAreaOutput;
 	private static JScrollPane scrollPaneOutput;
+	private static JLabel lblTotalSpent;
+	private static USER user;
 
 
 
 	public static void displaySeeOrders(JFrame previous, USER userType) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
+		user = userType;
 		frame = new JFrame("Orders");
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -47,15 +50,15 @@ public class DisplaySeeOrders implements ActionListener{
 		
 		frame.getContentPane().setLayout(null);
 
-		createLabels(userType);
+		createLabels(user);
 		createButtons();
 		createTextArea();
-		createTextFields(userType);
+		createTextFields(user);
 		frame.revalidate();
 	}
 	
 	private static void createLabels(USER userType) {
-		JLabel lblTotalSpent = new JLabel("Total spent");
+		lblTotalSpent = new JLabel("Total spent");
 		lblTotalSpent.setFont(new Font("굴림", Font.BOLD, 15));
 		lblTotalSpent.setBounds(12, 457, 102, 35);
 		if(userType == USER.PHARMACIST) {
@@ -153,6 +156,10 @@ public class DisplaySeeOrders implements ActionListener{
 				long healthCardID = Long.parseLong(stringHCN);
 					
 				if(action.compareTo("See All Orders") == 0) {
+					if(user == USER.OWNER && !textFieldTotalSpent.isVisible() && !lblTotalSpent.isVisible()) {
+						textFieldTotalSpent.setVisible(true);
+						lblTotalSpent.setVisible(true);
+					}
 					textFieldTotalSpent.setText("");
         			textAreaOutput.setText("");
 					
@@ -167,7 +174,10 @@ public class DisplaySeeOrders implements ActionListener{
 					textFieldTotalSpent.setText(Double.toString(val));
 	        	}
 		        else if(action.compareTo("See Prescription") == 0){
-		        	
+		        	if(textFieldTotalSpent.isVisible() && lblTotalSpent.isVisible()) {
+		        		textFieldTotalSpent.setVisible(false);
+		        		lblTotalSpent.setVisible(false);
+		        	}
 					textAreaOutput.setText("");
 					
 					ArrayList<String> resultPurchaseHistory = listOfOrdersInstance.outputPresRefill(healthCardID, USER.OWNER);
