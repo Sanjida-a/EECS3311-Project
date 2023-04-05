@@ -133,7 +133,13 @@ public class DisplayReport {
 	}
 	
 	private void setSalesOutput(JTextArea outputArea) {
-		//implement the logic here
+		
+		ArrayList<String> medSummary = new ArrayList<String>();
+		
+		medSummary = report.seeMedicationSales();
+		for(String s : medSummary) {
+			outputArea.append(s);
+		}
 	}
 	
 
