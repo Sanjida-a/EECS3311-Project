@@ -5,7 +5,7 @@ Please access the Wiki for all important details. Links to the UML Class Diagram
 
 Other required documentation such as the UpdatedPlan, Updated Big Stories, Detailed Stories, Addressing Issues (by QA team), Major Changes Made In Iteration 3, QA Activity Report, Refactoring Document, Retrospective Activity, Peer Evaluation form and log.txt (called logIteration3.txt) can be found in the "Iteration3 - Documentation" folder.
 
-To execute the program, ensure you have the latest version of Java. Download the Iteration2ExecutableDemo.jar file and run it from your system (you can simply double-click on it).
+To execute the program, ensure you have the latest version of Java. Download the Iteration3ExecutableDemo.jar file and run it from your system (you can simply double-click on it).
 
 To see the files that contain java code, please first click on the "York and Co. Pharmacy Management System" folder and then the "src" folder.
 
