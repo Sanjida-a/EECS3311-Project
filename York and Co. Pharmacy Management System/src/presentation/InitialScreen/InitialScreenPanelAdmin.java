@@ -243,7 +243,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			this.deleteMedication();
 		}
 		else if(actionCommand.equalsIgnoreCase("AddOrder")) {
-			DisplayAddOrderAddPresciptionForm.displayAddOrder(frame, actionCommand);
+			DisplayAddOrderAddPresciptionForm.displayAddOrder(frame, actionCommand, currentList);
 		}
 		else if(actionCommand.equalsIgnoreCase("Increase")) {
 			this.increaseQty();
@@ -261,7 +261,7 @@ public class InitialScreenPanelAdmin implements ActionListener{
 			DisplaySeeOrders.displaySeeOrders(frame, userType);
 		}
 		else if(actionCommand.equalsIgnoreCase("AddPrescription")) {
-			DisplayAddOrderAddPresciptionForm.displayAddOrder(frame, actionCommand);
+			DisplayAddOrderAddPresciptionForm.displayAddOrder(frame, actionCommand, currentList);
 		}
 		else if(actionCommand.equalsIgnoreCase("SeeReport")) {
             DisplayReport screen = new DisplayReport() ;

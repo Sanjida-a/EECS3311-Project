@@ -57,8 +57,9 @@ public class ListOfOrders {
     }
 	
 	public static ListOfOrders getInstance(OrderRoot orderDAO, MerchandiseRoot merDAO, UserRoot userDAO) {
-        if (ListOfOrdersInstance == null) {
-        	//System.out.println("LIstOforders.getInstance is called with two DAOs");
+		//for dependency injection, which allows the stub DB to be used
+		if (ListOfOrdersInstance == null) {
+    		
         	ListOfOrdersInstance = new ListOfOrders(orderDAO, merDAO, userDAO);
         }
         return ListOfOrdersInstance;

@@ -34,6 +34,7 @@ public class ListOfUsers {
 	}
 	
 	private ListOfUsers(UserRoot dao) {
+		//for dependency injection, which allows the stub DB to be used
 		try {
 			_userDAO = dao;
 			allPatientsList = _userDAO.getListOfAllPatients();
@@ -53,6 +54,7 @@ public class ListOfUsers {
     }
 	
 	public static ListOfUsers getInstance(UserRoot dao) {
+		//for dependency injection, which allows the stub DB to be used
         if (ListOfUsersInstance == null) {
         	ListOfUsersInstance = new ListOfUsers(dao);
         }
@@ -60,6 +62,7 @@ public class ListOfUsers {
 	}
 	
 	public void set_userDAO(UserRoot dao) {
+		//for dependency injection, which allows the stub DB to be used
 		this._userDAO = dao;
 		try {
 			allPatientsList = this._userDAO.getListOfAllPatients();

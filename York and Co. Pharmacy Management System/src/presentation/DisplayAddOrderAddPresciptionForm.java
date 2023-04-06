@@ -15,11 +15,13 @@ import javax.swing.SwingConstants;
 
 
 import middleLayer.NegativeInputException;
-
+import middleLayer.MerchandiseInventory.Merchandise;
 import middleLayer.Orders.*;
+import presentation.InitialScreen.InitialScreenPanelAll;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 
@@ -32,11 +34,13 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 	private static JTextField textFieldRefill;
 
 	private static ListOfOrders listOfOrders = ListOfOrders.getInstance();
+	private static ArrayList<Merchandise> currentList;
 	private static JLabel lbNotice;
 
-	public static void displayAddOrder(JFrame previous, String command) {
+	public static void displayAddOrder(JFrame previous, String command, ArrayList<Merchandise> list) {
 		superFrame = previous;
 		superFrame.setEnabled(false);
+		currentList = list;
 		frame = new JFrame(command.substring(0, 3) + " " + command.substring(3));//frame title is set to "Add [Order/Prescription]"
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -92,11 +96,13 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 	}
 	
 	private static void createButtons(JPanel panel, String command) {
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setFont(new Font("굴림", Font.BOLD, 18));
-		btnCancel.setBounds(437, 308, 125, 35);
-		btnCancel.addActionListener(new DisplayAddOrderAddPresciptionForm());
-		panel.add(btnCancel);
+		JButton btnExit = new JButton("Exit");
+		btnExit.setActionCommand("Exit");
+		btnExit.setFont(new Font("굴림", Font.BOLD, 18));
+		btnExit.setBounds(437, 308, 125, 35);
+		btnExit.addActionListener(new DisplayAddOrderAddPresciptionForm());
+		panel.add(btnExit);
+		
 		if(command.equals("AddOrder")) {
 			JButton btnAdjustRefill = new JButton("Give refill for a prescription");
 	        btnAdjustRefill.setFont(new Font("굴림", Font.BOLD, 18));
@@ -151,10 +157,11 @@ public class DisplayAddOrderAddPresciptionForm implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getActionCommand().equals("Cancel")) {
+		if(e.getActionCommand().equals("Exit")) {
 			frame.dispose();
 			superFrame.setEnabled(true);
 			superFrame.toFront();
+			InitialScreenPanelAll.displayMercList(currentList);
 		}
 		else {
 			lbNotice.setText("");

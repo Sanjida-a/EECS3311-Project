@@ -31,7 +31,8 @@ public class Inventory{
 		}
 	}
 	
-	private Inventory(MerchandiseRoot dao) {
+	private Inventory(MerchandiseRoot dao) {	
+		//for dependency injection, which allows the stub DB to be used
 		this._merDAO = dao;
 		this.list = this._merDAO.getListOfMerchandise();
 		
@@ -45,6 +46,7 @@ public class Inventory{
     }
     
     public static Inventory getInstance(MerchandiseRoot dao) {
+		//for dependency injection, which allows the stub DB to be used
         if (singletonInstance == null) {
             singletonInstance = new Inventory(dao);
         }
