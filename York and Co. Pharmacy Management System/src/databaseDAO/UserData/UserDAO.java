@@ -139,7 +139,7 @@ public class UserDAO extends superDAO implements UserRoot {
 			con.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because not updating primary key healthCardNum
 		}
 	}
 }

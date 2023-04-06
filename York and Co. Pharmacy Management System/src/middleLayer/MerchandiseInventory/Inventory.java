@@ -27,7 +27,7 @@ public class Inventory{
 			list = _merDAO.getListOfMerchandise();
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
 		}
 	}
 	

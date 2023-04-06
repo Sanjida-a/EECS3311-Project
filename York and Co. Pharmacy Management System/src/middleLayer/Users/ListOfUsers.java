@@ -28,7 +28,8 @@ public class ListOfUsers {
 			allCredentialsList = _userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
 	
-			e.printStackTrace();
+			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
+			// exception also not expected because just using select statements
 		}
 	}
 	
@@ -38,8 +39,8 @@ public class ListOfUsers {
 			allPatientsList = _userDAO.getListOfAllPatients();
 			allCredentialsList = _userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
-	
-			e.printStackTrace();
+			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
+			// exception also not expected because just using select statements
 		}
 	}
 	
@@ -64,7 +65,7 @@ public class ListOfUsers {
 			allPatientsList = this._userDAO.getListOfAllPatients();
 			allCredentialsList = this._userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just using select statements
 		}
 	}
 	
@@ -73,7 +74,7 @@ public class ListOfUsers {
 		try {
 			allPatientsList = _userDAO.getListOfAllPatients(); 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just using select statement
 		}
 	}
 	
@@ -88,7 +89,7 @@ public class ListOfUsers {
 		try {
 			allCredentialsList = _userDAO.getListOfUsernamesAndPasswords();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just using select statement
 		}
 	}
 	

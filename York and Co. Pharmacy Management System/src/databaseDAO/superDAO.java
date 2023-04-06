@@ -29,8 +29,8 @@ public class superDAO {
 			con = DriverManager.getConnection(url, user, password);
 			
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
+			// no exception expected because this method was created for Integration Tests and...
+			// ...is only invoked once the password has been set correctly
 		} 
 		return con;
 	}

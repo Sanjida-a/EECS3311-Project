@@ -24,8 +24,7 @@ public class Pharmacist extends User {
 //			this.username = username;
 //			this.password = password;
 //		} catch (Exception e) {
-//	
-//			e.printStackTrace();
+// 			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
 //		}
 		
 	}

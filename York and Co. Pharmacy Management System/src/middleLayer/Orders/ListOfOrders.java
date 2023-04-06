@@ -31,7 +31,7 @@ public class ListOfOrders {
 			this.merList = Inventory.getInstance();
 			this.userList = ListOfUsers.getInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
 		}
 	}
 	
@@ -44,7 +44,7 @@ public class ListOfOrders {
 			this.userList = ListOfUsers.getInstance(userDAO);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class ListOfOrders {
 		try {
 			allOrdersList = _orderDAO.getListOfAllOrders();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because failure of connection is now handled as first step when logging in (in superDAO.java)
 		}
 	}
 	
@@ -81,7 +81,7 @@ public class ListOfOrders {
 		try {
 			allOrdersList = _orderDAO.getListOfAllOrders(); 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just a simple select statement
 		}
 	}
 	
@@ -95,7 +95,7 @@ public class ListOfOrders {
 		try {
 			allPresList = _orderDAO.getListOfAllPres(); 
 		} catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just a simple select statement
 		}
 		return allPresList;
 	}

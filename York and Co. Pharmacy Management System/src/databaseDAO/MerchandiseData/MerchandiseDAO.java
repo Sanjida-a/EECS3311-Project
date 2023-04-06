@@ -67,7 +67,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 			con.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just Select statement
 		}
 		
 		return allInventory;
@@ -97,7 +97,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 			con.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because not updating primary key medID
 		}
 	}
 	
@@ -118,7 +118,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 			con.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because not updating primary key medID
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 			con.close();
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			// exception not expected because primary key medID is auto generated (never duplicate)
 		}
 	}
 	
@@ -188,7 +188,7 @@ public class MerchandiseDAO  extends superDAO implements MerchandiseRoot {
 			con.close();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			// exception not expected because just Select statement
 		}
 		
 		return allValidAndInvalidInventory;

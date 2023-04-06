@@ -116,7 +116,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			
 			con.close();		
 		} catch (SQLException e1) {
-			e1.printStackTrace();
 			throw e1;
 		}		
 	}
@@ -135,7 +134,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 				con.close();		
 		}	
 		catch (SQLException e1) {
-			e1.printStackTrace();
 			throw e1;
 		}
 		
@@ -159,7 +157,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 				con.close();		
 		}
 		catch (SQLException e1) {
-			e1.printStackTrace();
 			throw e1;
 		}
 	}
@@ -189,7 +186,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 		
 		}
 		catch (SQLException e1) {
-			e1.printStackTrace();
 			throw e1;
 		}
 	}
@@ -210,7 +206,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			return isRecord; // returns prescriptionNum (primary key) of row in prescriptions table if prescription form record already exists; if not exists, returns -1
 		}
 		catch (SQLException e1) {
-			e1.printStackTrace();
 			throw e1;
 		}
 	}
@@ -242,7 +237,6 @@ public class OrderDAO extends superDAO implements OrderRoot{
 			
 		}
 		catch (SQLException e1) {
-			e1.printStackTrace();
 			throw e1;
 		}
 		
