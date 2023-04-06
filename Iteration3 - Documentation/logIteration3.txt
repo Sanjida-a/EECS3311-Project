@@ -161,9 +161,15 @@ Updated DisplaySeeOrders.java
 42. 2023/4/4 18:00-18:10 contributor: Alvin Ta
 * added another edge case for the type spelt wrong
 
-43. 2023/4/03 19:00 - 20:00 contributor: Aiza Bajwa
+43. 2023/4/04 19:00 - 20:00 contributor: Aiza Bajwa
 * added a method in Report.java to enhance detailed story from Itr2
 
-44. 2023/4/03 23:55 - 00:10 contributor: Aiza Bajwa
+44. 2023/4/04 23:55 - 00:10 contributor: Aiza Bajwa
 * added an integration test for new method just added to Report.java
 
+45. 2023/4/05 12:00 - 15:00 contributor: Minh Tran
+* updated Wiki and UML files
+
+46. 2023/4/05 23:50 - 01:50 2023/4/06 contributor: Aiza Bajwa, Minh Tran
+* virtual call
+* final overall check-up: final hardening and testing of application 
