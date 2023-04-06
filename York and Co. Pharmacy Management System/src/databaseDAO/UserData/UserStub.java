@@ -37,7 +37,7 @@ public class UserStub implements UserRoot {
 	public void addPatientToDatabase(Patient newPatient) throws Exception {
 		for (Patient p : this.patientList) {
 			if(p.getHealthCardNum() == newPatient.getHealthCardNum()) {
-				throw new SQLException();
+				throw new SQLException();	//ensures no duplicated entry
 			}
 		}
 		allUsernamesAndPasswordsList.add(newPatient);

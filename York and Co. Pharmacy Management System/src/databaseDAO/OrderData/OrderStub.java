@@ -1,14 +1,10 @@
 package databaseDAO.OrderData;
 
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.sql.Statement;
-/*(int orderNum,int medicationID, int patientID, int quantityBought, double priceAtPurchase )
- * 
- * 
- */
+
+
+ 
 import java.util.ArrayList;
 
 
@@ -52,7 +48,7 @@ public class OrderStub implements OrderRoot {
 	@Override
 	public void addToOrderTable(Order o) throws Exception {
 		for(Order order : orderList) {
-			if(order.equals(o)) {
+			if(order.equals(o)) {	//ensures that there is not duplicate entry
 				throw new SQLException();
 			}
 		}
