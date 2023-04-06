@@ -3,10 +3,7 @@ package databaseDAO.MerchandiseData;
 import java.util.ArrayList;
 
 import middleLayer.MerchandiseInventory.*;
-/*
- * Merchandise(int medicationID, String name, int quantity, double price, MERCHANDISE_TYPE type, MERCHANDISE_FORM form, boolean isOTC, String description
- * 
- */
+
 public class MerchandiseStub implements MerchandiseRoot {
 	public ArrayList<Merchandise> allInventoryStub = new ArrayList<Merchandise>();
 	
@@ -63,6 +60,5 @@ public class MerchandiseStub implements MerchandiseRoot {
 	@Override
 	public void addMedicationToDatabase(Merchandise newMedication) {
 		allInventoryStub.add(newMedication);
-
 	}
 }
