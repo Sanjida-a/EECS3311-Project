@@ -11,7 +11,8 @@ To see the files that contain java code, please first click on the "York and Co.
 
 (For the TAs): To run the Integration and Unit Tests without any exceptions, please change the password on EACH test file to your local SQL password (and do not touch the "TEST (DO NOT TOUCH" medication with ID = 7 in the inventory).
 
-[OLD - IGNORE BELOW]
+**[OLD - IGNORE BELOW]**
+
 Iteration 2:
 
 Please access the Wiki for all important details. Links to the UML Class Diagram and System Architecture are also included in the Wiki: https://github.com/jewbe22/EECS3311-project-group8/wiki
