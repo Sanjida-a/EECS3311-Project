@@ -9,7 +9,7 @@ To execute the program, ensure you have the latest version of Java. Download the
 
 To see the files that contain java code, please first click on the "York and Co. Pharmacy Management System" folder and then the "src" folder.
 
-(For the TAs): To run the Integration and Unit Tests without any exceptions, please change the password on EACH test file to your local SQL password (and do not touch the "TEST (DO NOT TOUCH" medication with ID = 7 in the inventory).
+(For the TAs): To run the Integration and Unit Tests without any exceptions, please change the password on EACH test file to your local SQL password (and please do not touch the "TEST (DO NOT TOUCH)" medication with ID = 7 in the inventory - do not make any orders or prescription forms with this medication or modify any of its values).
 
 **[OLD - IGNORE BELOW]**
 
