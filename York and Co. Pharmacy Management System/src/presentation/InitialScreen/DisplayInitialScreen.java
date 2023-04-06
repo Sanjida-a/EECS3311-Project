@@ -101,6 +101,7 @@ public class DisplayInitialScreen{
         btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				InitialScreenPanelAll.setOperationResult("");
 				setCurrentList();
 				InitialScreenPanelAll.displayMercList(currentList);
 			

@@ -130,7 +130,7 @@ class ReportTest {
 				totalBought =  result.getInt("totalBought");
 				totalPrice =  result.getDouble("totalPrice");
 				
-				expected.add("MEDID: " + medicationID + " - " + "Sold: " + totalBought + ", $" + totalPrice + "\n");
+				expected.add("MedID: " + medicationID + " - " + "Sold: " + totalBought + ", $" + totalPrice + "\n");
 			}
 			
 		} catch (Exception e) {

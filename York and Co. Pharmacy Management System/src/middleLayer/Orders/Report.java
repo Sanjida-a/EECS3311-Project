@@ -79,7 +79,7 @@ public class Report {
 		 	}
 	 		
 	 		if (quantitySold != 0) { // only want to display orders that actually were sold
-	 			output.add("MEDID: " + m.getMedicationID() + " - " + "Sold: " + quantitySold + ", $" + priceSold + "\n");
+	 			output.add("MedID: " + m.getMedicationID() + " - " + "Sold: " + quantitySold + ", $" + priceSold + "\n");
 	 		}
 	 		
 	 		//reset for next medication

@@ -60,7 +60,7 @@ class ReportUnitTest {
 	void testSeeMedicationSales() {
 		ArrayList<String> expected = new ArrayList<String>();
 		for(Order o : orderStub.orderList) {
-			expected.add("MEDID: " + o.getMedicationID() + " - " + "Sold: " + o.getQuantityBought() + ", $" + o.getTotalPriceOfOrder() + "\n");
+			expected.add("MedID: " + o.getMedicationID() + " - " + "Sold: " + o.getQuantityBought() + ", $" + o.getTotalPriceOfOrder() + "\n");
 		}
 		assertEquals(expected, report.seeMedicationSales());
 	}
