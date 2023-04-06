@@ -456,7 +456,7 @@ class ListOfOrdersTest {
     	String resultMsg = null;
       
     	int indexForOTC = -1;
-    	for (int i = 0; i < originalList.size(); i++) {
+    	for (int i = 0; i < medList.size(); i++) {
     		if (medList.get(i).getisOTC() == true) {
     			indexForOTC = i;
     			break;
