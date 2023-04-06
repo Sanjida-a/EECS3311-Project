@@ -1,5 +1,6 @@
 # EECS3311-Group8-PharmacyManagementSystem
-ITERATION 3
+**ITERATION 3**
+
 Please access the Wiki for all important details. Links to the UML Class Diagram and System Architecture are also included in the Wiki: https://github.com/jewbe22/EECS3311-project-group8/wiki
 
 Other required documentation such as the UpdatedPlan, Updated Big Stories, Detailed Stories, Addressing Issues (by QA team), Major Changes Made In Iteration 3, QA Activity Report, Refactoring Document, Retrospective Activity, Peer Evaluation form and log.txt (called logIteration3.txt) can be found in the "Iteration3 - Documentation" folder.
